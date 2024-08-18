@@ -15,7 +15,7 @@ const config = {
   bracketSpacing: true,
   bracketSameLine: false,
   jsxBracketSameLine: false,
-  endOfLine: "lf",
+  endOfLine: "auto",
   embeddedLanguageFormatting: "auto",
   singleAttributePerLine: false,
   plugins: ["prettier-plugin-tailwindcss"],
