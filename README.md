@@ -90,3 +90,54 @@
 |   | Dash de Pedidos Recebidos > Informações do Pedido       |            |         |
 |   | Ajuda                                                   |            |         |
 |   | Configurações da Loja                                   |            |         |
+
+## Estrutura de pastas
+
+```plaintext
+src/
+├── domains/                       # Domínios principais da aplicação
+│   ├── food/                      # Domínio relacionado aos alimentos
+│   │   ├── components/            # Componentes UI específicos do domínio
+│   │   ├── models/                # Modelos de dados (e.g., Food, Category)
+│   │   ├── services/              # Serviços de regras de negócio (lógica de domínio)
+│   │   ├── hooks/                 # Hooks específicos do domínio
+│   │   └── index.ts               # Exportações do domínio
+│   ├── user/                      # Domínio relacionado aos usuários
+│   │   ├── components/
+│   │   ├── models/
+│   │   ├── services/
+│   │   ├── hooks/
+│   │   └── index.ts
+│   └── ...                        # Outros domínios (e.g., order, payment, etc.)
+│
+├── app/                           # Lógica e configuração geral da aplicação
+│   ├── context/                   # Contextos globais (e.g., AuthContext)
+│   ├── hooks/                     # Hooks reutilizáveis
+│   ├── providers/                 # Providers globais (e.g., ThemeProvider)
+│   ├── router/                    # Configuração de rotas
+│   ├── store/                     # Gerenciamento de estado (e.g., Redux, Zustand)
+│   └── App.tsx                    # Componente principal da aplicação
+│
+├── infrastructure/                # Infraestrutura e integrações externas
+│   ├── api/                       # Configuração de APIs externas
+│   ├── config/                    # Configurações globais (e.g., env, axios)
+│   ├── logging/                   # Configuração de logs
+│   └── security/                  # Configuração de segurança (e.g., autenticação)
+│
+├── ui/                            # Componentes de UI e estilos
+│   ├── components/                # Componentes reutilizáveis de UI
+│   ├── layouts/                   # Layouts globais
+│   ├── styles/                    # Arquivos de estilo (e.g., Tailwind, CSS Modules)
+│   └── assets/                    # Imagens, fontes, etc.
+│
+└── index.tsx                      # Entrada principal da aplicação React
+```
+
+Explicação
+Domains: Cada domínio representa uma área do negócio (como food ou user) e contém tudo relacionado a ele, como componentes específicos, modelos de dados, serviços (regra de negócio), e hooks. Isso organiza o código de maneira modular e alinhada com as regras de negócio.
+
+App: Contém a configuração e lógica geral da aplicação, como contextos, hooks globais, provedores e roteamento. Mantém a lógica de domínio separada das configurações e funcionalidades compartilhadas.
+
+Infrastructure: Reúne todas as integrações externas e configurações de infraestrutura, como APIs, segurança, e logging. Mantém a lógica de domínio desacoplada de detalhes técnicos.
+
+UI: Foca nos componentes de interface, layouts, estilos e ativos visuais. Essa separação permite que o desenvolvimento da UI seja independente das regras de negócio.
