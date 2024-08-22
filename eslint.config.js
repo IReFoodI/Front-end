@@ -4,6 +4,7 @@ import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
+import tailwind from "eslint-plugin-tailwindcss"
 import globals from "globals"
 
 export default [
@@ -26,6 +27,7 @@ export default [
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "simple-import-sort": simpleImportSort,
+      tailwind,
     },
 
     rules: {
@@ -47,6 +49,13 @@ export default [
       ],
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+    },
+  },
+  {
+    // Arquivos onde a regra será desativada
+    files: ["src/ui/components/ui/**/*.jsx"],
+    rules: {
+      "prettier/prettier": "off",
     },
   },
 ]
