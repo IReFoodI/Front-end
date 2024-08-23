@@ -6,6 +6,10 @@ export default {
     fontFamily: {
       sans: ["Inter", "Helvetica", "sans-serif"],
     },
+    backgroundImage: {
+      "capa-loja": "url('/src/domains/food/components/pages/capa.png')",
+      "logo-loja": "url('/src/domains/food/components/pages/logo-loja.png')",
+    },
   },
   plugins: [],
 }
