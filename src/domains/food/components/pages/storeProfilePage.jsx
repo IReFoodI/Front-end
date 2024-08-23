@@ -2,17 +2,19 @@
 import { IconClock, IconHeart, IconInfoCircle, IconMapPin, IconStarFilled } from '@tabler/icons-react';
 
 export const StoreProfilePage = () => {
-  return <div id="page" className="border border-gray-200 min-w-80 max-w-96 h-[720px] mx-auto">
+  return <div id="page" className="min-w-80 w-full h-[720px] mx-auto">
     <div className='h-20'></div>
-    <div id="capa" className="bg-capa-loja bg-cover w-full h-[140px]"></div>
-    <section className=' px-5 pb-5'>
+    <div id="capa" className="bg-capa-loja bg-cover w-full h-[140px] px-5 relative">
+      <div className='bg-logo-loja bg-cover rounded w-20 h-20 relative top-24' />
+    </div>
+    <section className='px-5 pb-5'>
       <div id="icons" className='flex gap-2 text-gray-400 justify-end py-3'>
         <IconInfoCircle stroke={2} /><IconHeart stroke={2} />
       </div>
       <div id="cards" className='flex flex-col gap-5'>
         <div id="card-info">
-          <div id="content" className='relavtive flex flex-col gap-1'>
-            <div className='bg-logo-loja bg-cover rounded w-20 h-20 absolute top-[28%]' />
+          <div id="content" className='flex flex-col gap-1'>
+
             <h1 className='text-gray-700 font-bold text-2xl'>Dragão Verde</h1>
             <div className='flex items-center gap-2 text-sm'>
               <span className='text-orange-500 font-bold'>novo!</span>
