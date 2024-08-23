@@ -53,7 +53,7 @@ export default [
   },
   {
     // Arquivos onde a regra será desativada
-    files: ["src/ui/components/ui/**/*.jsx"],
+    files: ["src/**/*.jsx"],
     rules: {
       "prettier/prettier": "off",
     },
