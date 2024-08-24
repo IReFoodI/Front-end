@@ -26,7 +26,7 @@ export const StoreProfilePageTopDesktop = () => {
         id="card-desktop"
         className="relative bottom-20 ms-7 hidden max-w-[550px] rounded-xl bg-white xl:flex"
       >
-        <div className="relative right-7 h-24 w-24 rounded bg-logo-loja bg-cover" />
+        <div className="relative right-7 h-24 w-24 rounded-full bg-[url('https://via.placeholder.com/150')] bg-cover" />
         <div id="info" className="flex-1 py-3 pe-3">
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold text-gray-700">Dragão Verde</h1>

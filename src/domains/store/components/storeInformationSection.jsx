@@ -21,7 +21,7 @@ export const StoreInformationSection = () => {
         </div>
         <div id="card-info">
           <div className="my-3 flex items-center gap-5">
-            <div className="h-24 w-24 rounded bg-logo-loja bg-cover" />
+            <div className="h-24 w-24 rounded-full bg-[url('https://via.placeholder.com/150')] bg-cover" />
             <div>
               <h1 className="text-3xl font-bold text-gray-700">Dragão Verde</h1>
               <p className="flex gap-3">
@@ -43,7 +43,7 @@ export const StoreInformationSection = () => {
       </header>
       <div
         id="capa"
-        className="relative hidden h-[140px] w-full bg-capa-loja bg-cover px-5 xl:flex xl:rounded"
+        className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded"
       ></div>
       <StoreProfilePageTopDesktop />
       <StoreInformationSectionTabs />

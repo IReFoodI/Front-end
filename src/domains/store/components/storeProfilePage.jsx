@@ -14,9 +14,9 @@ export const StoreProfilePage = () => {
       <div className="h-20"></div>
       <div
         id="capa"
-        className="relative h-[140px] w-full bg-capa-loja bg-cover px-5 xl:rounded"
+        className="relative h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:rounded"
       >
-        <div className="relative top-24 h-20 w-20 rounded bg-logo-loja bg-cover xl:hidden" />
+        <div className="relative top-24 h-20 w-20 rounded-full bg-[url('https://via.placeholder.com/150')] bg-cover xl:hidden" />
       </div>
       <div className="px-5 pb-5 xl:px-0">
         <div
