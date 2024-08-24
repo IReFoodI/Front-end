@@ -5,12 +5,15 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
-import { StoreInformationSectionTabs } from "./storeInformationSectionTabs"
+import { StoreInformationTabs } from "./storeInformationTabs"
 import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
 
-export const StoreInformationSection = () => {
+export const StoreInformationSectionPage = () => {
   return (
-    <div id="page" className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8">
+    <div
+      id="page"
+      className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8 antialiased"
+    >
       <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
           <IconArrowLeft stroke={2} className="text-gray-600" />
@@ -46,7 +49,7 @@ export const StoreInformationSection = () => {
         className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded"
       ></div>
       <StoreProfilePageTopDesktop />
-      <StoreInformationSectionTabs />
+      <StoreInformationTabs />
     </div>
   )
 }

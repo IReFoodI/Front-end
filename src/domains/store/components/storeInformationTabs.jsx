@@ -3,7 +3,7 @@ import { useState } from "react"
 import { StoreInformationInfo } from "./storeInformationInfo"
 import { StoreInformationReview } from "./storeInformationReview"
 
-export const StoreInformationSectionTabs = () => {
+export const StoreInformationTabs = () => {
   const [activeTab, setActiveTab] = useState("info")
 
   return (

@@ -10,7 +10,10 @@ import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
 
 export const StoreProfilePage = () => {
   return (
-    <div id="page" className="mx-auto w-full min-w-80 max-w-[1280px]">
+    <div
+      id="page"
+      className="mx-auto w-full min-w-80 max-w-[1280px] antialiased"
+    >
       <div className="h-20"></div>
       <div
         id="capa"
