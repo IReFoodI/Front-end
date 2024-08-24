@@ -5,12 +5,13 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import { StoreInformationSectionTabs } from "./storeInformationSectionTabs"
 import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
 
 export const StoreInformationSection = () => {
   return (
     <div id="page" className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8">
-      <header className="xl:hidden">
+      <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
           <IconArrowLeft stroke={2} className="text-gray-600" />
           <div className="flex justify-end gap-2 text-orange-500">
@@ -45,6 +46,7 @@ export const StoreInformationSection = () => {
         className="relative hidden h-[140px] w-full bg-capa-loja bg-cover px-5 xl:flex xl:rounded"
       ></div>
       <StoreProfilePageTopDesktop />
+      <StoreInformationSectionTabs />
     </div>
   )
 }
