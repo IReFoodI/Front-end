@@ -1,0 +1,50 @@
+import {
+  IconArrowLeft,
+  IconHeart,
+  IconInfoCircle,
+  IconStarFilled,
+} from "@tabler/icons-react"
+
+import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
+
+export const StoreInformationSection = () => {
+  return (
+    <div id="page" className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8">
+      <header className="xl:hidden">
+        <div id="icons-mobile" className="flex justify-between">
+          <IconArrowLeft stroke={2} className="text-gray-600" />
+          <div className="flex justify-end gap-2 text-orange-500">
+            <IconInfoCircle stroke={2} />
+            <IconHeart stroke={2} />
+          </div>
+        </div>
+        <div id="card-info">
+          <div className="my-3 flex items-center gap-5">
+            <div className="h-24 w-24 rounded bg-logo-loja bg-cover" />
+            <div>
+              <h1 className="text-3xl font-bold text-gray-700">Dragão Verde</h1>
+              <p className="flex gap-3">
+                <span className="font-bold text-orange-500">novo!</span>
+                <span className="font-bold text-gray-400">Restaurante</span>
+              </p>
+            </div>
+          </div>
+          <span className="flex items-center gap-2">
+            <IconStarFilled size={15} className="text-orange-500" />
+            <IconStarFilled size={15} className="text-orange-500" />
+            <IconStarFilled size={15} className="text-orange-500" />
+            <IconStarFilled size={15} className="text-orange-500" />
+            <IconStarFilled size={15} className="text-orange-500" />
+            <span className="font-bold text-gray-500">5,0</span>
+          </span>
+          <span className="text-gray-500">10 avaliações</span>
+        </div>
+      </header>
+      <div
+        id="capa"
+        className="relative hidden h-[140px] w-full bg-capa-loja bg-cover px-5 xl:flex xl:rounded"
+      ></div>
+      <StoreProfilePageTopDesktop />
+    </div>
+  )
+}
