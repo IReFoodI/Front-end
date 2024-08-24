@@ -1,4 +1,4 @@
-import { IconStarFilled } from "@tabler/icons-react"
+import { IconArrowBadgeDownFilled, IconStarFilled } from "@tabler/icons-react"
 
 import { CardReview } from "./cardReview"
 export const StoreInformationReview = () => {
@@ -38,6 +38,13 @@ export const StoreInformationReview = () => {
         date="13/08/2024"
         reviewText="Achei muito bom, vale a pena e veio muita coisa na sacola!"
       />
+
+      <div className="my-6 flex items-center gap-3 text-sm">
+        <span>Exibir mais informações</span>
+        <span>
+          <IconArrowBadgeDownFilled size={15} />
+        </span>
+      </div>
     </div>
   )
 }
