@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { IconStarFilled } from "@tabler/icons-react"
 
 export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
