@@ -34,6 +34,7 @@ export default [
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react/jsx-no-target-blank": "off",
+      "react/prop-types": "off",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
@@ -41,11 +42,30 @@ export default [
       "prettier/prettier": [
         "error",
         {
+          trailingComma: "es5",
+          tabWidth: 2,
+          semi: false,
+          singleQuote: false,
+          printWidth: 80,
+          useTabs: false,
+          jsxSingleQuote: false,
+          bracketSpacing: true,
+          bracketSameLine: false,
+          jsxBracketSameLine: false,
           endOfLine: "auto",
+          embeddedLanguageFormatting: "auto",
+          singleAttributePerLine: false,
         },
       ],
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+    },
+  },
+  {
+    // Arquivos onde a regra será desativada
+    files: ["src/ui/components/ui/**/*.jsx"],
+    rules: {
+      "prettier/prettier": "off",
     },
   },
 ]
