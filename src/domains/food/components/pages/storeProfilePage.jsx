@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { IconClock, IconHeart, IconInfoCircle, IconMapPin, IconStarFilled } from '@tabler/icons-react';
 
+import { StoreProfilePageTopDesktop } from './storeProfilePageTopDesktop';
+
 export const StoreProfilePage = () => {
   return <div id="page" className="min-w-80 w-full max-w-[1280px] mx-auto">
     <div className='h-20'></div>
@@ -38,7 +40,8 @@ export const StoreProfilePage = () => {
         </div>
       </div>
       {/* DESKTOP */}
-      <div id="icons-desktop" className='hidden xl:flex items-center gap-2 text-gray-400 justify-end py-3'>
+      <StoreProfilePageTopDesktop />
+      {/* <div id="icons-desktop" className='hidden xl:flex items-center gap-2 text-gray-400 justify-end py-3'>
         <span><IconClock size={15} className='text-gray-400' /></span>
         <span>xx:xx às xx:xx</span>
         <span><IconMapPin size={15} className='text-gray-400' /></span>
@@ -60,7 +63,7 @@ export const StoreProfilePage = () => {
             <span className='text-gray-400 font-bold'>Restaurante</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   </div>
 }
