@@ -1,6 +1,10 @@
 import { IconStarFilled } from "@tabler/icons-react"
+import { useState } from "react"
 
 export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const charLimit = 100
+
   const renderStars = () => {
     const stars = []
     for (let i = 0; i < 5; i++) {
@@ -15,10 +19,15 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
     return stars
   }
 
+  const truncatedReviewText =
+    reviewText.length > charLimit
+      ? reviewText.slice(0, charLimit) + "..."
+      : reviewText
+
   return (
     <div
       id="card-review"
-      className="mx-auto flex w-full max-w-[610px] justify-between gap-3 border-b border-gray-200 bg-white p-4"
+      className="mx-auto flex w-full max-w-[550px] gap-3 border-b border-gray-200 bg-white p-4"
     >
       <div id="profile-img" className="flex w-1/5 items-start">
         <img
@@ -38,7 +47,17 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
           {renderStars()}
           <span className="text-sm text-gray-600">{date}</span>
         </span>
-        <p className="mt-2 text-start text-sm text-gray-600">“{reviewText}”</p>
+        <p className="mt-2 text-start text-sm text-gray-600">
+          {isExpanded ? reviewText : truncatedReviewText}
+        </p>
+        {reviewText.length > charLimit && (
+          <button
+            className="mt-2 text-sm text-blue-500"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? "Mostrar menos" : "Expandir"}
+          </button>
+        )}
       </div>
     </div>
   )
