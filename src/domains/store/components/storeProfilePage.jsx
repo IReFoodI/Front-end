@@ -1,4 +1,5 @@
 import {
+  IconArrowLeft,
   IconClock,
   IconHeart,
   IconInfoCircle,
@@ -6,6 +7,8 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import capa from "./capa.png"
+import logo from "./logo-loja.png"
 import StoreProductList from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
 
@@ -13,60 +16,69 @@ export const StoreProfilePage = () => {
   return (
     <div
       id="page"
-      className="mx-auto w-full min-w-80 max-w-[1280px] antialiased"
+      className="mx-auto w-full min-w-80 max-w-[1280px] text-gray-500 antialiased xl:py-8"
     >
-      <div className="h-20"></div>
       <div
         id="capa"
-        className="relative h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:rounded"
+        className="relative h-[200px] w-full bg-cover bg-center px-5 xl:hidden xl:rounded-[14px]"
+        style={{ backgroundImage: `url(${capa})` }}
       >
-        <div className="relative top-24 h-20 w-20 rounded-full bg-[url('https://via.placeholder.com/150')] bg-cover xl:hidden" />
+        <div className="relative top-9 cursor-pointer transition duration-300 hover:text-orange-700">
+          <IconArrowLeft />
+        </div>
+        <button
+          className="relative top-32 h-24 w-24 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
+          style={{ backgroundImage: `url(${logo})` }}
+        />
       </div>
       <div className="px-5 pb-5 xl:px-0">
         <div
           id="icons-mobile"
           className="flex justify-end gap-2 py-3 text-gray-400 xl:hidden"
         >
-          <IconInfoCircle stroke={2} />
-          <IconHeart stroke={2} />
+          <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
+          <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-600" />
         </div>
         <div id="cards-mobile" className="flex flex-col gap-5 xl:hidden">
           <div id="card-info">
             <div id="card-content" className="flex flex-col gap-1">
-              <h1 className="text-2xl font-bold text-gray-700">Dragão Verde</h1>
+              <div className="cursor-pointer text-2xl font-bold text-gray-700 transition duration-300 hover:text-orange-700">
+                Dragão Verde
+              </div>
               <div className="flex items-center gap-2 text-sm">
                 <span className="font-bold text-orange-500">novo!</span>
-                <span className="font-bold text-gray-400">Restaurante</span>
+                <span className="font-semibold text-gray-400">Restaurante</span>
                 <span>
-                  <IconStarFilled size={15} className="text-gray-500" />
+                  <IconStarFilled size={14} className="text-orange-500" />
                 </span>
-                <span className="font-bold text-gray-500">
-                  5,0 (10 avaliações)
-                </span>
+                <span className="font-bold">5,0 (10 avaliações)</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-400">
+              <button className="flex items-center gap-2 text-sm text-gray-400">
                 <span>
-                  <IconClock size={15} className="text-gray-400" />
+                  <IconClock size={15} className="text-gray-500" />
                 </span>
-                <span>xx:xx às xx:xx</span>
+                <span className="transition duration-300 hover:text-orange-700">
+                  10:00 às 23:00
+                </span>
                 <span>
-                  <IconMapPin size={15} className="text-gray-400" />
+                  <IconMapPin size={15} className="text-gray-500" />
                 </span>
-                <span>xx.x Km</span>
-              </div>
+                <span className="transition duration-300 hover:text-orange-700">
+                  2.5 Km
+                </span>
+              </button>
             </div>
           </div>
           <div id="card-address">
-            <div id="content">
-              <p className="font-bold text-gray-700">Endereço da Loja, XX</p>
-              <p className="font-bold text-gray-700">
-                Bairro - Cidade - Estado
-              </p>
-              <p className="text-sm text-gray-400">Ver rota até o endereço</p>
+            <div id="content" className="text-gray-700">
+              <p className="font-bold">Endereço da Loja, XX</p>
+              <p className="font-bold">Bairro - Cidade - Estado</p>
+              <button className="text-sm text-gray-400 transition duration-300 hover:text-orange-600">
+                Ver rota até o endereço
+              </button>
             </div>
           </div>
         </div>
-        {/* DESKTOP */}
         <StoreProfilePageTopDesktop />
         <StoreProductList />
       </div>

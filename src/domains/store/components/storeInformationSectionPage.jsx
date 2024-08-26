@@ -5,6 +5,7 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import logo from "./logo-loja.png"
 import { StoreInformationInfo } from "./storeInformationInfo"
 import { StoreInformationReview } from "./storeInformationReview"
 import { StoreInformationTabs } from "./storeInformationTabs"
@@ -18,20 +19,25 @@ export const StoreInformationSectionPage = () => {
     >
       <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
-          <IconArrowLeft stroke={2} className="text-gray-500" />
+          <IconArrowLeft className="cursor-pointer transition duration-300 hover:text-orange-700" />
           <div className="flex justify-end gap-2 text-orange-500">
-            <IconInfoCircle stroke={2} />
-            <IconHeart stroke={2} />
+            <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-700" />
+            <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-700" />
           </div>
         </div>
         <div id="card-info">
           <div className="my-3 flex items-center gap-5">
-            <div className="h-24 w-24 rounded-full bg-[url('https://via.placeholder.com/150')] bg-cover" />
+            <button
+              className="h-24 w-24 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
+              style={{ backgroundImage: `url(${logo})` }}
+            />
             <div>
-              <h1 className="text-3xl font-bold text-gray-700">Dragão Verde</h1>
-              <p className="flex gap-3">
-                <span className="font-bold text-orange-500">novo!</span>
-                <span className="font-bold text-gray-400">Restaurante</span>
+              <button className="text-3xl font-bold text-gray-700 transition duration-300 hover:text-orange-700">
+                Dragão Verde
+              </button>
+              <p className="flex gap-3 font-semibold">
+                <span className="text-orange-500">novo!</span>
+                <span className="text-gray-400">Restaurante</span>
               </p>
             </div>
           </div>
@@ -41,26 +47,26 @@ export const StoreInformationSectionPage = () => {
             <IconStarFilled size={15} className="text-orange-500" />
             <IconStarFilled size={15} className="text-orange-500" />
             <IconStarFilled size={15} className="text-orange-500" />
-            <span className="font-bold text-gray-500">5,0</span>
+            <span className="font-bold">5,0</span>
           </span>
-          <span className="text-gray-500">10 avaliações</span>
+          <span>10 avaliações</span>
         </div>
       </header>
-      <div
+      {/* <div
         id="capa"
-        className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded"
-      ></div>
+        className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded-[14px]"
+      ></div> */}
       <StoreProfilePageTopDesktop />
       <div className="xl:hidden">
         <StoreInformationTabs />
       </div>
-      <div className="hidden xl:flex">
+      <div className="hidden text-gray-700 xl:flex">
         <div className="w-1/2">
-          <h2 className="mb-5 text-xl font-bold text-gray-700">Avaliações</h2>
+          <h2 className="mb-5 text-xl font-bold">Avaliações</h2>
           <StoreInformationReview />
         </div>
         <div className="w-1/2">
-          <h2 className="mb-5 text-xl font-bold text-gray-700">Informações</h2>
+          <h2 className="mb-5 text-xl font-bold">Informações</h2>
           <StoreInformationInfo />
         </div>
       </div>

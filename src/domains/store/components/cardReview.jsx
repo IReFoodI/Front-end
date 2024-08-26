@@ -27,7 +27,7 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
   return (
     <div
       id="card-review"
-      className="mx-auto flex w-full max-w-[550px] gap-3 border-b border-gray-200 bg-white p-4"
+      className="mx-auto flex w-full max-w-[550px] gap-3 border-b border-gray-200 bg-white p-4 antialiased"
     >
       <div id="profile-img" className="flex w-1/5 items-start">
         <img
@@ -43,7 +43,9 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
       >
         <h2 className="font-semibold">{name}</h2>
         <span className="flex items-center gap-2">
-          <span className="font-bold text-gray-500">{rating.toFixed(1)}</span>
+          <span className="font-semibold text-gray-500">
+            {rating.toFixed(1)}
+          </span>
           {renderStars()}
           <span className="text-sm text-gray-600">{date}</span>
         </span>
@@ -52,7 +54,7 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
         </p>
         {reviewText.length > charLimit && (
           <button
-            className="mt-2 text-sm text-blue-500"
+            className="mt-2 text-sm text-blue-500 transition duration-300 hover:text-orange-700"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? "Mostrar menos" : "Expandir"}

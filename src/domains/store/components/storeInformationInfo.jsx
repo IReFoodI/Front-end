@@ -83,7 +83,7 @@ export const StoreInformationInfo = () => {
   }
 
   return (
-    <div id="info" className="flex flex-col gap-8 text-gray-500">
+    <div id="info" className="flex flex-col gap-8 text-gray-500 antialiased">
       <div id="description">
         <h2 className="font-bold">Descrição da Loja</h2>
         <p className="py-2 text-sm">
@@ -94,7 +94,7 @@ export const StoreInformationInfo = () => {
         <div id="accordion">
           <button
             onClick={toggleAccordion}
-            className="flex w-full items-center justify-between bg-gray-100 text-left font-bold"
+            className="flex w-full items-center justify-between rounded-full bg-gray-100 px-2 text-left font-bold"
           >
             <span className={isOpen() ? "text-green-500" : "text-red-500"}>
               {isOpen() ? "Aberto agora" : "Fechado"}
@@ -109,25 +109,25 @@ export const StoreInformationInfo = () => {
             <span>{daysOfWeek[todayIndex].day}</span>
             <span>{daysOfWeek[todayIndex].hours}</span>
           </div>
-          {isShowing && (
-            <div className="pb-2 text-sm">
-              {daysOfWeek.map((day, index) =>
-                index !== todayIndex ? (
-                  <div key={index} className="flex justify-between">
-                    <span>{day.day}</span>
-                    <span>{day.hours}</span>
-                  </div>
-                ) : null
-              )}
-            </div>
-          )}
+          <div
+            className={`overflow-hidden pb-2 text-sm transition-all duration-1000 ${isShowing ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+          >
+            {daysOfWeek.map((day, index) =>
+              index !== todayIndex ? (
+                <div key={index} className="flex justify-between">
+                  <span>{day.day}</span>
+                  <span>{day.hours}</span>
+                </div>
+              ) : null
+            )}
+          </div>
         </div>
       </div>
       <div id="address">
         <h2 className="font-bold">Endereço</h2>
         <div className="flex items-center gap-2 py-2">
           <span>
-            <IconMapPin size={35} />
+            <IconMapPin size={25} />
           </span>
           <p className="py-2 text-sm">{address}</p>
         </div>
@@ -145,7 +145,7 @@ export const StoreInformationInfo = () => {
 
       <div id="other-info">
         <h2 className="font-bold">Outras Informações</h2>
-        <p className="py-2 text-sm">CNPJ: XX.XXX.XXX/0001-XX</p>
+        <p className="py-2 text-sm">CNPJ: 33.123.123/0001-00</p>
       </div>
     </div>
   )
