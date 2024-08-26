@@ -5,6 +5,8 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import { StoreInformationInfo } from "./storeInformationInfo"
+import { StoreInformationReview } from "./storeInformationReview"
 import { StoreInformationTabs } from "./storeInformationTabs"
 import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
 
@@ -12,11 +14,11 @@ export const StoreInformationSectionPage = () => {
   return (
     <div
       id="page"
-      className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8 antialiased"
+      className="mx-auto w-full min-w-80 max-w-[1280px] px-5 py-8 text-gray-500 antialiased"
     >
       <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
-          <IconArrowLeft stroke={2} className="text-gray-600" />
+          <IconArrowLeft stroke={2} className="text-gray-500" />
           <div className="flex justify-end gap-2 text-orange-500">
             <IconInfoCircle stroke={2} />
             <IconHeart stroke={2} />
@@ -49,7 +51,19 @@ export const StoreInformationSectionPage = () => {
         className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded"
       ></div>
       <StoreProfilePageTopDesktop />
-      <StoreInformationTabs />
+      <div className="xl:hidden">
+        <StoreInformationTabs />
+      </div>
+      <div className="hidden xl:flex">
+        <div className="w-1/2">
+          <h2 className="mb-5 text-xl font-bold text-gray-700">Avaliações</h2>
+          <StoreInformationReview />
+        </div>
+        <div className="w-1/2">
+          <h2 className="mb-5 text-xl font-bold text-gray-700">Informações</h2>
+          <StoreInformationInfo />
+        </div>
+      </div>
     </div>
   )
 }
