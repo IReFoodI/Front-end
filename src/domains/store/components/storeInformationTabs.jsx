@@ -4,12 +4,12 @@ import { StoreInformationInfo } from "./storeInformationInfo"
 import { StoreInformationReview } from "./storeInformationReview"
 
 export const StoreInformationTabs = () => {
-  const [activeTab, setActiveTab] = useState("info")
+  const [activeTab, setActiveTab] = useState("reviews")
 
   return (
     <div>
       <div className="mb-4 flex cursor-pointer border-t border-t-gray-200 text-gray-500">
-        <div
+        <button
           onClick={() => setActiveTab("reviews")}
           className={`w-full px-4 py-2 text-center ${
             activeTab === "reviews"
@@ -18,8 +18,8 @@ export const StoreInformationTabs = () => {
           }`}
         >
           Avaliações
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => setActiveTab("info")}
           className={`w-full px-4 py-2 text-center ${
             activeTab === "info"
@@ -28,7 +28,7 @@ export const StoreInformationTabs = () => {
           }`}
         >
           Informações
-        </div>
+        </button>
       </div>
       <div>
         {activeTab === "reviews" && <StoreInformationReview />}
