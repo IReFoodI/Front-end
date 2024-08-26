@@ -8,7 +8,11 @@ import HeaderMobile from "./HeaderMobile"
 function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
-  return <div>{isDesktop ? <HeaderDesktop /> : <HeaderMobile />}</div>
+  return (
+    <header className="w-screen bg-orange-50 p-3 drop-shadow-md">
+      {isDesktop ? <HeaderDesktop /> : <HeaderMobile />}
+    </header>
+  )
 }
 
 export default Header
