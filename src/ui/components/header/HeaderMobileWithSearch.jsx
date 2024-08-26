@@ -11,11 +11,11 @@ function HeaderMobileWithSearch() {
       <div className="m-2 flex w-full items-center justify-center p-1">
         <p className="font-semibold">Endereço da pessoa, XX</p>
         <span className="ml-2">
-          <IconCaretDown stroke={2} className="text-primary" />
+          <IconCaretDown stroke={2} className="text-[#FB3D01]" />
         </span>
       </div>
       <div className="relative m-auto flex w-full items-center justify-center">
-        <IconSearch className="absolute left-0 ml-2 text-primary" size={20} />
+        <IconSearch className="absolute left-0 ml-2 text-[#FB3D01]" size={20} />
         <input
           type="text"
           placeholder="Busque por estabelecimentos"

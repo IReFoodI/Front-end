@@ -6,7 +6,7 @@ import HeaderMobileWithSearch from "./HeaderMobileWithSearch"
 function HeaderMobile() {
   const location = useLocation()
 
-  const routesWithSearch = [""] //Aqui estão todas as rotas que o header COM pesquisa deverá aparecer.
+  const routesWithSearch = ["/"] //Aqui estão todas as rotas que o header COM pesquisa deverá aparecer.
 
   const showSearch = routesWithSearch.includes(location.pathname)
 
