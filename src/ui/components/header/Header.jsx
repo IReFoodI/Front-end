@@ -9,7 +9,7 @@ function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   return (
-    <header className="w-screen bg-orange-50 p-3 drop-shadow-md">
+    <header className="sticky top-0 w-screen bg-orange-50 p-3 drop-shadow-md">
       {isDesktop ? <HeaderDesktop /> : <HeaderMobile />}
     </header>
   )

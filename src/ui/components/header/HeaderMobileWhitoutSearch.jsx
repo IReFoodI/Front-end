@@ -10,7 +10,7 @@ function HeaderMobileWithoutSearch() {
       <div className="w-9 rounded-sm bg-orange-100 p-1">
         <IconMenu2 className="m-auto text-[#FB3D01]" size={24} />
       </div>
-      <div className="w-28">
+      <div className="w-24">
         <img src={logo} alt="Logo" className="w-full" />
       </div>
       <Link className="relative w-9 rounded-sm bg-orange-100 p-1" to="/">
