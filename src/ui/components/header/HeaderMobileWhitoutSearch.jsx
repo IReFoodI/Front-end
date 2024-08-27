@@ -1,15 +1,13 @@
-import { IconMenu2 } from "@tabler/icons-react"
 import { IconShoppingBag } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
+import MenuMobile from "../navMenu/MenuMobile"
 
 function HeaderMobileWithoutSearch() {
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="w-9 rounded-sm bg-orange-100 p-1">
-        <IconMenu2 className="m-auto text-[#FB3D01]" size={24} />
-      </div>
+      <MenuMobile />
       <div className="w-24">
         <img src={logo} alt="Logo" className="w-full" />
       </div>

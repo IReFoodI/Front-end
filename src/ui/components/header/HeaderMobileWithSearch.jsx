@@ -1,4 +1,4 @@
-import { IconCaretDown } from "@tabler/icons-react"
+import { IconCaretDownFilled } from "@tabler/icons-react"
 import { IconSearch } from "@tabler/icons-react"
 import { IconFilter } from "@tabler/icons-react"
 
@@ -11,7 +11,7 @@ function HeaderMobileWithSearch() {
       <div className="m-2 flex w-full items-center justify-center p-1">
         <p className="font-semibold">Endereço da pessoa, XX</p>
         <span className="ml-2">
-          <IconCaretDown stroke={2} className="text-[#FB3D01]" />
+          <IconCaretDownFilled stroke={2} className="text-[#FB3D01]" />
         </span>
       </div>
       <div className="relative m-auto flex w-full items-center justify-center">
