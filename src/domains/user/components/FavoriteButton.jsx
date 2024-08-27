@@ -1,5 +1,6 @@
-import { Button } from "@/ui/components/ui/button";
-import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react"
+
+import { Button } from "@/ui/components/ui/button"
 
 export function FavoriteButton({ isFavorited, onToggle, className, ...props }) {
   return (
@@ -10,10 +11,10 @@ export function FavoriteButton({ isFavorited, onToggle, className, ...props }) {
       {...props}
     >
       {isFavorited ? (
-        <IconHeartFilled className="text-[hsl(var(--primary))] w-6 h-6" />
+        <IconHeartFilled className="h-6 w-6 text-[hsl(var(--primary))]" />
       ) : (
-        <IconHeart className="text-gray-400 w-6 h-6" />
+        <IconHeart className="h-6 w-6 text-gray-400" />
       )}
     </Button>
-  );
+  )
 }

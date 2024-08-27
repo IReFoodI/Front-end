@@ -1,6 +1,7 @@
-import React from "react";
-import { CardLoja } from "./CardLoja";
-import { BannerPromo } from "./BannerPromo";
+import React from "react"
+
+import { BannerPromo } from "./BannerPromo"
+import { CardLoja } from "./CardLoja"
 
 export function LojasGrid({ lojas, toggleFavorite, showBanner }) {
   return (
@@ -20,10 +21,8 @@ export function LojasGrid({ lojas, toggleFavorite, showBanner }) {
           </React.Fragment>
         ))
       ) : (
-        <p className="col-span-full text-center">
-          Nenhuma loja disponível.
-        </p>
+        <p className="col-span-full text-center">Nenhuma loja disponível.</p>
       )}
     </div>
-  );
+  )
 }

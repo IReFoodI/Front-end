@@ -21,7 +21,7 @@ export const lojasData = [
     distancia: "3,4 Km",
     isFavorited: false,
     imagePath: "/src/ui/assets/dragao_verde_img.png",
-    logoPath: "/src/ui/assets/dragao_verde_logo.png"
+    logoPath: "/src/ui/assets/dragao_verde_logo.png",
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ export const lojasData = [
     distancia: "2,1 Km",
     isFavorited: false,
     imagePath: "/src/ui/assets/artesanato_pastel_img.png",
-    logoPath: "/src/ui/assets/artesanato_pastel_logo.png"
+    logoPath: "/src/ui/assets/artesanato_pastel_logo.png",
   },
   {
     id: 3,
@@ -155,4 +155,4 @@ export const lojasData = [
     imagePath: "/path/to/loja12-image.png",
     logoPath: "/path/to/loja12-logo.png",
   },
-];
+]

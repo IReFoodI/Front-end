@@ -1,14 +1,12 @@
-import React from "react";
-
 export default function PageLayout({ children, headerText }) {
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="fixed top-0 left-0 w-full sm:h-1/4 lg:h-1/6 bg-[#fedede] z-10 flex justify-center items-center">
+    <div className="flex w-full flex-col items-center">
+      <div className="fixed left-0 top-0 z-10 flex w-full items-center justify-center bg-[#fedede] sm:h-1/4 lg:h-1/6">
         <p className="text-center text-2xl font-bold">{headerText}</p>
       </div>
-      <div className="sm:pt-[30vh] lg:pt-[20vh] w-11/12 lg:w-10/12">
+      <div className="w-11/12 sm:pt-[30vh] lg:w-10/12 lg:pt-[20vh]">
         {children}
       </div>
     </div>
-  );
+  )
 }

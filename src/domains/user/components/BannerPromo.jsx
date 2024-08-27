@@ -1,12 +1,9 @@
-import React from 'react';
-
-export function BannerPromo  ({ title })  {
+export function BannerPromo({ title }) {
   return (
-    <div className="h-[300px] p-4 my-4 top-[889px] bg-[#FFCBCB] rounded-[14px] flex items-center justify-center">
-      <h1 className="text-center text-[#616375] font-inter font-semibold text-[24px] leading-[29px]">
+    <div className="top-[889px] my-4 flex h-[300px] items-center justify-center rounded-[14px] bg-[#FFCBCB] p-4">
+      <h1 className="font-inter text-center text-[24px] font-semibold leading-[29px] text-[#616375]">
         {title}
       </h1>
     </div>
-  );
-};
-
+  )
+}

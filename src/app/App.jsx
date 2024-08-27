@@ -1,11 +1,10 @@
-import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom"
 
 function App() {
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="relative flex min-h-screen flex-col">
       {/* Menu de Navegação */}
-      <nav className="p-4 bg-gray-200 z-50 absolute">
+      <nav className="absolute z-50 bg-gray-200 p-4">
         <ul className="flex space-x-4">
           <li>
             <Link to="/">Home</Link>
@@ -21,7 +20,7 @@ function App() {
         <Outlet />
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
