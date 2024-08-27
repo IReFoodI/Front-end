@@ -1,28 +1,27 @@
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
-import { useState } from "react"
-import { Outlet } from "react-router-dom"
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
 function App() {
-  const [state, setState] = useState(0)
-
-  function count(val) {
-    setState((state) => state + val)
-  }
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="mb-2 flex text-red-500">Hello world</h1>
-      <div className="flex items-center gap-3">
-        <button onClick={() => count(-1)}>
-          <IconArrowLeft size={20} />
-        </button>
-        <p>{state}</p>
-        <button onClick={() => count(1)}>
-          <IconArrowRight size={20} />
-        </button>
-      </div>
-      <Outlet />
+    <div className="relative min-h-screen flex flex-col">
+      {/* Menu de Navegação */}
+      <nav className="p-4 bg-gray-200 z-50 absolute">
+        <ul className="flex space-x-4">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/favoritos">Favoritos</Link>
+          </li>
+        </ul>
+      </nav>
+
+      {/* Conteúdo Principal */}
+      <main className="flex-grow p-4">
+        <Outlet />
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
