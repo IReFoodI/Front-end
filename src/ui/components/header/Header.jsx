@@ -12,7 +12,6 @@ import MenuMobile from "../navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverTrigger } from "../ui/popover"
 import RestaurantFilter from "./components/RestaurantFilter"
-import { PopoverAnchor } from "@radix-ui/react-popover"
 
 function Header() {
   return (
@@ -82,10 +81,11 @@ function Header() {
             />
 
             <Popover className="relative" placement="center">
-              <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]"r>
-                <IconFilter
-                  size={20}
-                />
+              <PopoverTrigger
+                className="absolute right-0 mr-2 text-[#616375]"
+                r
+              >
+                <IconFilter size={20} />
               </PopoverTrigger>
               <RestaurantFilter />
             </Popover>
