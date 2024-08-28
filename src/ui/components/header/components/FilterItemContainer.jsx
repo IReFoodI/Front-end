@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const FilterItemContainer = ({ title, items }) => {
+function FilterItemContainer({ title, items }) {
   const [activeItem, setActiveItem] = useState(null)
 
   function handleClick(index) {

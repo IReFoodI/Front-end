@@ -83,7 +83,6 @@ function Header() {
             <Popover className="relative" placement="center">
               <PopoverTrigger
                 className="absolute right-0 mr-2 text-[#616375]"
-                r
               >
                 <IconFilter size={20} />
               </PopoverTrigger>
