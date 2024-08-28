@@ -1,5 +1,4 @@
 import {
-  IconCaretDownFilled,
   IconFilter,
   IconSearch,
   IconShoppingBag,
@@ -8,7 +7,8 @@ import {
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
-import MenuMobile from "../navMenu/MenuMobile"
+import AddressModal from "../header/addressModal/AddressModal"
+import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 
 function Header() {
@@ -55,18 +55,7 @@ function Header() {
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="flex w-full flex-col items-center justify-center md:flex-row">
-          <div className="m-2 flex w-full items-center justify-center p-1 md:order-last md:mr-14">
-            <p className="md:text-md text-sm font-semibold">
-              Endereço da pessoa, XX
-            </p>
-            <span className="ml-2">
-              <IconCaretDownFilled
-                stroke={2}
-                className="text-primary"
-                size={20}
-              />
-            </span>
-          </div>
+          <AddressModal />
           <div className="relative m-auto flex w-full items-center justify-center md:right-40">
             <IconSearch
               className="absolute left-0 ml-2 text-primary"

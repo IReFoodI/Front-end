@@ -1,6 +1,6 @@
 import { IconMenu2 } from "@tabler/icons-react"
 
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet"
 
 function MenuMobile() {
   return (
