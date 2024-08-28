@@ -10,8 +10,7 @@ import FilterItemContainer from "./FilterItemContainer"
 import SliderMetric from "./SliderMetric"
 
 function RestaurantFilter() {
-  const [sliderValue, setSlidervalue] = useState([80])
-  console.log(sliderValue)
+  const [sliderValue, setSlidervalue] = useState([0])
 
   const ordinateBy = [
     { buttonTitle: "Mais próximos", imageSource: MapPin },

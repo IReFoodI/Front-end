@@ -12,34 +12,34 @@ function SliderMetric({ initialValue, currentValue, finalValue, step }) {
       {values.map((value, index) => (
         <div className="flex" key={index}>
           <div
-            className={`flex flex-col items-center justify-center ${currentValue == value ? `text-orange-700` : `text-zinc-200`} mx-1`}
+            className={`flex flex-col items-center justify-center ${currentValue == value ? `text-orange-700` : `text-zinc-300`} mx-1`}
           >
             <span
-              className={`m-1 h-full border-l ${currentValue == value ? `border-orange-700` : `border-zinc-200`}`}
+              className={`h-3 border ${currentValue == value ? `border-orange-700` : `border-zinc-300`}`}
             ></span>
             <div
-              className={
-                currentValue == value ? `text-orange-700` : `text-zinc-100`
-              }
+              className={`${
+                currentValue == value ? `text-orange-700` : `text-zinc-300`
+              }`}
             >
               {value}
             </div>
           </div>
           <span
-            className={`mx-3 h-full ${currentValue == value + 10 ? `text-orange-700` : `text-zinc-200`} `}
-          >
-            I
-          </span>
+            className={`mx-3 h-2 border ${currentValue == value + 10 ? `border-orange-700` : `border-zinc-100`} `}
+          ></span>
         </div>
       ))}
 
       <div
-        className={`flex flex-col items-center justify-center ${currentValue == finalValue ? `text-orange-700` : `text-zinc-200`}`}
+        className={`flex flex-col items-center justify-center ${currentValue == finalValue ? `text-orange-700` : `text-zinc-400`}`}
       >
-        <span>I</span>
+        <span
+          className={`h-3 border ${currentValue == finalValue ? `border-orange-700` : `border-zinc-300`}`}
+        ></span>
         <div
           className={
-            currentValue == finalValue ? `text-orange-700` : `text-zinc-200`
+            currentValue == finalValue ? `text-orange-700` : `text-zinc-300`
           }
         >
           {finalValue}
