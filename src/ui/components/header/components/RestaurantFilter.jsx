@@ -1,5 +1,5 @@
 import { Cross1Icon } from "@radix-ui/react-icons"
-import { PopoverContent } from "@radix-ui/react-popover"
+import { PopoverClose, PopoverContent } from "@radix-ui/react-popover"
 
 import MapPin from "@/ui/assets/MapPin"
 import StarIcon from "@/ui/assets/StarIcon"
@@ -43,12 +43,12 @@ const RestaurantFilter = () => {
           <FilterItemContainer title={`Categoria`} items={categories} />
         </div>
 
-        {/* <PopoverClose className="flex">
+        <PopoverClose className="flex">
           <Cross1Icon className="text-lilac-800 size-5" />
-        </PopoverClose> */}
+        </PopoverClose>
       </div>
 
-      <div className="flex flex-col gap-3 p-2">
+      <div className="flex flex-col gap-3 p-4">
         <h2 className="text-sm font-semibold">Preço (R$)</h2>
         <Slider />
       </div>
