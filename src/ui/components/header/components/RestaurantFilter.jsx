@@ -10,9 +10,8 @@ import FilterItemContainer from "./FilterItemContainer"
 import SliderMetric from "./SliderMetric"
 
 function RestaurantFilter() {
-  const [sliderValue, setSlidervalue] = useState([80]);
-  console.log(sliderValue);
-  
+  const [sliderValue, setSlidervalue] = useState([80])
+  console.log(sliderValue)
 
   const ordinateBy = [
     { buttonTitle: "Mais próximos", imageSource: MapPin },
@@ -35,7 +34,7 @@ function RestaurantFilter() {
 
   return (
     <PopoverContent
-      className="rounded-xl bg-white shadow-lg p-4"
+      className="rounded-xl bg-white p-4 shadow-lg"
       sideOffset={20}
       align="end"
     >
@@ -54,10 +53,22 @@ function RestaurantFilter() {
         </PopoverClose>
       </div>
 
-      <div className="flex flex-col gap-3 mt-4">
+      <div className="mt-4 flex flex-col gap-3">
         <h2 className="text-sm font-semibold">Preço (R$)</h2>
-        <Slider defaultValue={sliderValue} max={100} step={1} onValueChange={(currentSliderValue) => setSlidervalue(currentSliderValue)}/>
-        <SliderMetric initialValue={0} currentValue={sliderValue} finalValue={100} step={20} />
+        <Slider
+          defaultValue={sliderValue}
+          max={100}
+          step={1}
+          onValueChange={(currentSliderValue) =>
+            setSlidervalue(currentSliderValue)
+          }
+        />
+        <SliderMetric
+          initialValue={0}
+          currentValue={sliderValue}
+          finalValue={100}
+          step={20}
+        />
       </div>
     </PopoverContent>
   )
