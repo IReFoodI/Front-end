@@ -1,15 +1,12 @@
 import { IconMenu2 } from "@tabler/icons-react"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "../ui/sheet"
+
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 
 function MenuMobile() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="w-9 rounded-sm bg-orange-100 p-1 cursor-pointer md:hidden">
+        <div className="w-9 cursor-pointer rounded-sm bg-orange-100 p-1 md:hidden">
           <IconMenu2 className="m-auto text-primary" size={24} />
         </div>
       </SheetTrigger>
