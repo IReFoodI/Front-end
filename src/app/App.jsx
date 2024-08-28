@@ -2,6 +2,8 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
 import { useState } from "react"
 import { Outlet } from "react-router-dom"
 
+import Header from "@/ui/components/header/Header"
+
 function App() {
   const [state, setState] = useState(0)
 
@@ -21,6 +23,7 @@ function App() {
         </button>
       </div>
       <Outlet />
+      <Header />
     </div>
   )
 }
