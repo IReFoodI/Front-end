@@ -1,7 +1,7 @@
 import { IconStarFilled } from "@tabler/icons-react"
 import { useState } from "react"
 
-export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
+export function CardReview({ avatar, name, rating, date, reviewText }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const charLimit = 100
 
@@ -12,7 +12,7 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
         <IconStarFilled
           key={i}
           size={15}
-          className={i < rating ? "text-orange-500" : "text-gray-300"}
+          className={i < rating ? "text-primary" : "text-gray-300"}
         />
       )
     }
@@ -54,7 +54,7 @@ export const CardReview = ({ avatar, name, rating, date, reviewText }) => {
         </p>
         {reviewText.length > charLimit && (
           <button
-            className="mt-2 text-sm text-blue-500 transition duration-300 hover:text-orange-700"
+            className="mt-2 text-sm text-blue-500 transition duration-300 hover:text-primary"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? "Mostrar menos" : "Expandir"}

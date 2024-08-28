@@ -1,15 +1,23 @@
 import {
   IconClock,
   IconHeart,
+  IconHeartFilled,
   IconInfoCircle,
   IconMapPin,
   IconStarFilled,
 } from "@tabler/icons-react"
+import { useState } from "react"
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
 
-export const StoreProfilePageTopDesktop = () => {
+export function StoreProfilePageTopDesktop() {
+  const [isHeartFilled, setIsHeartFilled] = useState(false)
+
+  const toggleHeart = () => {
+    setIsHeartFilled((prevState) => !prevState)
+  }
+
   return (
     <div className="text-gray-500 antialiased">
       <div
@@ -25,13 +33,13 @@ export const StoreProfilePageTopDesktop = () => {
           <span>
             <IconClock size={15} />
           </span>
-          <span className="text-gray-400 transition duration-300 hover:text-orange-700">
+          <span className="text-gray-400 transition duration-300 hover:text-primary">
             10:00 às 23:00
           </span>
           <span>
             <IconMapPin size={15} />
           </span>
-          <span className="text-gray-400 transition duration-300 hover:text-orange-700">
+          <span className="text-gray-400 transition duration-300 hover:text-primary">
             2.5 Km
           </span>
         </button>
@@ -47,18 +55,27 @@ export const StoreProfilePageTopDesktop = () => {
         />
         <div id="info" className="ms-[-10px] flex-1 py-3 pe-3">
           <div className="flex justify-between">
-            <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-orange-700">
+            <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
               Dragão Verde
             </button>
-            <div id="icons" className="flex justify-end gap-2 text-orange-500">
-              <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-700" />
-              <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-700" />
+            <div id="icons" className="flex justify-end gap-2 text-gray-400">
+              <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
+              <button
+                onClick={toggleHeart}
+                className="flex transition duration-300 hover:text-primary"
+              >
+                {isHeartFilled ? (
+                  <IconHeartFilled className="cursor-pointer text-primary" />
+                ) : (
+                  <IconHeart className="cursor-pointer" />
+                )}
+              </button>
             </div>
           </div>
-          <span className="font-semibold text-orange-500">novo!</span>
+          <span className="font-semibold text-primary">novo!</span>
           <div className="flex items-center gap-2 font-semibold">
             <span>
-              <IconStarFilled size={15} className="text-orange-500" />
+              <IconStarFilled size={15} className="text-primary" />
             </span>
             <span>5,0 (10 avaliações)</span>
             <span className="text-gray-400">Restaurante</span>

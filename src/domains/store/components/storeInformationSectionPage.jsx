@@ -6,12 +6,12 @@ import {
 } from "@tabler/icons-react"
 
 import logo from "./logo-loja.png"
-import { StoreInformationInfo } from "./storeInformationInfo"
-import { StoreInformationReview } from "./storeInformationReview"
-import { StoreInformationTabs } from "./storeInformationTabs"
-import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
+import { StoreInformationInfo } from "./StoreInformationInfo"
+import { StoreInformationReview } from "./StoreInformationReview"
+import { StoreInformationTabs } from "./StoreInformationTabs"
+import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
-export const StoreInformationSectionPage = () => {
+export function StoreInformationSectionPage() {
   return (
     <div
       id="page"
@@ -19,10 +19,10 @@ export const StoreInformationSectionPage = () => {
     >
       <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
-          <IconArrowLeft className="cursor-pointer transition duration-300 hover:text-orange-700" />
-          <div className="flex justify-end gap-2 text-orange-500">
-            <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-700" />
-            <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-700" />
+          <IconArrowLeft className="cursor-pointer transition duration-300 hover:text-primary" />
+          <div className="flex justify-end gap-2 text-gray-400">
+            <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
+            <IconHeart className="cursor-pointer transition duration-300 hover:text-primary" />
           </div>
         </div>
         <div id="card-info">
@@ -32,30 +32,26 @@ export const StoreInformationSectionPage = () => {
               style={{ backgroundImage: `url(${logo})` }}
             />
             <div>
-              <button className="text-3xl font-bold text-gray-700 transition duration-300 hover:text-orange-700">
+              <button className="text-3xl font-bold text-gray-700 transition duration-300 hover:text-primary">
                 Dragão Verde
               </button>
               <p className="flex gap-3 font-semibold">
-                <span className="text-orange-500">novo!</span>
+                <span className="text-primary">novo!</span>
                 <span className="text-gray-400">Restaurante</span>
               </p>
             </div>
           </div>
           <span className="flex items-center gap-2">
-            <IconStarFilled size={15} className="text-orange-500" />
-            <IconStarFilled size={15} className="text-orange-500" />
-            <IconStarFilled size={15} className="text-orange-500" />
-            <IconStarFilled size={15} className="text-orange-500" />
-            <IconStarFilled size={15} className="text-orange-500" />
+            <IconStarFilled size={15} className="text-primary" />
+            <IconStarFilled size={15} className="text-primary" />
+            <IconStarFilled size={15} className="text-primary" />
+            <IconStarFilled size={15} className="text-primary" />
+            <IconStarFilled size={15} className="text-primary" />
             <span className="font-bold">5,0</span>
           </span>
           <span>10 avaliações</span>
         </div>
       </header>
-      {/* <div
-        id="capa"
-        className="relative hidden h-[140px] w-full bg-[url('https://via.placeholder.com/800x400')] bg-cover px-5 xl:flex xl:rounded-[14px]"
-      ></div> */}
       <StoreProfilePageTopDesktop />
       <div className="xl:hidden">
         <StoreInformationTabs />

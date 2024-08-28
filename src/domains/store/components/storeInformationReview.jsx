@@ -75,7 +75,7 @@ const reviewsData = [
   },
 ]
 
-export const StoreInformationReview = () => {
+export function StoreInformationReview() {
   const [visibleReviews, setVisibleReviews] = useState(3)
   const [hasReviews] = useState(reviewsData.length > 0)
 
@@ -94,11 +94,11 @@ export const StoreInformationReview = () => {
       >
         <h1 className="text-2xl font-bold">5,0</h1>
         <span className="my-3 flex items-center gap-2">
-          <IconStarFilled size={24} className="text-orange-500" />
-          <IconStarFilled size={24} className="text-orange-500" />
-          <IconStarFilled size={24} className="text-orange-500" />
-          <IconStarFilled size={24} className="text-orange-500" />
-          <IconStarFilled size={24} className="text-orange-500" />
+          <IconStarFilled size={24} className="text-primary" />
+          <IconStarFilled size={24} className="text-primary" />
+          <IconStarFilled size={24} className="text-primary" />
+          <IconStarFilled size={24} className="text-primary" />
+          <IconStarFilled size={24} className="text-primary" />
         </span>
         <p className="font-semibold">9 avaliações • últimos 90 dias</p>
         <p>10 avaliações no total</p>
@@ -119,7 +119,7 @@ export const StoreInformationReview = () => {
 
           {reviewsData.length > visibleReviews && (
             <button
-              className="my-6 flex items-center gap-3 text-sm transition duration-300 hover:text-orange-700"
+              className="my-6 flex items-center gap-3 text-sm transition duration-300 hover:text-primary"
               onClick={loadMoreReviews}
             >
               <span>Mostrar mais comentários</span>
@@ -134,7 +134,7 @@ export const StoreInformationReview = () => {
           <p>Ainda não tem nenhuma avaliação. Deseja ser o primeiro?</p>
           <a
             href="/perfil-da-loja"
-            className="text-blue-500 underline transition duration-300 hover:text-orange-700"
+            className="text-blue-500 underline transition duration-300 hover:text-primary"
           >
             Escolher produto
           </a>

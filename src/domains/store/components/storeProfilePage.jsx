@@ -10,9 +10,9 @@ import {
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
 import StoreProductList from "./StoreProductList"
-import { StoreProfilePageTopDesktop } from "./storeProfilePageTopDesktop"
+import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
-export const StoreProfilePage = () => {
+export function StoreProfilePage() {
   return (
     <div
       id="page"
@@ -23,7 +23,7 @@ export const StoreProfilePage = () => {
         className="relative h-[200px] w-full bg-cover bg-center px-5 xl:hidden xl:rounded-[14px]"
         style={{ backgroundImage: `url(${capa})` }}
       >
-        <div className="relative top-9 cursor-pointer transition duration-300 hover:text-orange-700">
+        <div className="relative top-9 cursor-pointer transition duration-300 hover:text-primary">
           <IconArrowLeft />
         </div>
         <button
@@ -42,14 +42,14 @@ export const StoreProfilePage = () => {
         <div id="cards-mobile" className="flex flex-col gap-5 xl:hidden">
           <div id="card-info">
             <div id="card-content" className="flex flex-col gap-1">
-              <div className="cursor-pointer text-2xl font-bold text-gray-700 transition duration-300 hover:text-orange-700">
+              <div className="cursor-pointer text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
                 Dragão Verde
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <span className="font-bold text-orange-500">novo!</span>
+                <span className="font-bold text-primary">novo!</span>
                 <span className="font-semibold text-gray-400">Restaurante</span>
                 <span>
-                  <IconStarFilled size={14} className="text-orange-500" />
+                  <IconStarFilled size={14} className="text-primary" />
                 </span>
                 <span className="font-bold">5,0 (10 avaliações)</span>
               </div>
@@ -57,13 +57,13 @@ export const StoreProfilePage = () => {
                 <span>
                   <IconClock size={15} className="text-gray-500" />
                 </span>
-                <span className="transition duration-300 hover:text-orange-700">
+                <span className="transition duration-300 hover:text-primary">
                   10:00 às 23:00
                 </span>
                 <span>
                   <IconMapPin size={15} className="text-gray-500" />
                 </span>
-                <span className="transition duration-300 hover:text-orange-700">
+                <span className="transition duration-300 hover:text-primary">
                   2.5 Km
                 </span>
               </button>
