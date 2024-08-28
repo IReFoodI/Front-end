@@ -10,6 +10,8 @@ import { Link } from "react-router-dom"
 import logo from "../../assets/Logo.svg"
 import MenuMobile from "../navMenu/MenuMobile"
 import { Input } from "../ui/input"
+import { Popover, PopoverTrigger } from "../ui/popover"
+import RestaurantFilter from "./components/RestaurantFilter"
 
 function Header() {
   return (
@@ -77,10 +79,15 @@ function Header() {
               placeholder="Busque por estabelecimentos"
               className="bg-background pl-8"
             />
-            <IconFilter
-              className="absolute right-0 mr-2 text-[#616375]"
-              size={20}
-            />
+
+            <Popover className="relative">
+              <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]"r>
+                <IconFilter
+                  size={20}
+                />
+              </PopoverTrigger>
+              <RestaurantFilter />
+            </Popover>
           </div>
         </section>
       </div>
