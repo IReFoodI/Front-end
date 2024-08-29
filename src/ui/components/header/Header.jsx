@@ -12,7 +12,7 @@ import AddressModal from "../header/addressModal/AddressModal"
 import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverTrigger } from "../ui/popover"
-import RestaurantFilter from "./components/RestaurantFilter"
+import { RestaurantFilter } from "./components/RestaurantFilter"
 
 function Header() {
   const [isActive, setIsActive] = useState(false)
@@ -88,10 +88,7 @@ function Header() {
             />
 
             <Popover className="relative" placement="center">
-              <PopoverTrigger
-                className={`absolute right-0 mr-2 rounded-md p-1 text-[#616375] hover:bg-muted ${isActive ? "active:bg-muted" : ""}`}
-                r
-              >
+              <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]">
                 <IconFilter size={20} />
               </PopoverTrigger>
               <RestaurantFilter />
