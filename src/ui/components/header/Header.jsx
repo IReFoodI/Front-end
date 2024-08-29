@@ -11,7 +11,7 @@ import logo from "../../assets/Logo.svg"
 import MenuMobile from "../navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverTrigger } from "../ui/popover"
-import RestaurantFilter from "./components/RestaurantFilter"
+import { RestaurantFilter } from "./components/RestaurantFilter"
 
 function Header() {
   return (

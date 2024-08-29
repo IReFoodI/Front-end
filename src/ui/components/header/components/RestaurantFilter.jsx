@@ -6,10 +6,10 @@ import MapPin from "@/ui/assets/MapPin"
 import StarIcon from "@/ui/assets/StarIcon"
 import { Slider } from "@/ui/components/ui/slider"
 
-import FilterItemContainer from "./FilterItemContainer"
-import SliderMetric from "./SliderMetric"
+import { FilterItemContainer } from "./FilterItemContainer"
+import { SliderMetric } from "./SliderMetric"
 
-function RestaurantFilter() {
+export function RestaurantFilter() {
   const [sliderValue, setSlidervalue] = useState([0])
 
   const ordinateBy = [
@@ -48,7 +48,7 @@ function RestaurantFilter() {
         </div>
 
         <PopoverClose className="flex justify-center">
-          <Cross1Icon className="text-lilac-800 size-5" />
+          <Cross1Icon className="text-lilac-800 size-6" />
         </PopoverClose>
       </div>
 
@@ -57,7 +57,7 @@ function RestaurantFilter() {
         <Slider
           defaultValue={sliderValue}
           max={100}
-          step={1}
+          step={10}
           onValueChange={(currentSliderValue) =>
             setSlidervalue(currentSliderValue)
           }
@@ -72,5 +72,3 @@ function RestaurantFilter() {
     </PopoverContent>
   )
 }
-
-export default RestaurantFilter

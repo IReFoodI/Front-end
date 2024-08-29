@@ -1,4 +1,4 @@
-function SliderMetric({ initialValue, currentValue, finalValue, step }) {
+export function SliderMetric({ initialValue, currentValue, finalValue, step }) {
   const values = [
     initialValue,
     initialValue + step,
@@ -42,11 +42,9 @@ function SliderMetric({ initialValue, currentValue, finalValue, step }) {
             currentValue == finalValue ? `text-orange-700` : `text-zinc-300`
           }
         >
-          {finalValue}
+          {finalValue}+
         </div>
       </div>
     </div>
   )
 }
-
-export default SliderMetric

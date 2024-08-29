@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function FilterItemContainer({ title, items }) {
+export function FilterItemContainer({ title, items }) {
   const [activeItem, setActiveItem] = useState(null)
 
   function handleClick(index) {
@@ -37,5 +37,3 @@ function FilterItemContainer({ title, items }) {
     </div>
   )
 }
-
-export default FilterItemContainer
