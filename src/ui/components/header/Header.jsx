@@ -11,7 +11,7 @@ import AddressModal from "../header/addressModal/AddressModal"
 import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverTrigger } from "../ui/popover"
-import RestaurantFilter from "./components/RestaurantFilter"
+import { RestaurantFilter } from "./components/RestaurantFilter"
 
 function Header() {
   return (
@@ -70,10 +70,7 @@ function Header() {
             />
 
             <Popover className="relative" placement="center">
-              <PopoverTrigger
-                className="absolute right-0 mr-2 text-[#616375]"
-                r
-              >
+              <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]">
                 <IconFilter size={20} />
               </PopoverTrigger>
               <RestaurantFilter />
