@@ -1,15 +1,25 @@
 import { IconCaretDownFilled } from "@tabler/icons-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { Button } from "../../ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
 
 function AddressModal() {
+  const [isActive, setIsActive] = useState(false)
+
+  function handleClick() {
+    setIsActive(true)
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="m-2 flex w-full cursor-pointer items-center justify-center p-1 md:order-last md:mr-14">
-          <p className="md:text-md text-sm font-semibold">
+        <div
+          className={`right-12 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:relative md:order-last md:mr-14 md:w-[60%] ${isActive ? "active:bg-orange-100" : ""}`}
+          onClick={handleClick}
+        >
+          <p className="text-sm font-semibold md:text-[15px]">
             Endereço da pessoa, XX
           </p>
           <span className="ml-2">

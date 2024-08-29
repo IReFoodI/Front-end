@@ -4,6 +4,7 @@ import {
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
@@ -14,6 +15,17 @@ import { Popover, PopoverTrigger } from "../ui/popover"
 import RestaurantFilter from "./components/RestaurantFilter"
 
 function Header() {
+  const [isActive, setIsActive] = useState(false)
+  const [orderQuantity, setOrderQuantity] = useState(0)
+
+  if (orderQuantity > 9) {
+    setOrderQuantity(9 + "+")
+  }
+
+  function handleClick() {
+    setIsActive(true)
+  }
+
   return (
     <header className="sticky top-0 w-screen bg-orange-50 p-4 drop-shadow-md">
       <div className="relative flex w-full flex-col items-center justify-between md:m-auto md:w-[70%] md:flex-row">
@@ -26,32 +38,38 @@ function Header() {
             <div className="hidden items-center gap-5 md:flex">
               <Link
                 to="/"
-                className="text-md rounded-lg px-2 py-1 hover:bg-orange-100 active:bg-orange-100 active:text-primary"
+                className={`text-md rounded-lg px-2 py-1 hover:bg-orange-100 ${isActive ? "focus:bg-orange-100 focus:text-primary" : ""}`}
+                onClick={handleClick}
               >
                 Início
               </Link>
               <Link
                 to="/"
-                className="text-md rounded-lg px-2 py-1 hover:bg-orange-100 active:bg-orange-100 active:text-primary"
+                className={`text-md rounded-lg px-2 py-1 hover:bg-orange-100 ${isActive ? "focus:bg-orange-100 focus:text-primary" : ""}`}
+                onClick={handleClick}
               >
                 Pedidos
               </Link>
             </div>
           </div>
-          <div className="right-0 flex gap-4 md:absolute">
+          <div className="right-0 flex gap-3 md:absolute">
             {/* Aqui é onde será colocado o modal de perfil */}
-            <div className="relative hidden w-9 cursor-pointer rounded-lg bg-orange-100 p-1 md:flex">
-              <IconUser className="text-primary" size={28} />
-            </div>
             <Link
-              className="relative w-9 rounded-sm bg-orange-100 p-1 md:rounded-lg"
+              className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+              onClick={handleClick}
+            >
+              <IconUser className="w-full text-center" size={30} />
+            </Link>
+            <Link
               to="/"
+              className={`relative m-auto w-10 rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+              onClick={handleClick}
             >
               {/* colocar rota para página de pedidos na sacola de compras */}
-              <span className="absolute left-0 top-0 mx-px inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary px-1 py-1 text-xs leading-none text-white">
-                1
+              <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
+                {orderQuantity}
               </span>
-              <IconShoppingBag className="text-primary" size={28} />
+              <IconShoppingBag className="w-full text-center" size={30} />
             </Link>
           </div>
         </section>
@@ -71,7 +89,7 @@ function Header() {
 
             <Popover className="relative" placement="center">
               <PopoverTrigger
-                className="absolute right-0 mr-2 text-[#616375]"
+                className={`absolute right-0 mr-2 rounded-md p-1 text-[#616375] hover:bg-muted ${isActive ? "active:bg-muted" : ""}`}
                 r
               >
                 <IconFilter size={20} />
