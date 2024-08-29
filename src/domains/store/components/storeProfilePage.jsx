@@ -9,7 +9,7 @@ import {
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
-import StoreProductList from "./StoreProductList"
+import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function StoreProfilePage() {

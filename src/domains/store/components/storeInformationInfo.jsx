@@ -5,7 +5,7 @@ import {
 } from "@tabler/icons-react"
 import { useState } from "react"
 
-export const StoreInformationInfo = () => {
+export function StoreInformationInfo() {
   const [isShowing, setIsShowing] = useState(false)
   const address =
     "Rua Visconde de Duprat, 258 - Petrópolis, Porto Alegre - RS, 90690-430"

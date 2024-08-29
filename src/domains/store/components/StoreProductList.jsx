@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/ui/components/ui/select"
 
-import StoreProductItem from "./StoreProductItem"
+import { StoreProductItem } from "./StoreProductItem"
 
 const products = [
   {
@@ -49,7 +49,7 @@ const products = [
 ]
 
 //Depois vai receber o products como parâmetro ou fazer a requisição aqui mesmo
-const StoreProductList = () => {
+export function StoreProductList() {
   return (
     <section className="mt-5 flex flex-col gap-5 xl:mt-0">
       <div className="flex w-full items-center justify-between">
@@ -78,5 +78,3 @@ const StoreProductList = () => {
     </section>
   )
 }
-
-export default StoreProductList

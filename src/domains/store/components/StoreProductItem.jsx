@@ -9,14 +9,14 @@ import { Card } from "@/ui/components/ui/card"
 
 import image from "./foto-produto.png"
 
-const StoreProductItem = ({
+export function StoreProductItem({
   fullPrice = 60,
   price = 40.020202,
   name = "Combo Hamburguer",
   quantity = 10,
   imageUrl = image,
   description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi possimus illum eveniet libero cumque, minima veniam excepturi deserunt totam sed.",
-}) => {
+}) {
   const [amountAdded, setAmountAdded] = useState(1)
 
   const handleIncreaseProductQuantity = () => {
@@ -91,5 +91,3 @@ const StoreProductItem = ({
     </Card>
   )
 }
-
-export default StoreProductItem
