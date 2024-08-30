@@ -4,49 +4,55 @@ import { AddressCard } from "./AddressCard"
 import { Button } from "./Button"
 import ilustra from "./ilustra.png"
 import { Modal } from "./Modal"
+const addresses = [
+  {
+    id: "1",
+    type: "Casa",
+    street: "Av Vamo pra Cima, 10 - Apto 02",
+    complement: "Bloco A",
+    neighborhood: "Bairro Cruzes",
+    city: "Não-me-Toque",
+    state: "RS",
+    zipCode: "99.999-99",
+    isDefault: true,
+  },
+  {
+    id: "2",
+    type: "Trabalho",
+    street: "Rua do Trabalho, 123 - Sala 45",
+    complement: "Edifício Centro",
+    neighborhood: "Centro",
+    city: "Porto Alegre",
+    state: "RS",
+    zipCode: "90.000-00",
+    isDefault: false,
+  },
+  {
+    id: "3",
+    type: "Casa de Praia",
+    street: "Praia do Sol, 100 - Casa 3",
+    complement: "",
+    neighborhood: "Praia do Sol",
+    city: "Balneário Camboriú",
+    state: "SC",
+    zipCode: "88.888-88",
+    isDefault: false,
+  },
+]
 
 export function AddressPage() {
+  const defaultAddress = addresses.find((address) => address.isDefault)
+  const otherAddresses = addresses.filter((address) => !address.isDefault)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedOption, setSelectedOption] = useState(defaultAddress?.id)
 
   const toggleOpenModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
-  const addresses = [
-    {
-      type: "Casa",
-      street: "Av Vamo pra Cima, 10 - Apto 02",
-      complement: "Bloco A",
-      neighborhood: "Bairro Cruzes",
-      city: "Não-me-Toque",
-      state: "RS",
-      zipCode: "99.999-99",
-      isDefault: true,
-    },
-    {
-      type: "Trabalho",
-      street: "Rua do Trabalho, 123 - Sala 45",
-      complement: "Edifício Centro",
-      neighborhood: "Centro",
-      city: "Porto Alegre",
-      state: "RS",
-      zipCode: "90.000-00",
-      isDefault: false,
-    },
-    {
-      type: "Casa de Praia",
-      street: "Praia do Sol, 100 - Casa 3",
-      complement: "",
-      neighborhood: "Praia do Sol",
-      city: "Balneário Camboriú",
-      state: "SC",
-      zipCode: "88.888-88",
-      isDefault: false,
-    },
-  ]
-
-  const defaultAddress = addresses.find((address) => address.isDefault)
-  const otherAddresses = addresses.filter((address) => !address.isDefault)
+  function handleOptionChange(e) {
+    setSelectedOption(e?.target?.value)
+  }
 
   return (
     <div
@@ -56,7 +62,6 @@ export function AddressPage() {
       <h1 className="w-full pb-6 pt-7 text-center text-2xl font-semibold lg:py-10">
         Meus Endereços
       </h1>
-
       <div className="flex h-full">
         <div className="flex flex-col justify-between lg:w-1/2 lg:ps-5">
           <div className="flex-1">
@@ -65,17 +70,21 @@ export function AddressPage() {
               <AddressCard
                 address={defaultAddress}
                 toggleOpenModal={toggleOpenModal}
+                selectedOption={selectedOption}
+                handleOptionChange={handleOptionChange}
               />
             ) : (
               <p>Não há endereço padrão.</p>
             )}
             <h3 className="w-full px-5 text-left font-semibold">Outros</h3>
             {otherAddresses.length > 0 ? (
-              otherAddresses.map((address, index) => (
+              otherAddresses.map((address) => (
                 <AddressCard
-                  key={index}
+                  key={address.id}
                   address={address}
                   toggleOpenModal={toggleOpenModal}
+                  selectedOption={selectedOption}
+                  handleOptionChange={handleOptionChange}
                 />
               ))
             ) : (

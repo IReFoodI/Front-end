@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 import { IconEdit, IconTrash } from "@tabler/icons-react"
 
-export function AddressCard({ address, toggleOpenModal }) {
+export function AddressCard({
+  address,
+  toggleOpenModal,
+  selectedOption,
+  handleOptionChange,
+}) {
   const { type, street, complement, neighborhood, city, state, zipCode } =
     address
   return (
@@ -14,6 +19,9 @@ export function AddressCard({ address, toggleOpenModal }) {
                 className="peer sr-only"
                 name="address-default"
                 type="radio"
+                value={address.id}
+                checked={selectedOption === address?.id}
+                onChange={handleOptionChange}
               />
               <div className="h-4 w-4 rounded-full border-2 border-white bg-transparent transition duration-300 ease-in-out peer-checked:border-white peer-checked:bg-orange-500"></div>
             </label>
