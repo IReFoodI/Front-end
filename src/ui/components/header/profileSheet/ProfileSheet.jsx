@@ -1,4 +1,13 @@
-import { IconMenu2, IconMoneybag, IconShoppingBag, IconUser, IconHeart, IconMap, IconCreditCard, IconKey } from "@tabler/icons-react"
+import {
+  IconCreditCard,
+  IconHeart,
+  IconKey,
+  IconMap,
+  IconMenu2,
+  IconMoneybag,
+  IconShoppingBag,
+  IconUser,
+} from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
@@ -53,16 +62,36 @@ export function ProfileSheet() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col gap-2">
-        <InformationButton iconForButton={<IconUser />} buttonText="Meus Dados" path="/meusdados" />
+      <div className="flex w-full flex-col gap-2">
+        <InformationButton
+          iconForButton={<IconUser />}
+          buttonText="Meus Dados"
+          path="/meusdados"
+        />
 
-        <InformationButton iconForButton={<IconHeart />} buttonText="Favoritos" path="/" />
+        <InformationButton
+          iconForButton={<IconHeart />}
+          buttonText="Favoritos"
+          path="/"
+        />
 
-        <InformationButton iconForButton={<IconMap />} buttonText="Endereços" path="/" />
+        <InformationButton
+          iconForButton={<IconMap />}
+          buttonText="Endereços"
+          path="/"
+        />
 
-        <InformationButton iconForButton={<IconCreditCard />} buttonText="Cartões" path="/" />
+        <InformationButton
+          iconForButton={<IconCreditCard />}
+          buttonText="Cartões"
+          path="/"
+        />
 
-        <InformationButton iconForButton={<IconKey />} buttonText="Alterar Senha" path="/" />
+        <InformationButton
+          iconForButton={<IconKey />}
+          buttonText="Alterar Senha"
+          path="/"
+        />
       </div>
     </div>
   )
