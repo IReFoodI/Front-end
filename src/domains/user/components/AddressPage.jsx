@@ -65,7 +65,6 @@ export function AddressPage() {
               <AddressCard
                 address={defaultAddress}
                 toggleOpenModal={toggleOpenModal}
-                checked={true}
               />
             ) : (
               <p>Não há endereço padrão.</p>
