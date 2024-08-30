@@ -1,10 +1,11 @@
-import { IconMenu2, IconMoneybag, IconShoppingBag } from "@tabler/icons-react"
+import { IconMenu2, IconMoneybag, IconShoppingBag, IconUser, IconHeart, IconMap, IconCreditCard, IconKey } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { SheetClose } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
+import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
   return (
@@ -24,7 +25,7 @@ export function ProfileSheet() {
 
       <div className="flex w-full flex-col items-center justify-center">
         {/* A cor lilac não existe no tailwind */}
-        <div className="w-full rounded-xl bg-zinc-200 p-4 text-center">
+        <div className="w-full rounded-xl bg-gray-200 p-4 text-center">
           <h2 className="text-sm font-semibold leading-5">
             Você ainda não possuí pedidos em andamento
           </h2>
@@ -50,6 +51,18 @@ export function ProfileSheet() {
             title="economizados"
           />
         </div>
+      </div>
+
+      <div className="w-full flex flex-col gap-2">
+        <InformationButton iconForButton={<IconUser />} buttonText="Meus Dados" path="/meusdados" />
+
+        <InformationButton iconForButton={<IconHeart />} buttonText="Favoritos" path="/" />
+
+        <InformationButton iconForButton={<IconMap />} buttonText="Endereços" path="/" />
+
+        <InformationButton iconForButton={<IconCreditCard />} buttonText="Cartões" path="/" />
+
+        <InformationButton iconForButton={<IconKey />} buttonText="Alterar Senha" path="/" />
       </div>
     </div>
   )
