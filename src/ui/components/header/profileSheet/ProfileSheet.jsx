@@ -14,14 +14,13 @@ import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
-// import { PopoverClose } from "../../ui/popover"
-// import { SheetClose } from "../../ui/sheet"
+import { SheetClose } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 import { StyledLink } from "./StyledLink"
 
 export function ProfileSheet() {
-  const width = useMediaQuery("(min-width: 768px)")
+  const width = useMediaQuery("(max-width: 768px)")
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -35,9 +34,9 @@ export function ProfileSheet() {
           </div>
 
           {width && (
-            // <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1">
-            <IconMenu2 className="m-auto text-orange-700" size={30} />
-            // </SheetClose>
+            <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1">
+              <IconMenu2 className="m-auto text-orange-700" size={30} />
+            </SheetClose>
           )}
         </div>
 
