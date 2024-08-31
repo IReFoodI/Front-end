@@ -12,8 +12,8 @@ import AddressModal from "../header/addressModal/AddressModal"
 import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { RestaurantFilter } from "./components/RestaurantFilter"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
+import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
 function Header() {
   const [isActive, setIsActive] = useState(false)
