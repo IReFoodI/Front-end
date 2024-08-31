@@ -11,8 +11,9 @@ import logo from "../../assets/Logo.svg"
 import AddressModal from "../header/addressModal/AddressModal"
 import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
-import { Popover, PopoverTrigger } from "../ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { RestaurantFilter } from "./components/RestaurantFilter"
+import { ProfileSheet } from "./profileSheet/ProfileSheet"
 
 function Header() {
   const [isActive, setIsActive] = useState(false)
@@ -58,7 +59,15 @@ function Header() {
               className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
               onClick={handleClick}
             >
-              <IconUser className="w-full text-center" size={30} />
+              <Popover>
+                <PopoverTrigger>
+                  <IconUser className="w-full text-center" size={30} />
+                </PopoverTrigger>
+
+                <PopoverContent>
+                  <ProfileSheet />
+                </PopoverContent>
+              </Popover>
             </Link>
             <Link
               to="/"

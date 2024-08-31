@@ -10,15 +10,19 @@ import {
 } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
+import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
-import { SheetClose } from "../../ui/sheet"
+// import { PopoverClose } from "../../ui/popover"
+// import { SheetClose } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 import { StyledLink } from "./StyledLink"
 
 export function ProfileSheet() {
+  const width = useMediaQuery("(min-width: 768px)")
+
   return (
     <div className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-3">
@@ -30,9 +34,11 @@ export function ProfileSheet() {
             </h1>
           </div>
 
-          <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1 md:hidden">
+          {width && (
+            // <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1">
             <IconMenu2 className="m-auto text-orange-700" size={30} />
-          </SheetClose>
+            // </SheetClose>
+          )}
         </div>
 
         <div className="flex w-full flex-col items-center justify-center">
@@ -41,7 +47,10 @@ export function ProfileSheet() {
             <h2 className="text-sm font-semibold leading-5">
               Você ainda não possuí pedidos em andamento
             </h2>
-            <Link to="/" className="text-xs font-semibold text-orange-700">
+            <Link
+              to="/"
+              className="text-xs font-semibold text-orange-700 hover:text-orange-400"
+            >
               Que tal fazer um agora?
             </Link>
           </div>
