@@ -29,7 +29,6 @@ function Header() {
   }
 
   function handleProfilePopoverOpen(open) {
-    console.log(open)
     setIsProfilePopoverOpen(open)
   }
 

@@ -8,30 +8,77 @@ import {
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
-import { SheetClose } from "../../ui/sheet"
+import {
+  SheetClose,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
-import { StyledLink } from "./StyledLink"
 
 export function ProfileSheet() {
   const width = useMediaQuery("(max-width: 768px)")
+  const [activeInformationButton, setActiveInformationButton] = useState(null)
+  console.log(activeInformationButton)
+
+  const informationButtons = [
+    {
+      iconForButton: <IconUser />,
+      buttonText: "Meus Dados",
+      path: "/",
+    },
+    {
+      iconForButton: <IconHeart />,
+      buttonText: "Favoritos",
+      path: "/",
+    },
+    {
+      iconForButton: <IconMap />,
+      buttonText: "Endereços",
+      path: "/",
+    },
+    {
+      iconForButton: <IconCreditCard />,
+      buttonText: "Cartões",
+      path: "/",
+    },
+    {
+      iconForButton: <IconKey />,
+      buttonText: "Alterar Senha",
+      path: "/",
+    },
+  ]
 
   return (
     <div className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-3">
         <div className="mt-4 flex justify-between gap-2">
-          <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
-            <ProfileImagePlaceholder className="z-2 m-1 w-14" />
-            <h1 className="m-1 text-lg font-semibold leading-5 text-white">
-              Olá, Usuário
-            </h1>
-          </div>
+          {width ? (
+            <SheetHeader className="w-full">
+              <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
+                <ProfileImagePlaceholder className="z-2 m-1 w-14" />
+                <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
+                  Olá, Usuário
+                </SheetTitle>
+                <SheetDescription />
+              </div>
+            </SheetHeader>
+          ) : (
+            <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
+              <ProfileImagePlaceholder className="z-2 m-1 w-14" />
+              <h1 className="m-1 text-lg font-semibold leading-5 text-white">
+                Olá, Usuário
+              </h1>
+            </div>
+          )}
 
           {width && (
             <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1">
@@ -74,44 +121,36 @@ export function ProfileSheet() {
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          <InformationButton
-            iconForButton={<IconUser />}
-            buttonText="Meus Dados"
-            path="/meusdados"
-          />
-
-          <InformationButton
-            iconForButton={<IconHeart />}
-            buttonText="Favoritos"
-            path="/"
-          />
-
-          <InformationButton
-            iconForButton={<IconMap />}
-            buttonText="Endereços"
-            path="/"
-          />
-
-          <InformationButton
-            iconForButton={<IconCreditCard />}
-            buttonText="Cartões"
-            path="/"
-          />
-
-          <InformationButton
-            iconForButton={<IconKey />}
-            buttonText="Alterar Senha"
-            path="/"
-          />
+          {informationButtons.map((button, index) => (
+            <InformationButton
+              key={index}
+              ownIndex={index}
+              iconForButton={button.iconForButton}
+              buttonText={button.buttonText}
+              path={button.path}
+              currentIndex={activeInformationButton}
+              setCurrentIndex={setActiveInformationButton}
+            />
+          ))}
         </div>
       </div>
 
       <div className="mb-2 flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <StyledLink path={`/`} text={`Termos e Condições`} />
-          <StyledLink path={`/`} text={`Ajuda`} />
+          <Link
+            to="/"
+            className="text-sm font-semibold text-orange-600 underline"
+          >
+            Termos e Condições
+          </Link>
+          <Link
+            to="/"
+            className="text-sm font-semibold text-orange-600 underline"
+          >
+            Ajuda
+          </Link>
         </div>
-        <Button className="w-full bg-orange-700 text-base font-semibold">
+        <Button className="w-full rounded-3xl bg-orange-700 text-base font-semibold">
           Sair
         </Button>
       </div>
