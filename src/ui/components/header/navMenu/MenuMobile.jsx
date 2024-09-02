@@ -1,6 +1,7 @@
 import { IconMenu2 } from "@tabler/icons-react"
 
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet"
+import { ProfileSheet } from "../profileSheet/ProfileSheet"
 
 function MenuMobile() {
   return (
@@ -11,8 +12,7 @@ function MenuMobile() {
         </div>
       </SheetTrigger>
       <SheetContent side={"left"} className="bg-[#F8F9FE]">
-        {/* APLICAR O COMPONENTE 'MODAL DE PERFIL' AQUI. */}
-        <p>Aplicar modal de perfil aqui.</p>
+        <ProfileSheet />
       </SheetContent>
     </Sheet>
   )

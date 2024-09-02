@@ -11,11 +11,13 @@ import logo from "../../assets/Logo.svg"
 import AddressModal from "../header/addressModal/AddressModal"
 import MenuMobile from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
-import { Popover, PopoverTrigger } from "../ui/popover"
-import { RestaurantFilter } from "./components/RestaurantFilter"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { ProfileSheet } from "./profileSheet/ProfileSheet"
+import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
 function Header() {
   const [isActive, setIsActive] = useState(false)
+  const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
   const [orderQuantity, setOrderQuantity] = useState(0)
 
   if (orderQuantity > 9) {
@@ -24,6 +26,10 @@ function Header() {
 
   function handleClick() {
     setIsActive(true)
+  }
+
+  function handleProfilePopoverOpen(open) {
+    setIsProfilePopoverOpen(open)
   }
 
   return (
@@ -54,12 +60,20 @@ function Header() {
           </div>
           <div className="right-0 flex gap-3 md:absolute">
             {/* Aqui é onde será colocado o modal de perfil */}
-            <Link
-              className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-              onClick={handleClick}
-            >
-              <IconUser className="w-full text-center" size={30} />
-            </Link>
+
+            <Popover onOpenChange={handleProfilePopoverOpen}>
+              <PopoverTrigger asChild>
+                <Link
+                  className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
+                >
+                  <IconUser className="w-full text-center" size={30} />
+                </Link>
+              </PopoverTrigger>
+
+              <PopoverContent>
+                <ProfileSheet />
+              </PopoverContent>
+            </Popover>
             <Link
               to="/"
               className={`relative m-auto w-10 rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
