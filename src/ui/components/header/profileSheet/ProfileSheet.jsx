@@ -3,7 +3,6 @@ import {
   IconHeart,
   IconKey,
   IconMap,
-  IconMenu2,
   IconMoneybag,
   IconShoppingBag,
   IconUser,
@@ -15,19 +14,13 @@ import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
-import {
-  SheetClose,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "../../ui/sheet"
+import { SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
   const width = useMediaQuery("(max-width: 768px)")
   const [activeInformationButton, setActiveInformationButton] = useState(null)
-  console.log(activeInformationButton)
 
   const informationButtons = [
     {
@@ -68,7 +61,6 @@ export function ProfileSheet() {
                 <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
                   Olá, Usuário
                 </SheetTitle>
-                <SheetDescription />
               </div>
             </SheetHeader>
           ) : (
@@ -78,12 +70,6 @@ export function ProfileSheet() {
                 Olá, Usuário
               </h1>
             </div>
-          )}
-
-          {width && (
-            <SheetClose className="cursor-pointer rounded-sm bg-orange-100 p-1">
-              <IconMenu2 className="m-auto text-orange-700" size={30} />
-            </SheetClose>
           )}
         </div>
 
