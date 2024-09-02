@@ -10,16 +10,17 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
-import { SheetHeader, SheetTitle } from "../../ui/sheet"
+import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
-  const width = useMediaQuery("(max-width: 768px)")
+  const [value] = useState(() => {
+    return matchMedia("(max-width: 768px)").matches
+  })
   const [activeInformationButton, setActiveInformationButton] = useState(null)
 
   const informationButtons = [
@@ -54,13 +55,14 @@ export function ProfileSheet() {
     <div className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-3">
         <div className="mt-4 flex justify-between gap-2">
-          {width ? (
+          {value ? (
             <SheetHeader className="w-full">
               <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
                 <ProfileImagePlaceholder className="z-2 m-1 w-14" />
                 <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
                   Olá, Usuário
                 </SheetTitle>
+                <SheetDescription></SheetDescription>
               </div>
             </SheetHeader>
           ) : (
