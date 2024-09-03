@@ -1,5 +1,5 @@
 import { Cross1Icon } from "@radix-ui/react-icons"
-import { PopoverClose, PopoverContent } from "@radix-ui/react-popover"
+import { PopoverClose } from "@radix-ui/react-popover"
 import { useState } from "react"
 
 import MapPin from "@/ui/assets/MapPin"
@@ -32,11 +32,7 @@ export function RestaurantFilter() {
   ]
 
   return (
-    <PopoverContent
-      className="rounded-xl bg-white p-4 shadow-lg"
-      sideOffset={20}
-      align="end"
-    >
+    <div>
       <div className="flex">
         <div>
           <FilterItemContainer title={`Ordenar por`} items={ordinateBy} />
@@ -69,6 +65,6 @@ export function RestaurantFilter() {
           step={20}
         />
       </div>
-    </PopoverContent>
+    </div>
   )
 }

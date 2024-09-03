@@ -31,7 +31,10 @@ function AddressModal() {
           </span>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="relative top-14 md:absolute md:top-7 md:w-96">
+      <PopoverContent
+        className="relative top-14 md:absolute md:top-7 md:w-96"
+        align="start"
+      >
         <div className="flex w-full flex-col items-center justify-center gap-2">
           <h1 className="text-[15px] font-bold md:text-xl">
             Seu pedido irá para esse endereço

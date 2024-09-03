@@ -70,7 +70,7 @@ function Header() {
                 </Link>
               </PopoverTrigger>
 
-              <PopoverContent>
+              <PopoverContent sideOffset={20}>
                 <ProfileSheet />
               </PopoverContent>
             </Popover>
@@ -105,7 +105,9 @@ function Header() {
               <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]">
                 <IconFilter size={20} />
               </PopoverTrigger>
-              <RestaurantFilter />
+              <PopoverContent align="end" sideOffset={20} className="w-full">
+                <RestaurantFilter />
+              </PopoverContent>
             </Popover>
           </div>
         </section>
