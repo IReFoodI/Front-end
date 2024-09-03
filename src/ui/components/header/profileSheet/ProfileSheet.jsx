@@ -10,6 +10,7 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
+import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button"
@@ -18,9 +19,7 @@ import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
-  const [value] = useState(() => {
-    return matchMedia("(max-width: 768px)").matches
-  })
+  const { value } = useMediaQuery("(max-width: 768px)")
   const [activeInformationButton, setActiveInformationButton] = useState(null)
 
   const informationButtons = [
