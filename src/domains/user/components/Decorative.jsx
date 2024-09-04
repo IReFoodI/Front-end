@@ -1,4 +1,4 @@
-import imageDecorative from "../../../../../ui/assets/decorative_image.svg"
+import imageDecorative from "../../../ui/assets/decorative_image.svg"
 
 export function Decorative({ className }) {
   return (
