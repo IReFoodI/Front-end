@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button"
 
-import { Decorative } from "../Decorative"
+import { Decorative } from "./Decorative"
 
 export function PresentationContent() {
   const navigate = useNavigate()
@@ -15,11 +15,15 @@ export function PresentationContent() {
       <Decorative className={"sm:hidden"} />
       <p className="mt-5 text-muted-foreground">Como deseja continuar?</p>
       <nav aria-label="Navegação de login e registro" className="grid gap-2">
-        <Button>Cadastre-se</Button>
+        <Button onClick={() => navigate("/create-account")}>Cadastre-se</Button>
         <Button variant="outline" onClick={() => navigate("/login")}>
           Acesse sua conta
         </Button>
-        <Button variant="link" className={"underline"}>
+        <Button
+          onClick={() => navigate("/404")}
+          variant="link"
+          className={"underline"}
+        >
           Quero vender no ReFood
         </Button>
       </nav>
