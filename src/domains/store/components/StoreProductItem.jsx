@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { Badge } from "@/ui/components/ui/badge"
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
 
 import image from "./foto-produto.png"
@@ -40,7 +40,7 @@ export function StoreProductItem({
   return (
     <Card className="flex items-center justify-start gap-3 bg-zinc-100 p-2">
       <div className="relative w-24 rounded-lg md:rounded-[1.25rem]">
-        <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold">
+        <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
           <IconShoppingBag size={12} />
           <p className="text-[0.625rem]">{quantity}</p>
           <p className="text-[0.625rem]">disponíveis</p>
