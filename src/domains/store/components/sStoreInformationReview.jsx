@@ -1,7 +1,7 @@
 import { IconCaretDownFilled, IconStarFilled } from "@tabler/icons-react"
 import { useState } from "react"
 
-import { CardReview } from "./CardReview"
+import { CardReview } from "./cCardReview"
 
 const reviewsData = [
   {

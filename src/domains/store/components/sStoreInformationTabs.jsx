@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import { StoreInformationInfo } from "./StoreInformationInfo"
-import { StoreInformationReview } from "./StoreInformationReview"
+import { StoreInformationInfo } from "./sStoreInformationInfo"
+import { StoreInformationReview } from "./sStoreInformationReview"
 
 export function StoreInformationTabs() {
   const [activeTab, setActiveTab] = useState("reviews")
