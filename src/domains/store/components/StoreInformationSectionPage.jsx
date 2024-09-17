@@ -6,10 +6,10 @@ import {
 } from "@tabler/icons-react"
 
 import logo from "./logo-loja.png"
-import { StoreInformationInfo } from "./sStoreInformationInfo"
-import { StoreInformationReview } from "./sStoreInformationReview"
-import { StoreInformationTabs } from "./sStoreInformationTabs"
-import { StoreProfilePageTopDesktop } from "./sStoreProfilePageTopDesktop"
+import { StoreInformationInfo } from "./StoreInformationInfo"
+import { StoreInformationReview } from "./StoreInformationReview"
+import { StoreInformationTabs } from "./StoreInformationTabs"
+import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function StoreInformationSectionPage() {
   return (

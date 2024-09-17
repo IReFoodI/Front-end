@@ -9,8 +9,8 @@ import {
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
-import { StoreProfilePageTopDesktop } from "./sStoreProfilePageTopDesktop"
 import { StoreProductList } from "./StoreProductList"
+import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function StoreProfilePage() {
   return (
