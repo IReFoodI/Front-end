@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { PatternFormat } from "react-number-format"
 import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -14,6 +15,8 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+
+import { ModalCancel } from "./ModalCancel"
 
 //objeto temporário
 const profileData = {
@@ -53,8 +56,9 @@ export function MyProfileData() {
     },
   })
 
-  const onSubmit = (data) => {
+  function onSubmit(data) {
     console.log(data)
+    toast.success("Informações alteradas com sucesso")
     navigate("/my-profile") //todo: ajustar rota
   }
 
@@ -128,13 +132,7 @@ export function MyProfileData() {
             <Button className="order-2" type="submit">
               Salvar
             </Button>
-            <Button
-              className="order-1"
-              variant="outline"
-              onClick={() => navigate("/my-profile")} //ajustar rota
-            >
-              Cancelar
-            </Button>
+            <ModalCancel />
           </div>
         </form>
       </Form>
