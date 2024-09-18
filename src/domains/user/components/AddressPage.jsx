@@ -1,11 +1,17 @@
 import { useState } from "react"
 
 import { Button } from "@/ui/components/ui/button/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+} from "@/ui/components/ui/dialog"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
 import { AddressCard } from "./AddressCard"
 import ilustra from "./ilustra.png"
-import { Modal } from "./Modal"
 
 const addresses = [
   {
@@ -68,6 +74,7 @@ export function AddressPage() {
       <div className="flex h-full">
         <div className="flex flex-col justify-between lg:w-1/2 lg:ps-5">
           <RadioGroup
+            className="default-style"
             value={selectedAddressId}
             onValueChange={handleAddressChange}
           >
@@ -112,14 +119,33 @@ export function AddressPage() {
         </div>
       </div>
 
-      {isModalOpen && (
-        <Modal
-          body="Deseja realmente excluir este endereço?"
-          type="red"
-          buttonText="Confirmar"
-          onClose={toggleOpenModal}
-        />
-      )}
+      <Dialog open={isModalOpen} onOpenChange={toggleOpenModal}>
+        <DialogContent>
+          <DialogTitle>Deseja realmente excluir este endereço?</DialogTitle>
+          <DialogDescription>
+            Esta ação não pode ser desfeita. Isso excluirá permanentemente o
+            endereço.
+          </DialogDescription>
+          <DialogFooter>
+            <Button
+              className="rounded-full"
+              variant="ghost"
+              onClick={toggleOpenModal}
+            >
+              Cancelar
+            </Button>
+            <Button
+              className="rounded-full"
+              variant="destructive"
+              onClick={() => {
+                // ação de excluir aqui
+              }}
+            >
+              Confirmar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
