@@ -1,32 +1,31 @@
-/* eslint-disable react/prop-types */
 import { IconEdit, IconTrash } from "@tabler/icons-react"
+
+import { Label } from "@/ui/components/ui/label"
+import { RadioGroupItem } from "@/ui/components/ui/radio-group"
 
 export function AddressCard({
   address,
+  isSelected,
+  onAddressSelect,
   toggleOpenModal,
-  selectedOption,
-  handleOptionChange,
 }) {
-  const { type, street, complement, neighborhood, city, state, zipCode } =
+  const { id, type, street, complement, neighborhood, city, state, zipCode } =
     address
+
   return (
     <div className="flex w-11/12 max-w-[600px] items-center justify-between p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
       <div className="flex items-center">
-        <div className="flex flex-col space-y-4 pe-5">
-          <div className="rounded-full border-2 border-orange-500">
-            <label className="relative flex cursor-pointer items-center">
-              <input
-                className="peer sr-only"
-                name="address-default"
-                type="radio"
-                value={address.id}
-                checked={selectedOption === address?.id}
-                onChange={handleOptionChange}
-              />
-              <div className="h-4 w-4 rounded-full border-2 border-white bg-transparent transition duration-300 ease-in-out peer-checked:border-white peer-checked:bg-orange-500"></div>
-            </label>
-          </div>
+        <div className="flex items-center space-x-2 pe-5">
+          <RadioGroupItem
+            name="address-default"
+            id={`address-${id}`}
+            value={id}
+            checked={isSelected}
+            onChange={() => onAddressSelect(id)}
+          />
+          <Label htmlFor={`address-${id}`}></Label>
         </div>
+
         <div>
           <p id="title" className="text-orange-500">
             {type}

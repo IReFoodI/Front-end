@@ -1,11 +1,12 @@
 import { useState } from "react"
 
-// import { Button } from "./Button"
 import { Button } from "@/ui/components/ui/button/button"
+import { RadioGroup } from "@/ui/components/ui/radio-group"
 
 import { AddressCard } from "./AddressCard"
 import ilustra from "./ilustra.png"
 import { Modal } from "./Modal"
+
 const addresses = [
   {
     id: "1",
@@ -46,14 +47,14 @@ export function AddressPage() {
   const defaultAddress = addresses.find((address) => address.isDefault)
   const otherAddresses = addresses.filter((address) => !address.isDefault)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(defaultAddress?.id)
+  const [selectedAddressId, setSelectedAddressId] = useState(defaultAddress?.id)
 
   const toggleOpenModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
-  function handleOptionChange(e) {
-    setSelectedOption(e?.target?.value)
+  const handleAddressChange = (id) => {
+    setSelectedAddressId(id)
   }
 
   return (
@@ -66,33 +67,40 @@ export function AddressPage() {
       </h1>
       <div className="flex h-full">
         <div className="flex flex-col justify-between lg:w-1/2 lg:ps-5">
-          <div className="flex-1">
-            <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
-            {defaultAddress ? (
-              <AddressCard
-                address={defaultAddress}
-                toggleOpenModal={toggleOpenModal}
-                selectedOption={selectedOption}
-                handleOptionChange={handleOptionChange}
-              />
-            ) : (
-              <p>Não há endereço padrão.</p>
-            )}
-            <h3 className="w-full px-5 text-left font-semibold">Outros</h3>
-            {otherAddresses.length > 0 ? (
-              otherAddresses.map((address) => (
-                <AddressCard
-                  key={address.id}
-                  address={address}
-                  toggleOpenModal={toggleOpenModal}
-                  selectedOption={selectedOption}
-                  handleOptionChange={handleOptionChange}
-                />
-              ))
-            ) : (
-              <p>Não há outros endereços.</p>
-            )}
-          </div>
+          <RadioGroup
+            value={selectedAddressId}
+            onValueChange={handleAddressChange}
+          >
+            <div className="flex flex-col space-y-4 pe-5">
+              <div className="flex-1">
+                <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
+                {defaultAddress ? (
+                  <AddressCard
+                    address={defaultAddress}
+                    isSelected={selectedAddressId === defaultAddress.id}
+                    onAddressSelect={handleAddressChange}
+                    toggleOpenModal={toggleOpenModal}
+                  />
+                ) : (
+                  <p>Não há endereço padrão.</p>
+                )}
+                <h3 className="w-full px-5 text-left font-semibold">Outros</h3>
+                {otherAddresses.length > 0 ? (
+                  otherAddresses.map((address) => (
+                    <AddressCard
+                      key={address.id}
+                      address={address}
+                      isSelected={selectedAddressId === address.id}
+                      onAddressSelect={handleAddressChange}
+                      toggleOpenModal={toggleOpenModal}
+                    />
+                  ))
+                ) : (
+                  <p>Não há outros endereços.</p>
+                )}
+              </div>
+            </div>
+          </RadioGroup>
           <div className="py-11 lg:py-0">
             <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
               Adicionar novo endereço
