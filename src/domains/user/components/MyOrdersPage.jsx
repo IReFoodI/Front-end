@@ -1,7 +1,8 @@
 import { IconShoppingBag } from "@tabler/icons-react"
 
-import { Button } from "./Button"
-// import { Button } from "@/ui/components/ui/button/button"
+// import { Button } from "./Button"
+import { Button } from "@/ui/components/ui/button/button"
+
 import { CardItem } from "./CardItem"
 
 const cardData = [
@@ -69,7 +70,9 @@ export function MyOrdersPage() {
                 <p className="w-[250px]">
                   explore as lojas e tire a barriga da miséria hoje mesmo!
                 </p>
-                <Button>explorar agora!</Button>
+                <Button className="w-full rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+                  explorar agora!
+                </Button>
               </div>
             </div>
           )}

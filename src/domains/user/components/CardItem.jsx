@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   IconCaretRightFilled,
   IconCheck,
@@ -52,10 +51,10 @@ export function CardItem({ data }) {
           <p className="text-orange-500">R$ {data.price.toFixed(2)}</p>
         </div>
       </div>
-      <div className="flex items-center justify-between border-b bg-gray-100 p-2 px-4">
+      <button className="flex w-full items-center justify-between border-b bg-gray-100 p-2 px-4">
         <p className="">Avalie o pedido</p>
         <span className="flex gap-2">{renderStars(data.rating)}</span>
-      </div>
+      </button>
       <div className="rounded-b-lg bg-gray-100 p-2 text-center">
         <button className="text-orange-500">Ajuda</button>
       </div>
