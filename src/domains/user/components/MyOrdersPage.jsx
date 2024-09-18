@@ -1,6 +1,7 @@
 import { IconShoppingBag } from "@tabler/icons-react"
 
 import { Button } from "./Button"
+// import { Button } from "@/ui/components/ui/button/button"
 import { CardItem } from "./CardItem"
 
 const cardData = [
@@ -44,27 +45,33 @@ export function MyOrdersPage() {
       <h1 className="mt-5 w-full pb-6 pt-7 text-center text-2xl font-semibold lg:py-10">
         Meus Pedidos
       </h1>
-      <div className="flex w-full max-w-[320px] flex-col items-center gap-4 text-center">
-        <IconShoppingBag size={45} />
-        <h2 className="text-xl font-semibold">Você ainda não fez pedidos!</h2>
-        <p className="w-[250px]">
-          explore as lojas e tire a barriga da miséria hoje mesmo!
-        </p>
-        <Button>explorar agora!</Button>
-      </div>
+
       <div className="flex w-full flex-col items-start px-8">
         <div className="flex w-full flex-col">
-          <h2 className="my-8 text-center font-semibold text-orange-500 lg:px-24 lg:text-start">
-            Histórico
-          </h2>
           {cardData.length > 0 ? (
-            <div className="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {cardData.map((data, index) => (
-                <CardItem key={index} data={data} />
-              ))}
-            </div>
+            <>
+              <h2 className="my-8 text-center font-semibold text-orange-500 lg:px-24 lg:text-start">
+                Histórico
+              </h2>
+              <div className="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {cardData.map((data, index) => (
+                  <CardItem key={index} data={data} />
+                ))}
+              </div>
+            </>
           ) : (
-            <p className="p-4 text-center">Você ainda não fez pedidos.</p>
+            <div className="flex h-[50vh] w-full items-center justify-center">
+              <div className="flex w-full max-w-[320px] flex-col items-center gap-4 text-center">
+                <IconShoppingBag size={45} />
+                <h2 className="text-xl font-semibold">
+                  Você ainda não fez pedidos!
+                </h2>
+                <p className="w-[250px]">
+                  explore as lojas e tire a barriga da miséria hoje mesmo!
+                </p>
+                <Button>explorar agora!</Button>
+              </div>
+            </div>
           )}
         </div>
       </div>
