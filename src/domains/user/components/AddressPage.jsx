@@ -1,7 +1,9 @@
 import { useState } from "react"
 
+// import { Button } from "./Button"
+import { Button } from "@/ui/components/ui/button/button"
+
 import { AddressCard } from "./AddressCard"
-import { Button } from "./Button"
 import ilustra from "./ilustra.png"
 import { Modal } from "./Modal"
 const addresses = [
@@ -92,11 +94,7 @@ export function AddressPage() {
             )}
           </div>
           <div className="py-11 lg:py-0">
-            <Button
-              color="bg-orange-500"
-              textColor="text-white"
-              hoverColor="hover:bg-orange-700"
-            >
+            <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
               Adicionar novo endereço
             </Button>
           </div>
