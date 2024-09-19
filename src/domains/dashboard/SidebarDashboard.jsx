@@ -1,7 +1,7 @@
 import {
   IconCurrencyDollar,
   IconLogout,
-  IconMenu2,
+  // IconMenu2,
   IconPaperBag,
   IconSettings,
   IconToolsKitchen2,
@@ -15,15 +15,15 @@ export function SidebarDashboard() {
   }
   return (
     <>
-      <button
+      {/* <button
         onClick={toggleMenu}
         className="absolute left-2 top-2 z-30 h-[80px] w-[80px] rounded-lg p-3 text-white transition-all duration-300 ease-in-out hover:bg-orange-500 lg:hidden"
       >
         <IconMenu2 size={40} className="mx-auto" />
-      </button>
+      </button> */}
 
-      <div className="z-50 flex max-w-24 flex-grow flex-col items-center justify-between bg-slate-900 py-6 text-sm text-white">
-        <div className="flex flex-col gap-3">
+      <div className="z-50 flex flex-grow flex-row items-center justify-between bg-slate-900 py-6 text-sm text-white lg:max-w-24 lg:flex-col">
+        <div className="flex flex-row gap-3 lg:flex-col">
           <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
             <IconPaperBag size={40} className="mx-auto" />
             <p>Pedidos</p>
@@ -37,8 +37,11 @@ export function SidebarDashboard() {
             <p>Finanças</p>
           </button>
         </div>
-        <div className="flex flex-col gap-3">
-          <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
+        <div className="flex flex-row gap-3 lg:flex-col">
+          <button
+            onClick={toggleMenu}
+            className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500"
+          >
             <IconSettings size={40} className="mx-auto" />
             <p>Ajustes</p>
           </button>
@@ -50,7 +53,7 @@ export function SidebarDashboard() {
       </div>
 
       <div
-        className={`flex flex-col py-8 text-center font-semibold shadow-right transition-all duration-300 ease-in-out ${open ? "w-[220px] overflow-hidden" : "w-0 -translate-x-80"}`}
+        className={`fixed top-56 z-10 flex flex-col bg-white py-8 text-center font-semibold shadow-right transition-all duration-300 ease-in-out lg:top-auto lg:ms-24 ${open ? "w-[220px] overflow-hidden" : "w-0 -translate-x-80"}`}
       >
         <h3 className="pb-8 text-xl font-bold">Ajustes</h3>
         <h4 className="bg-slate-900 py-2 text-sm text-white">
