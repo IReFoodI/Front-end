@@ -22,7 +22,7 @@ export function SidebarDashboard() {
         <IconMenu2 size={40} className="mx-auto" />
       </button>
 
-      <div className="z-50 flex w-24 flex-col items-center justify-between bg-slate-900 py-6 text-sm text-white">
+      <div className="z-50 flex max-w-24 flex-grow flex-col items-center justify-between bg-slate-900 py-6 text-sm text-white">
         <div className="flex flex-col gap-3">
           <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
             <IconPaperBag size={40} className="mx-auto" />
