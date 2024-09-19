@@ -39,6 +39,17 @@ const cardData = [
     rating: 3,
     imgUrl: "https://placehold.co/100x100",
   },
+  {
+    date: "Qui 08 agosto 2024",
+    name: "Lótus Azul",
+    type: "Café",
+    orderNumber: 1122,
+    items: 3,
+    itemName: "Café especial",
+    price: 15.0,
+    rating: 0,
+    imgUrl: "https://placehold.co/100x100",
+  },
 ]
 export function MyOrdersPage() {
   return (

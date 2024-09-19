@@ -4,6 +4,14 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/ui/components/ui/alert-dialog"
+import { Button } from "@/ui/components/ui/button/button"
+
+import { ReviewModal } from "./ReviewModal"
+
 function renderStars(rating) {
   const stars = []
   for (let i = 0; i < 5; i++) {
@@ -51,12 +59,30 @@ export function CardItem({ data }) {
           <p className="text-orange-500">R$ {data.price.toFixed(2)}</p>
         </div>
       </div>
-      <button className="flex w-full items-center justify-between border-b bg-gray-100 p-2 px-4">
-        <p className="">Avalie o pedido</p>
-        <span className="flex gap-2">{renderStars(data.rating)}</span>
-      </button>
+      {data.rating ? (
+        <div className="flex w-full items-center justify-between border-b bg-gray-100 p-2 px-4">
+          <p className="">Pedido avaliado</p>
+          <span className="flex gap-2">{renderStars(data.rating)}</span>
+        </div>
+      ) : (
+        <AlertDialog>
+          <AlertDialogTrigger
+            variant="ghost"
+            className="flex w-full items-center justify-between rounded-none border-b bg-gray-100 p-2 px-4"
+          >
+            <p>Avalie o pedido</p>
+          </AlertDialogTrigger>
+          <ReviewModal />
+        </AlertDialog>
+      )}
+
       <div className="rounded-b-lg bg-gray-100 p-2 text-center">
-        <button className="text-orange-500">Ajuda</button>
+        <Button
+          variant="ghost"
+          className="flex h-5 w-full items-center justify-center text-primary hover:text-primary"
+        >
+          Ajuda
+        </Button>
       </div>
     </div>
   )
