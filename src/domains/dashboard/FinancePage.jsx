@@ -20,8 +20,8 @@ export function FinancePage() {
           </div>
         </div>
 
-        <section className="grid w-full grid-cols-12 gap-4 transition-all">
-          <div className="col-span-5">
+        <section className="grid w-full grid-cols-12 gap-4 transition-all sm:grid-cols-6 lg:grid-cols-12">
+          <div className="col-span-12 sm:col-span-3 lg:col-span-5">
             <Card className="bg-primary text-white">
               <CardHeader>
                 <CardTitle>Pedidos hoje - Ticket médio hoje</CardTitle>
@@ -35,7 +35,7 @@ export function FinancePage() {
             </Card>
           </div>
 
-          <div className="col-span-5">
+          <div className="col-span-12 sm:col-span-3 lg:col-span-5">
             <Card>
               <CardHeader>
                 <CardTitle>Pedidos do mês Ticket médio mês</CardTitle>
@@ -49,7 +49,7 @@ export function FinancePage() {
             </Card>
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-12 sm:col-span-6 lg:col-span-2">
             <Card>
               <CardHeader>
                 <CardTitle>Avaliações</CardTitle>
@@ -63,14 +63,14 @@ export function FinancePage() {
             </Card>
           </div>
         </section>
-        <section className="mt-5 grid w-full grid-cols-12 gap-4 transition-all lg:grid-cols-12">
-          <Card className="col-span-8">
+        <section className="mt-5 grid w-full grid-cols-12 gap-4 transition-all sm:grid-cols-6 lg:grid-cols-12">
+          <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
             <CardContent>
               <p className="p-4 text-xl font-semibold">Overview</p>
               <ChartCard />
             </CardContent>
           </Card>
-          <div className="col-span-4 flex flex-col gap-5">
+          <div className="col-span-12 flex flex-col gap-5 sm:col-span-6 lg:col-span-4">
             <Card>
               <CardHeader>
                 <CardTitle>Total faturado no mês</CardTitle>
