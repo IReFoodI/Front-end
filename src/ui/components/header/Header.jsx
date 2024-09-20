@@ -33,7 +33,7 @@ function Header() {
   }
 
   return (
-    <header className="sticky top-0 w-screen bg-orange-50 p-4 drop-shadow-md">
+    <header className="sticky top-0 z-10 w-screen bg-orange-50 p-4 drop-shadow-md">
       <div className="relative flex w-full flex-col items-center justify-between md:m-auto md:w-[70%] md:flex-row">
         <section className="flex w-full items-center justify-between">
           <MenuMobile />
