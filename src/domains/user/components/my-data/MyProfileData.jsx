@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { PatternFormat } from "react-number-format"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -15,6 +14,7 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 
 import { ModalCancel } from "./ModalCancel"
 
@@ -116,13 +116,7 @@ export function MyProfileData() {
               <FormItem>
                 <FormLabel>Contato</FormLabel>
                 <FormControl>
-                  <PatternFormat
-                    format="(##) #####-####"
-                    allowEmptyFormatting
-                    mask="_"
-                    className="input !mt-1 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:max-w-[50%]"
-                    {...field}
-                  />
+                  <PhonePatternFormat {...field} />
                 </FormControl>
                 <FormMessage className={"text-xs"} />
               </FormItem>
