@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 import { LoginProvider } from "@/app/context/LoginContext"
 
-import { Decorative } from "../../domains/user/components/Decorative"
+import { Decorative } from "../../domains/user/components/login/Decorative"
 
 export function Layout() {
   return (
