@@ -8,14 +8,14 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
-import AddressModal from "../header/addressModal/AddressModal"
-import MenuMobile from "../header/navMenu/MenuMobile"
+import { AddressModal } from "../header/addressModal/AddressModal"
+import { MenuMobile } from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
-function Header() {
+export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
   const [orderQuantity, setOrderQuantity] = useState(0)
@@ -59,8 +59,6 @@ function Header() {
             </div>
           </div>
           <div className="right-0 flex gap-3 md:absolute">
-            {/* Aqui é onde será colocado o modal de perfil */}
-
             <Popover onOpenChange={handleProfilePopoverOpen}>
               <PopoverTrigger asChild>
                 <Link
@@ -79,7 +77,6 @@ function Header() {
               className={`relative m-auto w-10 rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
               onClick={handleClick}
             >
-              {/* colocar rota para página de pedidos na sacola de compras */}
               <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
                 {orderQuantity}
               </span>
@@ -105,7 +102,11 @@ function Header() {
               <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]">
                 <IconFilter size={20} />
               </PopoverTrigger>
-              <PopoverContent align="end" sideOffset={20} className="w-full">
+              <PopoverContent
+                align="end"
+                sideOffset={20}
+                className="relative left-2 w-full"
+              >
                 <RestaurantFilter />
               </PopoverContent>
             </Popover>
@@ -115,5 +116,3 @@ function Header() {
     </header>
   )
 }
-
-export default Header

@@ -2,10 +2,10 @@ import { IconCaretDownFilled } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import { Button } from "../../ui/button/button"
+import { Button } from "../../ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
 
-function AddressModal() {
+export function AddressModal() {
   const [isActive, setIsActive] = useState(false)
 
   function handleClick() {
@@ -32,7 +32,7 @@ function AddressModal() {
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className="relative left-4 top-14 md:absolute md:left-0 md:top-5 md:w-96"
+        className="relative top-14 md:absolute md:left-0 md:top-5 md:w-96"
         align="start"
       >
         <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -61,5 +61,3 @@ function AddressModal() {
     </Popover>
   )
 }
-
-export default AddressModal

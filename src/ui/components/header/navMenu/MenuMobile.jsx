@@ -3,7 +3,7 @@ import { IconMenu2 } from "@tabler/icons-react"
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet"
 import { ProfileSheet } from "../profileSheet/ProfileSheet"
 
-function MenuMobile() {
+export function MenuMobile() {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -17,5 +17,3 @@ function MenuMobile() {
     </Sheet>
   )
 }
-
-export default MenuMobile
