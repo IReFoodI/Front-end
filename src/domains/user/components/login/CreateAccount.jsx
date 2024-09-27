@@ -2,9 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { z } from "zod"
+import { toast } from "sonner"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 import { Checkbox } from "@/ui/components/ui/checkbox"
 import {
   Form,
@@ -16,35 +16,11 @@ import {
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
 import { Label } from "@/ui/components/ui/label"
+import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
+import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
-import { TextWithLink } from "./TextWithLink"
-
-const phoneRegex = /^\+?[1-9]\d{1,14}$/
-
-const formSchema = z.object({
-  name: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .min(2, { message: "Tamanho mínimo de 2 caracter" }),
-  email: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .email({ message: "Formato de e-mail inválido" }),
-  phone: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .regex(phoneRegex, { message: "Número de telefone inválido" }),
-  password: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .min(6, { message: "A senha deve ter pelo menos 6 caracteres" })
-    .max(40, { message: "A senha deve ter até 40 caracteres" }),
-})
 
 export function CreateAccount() {
   const navigate = useNavigate()
@@ -52,16 +28,19 @@ export function CreateAccount() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: undefined,
-      phone: undefined,
-      email: undefined,
-      password: undefined,
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
     },
   })
 
   const onSubmit = (data) => {
-    console.log(data)
-    if (acceptedTerms) navigate("/home")
+    if (acceptedTerms) {
+      toast.success("Conta criada com sucesso! Bem-vindo(a)!")
+      navigate("/home")
+      console.log(data)
+    }
   }
 
   return (
@@ -101,12 +80,7 @@ export function CreateAccount() {
               <FormItem>
                 <FormLabel>Contato</FormLabel>
                 <FormControl>
-                  <Input
-                    type="tel"
-                    placeholder="(DDD) + Celular"
-                    className={"!mt-1"}
-                    {...field}
-                  />
+                  <PhonePatternFormat {...field} />
                 </FormControl>
                 <FormMessage className={"text-xs"} />
               </FormItem>
