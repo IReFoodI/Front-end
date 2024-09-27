@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 
 import { Decorative } from "./Decorative"
 
