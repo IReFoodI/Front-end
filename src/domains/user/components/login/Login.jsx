@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { z } from "zod"
+import { toast } from "sonner"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
   FormControl,
@@ -13,22 +13,10 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { formSchema } from "../../models/LoginTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
-import { TextWithLink } from "./TextWithLink"
-
-const formSchema = z.object({
-  email: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .email({ message: "Formato de e-mail inválido" }),
-  password: z
-    .string({
-      required_error: "Campo obrigatório",
-    })
-    .min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
-})
 
 export function Login() {
   const navigate = useNavigate()
@@ -36,12 +24,13 @@ export function Login() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: undefined,
-      password: undefined,
+      email: "",
+      password: "",
     },
   })
 
   const onSubmit = (data) => {
+    toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
     console.log(data)
     navigate("/home")
   }
