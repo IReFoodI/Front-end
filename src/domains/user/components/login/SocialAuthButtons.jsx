@@ -1,6 +1,6 @@
 import { IconBrandFacebook, IconBrandGoogle } from "@tabler/icons-react"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons() {
   return (
