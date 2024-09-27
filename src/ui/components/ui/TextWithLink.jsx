@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "./button/button"
+
+
 
 export function TextWithLink({ text, buttonContent, navigateTo }) {
   const navigate = useNavigate()
