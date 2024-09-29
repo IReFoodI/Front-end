@@ -6,12 +6,12 @@ import {
   IconMapPin,
   IconStarFilled,
 } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
 import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
-import { Link } from "react-router-dom"
 
 export function StoreProfilePage() {
   return (
@@ -25,7 +25,7 @@ export function StoreProfilePage() {
         style={{ backgroundImage: `url(${capa})` }}
       >
         <div className="relative top-9 cursor-pointer transition duration-300 hover:text-primary">
-        <Link
+          <Link
             to="/home
             "
           >

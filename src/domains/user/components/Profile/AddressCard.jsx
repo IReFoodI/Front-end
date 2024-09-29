@@ -1,9 +1,9 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
+import { ROUTES } from "@/app/router/routes"
 import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
-import { ROUTES } from "@/app/router/routes"
 
 export function AddressCard({ className, enderecoData = {}, ...props }) {
   const {
@@ -65,7 +65,10 @@ export function AddressCard({ className, enderecoData = {}, ...props }) {
         </div>
       </CardContent>
       <CardContent className="flex justify-end">
-        <Link to={ROUTES.getEnderecosEditById(id)} className="flex items-center gap-2">
+        <Link
+          to={ROUTES.getEnderecosEditById(id)}
+          className="flex items-center gap-2"
+        >
           <IconEdit className="h-[16px] w-[16px] text-[hsl(var(--Accent))]" />
         </Link>
         <IconTrash className="h-[16px] w-[16px] text-[hsl(var(--Accent))]" />

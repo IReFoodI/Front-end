@@ -7,12 +7,12 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 import { useState } from "react"
+import { Link } from "react-router-dom"
+
+import { ROUTES } from "@/app/router/routes"
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
-import { Link } from "react-router-dom"
-import { ROUTES } from "@/app/router/routes"
-
 
 export function StoreProfilePageTopDesktop() {
   const [isHeartFilled, setIsHeartFilled] = useState(false)

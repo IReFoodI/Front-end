@@ -12,8 +12,8 @@ import { Link } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
-
 import { Button } from "@/ui/components/ui/button/button"
+
 import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"

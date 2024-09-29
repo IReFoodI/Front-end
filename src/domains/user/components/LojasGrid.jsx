@@ -1,7 +1,7 @@
 import React from "react"
 
-import { BannerPromo } from "./Home/BannerPromo"
 import { CardLoja } from "./CardLoja"
+import { BannerPromo } from "./Home/BannerPromo"
 
 export function LojasGrid({ lojas, toggleFavorite, showBanner }) {
   return (

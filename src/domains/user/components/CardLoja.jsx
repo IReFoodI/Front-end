@@ -1,10 +1,11 @@
+import { IconStarFilled } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
-import { IconStarFilled } from "@tabler/icons-react"
+import { ROUTES } from "@/app/router/routes"
 import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
+
 import { FavoriteButton } from "./FavoriteButton"
-import { ROUTES } from "@/app/router/routes"
 
 export function CardLoja({
   className,

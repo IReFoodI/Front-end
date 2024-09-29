@@ -1,6 +1,6 @@
 import { useLojas } from "../../hooks/useLojas"
-import { BannerPromo } from "./BannerPromo"
 import { LojasGrid } from "../LojasGrid"
+import { BannerPromo } from "./BannerPromo"
 
 export function Home() {
   const { lojas, loading, toggleFavorite } = useLojas()

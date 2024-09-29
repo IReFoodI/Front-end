@@ -6,13 +6,13 @@ import {
 } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
+import { ROUTES } from "@/app/router/routes"
 
 import logo from "./logo-loja.png"
 import { StoreInformationInfo } from "./StoreInformationInfo"
 import { StoreInformationReview } from "./StoreInformationReview"
 import { StoreInformationTabs } from "./StoreInformationTabs"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
-import { ROUTES } from "@/app/router/routes"
 
 export function StoreInformationSectionPage() {
   return (
@@ -22,9 +22,7 @@ export function StoreInformationSectionPage() {
     >
       <header className="mb-6 xl:hidden">
         <div id="icons-mobile" className="flex justify-between">
-          <Link
-            to={ROUTES.LOJA}
-          >
+          <Link to={ROUTES.LOJA}>
             <IconArrowLeft className="cursor-pointer transition duration-300 hover:text-primary" />
           </Link>
           <div className="flex justify-end gap-2 text-gray-400">

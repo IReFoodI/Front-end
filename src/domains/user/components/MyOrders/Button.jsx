@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export function Button({
   children,
   color = "bg-orange-500",
