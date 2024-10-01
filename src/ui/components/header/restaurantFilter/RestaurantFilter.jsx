@@ -2,6 +2,7 @@ import { Cross1Icon } from "@radix-ui/react-icons"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { useState } from "react"
 
+//
 import MapPin from "@/ui/assets/MapPin"
 import StarIcon from "@/ui/assets/StarIcon"
 import { Slider } from "@/ui/components/ui/slider"

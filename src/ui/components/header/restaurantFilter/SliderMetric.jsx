@@ -6,7 +6,7 @@ export function SliderMetric({ initialValue, currentValue, finalValue, step }) {
     initialValue + step * 3,
     initialValue + step * 4,
   ]
-
+  //
   return (
     <div className="flex justify-between text-sm">
       {values.map((value, index) => (
