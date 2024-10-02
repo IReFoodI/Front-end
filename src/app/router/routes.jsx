@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
-import { PageNotFound } from "@/domains/user/components/PageNotFound.jsx"
+import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 
 import App from "../App.jsx"
 
