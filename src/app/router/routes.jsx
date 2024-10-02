@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
-import { InConstruction } from "@/domains/user/components/InConstruction.jsx"
+import { PageNotFound } from "@/domains/user/components/PageNotFound.jsx"
 
 import App from "../App.jsx"
 
@@ -17,6 +17,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <InConstruction />,
+    element: <PageNotFound />,
   },
 ])
