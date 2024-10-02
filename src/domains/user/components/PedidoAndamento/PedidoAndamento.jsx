@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { PedidoCard } from "./PedidoCard"
-import fundo from "@/ui/assets/fundo.png"
 import { Link } from "react-router-dom"
 
+import fundo from "@/ui/assets/fundo.png"
+
+import { PedidoCard } from "./PedidoCard"
+
 export function PedidoAndamento() {
-  const [pedido, setPedido] = useState({
+  const [pedido] = useState({
     retiradaHorario: "Hoje, 19:52 - 20:02",
     statusPedido: "A Loja está separando seu pedido",
     restaurante: {
@@ -40,7 +42,6 @@ export function PedidoAndamento() {
       <div className="flex h-full flex-col md:flex-row">
         <div className="flex flex-col justify-between px-10 lg:w-1/2 lg:ps-5">
           <div className="flex-1">
-            {/* Passando as propriedades corretamente para o PedidoCard */}
             <PedidoCard
               retiradaHorario={pedido.retiradaHorario}
               statusPedido={pedido.statusPedido}
@@ -56,14 +57,12 @@ export function PedidoAndamento() {
           </div>
         </div>
         <div className="relative flex justify-end">
-          {/* Imagem de fundo (ocultada no mobile) */}
           <img
             className="z-10 hidden max-h-[700px] w-[80%] md:relative md:block"
             src={fundo}
             alt=""
           />
 
-          {/* Mapa (sempre visível) */}
           <div
             id="map"
             className="top-12 z-20 mx-auto flex w-[80%] items-center justify-center md:absolute md:left-0 md:h-[80%]"

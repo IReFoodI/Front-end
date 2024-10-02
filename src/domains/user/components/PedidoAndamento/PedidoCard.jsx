@@ -12,9 +12,8 @@ export function PedidoCard({
   metodoPagamento,
   statusPagamento,
 }) {
-  const [expandedItems, setExpandedItems] = useState({}) // Estado para controlar itens expandidos
+  const [expandedItems, setExpandedItems] = useState({})
 
-  // Função para alternar a exibição completa da descrição do item
   const toggleItemDescription = (index) => {
     setExpandedItems((prev) => ({
       ...prev,
@@ -24,7 +23,6 @@ export function PedidoCard({
 
   return (
     <div className="mx-auto max-w-md rounded-lg p-4 md:bg-[#FFF8F5]">
-      {/* Previsão para Retirada */}
       <div className="text-sm font-semibold text-[#FB3D01]">
         Previsão para Retirada
       </div>
@@ -49,7 +47,6 @@ export function PedidoCard({
         <span className="ml-2 text-sm text-gray-500">{statusPedido}</span>
       </div>
 
-      {/* Detalhes do Pedido */}
       <div className="mt-6">
         <div className="text-lg font-semibold text-[#FB3D01]">
           Detalhes do Pedido
@@ -81,7 +78,6 @@ export function PedidoCard({
                 <div className="text-[#1E1F2B]">{item.nome}</div>
                 <div className="text-[#1E1F2B]">{item.preco}</div>
               </div>
-              {/* Exibe a descrição com limite de uma linha e opção de expandir */}
               <div
                 className={`mt-1 text-sm text-gray-400 ${expandedItems[index] ? "" : "line-clamp-1"}`}
               >
@@ -106,15 +102,13 @@ export function PedidoCard({
             </div>
           ))}
 
-          {/* Subtotal */}
-          <div className="bg-background p-2 rounded-lg mt-4 flex justify-between">
+          <div className="mt-4 flex justify-between rounded-lg bg-background p-2">
             <div className="font-semibold">Subtotal</div>
             <div className="font-semibold">{subtotal}</div>
           </div>
 
-          {/* Forma de entrega e pagamento */}
-          <div className="bg-background p-2 rounded-lg mt-4 flex items-center justify-between">
-            <div className="text-sm text-gray-500 pr-2">
+          <div className="mt-4 flex items-center justify-between rounded-lg bg-background p-2">
+            <div className="pr-2 text-sm text-gray-500">
               <span className="block">Forma de entrega:</span>
               <span className="block font-semibold">{formaEntrega}</span>
             </div>
