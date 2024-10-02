@@ -10,8 +10,8 @@ import {
 } from "@/ui/components/ui/dialog"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
+import ilustra from "../../../ui/assets/ilustra.png"
 import { AddressCard } from "./AddressCard"
-import ilustra from "./ilustra.png"
 
 const addresses = [
   {
