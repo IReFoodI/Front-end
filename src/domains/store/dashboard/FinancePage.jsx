@@ -3,6 +3,7 @@ import {
   IconShoppingCart,
   IconSquareX,
 } from "@tabler/icons-react"
+import { useState } from "react"
 
 import {
   Card,
@@ -13,16 +14,31 @@ import {
 } from "@/ui/components/ui/card"
 
 import { ChartCard } from "./ChartCard"
-import { DatePicker } from "./DatePicker"
+import { SelectMonth } from "./SelectMonth"
+import { SelectYear } from "./SelectYear"
 
 export function FinancePage() {
+  const [selectedMonth, setSelectedMonth] = useState(
+    new Date().getMonth().toString()
+  )
+  const [selectedYear, setSelectedYear] = useState(
+    new Date().getFullYear().toString()
+  )
   return (
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Finanças</h1>
-          <div>
-            <DatePicker />
+          <div className="flex items-center justify-end gap-3">
+            <SelectMonth
+              selectedMonth={selectedMonth}
+              selectedYear={selectedYear}
+              setSelectedMonth={setSelectedMonth}
+            />
+            <SelectYear
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
           </div>
         </div>
 
