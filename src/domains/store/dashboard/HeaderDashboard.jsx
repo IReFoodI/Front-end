@@ -1,7 +1,7 @@
 import { Button } from "@/ui/components/ui/button/button"
 
 import Logo from "./Logo-Negocios.png"
-export function HeaderDashboar() {
+export function HeaderDashboard() {
   return (
     <header className="sticky bg-slate-900 shadow-md">
       <div className="mx-auto flex h-24 items-center justify-between px-8 text-white">
