@@ -1,13 +1,12 @@
 import { useLojas } from "../hooks/useLojas"
 import { BannerPromo } from "./BannerPromo"
 import { LojasGrid } from "./LojasGrid"
-import PageLayout from "./PageLayout"
 
 export function Home() {
   const { lojas, loading, toggleFavorite } = useLojas()
 
   return (
-    <PageLayout headerText="Home">
+    <>
       <div className="my-10 hidden lg:left-0 lg:top-0 lg:z-10 lg:block lg:h-[300px] lg:w-full">
         <BannerPromo title="Confira nossas ofertas especiais!" />
       </div>
@@ -20,6 +19,6 @@ export function Home() {
           showBanner={true}
         />
       )}
-    </PageLayout>
+    </>
   )
 }
