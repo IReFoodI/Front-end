@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -13,13 +14,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/ui/components/ui/form/form"
-import { Input } from "@/ui/components/ui/input"
+import { PasswordInput } from "@/ui/components/ui/passwordInput"
 
 import ilustra from "../../../../ui/assets/ilustra.png"
 import { formSchema } from "../../models/ChangePasswordTypes"
 
 export function ChangePassword() {
   const navigate = useNavigate()
+
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    oldPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  })
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,8 +67,10 @@ export function ChangePassword() {
                     <FormItem>
                       <FormLabel>Senha antiga</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
+                        <PasswordInput
+                          fieldName="oldPassword"
+                          passwordVisibility={passwordVisibility.oldPassword}
+                          setPasswordVisibility={setPasswordVisibility}
                           placeholder="********"
                           className={"!mt-1"}
                           {...field}
@@ -73,7 +83,7 @@ export function ChangePassword() {
                 <TextWithLink
                   text="Esqueceu sua senha?"
                   buttonContent="Recuperar senha"
-                  navigateTo="/recoverPassword" //TODO: fazer rota
+                  navigateTo="/recoverPassword"
                   style={"!justify-start"}
                 />
 
@@ -85,8 +95,10 @@ export function ChangePassword() {
                     <FormItem>
                       <FormLabel>Nova senha</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
+                        <PasswordInput
+                          fieldName="newPassword"
+                          passwordVisibility={passwordVisibility.newPassword}
+                          setPasswordVisibility={setPasswordVisibility}
                           placeholder="********"
                           className={"!mt-1"}
                           {...field}
@@ -104,8 +116,12 @@ export function ChangePassword() {
                     <FormItem>
                       <FormLabel>Confirmar senha</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
+                        <PasswordInput
+                          fieldName="confirmPassword"
+                          passwordVisibility={
+                            passwordVisibility.confirmPassword
+                          }
+                          setPasswordVisibility={setPasswordVisibility}
                           placeholder="********"
                           className={"!mt-1"}
                           {...field}
