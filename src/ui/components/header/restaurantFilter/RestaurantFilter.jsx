@@ -1,10 +1,10 @@
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { PopoverClose } from "@radix-ui/react-popover"
+//
+import { IconMapPin } from "@tabler/icons-react"
+import { IconStar } from "@tabler/icons-react"
 import { useState } from "react"
 
-//
-import MapPin from "@/ui/assets/MapPin"
-import StarIcon from "@/ui/assets/StarIcon"
 import { Slider } from "@/ui/components/ui/slider"
 
 import { FilterItemContainer } from "./FilterItemContainer"
@@ -14,22 +14,25 @@ export function RestaurantFilter() {
   const [sliderValue, setSlidervalue] = useState([0])
 
   const ordinateBy = [
-    { buttonTitle: "Mais próximos", imageSource: MapPin },
     {
       buttonTitle: "Mais próximos",
-      imageSource: StarIcon,
+      imageSource: <IconMapPin className="size-4" />,
+    },
+    {
+      buttonTitle: "Mais próximos",
+      imageSource: <IconStar className="size-4" />,
     },
   ]
 
   const kindOfDelivery = [
-    { buttonTitle: "Retirada", imageSource: MapPin },
-    { buttonTitle: "Entrega", imageSource: MapPin },
+    { buttonTitle: "Retirada", imageSource: <IconMapPin className="size-4" /> },
+    { buttonTitle: "Entrega", imageSource: <IconMapPin className="size-4" /> },
   ]
 
   const categories = [
-    { buttonTitle: "Salgado", imageSource: MapPin },
-    { buttonTitle: "Doce", imageSource: MapPin },
-    { buttonTitle: "Misto", imageSource: MapPin },
+    { buttonTitle: "Salgado", imageSource: <IconMapPin className="size-4" /> },
+    { buttonTitle: "Doce", imageSource: <IconMapPin className="size-4" /> },
+    { buttonTitle: "Misto", imageSource: <IconMapPin className="size-4" /> },
   ]
 
   return (

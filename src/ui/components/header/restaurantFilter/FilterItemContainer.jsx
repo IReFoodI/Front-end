@@ -13,8 +13,6 @@ export function FilterItemContainer({ title, items }) {
 
       <div className="flex gap-2">
         {items.map((item, index) => {
-          const IconComponent = item.imageSource
-
           return (
             <button
               key={index}
@@ -25,10 +23,7 @@ export function FilterItemContainer({ title, items }) {
               }`}
               onClick={() => handleClick(index)}
             >
-              <IconComponent
-                className="size-4"
-                color={activeItem == index ? "#fa4808" : "#616375"}
-              />
+              <span>{item.imageSource}</span>
               <span className="px-1">{item.buttonTitle}</span>
             </button>
           )
