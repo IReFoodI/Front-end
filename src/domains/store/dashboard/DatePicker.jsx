@@ -1,10 +1,7 @@
-"use client"
-
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, format } from "date-fns"
 import * as React from "react"
 
-// import { DateRange } from "react-day-picker"
 import { cn } from "@/app/utils/cn"
 import { Button } from "@/ui/components/ui/button/button"
 import { Calendar } from "@/ui/components/ui/calendar"
@@ -16,8 +13,8 @@ import {
 
 export function DatePicker({ className }) {
   const [date, setDate] = React.useState({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
+    from: addDays(new Date(), -90),
+    to: new Date(),
   })
 
   return (

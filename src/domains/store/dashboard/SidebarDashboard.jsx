@@ -3,10 +3,11 @@ import {
   IconLogout,
   // IconMenu2,
   IconPaperBag,
-  IconSettings,
   IconToolsKitchen2,
 } from "@tabler/icons-react"
 import { useState } from "react"
+
+import { Button } from "@/ui/components/ui/button/button"
 export function SidebarDashboard() {
   const [open, setopen] = useState(false)
 
@@ -22,33 +23,48 @@ export function SidebarDashboard() {
         <IconMenu2 size={40} className="mx-auto" />
       </button> */}
 
-      <div className="z-50 flex flex-grow flex-row items-center justify-between bg-slate-900 py-6 text-sm text-white lg:max-w-24 lg:flex-col">
+      <div className="z-50 flex flex-grow flex-row items-center justify-between bg-slate-900 py-6 text-sm text-white lg:max-w-24 lg:flex-col lg:gap-3">
         <div className="flex flex-row gap-3 lg:flex-col">
-          <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
+          <Button
+            className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500"
+            variant="ghost"
+          >
             <IconPaperBag size={40} className="mx-auto" />
             <p>Pedidos</p>
-          </button>
-          <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
+          </Button>
+          <Button
+            className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500"
+            variant="ghost"
+          >
             <IconToolsKitchen2 size={40} className="mx-auto" />
             <p>Cardápio</p>
-          </button>
-          <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
+          </Button>
+          <Button
+            className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500"
+            variant="ghost"
+          >
             <IconCurrencyDollar size={40} className="mx-auto" />
             <p>Finanças</p>
-          </button>
+          </Button>
         </div>
         <div className="flex flex-row gap-3 lg:flex-col">
-          <button
-            onClick={toggleMenu}
+          {/* <Toggle className="flex w-[80px] flex-col items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-orange-500">
+            <Button
+              variant="ghost"
+              onClick={toggleMenu}
+              className="flex w-full flex-col items-center justify-center rounded-lg"
+            >
+              <IconSettings size={40} />
+              <p>Ajustes</p>
+            </Button>
+          </Toggle> */}
+          <Button
             className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500"
+            variant="ghost"
           >
-            <IconSettings size={40} className="mx-auto" />
-            <p>Ajustes</p>
-          </button>
-          <button className="w-[80px] rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-orange-500">
             <IconLogout size={40} className="mx-auto" />
             <p>Sair</p>
-          </button>
+          </Button>
         </div>
       </div>
 
