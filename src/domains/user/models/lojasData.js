@@ -14,7 +14,7 @@ export const lojasData = [
   {
     id: 1,
     nome: "Dragão Verde",
-    desconto: "20% OFF",
+    desconto: "",
     avaliacao: "4,7",
     categoria: "Lancheria",
     horario: "11:00 às 23:00",
