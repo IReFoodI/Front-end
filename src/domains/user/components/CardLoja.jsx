@@ -17,7 +17,6 @@ export function CardLoja({
     avaliacao = "0.0",
     categoria = "Categoria não disponível",
     horario = "Horário não disponível",
-    distancia = "Distância não disponível",
     isFavorited = false,
     imagePath = "", // Caminho da imagem da loja
     logoPath = "", // Caminho do logotipo da loja
@@ -31,18 +30,18 @@ export function CardLoja({
       )}
       {...props}
     >
-      <CardContent className="relative flex aspect-square h-[100%] w-[100%] items-center justify-center p-0 pb-12">
-        <div className="relative">
+      <CardContent className="relative flex h-full w-full items-center justify-center p-0 pb-12">
+        <div className="relative h-auto w-full">
           <img
             src={imagePath}
             alt={`${nome} Image`}
-            className="rounded-[23px] border-[3px]"
+            className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
           <div className="absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] -translate-x-1/2 translate-y-1/3 transform">
             <img
               src={logoPath}
               alt={`${nome} Logo`}
-              className="h-full w-full rounded-full border-[3px] object-cover"
+              className="h-full w-full rounded-full object-cover"
             />
           </div>
         </div>
@@ -72,9 +71,6 @@ export function CardLoja({
         <div className="mt-4 flex items-center">
           <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
             {horario}
-          </span>
-          <span className="font-inter ml-1 font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-            {distancia}
           </span>
         </div>
       </CardContent>

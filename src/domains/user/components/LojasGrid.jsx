@@ -11,15 +11,15 @@ export function LojasGrid({ lojas, toggleFavorite, showBanner, singleColumn }) {
       {lojas.length > 0 ? (
         lojas.map((loja, index) => (
           <React.Fragment key={loja.id}>
-            <CardLoja
-              lojaData={loja}
-              onFavoriteToggle={() => toggleFavorite(loja.id)}
-            />
             {showBanner && index % 6 === 0 && (
               <div className="sm:col-span-full lg:hidden">
                 <BannerPromo title="Confira nossas ofertas especiais!" />
               </div>
             )}
+            <CardLoja
+              lojaData={loja}
+              onFavoriteToggle={() => toggleFavorite(loja.id)}
+            />
           </React.Fragment>
         ))
       ) : (
