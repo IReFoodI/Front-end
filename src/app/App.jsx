@@ -1,9 +1,9 @@
-import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage"
+import { Outlet } from "react-router-dom"
 
 function App() {
   return (
     <>
-      <StoreProfilePage />
+      <Outlet />
     </>
   )
 }
