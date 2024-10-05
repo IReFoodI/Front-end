@@ -9,9 +9,12 @@ export function PresentationContent() {
   return (
     <>
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
-        texto de abertura apresentando o app
+        Economize e ajude a reduzir o desperdício!
       </h1>
-      <p className="text-muted-foreground">texto complementar sobre o app</p>
+      <p className="text-muted-foreground">
+        Conectamos você a restaurantes e mercados que vendem alimentos próximos
+        do vencimento a preços reduzidos.
+      </p>
       <Decorative className={"sm:hidden"} />
       <p className="mt-5 text-muted-foreground">Como deseja continuar?</p>
       <nav aria-label="Navegação de login e registro" className="grid gap-2">
