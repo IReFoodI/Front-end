@@ -26,7 +26,7 @@ export function FinancePage() {
   )
   return (
     <div className="flex-grow p-4">
-      <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
+      <main className="flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Finanças</h1>
           <div className="flex items-center justify-end gap-3">
