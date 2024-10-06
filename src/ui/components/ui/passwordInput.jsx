@@ -17,7 +17,7 @@ const PasswordInput = React.forwardRef(
     }
 
     return (
-      <div className="relative">
+      <div className="relative !mt-1">
         <input
           type={passwordVisibility ? "text" : "password"}
           className={cn(

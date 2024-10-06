@@ -11,7 +11,7 @@ export function TextWithLink({ text, buttonContent, navigateTo }) {
       <p className="text-muted-foreground">{text}</p>{" "}
       <Button
         variant={"link"}
-        className={"pl-1 text-xs"}
+        className={"p-0 pl-1  text-xs h-4"}
         onClick={() => navigate(navigateTo)}
       >
         {buttonContent}
