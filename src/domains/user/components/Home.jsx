@@ -1,9 +1,9 @@
-import { useLojas } from "../hooks/useLojas"
+import { useStores } from "../hooks/useStores"
 import { BannerPromo } from "./BannerPromo"
-import { LojasGrid } from "./LojasGrid"
+import { StoresGrid } from "./StoresGrid"
 
 export function Home() {
-  const { lojas, loading, toggleFavorite } = useLojas()
+  const { stores, loading, toggleFavorite } = useStores()
 
   return (
     <>
@@ -13,8 +13,8 @@ export function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <LojasGrid
-          lojas={lojas}
+        <StoresGrid
+          stores={stores}
           toggleFavorite={toggleFavorite}
           showBanner={true}
         />
