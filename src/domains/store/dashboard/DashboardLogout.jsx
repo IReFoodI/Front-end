@@ -23,7 +23,7 @@ export function DashboardLogout() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className={`flex h-fit w-16 flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary hover:text-white md:w-20`}
+          className={`flex h-fit w-16 select-none flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary hover:text-white md:w-20`}
           variant="ghost"
         >
           <IconLogout className="size-6 md:size-10" />
