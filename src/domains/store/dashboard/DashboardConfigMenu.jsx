@@ -1,4 +1,5 @@
 import { IconSettings } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -30,9 +31,11 @@ export function DashboardConfigMenu() {
           <DropdownMenuLabel className="bg-slate-900 text-white">
             GESTOR DE PEDIDOS
           </DropdownMenuLabel>
-          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Alertas sonoros
-          </DropdownMenuItem>
+          <Link to="/dashboard/ajustes/alertas-sonoros">
+            <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
+              Alertas sonoros
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
             Horário da loja
           </DropdownMenuItem>
@@ -58,31 +61,6 @@ export function DashboardConfigMenu() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* <div
-        className={`fixed top-56 z-10 flex flex-col bg-white py-8 text-center font-semibold shadow-right transition-all duration-300 ease-in-out lg:top-auto lg:ms-24`}
-      >
-        <h3 className="pb-8 text-xl font-bold">Ajustes</h3>
-        <h4 className="bg-slate-900 py-2 text-sm text-white">
-          GESTOR DE PEDIDOS
-        </h4>
-        <button className="border-b py-3 hover:text-primary">
-          Alertas sonoros
-        </button>
-        <button className="border-b py-3 hover:text-primary">
-          Horário da loja
-        </button>
-        <h4 className="bg-slate-900 py-2 text-sm text-white">LOJA</h4>
-        <button className="border-b py-3 hover:text-primary">Perfil</button>
-        <button className="border-b py-3 hover:text-primary">Endereço</button>
-        <h4 className="bg-slate-900 py-2 text-sm text-white">CONTA</h4>
-        <button className="border-b py-3 hover:text-primary">
-          Gestão de acesso
-        </button>
-        <button className="border-b py-3 hover:text-primary">
-          Alterar senha
-        </button>
-      </div> */}
     </>
   )
 }

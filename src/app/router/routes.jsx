@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
@@ -11,6 +12,7 @@ import App from "../App.jsx"
 export const ROUTES = {
   ADDRESS: "/address",
   FINANCAS: "financas",
+  AJUSTEALERTAS: "ajustes/alertas-sonoros",
   CHANGE_PASSWORD: "/alterar-senha",
 }
 export const router = createBrowserRouter([
@@ -24,7 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashBoardLayout />,
-        children: [{ path: ROUTES.FINANCAS, element: <FinancePage /> }],
+        children: [
+          { path: ROUTES.FINANCAS, element: <FinancePage /> },
+          { path: ROUTES.AJUSTEALERTAS, element: <AlertSoundSettingsPage /> },
+        ],
       },
     ],
   },
