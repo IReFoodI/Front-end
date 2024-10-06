@@ -2,7 +2,7 @@ import { Switch } from "@/ui/components/ui/switch"
 
 export function AlertSoundSettingsPage() {
   return (
-    <div className="flex-grow p-4">
+    <div className="flex flex-1 p-4">
       <main className="flex w-fit max-w-[1216px] flex-col items-center justify-start gap-6 text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">
