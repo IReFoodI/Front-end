@@ -16,6 +16,7 @@ import {
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
 import { Label } from "@/ui/components/ui/label"
+import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
@@ -25,6 +26,11 @@ import { SocialAuthButtons } from "./SocialAuthButtons"
 export function CreateAccount() {
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    password: false,
+    confirmPassword: false,
+  })
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,6 +38,7 @@ export function CreateAccount() {
       phone: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   })
 
@@ -40,7 +47,10 @@ export function CreateAccount() {
       toast.success("Conta criada com sucesso! Bem-vindo(a)!")
       navigate("/home")
       console.log(data)
+      return
     }
+
+    toast.warning("Necessário aceitar os termos")
   }
 
   return (
@@ -51,7 +61,7 @@ export function CreateAccount() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-2 text-left"
+          className="grid w-full gap-2 text-left"
         >
           <FormField
             id="name"
@@ -114,9 +124,32 @@ export function CreateAccount() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Senha"
+                  <PasswordInput
+                    fieldName="password"
+                    passwordVisibility={passwordVisibility.password}
+                    setPasswordVisibility={setPasswordVisibility}
+                    placeholder="********"
+                    className={"!mt-1"}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className={"text-xs"} />
+              </FormItem>
+            )}
+          />
+          <FormField
+            id="confirmPassword"
+            name="confirmPassword"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirmar senha</FormLabel>
+                <FormControl>
+                  <PasswordInput
+                    fieldName="confirmPassword"
+                    passwordVisibility={passwordVisibility.confirmPassword}
+                    setPasswordVisibility={setPasswordVisibility}
+                    placeholder="********"
                     className={"!mt-1"}
                     {...field}
                   />
@@ -142,7 +175,12 @@ export function CreateAccount() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/login"}
+        navigateTo={"/entrar"}
+      />
+      <TextWithLink
+        text={"É uma empresa?"}
+        buttonContent={"Criar conta empresarial"}
+        navigateTo={"/criar-conta-empresarial"}
       />
     </>
   )
