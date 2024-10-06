@@ -17,7 +17,7 @@ export function useStores() {
         setstores(initialStoresData)
         localStorage.setItem("storesData", JSON.stringify(initialStoresData))
         setLoading(false)
-      }, 100) // Simula um delay
+      }, 100)
     }
   }, [])
 
@@ -26,7 +26,7 @@ export function useStores() {
       store.id === id ? { ...store, isFavorited: !store.isFavorited } : store
     )
     setstores(updatedStores)
-    localStorage.setItem("storesData", JSON.stringify(updatedstores))
+    localStorage.setItem("storesData", JSON.stringify(updatedStores))
   }
 
   return { stores, loading, toggleFavorite }

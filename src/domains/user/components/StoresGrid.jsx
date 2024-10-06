@@ -3,7 +3,12 @@ import React from "react"
 import { BannerPromo } from "./BannerPromo"
 import { Cardstore } from "./CardStore"
 
-export function StoresGrid({ stores, toggleFavorite, showBanner, singleColumn }) {
+export function StoresGrid({
+  stores,
+  toggleFavorite,
+  showBanner,
+  singleColumn,
+}) {
   return (
     <div
       className={`grid gap-6 px-4 ${singleColumn ? "grid-cols-1" : "sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"}`}
