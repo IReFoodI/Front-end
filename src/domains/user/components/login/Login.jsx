@@ -97,7 +97,7 @@ export function Login() {
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
-        navigateTo="/create-account" //TODO: fazer rota
+        navigateTo="/criar-conta" //TODO: fazer rota
       />
     </>
   )
