@@ -17,8 +17,8 @@ import { ProtectedRoute } from "./ProtectedRoute.jsx"
 export const ROUTES = {
   ADDRESS: "address",
   CHANGE_PASSWORD: "alterar-senha",
-  LOGIN: "/entrar",
-  CREATE_ACCOUNT: "/criar-conta",
+  LOGIN: "entrar",
+  CREATE_ACCOUNT: "criar-conta",
   FINANCAS: "financas",
   AJUSTEALERTAS: "ajustes/alertas-sonoros",
 }
@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
     element: <PageNotFound />,
   },
   {
-    path: "/auth",
+    path: "autenticar",
     element: <Layout />,
     children: [
       {
