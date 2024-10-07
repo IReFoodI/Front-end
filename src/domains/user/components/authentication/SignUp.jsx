@@ -23,7 +23,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
 
-export function CreateAccount() {
+export function SignUp() {
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -54,7 +54,7 @@ export function CreateAccount() {
   }
 
   return (
-    <>
+    <div className="grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Criar conta
       </h1>
@@ -182,6 +182,6 @@ export function CreateAccount() {
         buttonContent={"Criar conta empresarial"}
         navigateTo={"/criar-conta-empresarial"}
       />
-    </>
+    </div>
   )
 }

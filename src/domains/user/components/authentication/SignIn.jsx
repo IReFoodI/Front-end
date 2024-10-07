@@ -20,7 +20,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 import { formSchema } from "../../models/LoginTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
 
-export function Login() {
+export function SignIn() {
   const navigate = useNavigate()
   const [passwordVisibility, setPasswordVisibility] = useState({
     password: false,
@@ -41,7 +41,7 @@ export function Login() {
   }
 
   return (
-    <>
+    <div className="grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Login
       </h1>
@@ -105,6 +105,6 @@ export function Login() {
         buttonContent="Criar conta"
         navigateTo="/criar-conta" //TODO: fazer rota
       />
-    </>
+    </div>
   )
 }

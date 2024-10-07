@@ -4,7 +4,7 @@ export function Decorative({ className }) {
   return (
     <>
       <div
-        className={`${className} relative p-5 sm:flex sm:max-h-[25.625rem] sm:justify-center md:py-8 md:pl-28 md:pr-24`}
+        className={`${className} fixed p-5 sm:flex sm:max-w-full sm:justify-end md:pr-9`}
       >
         <img
           className="relative z-10"
