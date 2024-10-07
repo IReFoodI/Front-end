@@ -1,0 +1,266 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { IconSearch } from "@tabler/icons-react"
+import { useEffect, useState } from "react"
+import { FormProvider, useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { useFetchCep } from "@/domains/store/hooks/useFetchCep"
+import { Button } from "@/ui/components/ui/button/button"
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/ui/components/ui/form/form"
+import { Input } from "@/ui/components/ui/input"
+
+const estadosBrasileiros = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+]
+
+const FormSchema = z.object({
+  cep: z.string().min(8, { message: "Insira um CEP válido com 8 caracteres." }),
+  endereco: z
+    .string()
+    .min(5, { message: "O endereço deve ter pelo menos 5 caracteres." }),
+  numero: z.string().min(1, { message: "Insira o número." }),
+  apto: z.string().optional(),
+  complemento: z.string().optional(),
+  cidade: z
+    .string()
+    .min(3, { message: "Cidade deve ter pelo menos 3 caracteres." }),
+  uf: z.enum(estadosBrasileiros, { message: "Selecione um estado válido." }),
+})
+
+export function StoreAdressEdit({ initialData }) {
+  const formMethods = useForm({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      cep: "",
+      endereco: "",
+      numero: "",
+      bairro: "",
+      complemento: "",
+      cidade: "",
+      uf: "",
+    },
+  })
+
+  const { register, watch, setValue, reset } = formMethods
+  const [encodedAddress, setEncodedAddress] = useState("")
+
+  const cep = watch("cep")
+  const endereco = watch("endereco")
+  const numero = watch("numero")
+  const apto = watch("apto")
+  const complemento = watch("complemento")
+  const cidade = watch("cidade")
+  const uf = watch("uf")
+
+  // Chama o hook para buscar o CEP
+  useFetchCep(cep, setValue)
+
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData)
+    }
+  }, [initialData, reset])
+
+  useEffect(() => {
+    const fullAddress = `${endereco}, ${numero} ${
+      apto ? `Apto: ${apto},` : ""
+    } ${complemento ? `${complemento},` : ""} ${cidade} - ${uf}, ${cep}`
+
+    setEncodedAddress(encodeURIComponent(fullAddress))
+  }, [cep, endereco, numero, apto, complemento, cidade, uf])
+
+  function onSubmit(data) {
+    console.log("Dados enviados:", data)
+  }
+
+  return (
+    <>
+      <h2 className="p-4 text-center text-3xl font-bold text-[#1E1F2B]">
+        {initialData ? "Alterar Endereço" : "Adicionar Endereço"}
+      </h2>
+
+      <div className="flex justify-center">
+        <div className="relative bg-white p-4">
+          <FormProvider {...formMethods}>
+            <form
+              onSubmit={formMethods.handleSubmit(onSubmit)}
+              className="relative h-screen space-y-6"
+            >
+              <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.5fr]">
+                <div className="relative w-full">
+                  <Input
+                    placeholder="Pesquisar CEP"
+                    className="h-12 w-full rounded-md border-2 border-muted-foreground pr-4"
+                    {...register("cep")}
+                  />
+                  <IconSearch className="absolute right-3 top-1/2 -translate-y-1/2 transform text-[#B6BAD3]" />
+                </div>
+
+                <FormField
+                  control={formMethods.control}
+                  name="uf"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <select
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-3"
+                        >
+                          <option value="">UF</option>
+                          {estadosBrasileiros.map((estado) => (
+                            <option key={estado} value={estado}>
+                              {estado}
+                            </option>
+                          ))}
+                        </select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={formMethods.control}
+                  name="bairro"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Bairro"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <FormField
+                  control={formMethods.control}
+                  name="endereco"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Rua"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={formMethods.control}
+                  name="complemento"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Complemento"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={formMethods.control}
+                  name="numero"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Número"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={formMethods.control}
+                  name="cidade"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Cidade"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div
+                id="map"
+                className="top-12 z-20 mx-auto flex items-center justify-center"
+              >
+                <iframe
+                  title="Google Maps"
+                  width="100%"
+                  height="100%"
+                  className="rounded-xl border-0"
+                  src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <Button
+                type="submit"
+                className="absolute right-0 h-12 rounded-md border-4 border-primary bg-primary text-xl font-semibold text-primary-foreground"
+              >
+                Salvar alterações
+              </Button>
+            </form>
+          </FormProvider>
+        </div>
+      </div>
+    </>
+  )
+}
