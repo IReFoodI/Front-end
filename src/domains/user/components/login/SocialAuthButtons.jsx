@@ -12,7 +12,7 @@ export function SocialAuthButtons() {
           Continuar com Google
         </Button>
         <Button variant="outline">
-          <img src={facebook} alt="icone do gmail" className="mr-2 size-4" />
+          <img src={facebook} alt="icone do facebook" className="mr-2 size-4" />
           Continuar com Facebook
         </Button>
       </nav>
