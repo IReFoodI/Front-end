@@ -1,14 +1,19 @@
-import { useState } from "react"
+import { Switch } from "@/ui/components/ui/switch"
 
-import { Switch } from "@/ui/components/ui/switch" // Assumindo que o Switch já está definido
-
-export function ScheduleRow({ dayName, disabled }) {
-  const [enabled, setEnabled] = useState(false)
-  const [startHour, setStartHour] = useState("")
-  const [startMinute, setStartMinute] = useState("")
-  const [endHour, setEndHour] = useState("")
-  const [endMinute, setEndMinute] = useState("")
-
+export function ScheduleRow({
+  dayName,
+  enabled,
+  startHour,
+  startMinute,
+  endHour,
+  endMinute,
+  disabled,
+  onToggleEnabled,
+  onStartHourChange,
+  onStartMinuteChange,
+  onEndHourChange,
+  onEndMinuteChange,
+}) {
   const handleHourInput = (value, setValue) => {
     if (
       /^\d{0,2}$/.test(value) &&
@@ -41,7 +46,7 @@ export function ScheduleRow({ dayName, disabled }) {
     >
       <Switch
         checked={enabled}
-        onCheckedChange={setEnabled}
+        onCheckedChange={onToggleEnabled}
         disabled={disabled}
         className="mr-2"
       />
@@ -57,8 +62,8 @@ export function ScheduleRow({ dayName, disabled }) {
         <input
           type="text"
           value={startHour}
-          onChange={(e) => handleHourInput(e.target.value, setStartHour)}
-          onBlur={() => formatWithLeadingZero(startHour, setStartHour)}
+          onChange={(e) => handleHourInput(e.target.value, onStartHourChange)}
+          onBlur={() => formatWithLeadingZero(startHour, onStartHourChange)}
           className="w-12 rounded-md border text-center"
           maxLength={2}
           placeholder="00"
@@ -68,8 +73,10 @@ export function ScheduleRow({ dayName, disabled }) {
         <input
           type="text"
           value={startMinute}
-          onChange={(e) => handleMinuteInput(e.target.value, setStartMinute)}
-          onBlur={() => formatWithLeadingZero(startMinute, setStartMinute)}
+          onChange={(e) =>
+            handleMinuteInput(e.target.value, onStartMinuteChange)
+          }
+          onBlur={() => formatWithLeadingZero(startMinute, onStartMinuteChange)}
           className="w-12 rounded-md border text-center"
           maxLength={2}
           placeholder="00"
@@ -83,8 +90,8 @@ export function ScheduleRow({ dayName, disabled }) {
         <input
           type="text"
           value={endHour}
-          onChange={(e) => handleHourInput(e.target.value, setEndHour)}
-          onBlur={() => formatWithLeadingZero(endHour, setEndHour)}
+          onChange={(e) => handleHourInput(e.target.value, onEndHourChange)}
+          onBlur={() => formatWithLeadingZero(endHour, onEndHourChange)}
           className="w-12 rounded-md border text-center"
           maxLength={2}
           placeholder="00"
@@ -94,8 +101,8 @@ export function ScheduleRow({ dayName, disabled }) {
         <input
           type="text"
           value={endMinute}
-          onChange={(e) => handleMinuteInput(e.target.value, setEndMinute)}
-          onBlur={() => formatWithLeadingZero(endMinute, setEndMinute)}
+          onChange={(e) => handleMinuteInput(e.target.value, onEndMinuteChange)}
+          onBlur={() => formatWithLeadingZero(endMinute, onEndMinuteChange)}
           className="w-12 rounded-md border text-center"
           maxLength={2}
           placeholder="00"
