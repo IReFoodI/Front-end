@@ -17,10 +17,8 @@ export const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      
       { path: ROUTES.ADDRESS, element: <AddressPage /> },
       { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
-    ,
       { path: ROUTES.DASHBOARD, element: <StoreProfilePage /> },
     ],
   },
