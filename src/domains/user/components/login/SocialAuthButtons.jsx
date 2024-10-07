@@ -1,5 +1,5 @@
-import { FaFacebookF, FaGoogle } from "react-icons/fa"
-
+import facebook from "@/ui/assets/facebook-icon.svg"
+import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons() {
@@ -8,11 +8,12 @@ export function SocialAuthButtons() {
       <span className="text-xs text-muted-foreground">ou</span>
       <nav aria-label="Opções de login e registro" className="grid gap-2">
         <Button variant="outline">
-          <FaGoogle className="mr-2 size-4" />
+          <img src={gmail} alt="icone do gmail" className="mr-2 size-4" />
           Continuar com Google
         </Button>
         <Button variant="outline">
-          <FaFacebookF className="mr-2 size-4" /> Continuar com Facebook
+          <img src={facebook} alt="icone do gmail" className="mr-2 size-4" />
+          Continuar com Facebook
         </Button>
       </nav>
     </>
