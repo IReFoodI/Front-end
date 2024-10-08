@@ -3,6 +3,8 @@ import { createBrowserRouter } from "react-router-dom"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
+import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
+import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { CreateAccount } from "@/domains/user/components/login/CreateAccount.jsx"
 import { Login } from "@/domains/user/components/login/Login.jsx"
@@ -25,6 +27,8 @@ export const ROUTES = {
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  USER_CREDIT_CARD: "cartoes",
+  USER_ADD_CREDIT_CARD: "cartoes/add",
 }
 
 export const router = createBrowserRouter([
@@ -73,6 +77,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FAVORITES,
         element: <Favorites />,
+      },
+      {
+        path: ROUTES.USER_CREDIT_CARD,
+        element: <CardPage />,
+      },
+      {
+        path: ROUTES.USER_ADD_CREDIT_CARD,
+        element: <AddEditCard />,
       },
     ],
   },
