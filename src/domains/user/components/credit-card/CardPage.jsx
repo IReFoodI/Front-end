@@ -1,6 +1,6 @@
 import { IconCreditCard } from "@tabler/icons-react"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -32,18 +32,14 @@ const cardData = [
 ]
 export function CardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const navigate = useNavigate()
-  function handleAddCard() {
-    //Navegar para rota de adicionar cartão
-    navigate("/")
-  }
+
   const toggleOpenModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
   return (
-    <div className="mx-auto flex h-screen w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
-      <h1 className="my-5 w-full pb-6 pt-7 text-center text-2xl font-semibold lg:py-10">
+    <div className="mx-auto flex h-screen w-full max-w-[1216px] flex-col items-center gap-6 text-gray-600 antialiased lg:h-auto">
+      <h1 className="w-full py-6 text-center text-2xl font-semibold">
         Cartões
       </h1>
 
@@ -60,15 +56,14 @@ export function CardPage() {
                   />
                 ))}
               </div>
-              <Button
-                className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out"
-                onClick={handleAddCard}
-              >
-                Adicionar novo cartão
-              </Button>
+              <NavLink to={"/user/cartoes/add"}>
+                <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+                  Adicionar novo cartão
+                </Button>
+              </NavLink>
             </div>
           ) : (
-            <div className="flex h-[50vh] w-full items-center justify-center">
+            <div className="flex w-full items-center justify-center">
               <div className="flex w-full max-w-[320px] flex-col items-center gap-4 text-center">
                 <IconCreditCard size={45} />
                 <h2 className="text-xl font-semibold">
@@ -77,12 +72,11 @@ export function CardPage() {
                 <p className="w-[250px]">
                   Vamos adicionar seu primeiro cartão para fazer um novo pedido!
                 </p>
-                <Button
-                  className="w-full rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out"
-                  onClick={handleAddCard}
-                >
-                  Adicionar novo cartão
-                </Button>
+                <NavLink to={"/user/cartoes/add"}>
+                  <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+                    Adicionar novo cartão
+                  </Button>
+                </NavLink>
               </div>
             </div>
           )}
