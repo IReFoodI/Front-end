@@ -158,7 +158,6 @@ export function SignUp() {
               </FormItem>
             )}
           />
-          <Button type="submit">Cadastrar</Button>
           <div className="mt-4 flex items-center">
             <Checkbox
               id="terms"
@@ -169,6 +168,7 @@ export function SignUp() {
               Eu aceito os termos e condições
             </Label>
           </div>
+          <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
       <SocialAuthButtons />
