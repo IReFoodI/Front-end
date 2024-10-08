@@ -1,6 +1,6 @@
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react"
 
-import { Button } from "@/ui/components/ui/button"
+import { Button } from "@/ui/components/ui/button/button"
 
 export function FavoriteButton({ isFavorited, onToggle, className, ...props }) {
   return (

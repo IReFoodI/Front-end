@@ -1,11 +1,11 @@
 import ilustra from "@/ui/assets/ilustra.png"
 
-import { useLojas } from "../hooks/useLojas"
-import { LojasGrid } from "./LojasGrid"
+import { usestores } from "../hooks/usestores"
+import { StoreGrid } from "./StoresGrid"
 
 export function Favoritos() {
-  const { lojas, loading, toggleFavorite } = useLojas()
-  const lojasFavoritas = lojas.filter((loja) => loja.isFavorited)
+  const { stores, loading, toggleFavorite } = usestores()
+  const favoriteStores = stores.filter((store) => store.isFavorited)
 
   return (
     <div className="flex h-full">
@@ -13,8 +13,8 @@ export function Favoritos() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <LojasGrid
-            lojas={lojasFavoritas}
+          <StoreGrid
+            stores={favoriteStores}
             toggleFavorite={toggleFavorite}
             showBanner={false}
             singleColumn={true}

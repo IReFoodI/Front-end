@@ -13,13 +13,13 @@ export function CardLoja({
 }) {
   const {
     nome = "Nome não disponível",
-    desconto = "",
+    desconto = "Sem desconto",
     avaliacao = "0.0",
     categoria = "Categoria não disponível",
     horario = "Horário não disponível",
     isFavorited = false,
-    imagePath = "",
-    logoPath = "",
+    imagePath = "", // Caminho da imagem da loja
+    logoPath = "", // Caminho do logotipo da loja
   } = lojaData
 
   return (
@@ -52,13 +52,11 @@ export function CardLoja({
         <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
           {nome}
         </CardTitle>
-        {desconto && (
-          <div className="mt-2 inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
-            <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
-              {desconto}
-            </span>
-          </div>
-        )}
+        <div className="mt-2 inline-block rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1 sm:w-2/3 lg:w-full">
+          <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
+            {desconto}
+          </span>
+        </div>
 
         <div className="mt-4 flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
