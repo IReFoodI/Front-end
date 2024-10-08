@@ -1,7 +1,7 @@
+import { useStores } from "@/domains/user/hooks/useStores"
 import ilustra from "@/ui/assets/ilustra.png"
 
-import { useStores } from "../hooks/useStores"
-import { StoresGrid } from "./StoresGrid"
+import { StoresGrid } from "../storesHome/StoresGrid"
 
 export function Favorites() {
   const { stores, loading, toggleFavorite } = useStores()

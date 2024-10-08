@@ -3,7 +3,7 @@ import { IconStarFilled } from "@tabler/icons-react"
 import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
 
-import { FavoriteButton } from "./FavoriteButton"
+import { FavoriteButton } from "../favorites/FavoriteButton"
 
 export function StoreCard({
   className,

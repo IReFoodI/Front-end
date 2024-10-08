@@ -1,4 +1,5 @@
-import { useStores } from "../hooks/useStores"
+import { useStores } from "@/domains/user/hooks/useStores"
+
 import { BannerPromo } from "./BannerPromo"
 import { StoresGrid } from "./StoresGrid"
 
