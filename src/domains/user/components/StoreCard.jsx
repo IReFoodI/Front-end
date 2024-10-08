@@ -13,7 +13,7 @@ export function StoreCard({
 }) {
   const {
     name = "Nome não disponível",
-    discount = "Sem desconto",
+    discount = "",
     rating = "0.0",
     category = "Categoria não disponível",
     opening_hours = "Horário não disponível",
@@ -52,11 +52,13 @@ export function StoreCard({
         <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
           {name}
         </CardTitle>
-        <div className="mt-2 inline-block rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1 sm:w-2/3 lg:w-full">
-          <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
-            {discount}
-          </span>
-        </div>
+        {discount && (
+          <div className="mt-2 inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
+            <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
+              {discount}
+            </span>
+          </div>
+        )}
 
         <div className="mt-4 flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />

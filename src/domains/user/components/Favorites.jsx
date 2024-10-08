@@ -18,6 +18,7 @@ export function Favorites() {
             toggleFavorite={toggleFavorite}
             showBanner={false}
             singleColumn={true}
+            type="favorites"
           />
         )}
       </div>

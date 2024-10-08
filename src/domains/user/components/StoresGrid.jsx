@@ -8,6 +8,7 @@ export function StoresGrid({
   toggleFavorite,
   showBanner,
   singleColumn,
+  type = "home",
 }) {
   return (
     <div
@@ -27,8 +28,10 @@ export function StoresGrid({
             />
           </React.Fragment>
         ))
+      ) : type === "favorites" ? (
+        <p className="col-span-full text-center">Adicione um favorito.</p>
       ) : (
-        <p className="col-span-full text-center">Nenhuma store disponível.</p>
+        <p className="col-span-full text-center">Nenhuma loja disponível.</p>
       )}
     </div>
   )
