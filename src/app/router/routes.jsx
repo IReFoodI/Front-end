@@ -28,7 +28,7 @@ export const ROUTES = {
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
-  USER_ADD_CREDIT_CARD: "cartoes/add",
+  USER_ADD_CREDIT_CARD: "cartoes/adicionar",
 }
 
 export const router = createBrowserRouter([
