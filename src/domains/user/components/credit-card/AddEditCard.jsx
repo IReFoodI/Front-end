@@ -13,7 +13,7 @@ import {
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
 
-import { creditCardSchema } from "../models/CreditCardTypes"
+import { creditCardSchema } from "../../models/CreditCardTypes"
 import { CardExpiryFormat } from "./CardExpiryFormat"
 
 export function AddEditCard({ type = "add", card, closeModal }) {
