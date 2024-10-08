@@ -11,7 +11,7 @@ export function Decorative({ className }) {
           src={imageDecorative}
           alt="imagem decorativa padrão"
         />
-        <div className="sm:rou absolute left-4 top-11 h-5/6 w-11/12 rounded-3xl bg-primary/10 sm:left-0 sm:top-0 sm:h-full sm:w-full sm:rounded-e-3xl sm:rounded-s-none"></div>
+        <div className="absolute left-4 top-11 h-5/6 w-11/12 rounded-3xl bg-primary/10 sm:left-0 sm:top-0 sm:h-full sm:w-full sm:rounded-e-3xl sm:rounded-s-none"></div>
       </div>
     </>
   )

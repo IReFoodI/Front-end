@@ -54,7 +54,7 @@ export function SignUp() {
   }
 
   return (
-    <div className="grid max-w-sm gap-2">
+    <div className="mx-auto grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Criar conta
       </h1>

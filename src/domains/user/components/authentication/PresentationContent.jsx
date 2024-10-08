@@ -7,7 +7,7 @@ import { Decorative } from "./Decorative"
 export function PresentationContent() {
   const navigate = useNavigate()
   return (
-    <div className="grid max-w-sm gap-2">
+    <div className="mx-auto grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Economize e ajude a reduzir o desperdício!
       </h1>
