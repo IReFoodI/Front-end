@@ -1,31 +1,31 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import fundo from "@/ui/assets/fundo.png"
+import background from "@/ui/assets/background.png"
 
-import { PedidoCard } from "./PedidoCard"
+import { OrderCard } from "./OrderCard"
 
-export function PedidoAndamento() {
-  const [pedido] = useState({
-    retiradaHorario: "Hoje, 19:52 - 20:02",
-    statusPedido: "A Loja está separando seu pedido",
-    restaurante: {
-      nome: "Dragão Verde",
-      tipo: "Restaurante",
+export function OngoingOrder() {
+  const [order] = useState({
+    pickupTime: "Hoje, 19:52 - 20:02",
+    orderStatus: "A Loja está separando seu pedido",
+    restaurant: {
+      name: "Dragão Verde",
+      type: "Restaurante",
       imgUrl: "https://via.placeholder.com/40",
     },
-    numeroPedido: 3399,
-    itensPedido: [
+    orderNumber: 3399,
+    orderItems: [
       {
-        nome: "Item a venda",
-        descricao: "Descrição do item a venda...",
-        preco: "R$ 20,99",
+        name: "Item a venda",
+        description: "Descrição do item a venda...",
+        price: "R$ 20,99",
       },
     ],
     subtotal: "R$ 20,99",
-    entrega: "Retirada na loja",
-    pagamento: {
-      tipo: "PIX",
+    delivery: "Retirada na loja",
+    payment: {
+      method: "PIX",
       status: "aprovado",
     },
   })
@@ -42,24 +42,24 @@ export function PedidoAndamento() {
       <div className="flex h-full flex-col md:flex-row">
         <div className="flex flex-col justify-between px-10 lg:w-1/2 lg:ps-5">
           <div className="flex-1">
-            <PedidoCard
-              retiradaHorario={pedido.retiradaHorario}
-              statusPedido={pedido.statusPedido}
-              nomeRestaurante={pedido.restaurante.nome}
-              numeroPedido={`#${pedido.numeroPedido}`}
-              imagemRestaurante={pedido.restaurante.imgUrl}
-              itensPedido={pedido.itensPedido}
-              subtotal={pedido.subtotal}
-              formaEntrega={pedido.entrega}
-              metodoPagamento={pedido.pagamento.tipo}
-              statusPagamento={pedido.pagamento.status}
+            <OrderCard
+              pickupTime={order.pickupTime}
+              orderStatus={order.orderStatus}
+              restaurantName={order.restaurant.name}
+              orderNumber={`#${order.orderNumber}`}
+              restaurantImage={order.restaurant.imgUrl}
+              orderItems={order.orderItems}
+              subtotal={order.subtotal}
+              deliveryMethod={order.delivery}
+              paymentMethod={order.payment.method}
+              paymentStatus={order.payment.status}
             />
           </div>
         </div>
         <div className="relative flex justify-end">
           <img
             className="z-10 hidden max-h-[700px] w-[80%] md:relative md:block"
-            src={fundo}
+            src={background}
             alt=""
           />
 

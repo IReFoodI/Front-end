@@ -1,7 +1,7 @@
-import { PedidoAndamento } from "@/domains/user/components/PedidoAndamento/PedidoAndamento"
+import { Outlet } from "react-router-dom"
 
 function App() {
-  return <PedidoAndamento />
+  return <Outlet />
 }
 
 export default App

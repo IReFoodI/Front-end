@@ -1,16 +1,16 @@
 import { useState } from "react"
 
-export function PedidoCard({
-  retiradaHorario,
-  statusPedido,
-  nomeRestaurante,
-  numeroPedido,
-  imagemRestaurante,
-  itensPedido,
+export function OrderCard({
+  pickupTime,
+  orderStatus,
+  restaurantName,
+  orderNumber,
+  restaurantImage,
+  orderItems,
   subtotal,
-  formaEntrega,
-  metodoPagamento,
-  statusPagamento,
+  deliveryMethod,
+  paymentMethod,
+  paymentStatus,
 }) {
   const [expandedItems, setExpandedItems] = useState({})
 
@@ -26,9 +26,7 @@ export function PedidoCard({
       <div className="text-sm font-semibold text-[#FB3D01]">
         Previsão para Retirada
       </div>
-      <div className="text-2xl font-semibold text-[#1E1F2B]">
-        {retiradaHorario}
-      </div>
+      <div className="text-2xl font-semibold text-[#1E1F2B]">{pickupTime}</div>
       <div className="mt-1 flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +42,7 @@ export function PedidoCard({
             d="M8 7V3m0 0a2 2 0 114 0v4m-4 4h4m-4 0a2 2 0 104 0h-4z"
           />
         </svg>
-        <span className="ml-2 text-sm text-gray-500">{statusPedido}</span>
+        <span className="ml-2 text-sm text-gray-500">{orderStatus}</span>
       </div>
 
       <div className="mt-6">
@@ -55,35 +53,35 @@ export function PedidoCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <img
-                src={imagemRestaurante}
-                alt={nomeRestaurante}
+                src={restaurantImage}
+                alt={restaurantName}
                 className="h-10 w-10 rounded-full"
               />
               <div>
                 <div className="font-semibold text-[#1E1F2B]">
-                  {nomeRestaurante}
+                  {restaurantName}
                 </div>
                 <div className="text-sm text-gray-500">Restaurante</div>
               </div>
             </div>
-            <div className="text-gray-500">{numeroPedido}</div>
+            <div className="text-gray-500">{orderNumber}</div>
           </div>
 
-          {itensPedido.map((item, index) => (
+          {orderItems.map((item, index) => (
             <div className="mt-4" key={index}>
               <div
                 className="flex cursor-pointer items-center justify-between"
                 onClick={() => toggleItemDescription(index)}
               >
-                <div className="text-[#1E1F2B]">{item.nome}</div>
-                <div className="text-[#1E1F2B]">{item.preco}</div>
+                <div className="text-[#1E1F2B]">{item.name}</div>
+                <div className="text-[#1E1F2B]">{item.price}</div>
               </div>
               <div
                 className={`mt-1 text-sm text-gray-400 ${expandedItems[index] ? "" : "line-clamp-1"}`}
               >
-                {item.descricao}
+                {item.description}
               </div>
-              {!expandedItems[index] && item.descricao.length > 50 && (
+              {!expandedItems[index] && item.description.length > 50 && (
                 <button
                   onClick={() => toggleItemDescription(index)}
                   className="mt-1 text-xs text-[#FB3D01]"
@@ -110,16 +108,16 @@ export function PedidoCard({
           <div className="mt-4 flex items-center justify-between rounded-lg bg-background p-2">
             <div className="pr-2 text-sm text-gray-500">
               <span className="block">Forma de entrega:</span>
-              <span className="block font-semibold">{formaEntrega}</span>
+              <span className="block font-semibold">{deliveryMethod}</span>
             </div>
             <div className="flex flex-col items-center space-x-1">
               <span className="text-sm text-gray-500">Pagamento:</span>
               <div className="flex items-center space-x-1">
                 <span className="rounded bg-[#FB3D01] px-2 py-1 text-xs text-white">
-                  {metodoPagamento}
+                  {paymentMethod}
                 </span>
                 <span className="bg-primary-foregroun text-xs font-semibold text-[#FB3D01]">
-                  {statusPagamento}
+                  {paymentStatus}
                 </span>
               </div>
             </div>
