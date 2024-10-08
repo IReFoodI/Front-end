@@ -1,10 +1,10 @@
 import ilustra from "@/ui/assets/ilustra.png"
 
-import { usestores } from "../hooks/usestores"
-import { StoreGrid } from "./StoresGrid"
+import { useStores } from "../hooks/useStores"
+import { StoresGrid } from "./StoresGrid"
 
-export function Favoritos() {
-  const { stores, loading, toggleFavorite } = usestores()
+export function Favorites() {
+  const { stores, loading, toggleFavorite } = useStores()
   const favoriteStores = stores.filter((store) => store.isFavorited)
 
   return (
@@ -13,7 +13,7 @@ export function Favoritos() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <StoreGrid
+          <StoresGrid
             stores={favoriteStores}
             toggleFavorite={toggleFavorite}
             showBanner={false}

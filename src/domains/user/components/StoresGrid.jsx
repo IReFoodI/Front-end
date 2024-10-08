@@ -1,7 +1,7 @@
 import React from "react"
 
 import { BannerPromo } from "./BannerPromo"
-import { Cardstore } from "./CardStore"
+import { StoreCard } from "./StoreCard"
 
 export function StoresGrid({
   stores,
@@ -21,7 +21,7 @@ export function StoresGrid({
                 <BannerPromo title="Confira nossas ofertas especiais!" />
               </div>
             )}
-            <Cardstore
+            <StoreCard
               storeData={store}
               onFavoriteToggle={() => toggleFavorite(store.id)}
             />

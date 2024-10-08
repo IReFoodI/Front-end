@@ -5,22 +5,22 @@ import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
 
 import { FavoriteButton } from "./FavoriteButton"
 
-export function CardLoja({
+export function StoreCard({
   className,
-  lojaData = {},
+  storeData = {},
   onFavoriteToggle,
   ...props
 }) {
   const {
-    nome = "Nome não disponível",
-    desconto = "Sem desconto",
-    avaliacao = "0.0",
-    categoria = "Categoria não disponível",
-    horario = "Horário não disponível",
+    name = "Nome não disponível",
+    discount = "Sem desconto",
+    rating = "0.0",
+    category = "Categoria não disponível",
+    opening_hours = "Horário não disponível",
     isFavorited = false,
-    imagePath = "", // Caminho da imagem da loja
-    logoPath = "", // Caminho do logotipo da loja
-  } = lojaData
+    imagePath = "",
+    logoPath = "",
+  } = storeData
 
   return (
     <Card
@@ -34,13 +34,13 @@ export function CardLoja({
         <div className="relative h-auto w-full">
           <img
             src={imagePath}
-            alt={`${nome} Image`}
+            alt={`${name} Image`}
             className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
           <div className="absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] -translate-x-1/2 translate-y-1/3 transform">
             <img
               src={logoPath}
-              alt={`${nome} Logo`}
+              alt={`${name} Logo`}
               className="h-full w-full rounded-full object-cover"
             />
           </div>
@@ -50,27 +50,27 @@ export function CardLoja({
       {/* Textos */}
       <CardContent className="flex flex-col justify-center p-0 pl-4">
         <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
-          {nome}
+          {name}
         </CardTitle>
         <div className="mt-2 inline-block rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1 sm:w-2/3 lg:w-full">
           <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
-            {desconto}
+            {discount}
           </span>
         </div>
 
         <div className="mt-4 flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
           <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
-            {avaliacao}
+            {rating}
           </span>
           <span className="font-inter ml-4 font-semibold text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-            {categoria}
+            {category}
           </span>
         </div>
 
         <div className="mt-4 flex items-center">
           <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-            {horario}
+            {opening_hours}
           </span>
         </div>
       </CardContent>
