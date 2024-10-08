@@ -3,10 +3,12 @@ import { createBrowserRouter } from "react-router-dom"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
+import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { CreateAccount } from "@/domains/user/components/login/CreateAccount.jsx"
 import { Login } from "@/domains/user/components/login/Login.jsx"
 import { PresentationContent } from "@/domains/user/components/login/PresentationContent.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { Layout } from "@/ui/layouts/LoginLayout.jsx"
@@ -16,6 +18,8 @@ import { ProtectedRoute } from "./ProtectedRoute.jsx"
 
 export const ROUTES = {
   ADDRESS: "address",
+  HOME: "home",
+  FAVORITES: "favoritos",
   FINANCE: "financas",
   ALERTSETTINGS: "ajustes/alertas-sonoros",
   CHANGE_PASSWORD: "alterar-senha",
@@ -43,7 +47,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/home",
+    path: "/user",
     element: <App />,
     children: [
       {
@@ -61,6 +65,14 @@ export const router = createBrowserRouter([
             <ChangePassword />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: ROUTES.HOME,
+        element: <Home />,
+      },
+      {
+        path: ROUTES.FAVORITES,
+        element: <Favorites />,
       },
     ],
   },
