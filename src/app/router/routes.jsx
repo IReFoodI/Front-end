@@ -6,6 +6,8 @@ import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
+import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
+import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
@@ -25,6 +27,8 @@ export const ROUTES = {
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  USER_CREDIT_CARD: "cartoes",
+  USER_ADD_CREDIT_CARD: "cartoes/adicionar",
 }
 
 export const router = createBrowserRouter([
@@ -73,6 +77,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FAVORITES,
         element: <Favorites />,
+      },
+      {
+        path: ROUTES.USER_CREDIT_CARD,
+        element: <CardPage />,
+      },
+      {
+        path: ROUTES.USER_ADD_CREDIT_CARD,
+        element: <AddEditCard />,
       },
     ],
   },
