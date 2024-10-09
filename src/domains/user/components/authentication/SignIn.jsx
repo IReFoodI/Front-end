@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -13,13 +14,17 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/LoginTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
 
-export function Login() {
+export function SignIn() {
   const navigate = useNavigate()
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    password: false,
+  })
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -36,7 +41,7 @@ export function Login() {
   }
 
   return (
-    <>
+    <div className="mx-auto grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Login
       </h1>
@@ -64,7 +69,6 @@ export function Login() {
               </FormItem>
             )}
           />
-
           <FormField
             id="password"
             name="password"
@@ -73,9 +77,11 @@ export function Login() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Senha"
+                  <PasswordInput
+                    fieldName="password"
+                    passwordVisibility={passwordVisibility.password}
+                    setPasswordVisibility={setPasswordVisibility}
+                    placeholder="********"
                     className={"!mt-1"}
                     {...field}
                   />
@@ -99,6 +105,6 @@ export function Login() {
         buttonContent="Criar conta"
         navigateTo="/autenticar/criar-conta" //TODO: fazer rota
       />
-    </>
+    </div>
   )
 }

@@ -23,7 +23,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
 
-export function CreateAccount() {
+export function SignUp() {
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -54,7 +54,7 @@ export function CreateAccount() {
   }
 
   return (
-    <>
+    <div className="mx-auto grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Criar conta
       </h1>
@@ -158,7 +158,6 @@ export function CreateAccount() {
               </FormItem>
             )}
           />
-          <Button type="submit">Cadastrar</Button>
           <div className="mt-4 flex items-center">
             <Checkbox
               id="terms"
@@ -169,6 +168,7 @@ export function CreateAccount() {
               Eu aceito os termos e condições
             </Label>
           </div>
+          <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
       <SocialAuthButtons />
@@ -182,6 +182,6 @@ export function CreateAccount() {
         buttonContent={"Criar conta empresarial"}
         navigateTo={"/autenticar/criar-conta-empresarial"}
       />
-    </>
+    </div>
   )
 }
