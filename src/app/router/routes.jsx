@@ -101,12 +101,12 @@ export const router = createBrowserRouter([
           },
 
           {
-            path: "",
             element: <DashBoardLayout />,
             children: [
-              { path: ROUTES.FINANCAS, element: <FinancePage /> },
+              { index: true, element: <FinancePage /> }, //Trocar para a tela inicial da dashboard
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
               {
-                path: ROUTES.AJUSTEALERTAS,
+                path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
               },
             ],
