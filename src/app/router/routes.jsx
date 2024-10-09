@@ -8,6 +8,7 @@ import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -18,6 +19,8 @@ import { ProtectedRoute } from "./ProtectedRoute.jsx"
 
 export const ROUTES = {
   ADDRESS: "address",
+  ADDRESS_EDIT: "address/edit",
+  ADDRESS_EDIT_ID: "address/edit/:addressId",
   HOME: "home",
   FAVORITES: "favoritos",
   FINANCE: "financas",
@@ -73,6 +76,26 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FAVORITES,
         element: <Favorites />,
+      },
+      {
+        path: ROUTES.ADDRESS_EDIT,
+        element: <ProfileAddressForm />,
+      },
+      {
+        path: ROUTES.ADDRESS_EDIT_ID,
+        element: (
+          <ProfileAddressForm
+            initialData={{
+              cep: "01153000",
+              address: "Rua Exemplo",
+              number: "123",
+              apartment: "45B",
+              additionalInfo: "Bloco 3",
+              city: "São Paulo",
+              state: "SP",
+            }}
+          />
+        ),
       },
     ],
   },
