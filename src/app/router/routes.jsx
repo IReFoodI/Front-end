@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -24,6 +25,7 @@ export const ROUTES = {
   FAVORITES: "favoritos",
   FINANCE: "financas",
   ALERTSETTINGS: "ajustes/alertas-sonoros",
+  DASHBOARD: "dashboard",
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
@@ -89,9 +91,10 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
+    path: "/",
     element: <DashBoardLayout />,
     children: [
+      { path: ROUTES.DASHBOARD, index: true, element: <StoreProfilePage /> },
       { path: ROUTES.FINANCE, element: <FinancePage /> },
       { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
     ],
