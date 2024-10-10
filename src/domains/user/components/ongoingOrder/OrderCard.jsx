@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+import { currencyFormatter } from "@/app/utils/currencyFormatter"
+
 export function OrderCard({
   pickupTime,
   orderStatus,
@@ -23,10 +25,12 @@ export function OrderCard({
 
   return (
     <div className="mx-auto max-w-md rounded-lg p-4 md:bg-[#FFF8F5]">
-      <div className="text-sm font-semibold text-[#FB3D01]">
+      <div className="text-sm font-semibold text-primary">
         Previsão para Retirada
       </div>
-      <div className="text-2xl font-semibold text-[#1E1F2B]">{pickupTime}</div>
+      <div className="text-2xl font-semibold text-secondary-foreground">
+        {pickupTime}
+      </div>
       <div className="mt-1 flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,11 +46,13 @@ export function OrderCard({
             d="M8 7V3m0 0a2 2 0 114 0v4m-4 4h4m-4 0a2 2 0 104 0h-4z"
           />
         </svg>
-        <span className="ml-2 text-sm text-gray-500">{orderStatus}</span>
+        <span className="ml-2 text-sm text-secondary-foreground">
+          {orderStatus}
+        </span>
       </div>
 
       <div className="mt-6">
-        <div className="text-lg font-semibold text-[#FB3D01]">
+        <div className="text-lg font-semibold text-primary">
           Detalhes do Pedido
         </div>
         <div className="mt-2 rounded-lg bg-[#F8F9FE] p-4">
@@ -61,20 +67,24 @@ export function OrderCard({
                 <div className="font-semibold text-[#1E1F2B]">
                   {restaurantName}
                 </div>
-                <div className="text-sm text-gray-500">Restaurante</div>
+                <div className="text-sm text-secondary-foreground">
+                  Restaurante
+                </div>
               </div>
             </div>
-            <div className="text-gray-500">{orderNumber}</div>
+            <div className="text-secondary-foreground">{orderNumber}</div>
           </div>
 
-          {orderItems.map((item, index) => (
+          {orderItems?.map((item, index) => (
             <div className="mt-4" key={index}>
               <div
                 className="flex cursor-pointer items-center justify-between"
                 onClick={() => toggleItemDescription(index)}
               >
                 <div className="text-[#1E1F2B]">{item.name}</div>
-                <div className="text-[#1E1F2B]">{item.price}</div>
+                <div className="text-[#1E1F2B]">
+                  {currencyFormatter(item.price)}
+                </div>
               </div>
               <div
                 className={`mt-1 text-sm text-gray-400 ${expandedItems[index] ? "" : "line-clamp-1"}`}
@@ -84,7 +94,7 @@ export function OrderCard({
               {!expandedItems[index] && item.description.length > 50 && (
                 <button
                   onClick={() => toggleItemDescription(index)}
-                  className="mt-1 text-xs text-[#FB3D01]"
+                  className="mt-1 text-xs text-primary"
                 >
                   Ver mais
                 </button>
@@ -92,7 +102,7 @@ export function OrderCard({
               {expandedItems[index] && (
                 <button
                   onClick={() => toggleItemDescription(index)}
-                  className="mt-1 text-xs text-[#FB3D01]"
+                  className="mt-1 text-xs text-primary"
                 >
                   Ver menos
                 </button>
@@ -102,21 +112,23 @@ export function OrderCard({
 
           <div className="mt-4 flex justify-between rounded-lg bg-background p-2">
             <div className="font-semibold">Subtotal</div>
-            <div className="font-semibold">{subtotal}</div>
+            <div className="font-semibold">{currencyFormatter(subtotal)}</div>
           </div>
 
           <div className="mt-4 flex items-center justify-between rounded-lg bg-background p-2">
-            <div className="pr-2 text-sm text-gray-500">
+            <div className="pr-2 text-sm text-secondary-foreground">
               <span className="block">Forma de entrega:</span>
               <span className="block font-semibold">{deliveryMethod}</span>
             </div>
             <div className="flex flex-col items-center space-x-1">
-              <span className="text-sm text-gray-500">Pagamento:</span>
+              <span className="text-sm text-secondary-foreground">
+                Pagamento:
+              </span>
               <div className="flex items-center space-x-1">
-                <span className="rounded bg-[#FB3D01] px-2 py-1 text-xs text-white">
+                <span className="rounded bg-primary px-2 py-1 text-xs text-white">
                   {paymentMethod}
                 </span>
-                <span className="bg-primary-foregroun text-xs font-semibold text-[#FB3D01]">
+                <span className="bg-primary-foregroun text-xs font-semibold text-primary">
                   {paymentStatus}
                 </span>
               </div>

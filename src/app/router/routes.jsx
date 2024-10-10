@@ -9,6 +9,7 @@ import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
+import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
@@ -29,6 +30,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  ONGOING_ORDER: "pedidos/em-andamento",
 }
 
 export const router = createBrowserRouter([
@@ -85,6 +87,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.USER_ADD_CREDIT_CARD,
         element: <AddEditCard />,
+      },
+      {
+        path: ROUTES.ONGOING_ORDER,
+        element: <OngoingOrder />,
       },
     ],
   },

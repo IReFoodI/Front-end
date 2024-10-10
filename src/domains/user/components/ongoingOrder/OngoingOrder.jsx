@@ -19,10 +19,10 @@ export function OngoingOrder() {
       {
         name: "Item a venda",
         description: "Descrição do item a venda...",
-        price: "R$ 20,99",
+        price: "20.99",
       },
     ],
-    subtotal: "R$ 20,99",
+    subtotal: "20.99",
     delivery: "Retirada na loja",
     payment: {
       method: "PIX",
