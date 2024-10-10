@@ -77,6 +77,9 @@ export default {
         right:
           "4px 0 6px -1px rgba(0, 0, 0, 0.1), 6px 0 6px -1px rgba(0, 0, 0, 0.06)",
       },
+      maxHeight: {
+        "max-dashboard": "calc(100vh - 5rem)",
+      },
     },
   },
   plugins: [tailwindAnimate],
