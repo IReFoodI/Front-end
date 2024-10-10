@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
+import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
@@ -29,6 +30,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  DASHBOARD_CONFIG: "ajustes/configuracoes",
 }
 
 export const router = createBrowserRouter([
@@ -108,6 +110,10 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
+              },
+              {
+                path: ROUTES.DASHBOARD_CONFIG,
+                element: <ConfigurationPage />,
               },
             ],
           },
