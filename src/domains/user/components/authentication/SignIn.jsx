@@ -90,13 +90,13 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/recover-password" //TODO: fazer rota
+        navigateTo="/recuperar-senha"
       />
       <SocialAuthButtons />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
-        navigateTo="/criar-conta" //TODO: fazer rota
+        navigateTo="/criar-conta"
       />
     </div>
   )
