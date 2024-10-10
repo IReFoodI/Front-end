@@ -12,7 +12,7 @@ const data = [
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Fev",
+    name: "Feb",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
@@ -20,11 +20,11 @@ const data = [
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Abr",
+    name: "Apr",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Maio",
+    name: "May",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
@@ -36,15 +36,15 @@ const data = [
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Ago",
+    name: "Aug",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Set",
+    name: "Sep",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Out",
+    name: "Oct",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
@@ -52,7 +52,7 @@ const data = [
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Dez",
+    name: "Dec",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
 ]
@@ -73,7 +73,7 @@ export function ChartCard() {
           axisLine={false}
           stroke="#888888"
           fontSize={12}
-          tickFormatter={(value) => `R$${value}`}
+          tickFormatter={(value) => `$${value}`}
         />
         <Bar dataKey={"total"} radius={[4, 4, 0, 0]} />
       </BarGraph>
