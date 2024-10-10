@@ -31,11 +31,9 @@ export function AddressModal() {
           </span>
         </div>
       </PopoverTrigger>
-      <PopoverContent
-        className="relative top-14 md:absolute md:left-0 md:top-5 md:w-96"
-        align="start"
-      >
-        <div className="flex w-full flex-col items-center justify-center gap-2">
+
+      <PopoverContent className="ml-2 flex w-[80%] flex-col items-start gap-4 rounded-lg bg-white p-4 shadow-lg md:w-96">
+        <div className="flex w-full flex-col items-center gap-2">
           <h1 className="text-[15px] font-bold md:text-xl">
             Seu pedido irá para esse endereço
           </h1>
@@ -44,7 +42,8 @@ export function AddressModal() {
             região
           </p>
         </div>
-        <div className="my-6 flex w-full flex-col items-start justify-center gap-2 rounded-lg bg-[#F8F9FE] p-2">
+
+        <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg bg-[#F8F9FE] p-4">
           <h1 className="text-[15px] font-bold md:text-xl">Casa</h1>
           <div className="text-sm text-[#616375] md:text-[15px]">
             <p>Av Vamo pra Cima, 10 - Apto 02</p>
@@ -52,6 +51,7 @@ export function AddressModal() {
             <p>Não-me-Toque - RS - CEP XX.XXX-XX</p>
           </div>
         </div>
+
         <Button className="w-full rounded-xl md:text-xl">
           <Link to="/" className="w-full">
             Meus Endereços
