@@ -26,10 +26,6 @@ import { SocialAuthButtons } from "./SocialAuthButtons"
 export function SignUp() {
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-  const [passwordVisibility, setPasswordVisibility] = useState({
-    password: false,
-    confirmPassword: false,
-  })
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -125,9 +121,6 @@ export function SignUp() {
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    fieldName="password"
-                    passwordVisibility={passwordVisibility.password}
-                    setPasswordVisibility={setPasswordVisibility}
                     placeholder="********"
                     className={"!mt-1"}
                     {...field}
@@ -146,9 +139,6 @@ export function SignUp() {
                 <FormLabel>Confirmar senha</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    fieldName="confirmPassword"
-                    passwordVisibility={passwordVisibility.confirmPassword}
-                    setPasswordVisibility={setPasswordVisibility}
                     placeholder="********"
                     className={"!mt-1"}
                     {...field}

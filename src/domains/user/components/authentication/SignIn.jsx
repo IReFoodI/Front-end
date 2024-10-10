@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -22,9 +21,6 @@ import { SocialAuthButtons } from "./SocialAuthButtons"
 
 export function SignIn() {
   const navigate = useNavigate()
-  const [passwordVisibility, setPasswordVisibility] = useState({
-    password: false,
-  })
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -78,9 +74,6 @@ export function SignIn() {
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    fieldName="password"
-                    passwordVisibility={passwordVisibility.password}
-                    setPasswordVisibility={setPasswordVisibility}
                     placeholder="********"
                     className={"!mt-1"}
                     {...field}
