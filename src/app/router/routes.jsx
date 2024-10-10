@@ -89,7 +89,6 @@ export const router = createBrowserRouter([
               cep: "01153000",
               address: "Rua Exemplo",
               number: "123",
-              apartment: "45B",
               additionalInfo: "Bloco 3",
               city: "São Paulo",
               state: "SP",
