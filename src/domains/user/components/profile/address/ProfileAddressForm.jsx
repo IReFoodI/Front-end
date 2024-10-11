@@ -84,7 +84,7 @@ export function ProfileAddressForm({ initialData }) {
                 <div className="relative w-full">
                   <Input
                     placeholder="Pesquisar CEP"
-                    className="h-12 w-full rounded-md border-2 border-muted-foreground pr-4"
+                    className="h-12 w-full rounded-md border-2 border-input pr-4"
                     {...formMethods.register("cep")}
                   />
                 </div>
@@ -97,7 +97,7 @@ export function ProfileAddressForm({ initialData }) {
                       <FormControl>
                         <select
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-3"
+                          className="h-12 w-full rounded-md border-2 border-input p-3"
                         >
                           <option value="">UF</option>
                           {states.map((estado) => (
@@ -121,7 +121,7 @@ export function ProfileAddressForm({ initialData }) {
                         <Input
                           placeholder="Bairro"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
                       <FormMessage />
@@ -140,7 +140,7 @@ export function ProfileAddressForm({ initialData }) {
                         <Input
                           placeholder="Rua"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
                       <FormMessage />
@@ -157,7 +157,7 @@ export function ProfileAddressForm({ initialData }) {
                         <Input
                           placeholder="Complemento"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
                       <FormMessage />
@@ -174,7 +174,7 @@ export function ProfileAddressForm({ initialData }) {
                         <Input
                           placeholder="Número"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
                       <FormMessage />
@@ -191,7 +191,7 @@ export function ProfileAddressForm({ initialData }) {
                         <Input
                           placeholder="Cidade"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-muted-foreground p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
                       <FormMessage />
