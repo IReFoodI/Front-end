@@ -15,9 +15,9 @@ import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
+import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 
 import App from "../App.jsx"
-import { ProtectedRoute } from "./ProtectedRoute.jsx"
 
 export const ROUTES = {
   ADDRESS: "address",
@@ -37,52 +37,34 @@ export const ROUTES = {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AuthenticationLayout />,
+    element: <App />,
+
     children: [
       {
         index: true,
-        element: <PresentationContent />,
-      },
-      {
-        path: ROUTES.LOGIN,
-        element: <SignIn />,
-      },
-      {
-        path: ROUTES.CREATE_ACCOUNT,
-        element: <SignUp />,
-      },
-    ],
-  },
-  {
-    path: "/user",
-    element: <App />,
-    children: [
-      {
-        path: ROUTES.ADDRESS,
-        element: (
-          <ProtectedRoute>
-            <AddressPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTES.CHANGE_PASSWORD,
-        element: (
-          <ProtectedRoute>
-            <ChangePassword />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTES.HOME,
         element: <Home />,
       },
       {
-        path: ROUTES.FAVORITES,
-        element: <Favorites />,
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: ROUTES.FAVORITES,
+            element: <Favorites />,
+          },
+          {
+            path: ROUTES.USER_CREDIT_CARD,
+            element: <CardPage />,
+          },
+          {
+            path: ROUTES.USER_ADD_CREDIT_CARD,
+            element: <AddEditCard />,
+          },
+          { path: ROUTES.ADDRESS, element: <AddressPage /> },
+          { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+        ],
       },
-      {
 
+      {
         path: ROUTES.ADDRESS_EDIT,
         element: <ProfileAddressForm />,
       },
@@ -103,21 +85,61 @@ export const router = createBrowserRouter([
 
         path: ROUTES.USER_CREDIT_CARD,
         element: <CardPage />,
+
+        path: "autenticar",
+        element: <AuthenticationLayout />,
+        children: [
+          {
+            index: true,
+            element: <PresentationContent />,
+          },
+          {
+            path: ROUTES.LOGIN,
+            element: <SignIn />,
+          },
+          {
+            path: ROUTES.CREATE_ACCOUNT,
+            element: <SignUp />,
+          },
+        ],
       },
       {
-        path: ROUTES.USER_ADD_CREDIT_CARD,
-        element: <AddEditCard />,
+        path: "dashboard",
+        children: [
+          {
+            path: "autenticar",
+            children: [
+              {
+                index: true,
+                element: <PresentationContent />,
+              },
+              {
+                path: ROUTES.LOGIN,
+                element: <SignIn />,
+              },
+              {
+                path: ROUTES.CREATE_ACCOUNT,
+                element: <SignUp />,
+              },
+            ],
+          },
+
+          {
+            element: <DashBoardLayout />,
+            children: [
+              { index: true, element: <FinancePage /> }, //Trocar para a tela inicial da dashboard
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
+              {
+                path: ROUTES.ALERTSETTINGS,
+                element: <AlertSoundSettingsPage />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
-  {
-    path: "dashboard",
-    element: <DashBoardLayout />,
-    children: [
-      { path: ROUTES.FINANCE, element: <FinancePage /> },
-      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-    ],
-  },
+
   {
     path: "*",
     element: <PageNotFound />,

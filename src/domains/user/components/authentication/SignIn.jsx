@@ -37,7 +37,7 @@ export function SignIn() {
   const onSubmit = (data) => {
     toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
     console.log(data)
-    navigate("/home")
+    navigate("/")
   }
 
   return (
@@ -97,13 +97,13 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/recover-password" //TODO: fazer rota
+        navigateTo="/autenticar/recuperar-senha" //TODO: fazer rota
       />
       <SocialAuthButtons />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
-        navigateTo="/criar-conta" //TODO: fazer rota
+        navigateTo="/autenticar/criar-conta" //TODO: fazer rota
       />
     </div>
   )
