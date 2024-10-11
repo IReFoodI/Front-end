@@ -41,7 +41,7 @@ export function SignUp() {
   const onSubmit = (data) => {
     if (acceptedTerms) {
       toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/home")
+      navigate("/")
       console.log(data)
       return
     }
@@ -165,12 +165,12 @@ export function SignUp() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/entrar"}
+        navigateTo={"/autenticar/entrar"}
       />
       <TextWithLink
         text={"É uma empresa?"}
         buttonContent={"Criar conta empresarial"}
-        navigateTo={"/criar-conta-empresarial"}
+        navigateTo={"/autenticar/criar-conta-empresarial"}
       />
     </div>
   )
