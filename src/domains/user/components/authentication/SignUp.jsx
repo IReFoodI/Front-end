@@ -24,7 +24,7 @@ import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
 import { TermsOfUse } from "./TermsOfUse"
 
-export function CreateAccount() {
+export function SignUp() {
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -46,7 +46,7 @@ export function CreateAccount() {
   const onSubmit = (data) => {
     if (acceptedTerms) {
       toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/home")
+      navigate("/")
       console.log(data)
       return
     }
@@ -55,7 +55,7 @@ export function CreateAccount() {
   }
 
   return (
-    <>
+    <div className="mx-auto grid max-w-sm gap-2">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">
         Criar conta
       </h1>
@@ -159,7 +159,6 @@ export function CreateAccount() {
               </FormItem>
             )}
           />
-          <Button type="submit">Cadastrar</Button>
           <div className="mt-4 flex items-center">
             <Checkbox
               id="terms"
@@ -170,19 +169,20 @@ export function CreateAccount() {
               Eu aceito os <TermsOfUse>termos e condições</TermsOfUse>
             </Label>
           </div>
+          <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
       <SocialAuthButtons />
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/entrar"}
+        navigateTo={"/autenticar/entrar"}
       />
       <TextWithLink
         text={"É uma empresa?"}
         buttonContent={"Criar conta empresarial"}
-        navigateTo={"/criar-conta-empresarial"}
+        navigateTo={"/autenticar/criar-conta-empresarial"}
       />
-    </>
+    </div>
   )
 }
