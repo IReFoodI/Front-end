@@ -13,6 +13,7 @@ import { ChangePassword } from "@/domains/user/components/password/ChangePasswor
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
+import { AuthenticationLayoutBusinessLayout } from "@/ui/layouts/AuthenticationLayoutBusinessLayout.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 
 import App from "../App.jsx"
@@ -24,9 +25,11 @@ export const ROUTES = {
   FAVORITES: "favoritos",
   FINANCE: "financas",
   ALERTSETTINGS: "ajustes/alertas-sonoros",
+  teste: "teste",
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  CREATE_ACCOUNT_BUSINESS: "criar-conta-empresarial",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
 }
@@ -46,6 +49,20 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.CREATE_ACCOUNT,
+        element: <SignUp />,
+      },
+    ],
+  },
+  {
+    path: "/business",
+    element: <AuthenticationLayoutBusinessLayout />,
+    children: [
+      {
+        index: true,
+        element: <SignIn />,
+      },
+      {
+        path: ROUTES.CREATE_ACCOUNT_BUSINESS,
         element: <SignUp />,
       },
     ],
