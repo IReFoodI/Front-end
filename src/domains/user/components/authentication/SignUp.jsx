@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -20,10 +20,11 @@ import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/CreateAccountTypes"
-import { SocialAuthButtons } from "./SocialAuthButtons"
 
 export function SignUp() {
+  const location = useLocation()
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -52,6 +53,8 @@ export function SignUp() {
 
     toast.warning("Necessário aceitar os termos")
   }
+
+  const isSignUpPage = location.pathname === "/criar-conta"
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -175,12 +178,14 @@ export function SignUp() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/entrar"}
+        navigateTo={isSignUpPage ? "/entrar" : "/business"}
       />
       <TextWithLink
-        text={"É uma empresa?"}
-        buttonContent={"Criar conta empresarial"}
-        navigateTo={"/criar-conta-empresarial"}
+        text={isSignUpPage ? "É uma empresa?" : "É um cliente?"}
+        buttonContent={isSignUpPage ? "Criar conta empresarial" : "Criar conta"}
+        navigateTo={
+          isSignUpPage ? "/business/criar-conta-empresarial" : "/criar-conta"
+        }
       />
     </div>
   )
