@@ -19,10 +19,6 @@ export default {
       },
     },
     extend: {
-      backgroundImage: {
-        "dashboard-login":
-          "url('./src/domains/store/dashboard/bg-dashboard-login.png')",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
