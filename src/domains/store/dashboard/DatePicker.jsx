@@ -58,3 +58,34 @@ export function DatePicker({ className }) {
     </div>
   )
 }
+
+export function DatePickerSingle({ value, onChange }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "justify-start text-left font-normal",
+            !value && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {value instanceof Date && !isNaN(value) ? (
+            format(value, "PP")
+          ) : (
+            <span>Pick a date</span>
+          )}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={value}
+          onSelect={onChange}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
+  )
+}

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -29,6 +30,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  MENU: "cardapio",
 }
 
 export const router = createBrowserRouter([
@@ -94,6 +96,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.FINANCE, element: <FinancePage /> },
       { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.MENU, element: <StoreMenu /> },
     ],
   },
   {
