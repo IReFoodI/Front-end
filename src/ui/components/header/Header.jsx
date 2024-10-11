@@ -34,9 +34,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 w-screen bg-orange-50 p-4 drop-shadow-md">
-      <div className="relative flex w-full flex-col items-center justify-between md:m-auto md:w-[70%] md:flex-row">
-        <section className="flex w-full items-center justify-between">
-          <MenuMobile />
+      <div className="relative flex flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
+        <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
             <Link className="w-24 md:mr-7" to="/">
               <img src={logo} alt="Logo" className="w-full" />
@@ -58,36 +57,10 @@ export function Header() {
               </Link>
             </div>
           </div>
-          <div className="right-0 flex gap-3 md:absolute">
-            <Popover onOpenChange={handleProfilePopoverOpen}>
-              <PopoverTrigger asChild>
-                <Link
-                  className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
-                >
-                  <IconUser className="w-full text-center" size={30} />
-                </Link>
-              </PopoverTrigger>
-
-              <PopoverContent sideOffset={20}>
-                <ProfileSheet />
-              </PopoverContent>
-            </Popover>
-            <Link
-              to="/"
-              className={`relative m-auto w-10 rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-              onClick={handleClick}
-            >
-              <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-                {orderQuantity}
-              </span>
-              <IconShoppingBag className="w-full text-center" size={30} />
-            </Link>
-          </div>
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
-        <section className="flex w-full flex-col items-center justify-center md:flex-row">
-          <AddressModal />
-          <div className="relative m-auto flex w-full items-center justify-center md:right-40">
+        <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
+          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 md:ml-20 md:mr-20">
             <IconSearch
               className="absolute left-0 ml-2 text-primary"
               size={20}
@@ -111,6 +84,36 @@ export function Header() {
               </PopoverContent>
             </Popover>
           </div>
+          <AddressModal />
+        </section>
+        <section className="order-1 flex w-full items-center justify-between gap-2 md:order-last md:w-fit">
+          <MenuMobile />
+          <Link className="w-24 md:mr-7 md:hidden" to="/">
+            <img src={logo} alt="Logo" className="w-full" />
+          </Link>
+          <Popover onOpenChange={handleProfilePopoverOpen}>
+            <PopoverTrigger asChild>
+              <Link
+                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
+              >
+                <IconUser className="w-full text-center" size={30} />
+              </Link>
+            </PopoverTrigger>
+
+            <PopoverContent sideOffset={20}>
+              <ProfileSheet />
+            </PopoverContent>
+          </Popover>
+          <Link
+            to="/"
+            className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+            onClick={handleClick}
+          >
+            <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
+              {orderQuantity}
+            </span>
+            <IconShoppingBag className="w-full text-center" size={30} />
+          </Link>
         </section>
       </div>
     </header>

@@ -16,7 +16,7 @@ export function AddressModal() {
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`right-12 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:relative md:order-last md:mr-14 md:w-[60%] ${isActive ? "active:bg-orange-100" : ""}`}
+          className={`right-12 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:relative md:order-last md:w-[40%] ${isActive ? "active:bg-orange-100" : ""}`}
           onClick={handleClick}
         >
           <p className="text-sm font-semibold md:text-[15px]">
@@ -32,7 +32,7 @@ export function AddressModal() {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="ml-2 flex w-[80%] flex-col items-start gap-4 rounded-lg bg-white p-4 shadow-lg md:w-96">
+      <PopoverContent className="ml-6 flex w-[70%] flex-col items-start gap-4 rounded-lg bg-white p-4 shadow-lg md:w-96">
         <div className="flex w-full flex-col items-center gap-2">
           <h1 className="text-[15px] font-bold md:text-xl">
             Seu pedido irá para esse endereço
