@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
 
 import background from "@/ui/assets/background.png"
 
@@ -53,10 +52,11 @@ export function OngoingOrder() {
               deliveryMethod={order.delivery}
               paymentMethod={order.payment.method}
               paymentStatus={order.payment.status}
+              encodedAddress={encodedAddress}
             />
           </div>
         </div>
-        <div className="relative flex justify-end">
+        <div className="relative flex justify-end text-center">
           <img
             className="z-10 hidden max-h-[700px] w-[80%] md:relative md:block"
             src={background}
@@ -65,7 +65,7 @@ export function OngoingOrder() {
 
           <div
             id="map"
-            className="top-12 z-20 mx-auto flex w-[80%] items-center justify-center md:absolute md:left-0 md:h-[80%]"
+            className="top-12 z-20 mx-auto hidden w-[80%] items-center justify-center md:absolute md:left-0 md:flex md:h-[80%]"
           >
             <iframe
               title="Google Maps"
@@ -78,12 +78,6 @@ export function OngoingOrder() {
           </div>
         </div>
       </div>
-      <Link
-        to="/user/pedidos"
-        className="font-inter mx-auto mt-8 block w-[321px] text-center text-[24px] font-semibold leading-[44px] text-[#FB3D01] underline md:mt-4"
-      >
-        Preciso de ajuda
-      </Link>
     </div>
   )
 }

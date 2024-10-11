@@ -13,6 +13,7 @@ export function OrderCard({
   deliveryMethod,
   paymentMethod,
   paymentStatus,
+  encodedAddress,
 }) {
   const [expandedItems, setExpandedItems] = useState({})
 
@@ -24,8 +25,8 @@ export function OrderCard({
   }
 
   return (
-    <div className="mx-auto max-w-md rounded-lg p-4 md:bg-[#FFF8F5]">
-      <div className="text-sm font-semibold text-primary">
+    <div className="mx-auto rounded-lg p-4 md:max-w-md">
+      <div className="text-lg font-semibold text-primary">
         Previsão para Retirada
       </div>
       <div className="text-2xl font-semibold text-secondary-foreground">
@@ -50,7 +51,22 @@ export function OrderCard({
           {orderStatus}
         </span>
       </div>
-
+      <div className="mt-4 text-lg font-semibold text-primary md:hidden">
+        Retirar em:
+      </div>
+      <div
+        id="map"
+        className="top-12 z-20 mx-auto flex items-center justify-center md:hidden"
+      >
+        <iframe
+          title="Google Maps"
+          width="100%"
+          height="100%"
+          className="rounded-xl border-0"
+          src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+          allowFullScreen
+        ></iframe>
+      </div>
       <div className="mt-6">
         <div className="text-lg font-semibold text-primary">
           Detalhes do Pedido
