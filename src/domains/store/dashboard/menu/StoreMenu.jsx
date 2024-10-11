@@ -1,5 +1,13 @@
 import { useState } from "react"
 
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Card,
@@ -17,6 +25,7 @@ import {
 } from "@/ui/components/ui/table"
 
 import { productList as initialProductList } from "../../model/productList"
+import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"
 
@@ -25,27 +34,24 @@ export const description =
 
 export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [productList, setProductList] = useState(initialProductList) // State para armazenar a lista de produtos
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const handleOpenModal = (product) => {
-    setSelectedProduct(product)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [productList /* setProductList */] = useState(initialProductList) // State para armazenar a lista de produtos
+
+  const handleOpenModal = () => {
     setIsModalOpen(true)
   }
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedProduct(null)
-  }
-
+  //todo fazer a parte de atualizar o produto
   // Função para atualizar o produto na lista
-  const handleUpdateProduct = (updatedProduct) => {
-    setProductList((prevList) =>
-      prevList.map((product) =>
-        product.id === updatedProduct.id ? updatedProduct : product
-      )
-    )
-  }
+  // const handleUpdateProduct = (updatedProduct) => {
+  //   setProductList((prevList) =>
+  //     prevList.map((product) =>
+  //       product.id === updatedProduct.id ? updatedProduct : product
+  //     )
+  //   )
+  // }
 
   return (
     <div>
@@ -53,11 +59,26 @@ export function StoreMenu() {
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
 
-          <Button size="sm" className="m-0 items-center gap-1 text-lg">
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              + Adicionar produto
-            </span>
-          </Button>
+          <AlertDialog open={isModalOpen}>
+            <AlertDialogTrigger onClick={handleOpenModal} asChild>
+              <Button size="sm" className="m-0 items-center gap-1 text-lg">
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  + Adicionar produto
+                </span>
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="min-w-fit">
+              <AlertDialogHeader>
+                <AlertDialogTitle />
+                <AlertDialogDescription />
+              </AlertDialogHeader>
+              <ProductModal
+                setIsModalOpen={setIsModalOpen}
+                selectedProduct={selectedProduct}
+                setSelectedProduct={setSelectedProduct}
+              />
+            </AlertDialogContent>
+          </AlertDialog>
         </CardHeader>
         <CardContent>
           <Table>
@@ -89,8 +110,12 @@ export function StoreMenu() {
               {productList.map((product) => (
                 <MenuItemCard
                   key={product.id}
-                  {...product}
-                  onClick={() => handleOpenModal(product)} // Passa a função para abrir o modal
+                  product={product}
+                  setIsDeleteModalOpen={setIsDeleteModalOpen}
+                  selectedProduct={selectedProduct}
+                  setSelectedProduct={setSelectedProduct}
+                  setIsModalOpen={setIsModalOpen}
+                  isModalOpen={isModalOpen}
                 />
               ))}
             </TableBody>
@@ -98,16 +123,20 @@ export function StoreMenu() {
         </CardContent>
         <CardFooter>
           <div className="text-xs text-muted-foreground">
-            Showing <strong>1-10</strong> of <strong>32</strong> products
+            Exibindo{" "}
+            <strong>
+              1-
+              {initialProductList.length < 10 ? initialProductList.length : 10}
+            </strong>{" "}
+            de <strong>{initialProductList.length}</strong> produtos
           </div>
         </CardFooter>
       </Card>
-
-      <ProductModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        product={selectedProduct}
-        onSubmitForm={handleUpdateProduct} // Certifique-se de que a função correta está sendo passada
+      <DeleteProductModal
+        isDeleteModalOpen={isDeleteModalOpen}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
       />
     </div>
   )

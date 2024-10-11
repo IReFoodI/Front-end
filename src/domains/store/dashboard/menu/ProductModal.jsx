@@ -2,6 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
+import {
+  AlertDialogCancel,
+  AlertDialogFooter,
+} from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -13,50 +17,52 @@ import {
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
 
-import { productSchema } from "../../model/ProductTypes"
-export function ProductModal({ onClose, product }) {
+import { editProductSchema, productSchema } from "../../model/ProductTypes"
+export function ProductModal({
+  selectedProduct,
+  setSelectedProduct,
+  setIsModalOpen,
+}) {
   const form = useForm({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(selectedProduct ? editProductSchema : productSchema),
     defaultValues: {
-      name: product?.name ? product.name : "",
-      description: product?.description ? product.description : "",
-      expirationDate: product?.expirationDate
-        ? new Date(product.expirationDate)
+      name: selectedProduct?.name ? selectedProduct.name : "",
+      description: selectedProduct?.description
+        ? selectedProduct.description
+        : "",
+      expirationDate: selectedProduct?.expirationDate
+        ? new Date(selectedProduct.expirationDate)
         : null,
-      quantity: product?.quantity ? product.quantity : 0,
-      originalPrice: product?.originalPrice ? product.originalPrice : 0,
-      sellPrice: product?.sellPrice ? product.sellPrice : 0,
+      quantity: selectedProduct?.quantity ? selectedProduct.quantity : 0,
+      originalPrice: selectedProduct?.originalPrice
+        ? selectedProduct.originalPrice
+        : 0,
+      sellPrice: selectedProduct?.sellPrice ? selectedProduct.sellPrice : 0,
     },
   })
 
-  if (!product) return null
-  const onSubmit = () => {
-    onClose()
+  function handleCloseModal() {
+    setIsModalOpen(false)
+    setSelectedProduct(null)
+  }
+
+  const onSubmit = (data) => {
+    console.log(data)
+    handleCloseModal()
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div
-        className="fixed inset-0 bg-black opacity-50"
-        onClick={onClose}
-      ></div>
+      <div className="fixed inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 mx-auto rounded-lg bg-white p-6 shadow-lg">
-        <button
-          onClick={onClose}
-          className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
-        >
-          <span className="sr-only">Fechar</span>
-          &times;
-        </button>
-
         <div className="gap-4">
           <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
             Adicionar Produto
           </h1>
           <img
-            src={product.photo}
-            alt={product.name}
+            src={editProductSchema?.photo}
+            alt={name}
             className="my-2 h-auto w-full"
           />
 
@@ -108,7 +114,8 @@ export function ProductModal({ onClose, product }) {
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Validade</FormLabel>
-                      <DatePickerSingle {...field} />
+                      <DatePickerSingle {...field} ref={null} />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -126,6 +133,7 @@ export function ProductModal({ onClose, product }) {
                           min={0}
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -169,16 +177,30 @@ export function ProductModal({ onClose, product }) {
                 />
               </div>
               <div className="flex justify-end gap-4">
-                <Button
-                  onClick={onClose}
-                  variant="secondary"
-                  className="md:px-6"
-                >
+                <AlertDialogFooter className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4">
+                  <AlertDialogCancel onClick={handleCloseModal}>
+                    Cancelar
+                  </AlertDialogCancel>
+                  <Button type="submit" className="!ml-0 !mr-0 md:px-6">
+                    Confirmar
+                  </Button>
+                  {/* <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full md:px-6"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button className="!ml-0 !mr-0 w-full md:px-6">
+                    Confirmar
+                  </Button> */}
+                </AlertDialogFooter>
+                {/* <Button variant="secondary" className="md:px-6">
                   Cancelar
                 </Button>
                 <Button onClick={onSubmit} className="!ml-0 !mr-0 md:px-6">
                   Confirmar
-                </Button>
+                </Button> */}
               </div>
             </form>
           </Form>

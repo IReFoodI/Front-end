@@ -1,8 +1,14 @@
-import { IconTrash } from "@tabler/icons-react"
+import { IconDots } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/ui/components/ui/dropdown-menu"
 import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 import { TableCell, TableRow } from "@/ui/components/ui/table"
@@ -10,16 +16,23 @@ import { TableCell, TableRow } from "@/ui/components/ui/table"
 import { QuantityInput } from "./QuantityInput"
 
 export function MenuItemCard({
-  name,
-  photo,
-  description: initialDescription,
-  status: initialStatus,
-  expirationDate: initialExpirationDate,
-  quantity: initialQuantity,
-  originalPrice: initialOriginalPrice,
-  sellPrice: initialSellPrice,
+  product,
   onClick,
+  setIsModalOpen,
+  setIsDeleteModalOpen,
+  setSelectedProduct,
 }) {
+  const {
+    name,
+    image,
+    description: initialDescription,
+    status: initialStatus,
+    expirationDate: initialExpirationDate,
+    quantity: initialQuantity,
+    originalPrice: initialOriginalPrice,
+    sellPrice: initialSellPrice,
+  } = product
+
   const [expirationDate, setExpirationDate] = useState(
     initialExpirationDate ? new Date(initialExpirationDate) : null
   )
@@ -41,59 +54,90 @@ export function MenuItemCard({
     setStatus(checked)
   }
 
+  function handleOpenModal() {
+    setIsModalOpen(true)
+  }
+
   return (
-    <TableRow>
-      <TableCell className="hidden sm:table-cell">
-        <img
-          alt={name || "Product image"}
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={photo || "/placeholder.svg"}
-          width="64"
-        />
-      </TableCell>
-      <TableCell onClick={onClick} className="cursor-pointer font-medium">
-        {name}
-      </TableCell>
-      <TableCell>
-        <Input
-          type="text"
-          value={description}
-          onChange={handleChange(setDescription)}
-          placeholder="Descrição do produto"
-        />
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        <DatePickerSingle value={expirationDate} onChange={setExpirationDate} />
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        <QuantityInput items={quantity} />
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        <Input
-          type="text"
-          value={originalPrice}
-          onChange={handleChange(setOriginalPrice)}
-          placeholder="Preço Original"
-        />
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        <Input
-          type="text"
-          value={sellPrice}
-          onChange={handleChange(setSellPrice)}
-          placeholder="Preço de Venda"
-        />
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        <Switch checked={status} onCheckedChange={handleStatusChange} />
-      </TableCell>
-      <TableCell className="flex-col items-center gap-2">
-        <IconTrash
-          size={25}
-          className="transition duration-300 hover:text-primary"
-        />
-      </TableCell>
-    </TableRow>
+    <>
+      <TableRow>
+        <TableCell className="hidden sm:table-cell">
+          <img
+            alt={name || "Product image"}
+            className="aspect-square rounded-md object-cover"
+            height="64"
+            src={image}
+            width="64"
+          />
+        </TableCell>
+        <TableCell onClick={onClick} className="font-medium">
+          {name}
+        </TableCell>
+        <TableCell className="pointer-events-none">
+          <Input
+            type="text"
+            disabled
+            value={description}
+            onChange={handleChange(setDescription)}
+            placeholder="Descrição do produto"
+          />
+        </TableCell>
+        <TableCell className="pointer-events-none hidden md:table-cell">
+          <DatePickerSingle
+            value={expirationDate}
+            onChange={setExpirationDate}
+          />
+        </TableCell>
+        <TableCell className="pointer-events-none hidden md:table-cell">
+          <QuantityInput items={quantity} />
+        </TableCell>
+        <TableCell className="pointer-events-none hidden md:table-cell">
+          <Input
+            type="text"
+            value={originalPrice}
+            onChange={handleChange(setOriginalPrice)}
+            placeholder="Preço Original"
+          />
+        </TableCell>
+        <TableCell className="pointer-events-none hidden md:table-cell">
+          <Input
+            type="text"
+            value={sellPrice}
+            onChange={handleChange(setSellPrice)}
+            placeholder="Preço de Venda"
+          />
+        </TableCell>
+        <TableCell className="hidden md:table-cell">
+          <Switch checked={status} onCheckedChange={handleStatusChange} />
+        </TableCell>
+        <TableCell className="flex-col items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <IconDots size={25} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={() => {
+                  setSelectedProduct(product)
+                  handleOpenModal()
+                  document.body.style.pointerEvents = ""
+                }}
+              >
+                Editar
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setIsDeleteModalOpen(true)
+                  setSelectedProduct(product)
+                  document.body.style.pointerEvents = ""
+                }}
+              >
+                Deletar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
+    </>
   )
 }

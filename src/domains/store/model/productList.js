@@ -1,7 +1,7 @@
 export const productList = [
   {
     id: 0,
-    foto: "/path/to/banana.jpg",
+    image: "/path/to/banana.jpg",
     name: "Banana",
     description: "Banana .......",
     expirationDate: "10/10/2025",
@@ -12,7 +12,7 @@ export const productList = [
   },
   {
     id: 1,
-    foto: "/path/to/apple.jpg",
+    image: "../../../../ui/assets/page404.png",
     name: "Apple",
     description: "Fresh Apple",
     expirationDate: "12/10/2022",
@@ -24,7 +24,7 @@ export const productList = [
 
   {
     id: 3,
-    foto: "/path/to/grape.jpg",
+    image: "/path/to/grape.jpg",
     name: "Grape",
     description: "Sweet Grape",
     expirationDate: "10/15/2024",
@@ -35,7 +35,7 @@ export const productList = [
   },
   {
     id: 4,
-    foto: "/path/to/watermelon.jpg",
+    image: "/path/to/watermelon.jpg",
     name: "Watermelon",
     description: "Juicy Watermelon",
     expirationDate: "02/20/2024",
@@ -46,7 +46,7 @@ export const productList = [
   },
   {
     id: 5,
-    foto: "/path/to/strawberry.jpg",
+    image: "/path/to/strawberry.jpg",
     name: "Strawberry",
     description: "Sweet Strawberry",
     expirationDate: "01/22/2024",
