@@ -18,8 +18,12 @@ export const productSchema = z.object({
     .int("A quantidade deve ser um número inteiro")
     .nonnegative("A quantidade não pode ser negativa"),
   originalPrice: z
-    .number()
-    .positive("O preço original deve ser maior que zero"),
-  sellPrice: z.number().positive("O preço de venda deve ser maior que zero"),
+    .string()
+    .transform((value) => parseFloat(value))
+    .pipe(z.number().positive("O preço original deve ser maior que zero")),
+  sellPrice: z
+    .string()
+    .transform((value) => parseFloat(value))
+    .pipe(z.number().positive("O preço original deve ser maior que zero")),
   status: z.boolean().optional(), // pode ser omitido, padrão será `false`
 })
