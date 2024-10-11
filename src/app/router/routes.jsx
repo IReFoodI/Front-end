@@ -10,6 +10,8 @@ import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.j
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
+import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -29,6 +31,8 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  RECOVER_PASSWORD: "recuperar-senha",
+  RESET_PASSWORD: "redefinir-senha/:token",
 }
 
 export const router = createBrowserRouter([
@@ -76,6 +80,14 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.CREATE_ACCOUNT,
             element: <SignUp />,
+          },
+          {
+            path: ROUTES.RECOVER_PASSWORD,
+            element: <RecoverPasswordPage />,
+          },
+          {
+            path: ROUTES.RESET_PASSWORD,
+            element: <ResetPasswordPage />,
           },
         ],
       },
