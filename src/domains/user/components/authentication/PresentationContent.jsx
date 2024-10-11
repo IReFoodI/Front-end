@@ -18,8 +18,13 @@ export function PresentationContent() {
       <Decorative className={"!relative sm:hidden"} />
       <p className="mt-5 text-muted-foreground">Como deseja continuar?</p>
       <nav aria-label="Navegação de login e registro" className="grid gap-2">
-        <Button onClick={() => navigate("/criar-conta")}>Cadastre-se</Button>
-        <Button variant="outline" onClick={() => navigate("/entrar")}>
+        <Button onClick={() => navigate("/autenticar/criar-conta")}>
+          Cadastre-se
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => navigate("/autenticar/entrar")}
+        >
           Acesse sua conta
         </Button>
         <Button
