@@ -62,6 +62,10 @@ export const router = createBrowserRouter([
           },
           { path: ROUTES.ADDRESS, element: <AddressPage /> },
           { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+          {
+            path: ROUTES.ONGOING_ORDER,
+            element: <OngoingOrder />,
+          },
         ],
       },
 
@@ -116,10 +120,6 @@ export const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: ROUTES.ONGOING_ORDER,
-        element: <OngoingOrder />,
       },
     ],
   },

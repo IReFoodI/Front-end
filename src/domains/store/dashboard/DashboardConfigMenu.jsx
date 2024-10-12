@@ -31,7 +31,7 @@ export function DashboardConfigMenu() {
           <DropdownMenuLabel className="bg-slate-900 text-white">
             GESTOR DE PEDIDOS
           </DropdownMenuLabel>
-          <Link to="/ajustes/alertas-sonoros">
+          <Link to="/dashboard/ajustes/alertas-sonoros">
             <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
               Alertas sonoros
             </DropdownMenuItem>
