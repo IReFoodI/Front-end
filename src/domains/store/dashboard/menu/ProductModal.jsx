@@ -23,6 +23,7 @@ export function ProductModal({
   setSelectedProduct,
   setIsModalOpen,
 }) {
+  console.log(typeof selectedProduct)
   const form = useForm({
     resolver: zodResolver(selectedProduct ? editProductSchema : productSchema),
     defaultValues: {
@@ -33,11 +34,15 @@ export function ProductModal({
       expirationDate: selectedProduct?.expirationDate
         ? new Date(selectedProduct.expirationDate)
         : null,
-      quantity: selectedProduct?.quantity ? selectedProduct.quantity : 0,
+      quantity: selectedProduct?.quantity
+        ? String(selectedProduct.quantity)
+        : "",
       originalPrice: selectedProduct?.originalPrice
-        ? selectedProduct.originalPrice
-        : 0,
-      sellPrice: selectedProduct?.sellPrice ? selectedProduct.sellPrice : 0,
+        ? String(selectedProduct.originalPrice)
+        : "",
+      sellPrice: selectedProduct?.sellPrice
+        ? String(selectedProduct.sellPrice)
+        : "",
     },
   })
 
@@ -152,6 +157,7 @@ export function ProductModal({
                       <FormControl>
                         <Input
                           type="number"
+                          step="0.01"
                           placeholder="Preço Original *"
                           {...field}
                           min={0}
@@ -172,6 +178,7 @@ export function ProductModal({
                       <FormControl>
                         <Input
                           type="number"
+                          step="0.01"
                           placeholder="Preço de Venda *"
                           {...field}
                           min={0}

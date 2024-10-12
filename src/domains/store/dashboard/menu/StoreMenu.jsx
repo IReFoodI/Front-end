@@ -36,7 +36,7 @@ export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [selectedProduct, setSelectedProduct] = useState({})
   const [productList /* setProductList */] = useState(initialProductList) // State para armazenar a lista de produtos
 
   const handleOpenModal = () => {
@@ -72,9 +72,11 @@ export function StoreMenu() {
                 <AlertDialogDescription />
               </AlertDialogHeader>
               <ProductModal
-                setIsModalOpen={setIsModalOpen}
+                setIsDeleteModalOpen={setIsDeleteModalOpen}
                 selectedProduct={selectedProduct}
                 setSelectedProduct={setSelectedProduct}
+                setIsModalOpen={setIsModalOpen}
+                isModalOpen={isModalOpen}
               />
             </AlertDialogContent>
           </AlertDialog>
