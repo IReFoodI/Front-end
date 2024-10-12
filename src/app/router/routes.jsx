@@ -10,14 +10,15 @@ import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
+import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
+import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 
 import App from "../App.jsx"
-import { ProtectedRoute } from "./ProtectedRoute.jsx"
 
 export const ROUTES = {
   ADDRESS: "address",
@@ -31,74 +32,98 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  ONGOING_ORDER: "pedidos/em-andamento",
 }
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AuthenticationLayout />,
+    element: <App />,
+
     children: [
       {
         index: true,
-        element: <PresentationContent />,
-      },
-      {
-        path: ROUTES.LOGIN,
-        element: <SignIn />,
-      },
-      {
-        path: ROUTES.CREATE_ACCOUNT,
-        element: <SignUp />,
-      },
-    ],
-  },
-  {
-    path: "/user",
-    element: <App />,
-    children: [
-      {
-        path: ROUTES.ADDRESS,
-        element: (
-          <ProtectedRoute>
-            <AddressPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTES.CHANGE_PASSWORD,
-        element: (
-          <ProtectedRoute>
-            <ChangePassword />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTES.HOME,
         element: <Home />,
       },
       {
-        path: ROUTES.FAVORITES,
-        element: <Favorites />,
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: ROUTES.FAVORITES,
+            element: <Favorites />,
+          },
+          {
+            path: ROUTES.USER_CREDIT_CARD,
+            element: <CardPage />,
+          },
+          {
+            path: ROUTES.USER_ADD_CREDIT_CARD,
+            element: <AddEditCard />,
+          },
+          { path: ROUTES.ADDRESS, element: <AddressPage /> },
+          { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+        ],
+      },
+
+      {
+        path: "autenticar",
+        element: <AuthenticationLayout />,
+        children: [
+          {
+            index: true,
+            element: <PresentationContent />,
+          },
+          {
+            path: ROUTES.LOGIN,
+            element: <SignIn />,
+          },
+          {
+            path: ROUTES.CREATE_ACCOUNT,
+            element: <SignUp />,
+          },
+        ],
       },
       {
-        path: ROUTES.USER_CREDIT_CARD,
-        element: <CardPage />,
+        path: "dashboard",
+        children: [
+          {
+            path: "autenticar",
+            children: [
+              {
+                index: true,
+                element: <PresentationContent />,
+              },
+              {
+                path: ROUTES.LOGIN,
+                element: <SignIn />,
+              },
+              {
+                path: ROUTES.CREATE_ACCOUNT,
+                element: <SignUp />,
+              },
+            ],
+          },
+
+          {
+            element: <DashBoardLayout />,
+            children: [
+              { index: true, element: <StoreProfilePage /> },
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
+              {
+                path: ROUTES.ALERTSETTINGS,
+                element: <AlertSoundSettingsPage />,
+              },
+            ],
+          },
+        ],
       },
       {
-        path: ROUTES.USER_ADD_CREDIT_CARD,
-        element: <AddEditCard />,
+        path: ROUTES.ONGOING_ORDER,
+        element: <OngoingOrder />,
       },
     ],
   },
-  {
-    path: "/",
-    element: <DashBoardLayout />,
-    children: [
-      { path: ROUTES.DASHBOARD, index: true, element: <StoreProfilePage /> },
-      { path: ROUTES.FINANCE, element: <FinancePage /> },
-      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-    ],
-  },
+
   {
     path: "*",
     element: <PageNotFound />,

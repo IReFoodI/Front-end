@@ -54,10 +54,7 @@ export function DashboardConfigMenu() {
             CONTA
           </DropdownMenuLabel>
           <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Gestão de acesso
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Alterar senha
+            Configurações
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
