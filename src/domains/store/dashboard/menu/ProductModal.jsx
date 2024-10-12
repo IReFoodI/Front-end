@@ -60,12 +60,16 @@ export function ProductModal({
           <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
             Adicionar Produto
           </h1>
-          <img
-            src={editProductSchema?.photo}
-            alt={name}
-            className="my-2 h-auto w-full"
-          />
-
+          <div className="flex w-full flex-col items-center">
+            <img
+              src={selectedProduct?.image}
+              alt={name}
+              className="my-2 aspect-square w-1/3"
+            />
+            <Button type="button" className="!ml-0 !mr-0 md:px-6">
+              Adicionar imagem
+            </Button>
+          </div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -77,6 +81,7 @@ export function ProductModal({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>Nome do produto</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Nome do Produto"
@@ -94,6 +99,7 @@ export function ProductModal({
                   name="description"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>Descrição</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Descrição"

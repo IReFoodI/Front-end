@@ -42,7 +42,6 @@ export function StoreMenu() {
   const handleOpenModal = () => {
     setIsModalOpen(true)
   }
-
   //todo fazer a parte de atualizar o produto
   // Função para atualizar o produto na lista
   // const handleUpdateProduct = (updatedProduct) => {

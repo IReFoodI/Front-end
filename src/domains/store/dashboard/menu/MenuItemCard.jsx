@@ -23,8 +23,8 @@ export function MenuItemCard({
   setSelectedProduct,
 }) {
   const {
-    name,
-    image,
+    name = "",
+    image = "",
     description: initialDescription,
     status: initialStatus,
     expirationDate: initialExpirationDate,
@@ -32,7 +32,6 @@ export function MenuItemCard({
     originalPrice: initialOriginalPrice,
     sellPrice: initialSellPrice,
   } = product
-
   const [expirationDate, setExpirationDate] = useState(
     initialExpirationDate ? new Date(initialExpirationDate) : null
   )

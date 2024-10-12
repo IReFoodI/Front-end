@@ -1,7 +1,7 @@
 export const productList = [
   {
     id: 0,
-    image: "/path/to/banana.jpg",
+    image: "/src/ui/assets/ilustra.png",
     name: "Banana",
     description: "Banana .......",
     expirationDate: "10/10/2025",
@@ -46,7 +46,7 @@ export const productList = [
   },
   {
     id: 5,
-    image: "/path/to/strawberry.jpg",
+    image: "/src/ui/assets/ilustra.png",
     name: "Strawberry",
     description: "Sweet Strawberry",
     expirationDate: "01/22/2024",
