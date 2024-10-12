@@ -19,6 +19,7 @@ import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
+import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
 
@@ -46,59 +47,65 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        element: <ProtectedLayout />,
+        element: <UserLayout />,
         children: [
           {
-            path: ROUTES.FAVORITES,
-            element: <Favorites />,
+            index: true,
+            element: <Home />,
           },
           {
-            path: ROUTES.USER_CREDIT_CARD,
-            element: <CardPage />,
+            element: <ProtectedLayout />,
+            children: [
+              {
+                path: ROUTES.FAVORITES,
+                element: <Favorites />,
+              },
+              {
+                path: ROUTES.USER_CREDIT_CARD,
+                element: <CardPage />,
+              },
+              {
+                path: ROUTES.USER_ADD_CREDIT_CARD,
+                element: <AddEditCard />,
+              },
+              { path: ROUTES.ADDRESS, element: <AddressPage /> },
+              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+              {
+                path: ROUTES.ONGOING_ORDER,
+                element: <OngoingOrder />,
+              },
+            ],
           },
+
           {
-            path: ROUTES.USER_ADD_CREDIT_CARD,
-            element: <AddEditCard />,
-          },
-          { path: ROUTES.ADDRESS, element: <AddressPage /> },
-          { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
-          {
-            path: ROUTES.ONGOING_ORDER,
-            element: <OngoingOrder />,
+            path: "autenticar",
+            element: <AuthenticationLayout />,
+            children: [
+              {
+                index: true,
+                element: <PresentationContent />,
+              },
+              {
+                path: ROUTES.LOGIN,
+                element: <SignIn />,
+              },
+              {
+                path: ROUTES.CREATE_ACCOUNT,
+                element: <SignUp />,
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
+              },
+            ],
           },
         ],
       },
 
-      {
-        path: "autenticar",
-        element: <AuthenticationLayout />,
-        children: [
-          {
-            index: true,
-            element: <PresentationContent />,
-          },
-          {
-            path: ROUTES.LOGIN,
-            element: <SignIn />,
-          },
-          {
-            path: ROUTES.CREATE_ACCOUNT,
-            element: <SignUp />,
-          },
-          {
-            path: ROUTES.RECOVER_PASSWORD,
-            element: <RecoverPasswordPage />,
-          },
-          {
-            path: ROUTES.RESET_PASSWORD,
-            element: <ResetPasswordPage />,
-          },
-        ],
-      },
       {
         path: "dashboard",
         children: [
