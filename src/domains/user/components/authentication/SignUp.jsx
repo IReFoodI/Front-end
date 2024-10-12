@@ -22,6 +22,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
+import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
   const navigate = useNavigate()
@@ -155,7 +156,7 @@ export function SignUp() {
               onCheckedChange={() => setAcceptedTerms(!acceptedTerms)}
             />
             <Label htmlFor="terms" className="ml-2 text-sm">
-              Eu aceito os termos e condições
+              Eu aceito os <TermsOfUse>termos e condições</TermsOfUse>
             </Label>
           </div>
           <Button type="submit">Cadastrar</Button>
