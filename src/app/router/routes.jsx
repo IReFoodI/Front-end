@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreAddressEdit } from "@/domains/store/components/StoreAdress.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
@@ -29,6 +30,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  STORE_ADRRESS: "loja/endereco",
 }
 
 export const router = createBrowserRouter([
@@ -94,6 +96,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.FINANCE, element: <FinancePage /> },
       { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.STORE_ADRRESS, element: <StoreAddressEdit /> },
     ],
   },
   {
