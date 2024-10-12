@@ -53,7 +53,7 @@ export function AddressModal() {
           </div>
         </div>
         <Button className="w-full rounded-xl md:text-xl">
-          <Link to="/" className="w-full">
+          <Link to="/address" className="w-full">
             Meus Endereços
           </Link>
         </Button>
