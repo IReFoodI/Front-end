@@ -1,3 +1,4 @@
+import { cn } from "@/app/utils/cn"
 import {
   Dialog,
   DialogContent,
@@ -7,10 +8,10 @@ import {
   DialogTrigger,
 } from "@/ui/components/ui/dialog"
 
-export function TermsOfUse({ children }) {
+export function TermsOfUse({ children, className }) {
   return (
     <Dialog>
-      <DialogTrigger className="text-primary underline">
+      <DialogTrigger className={cn("text-primary underline", className)}>
         {children}
       </DialogTrigger>
       <DialogContent className="max-w-4xl">

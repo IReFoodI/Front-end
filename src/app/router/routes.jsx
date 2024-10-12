@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -16,6 +17,7 @@ import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
+import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
 
@@ -25,6 +27,7 @@ export const ROUTES = {
   FAVORITES: "favoritos",
   FINANCE: "financas",
   ALERTSETTINGS: "ajustes/alertas-sonoros",
+  DASHBOARD: "dashboard",
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
@@ -40,47 +43,57 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        element: <ProtectedLayout />,
-        children: [
-          {
-            path: ROUTES.FAVORITES,
-            element: <Favorites />,
-          },
-          {
-            path: ROUTES.USER_CREDIT_CARD,
-            element: <CardPage />,
-          },
-          {
-            path: ROUTES.USER_ADD_CREDIT_CARD,
-            element: <AddEditCard />,
-          },
-          { path: ROUTES.ADDRESS, element: <AddressPage /> },
-          { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
-        ],
-      },
-
-      {
-        path: "autenticar",
-        element: <AuthenticationLayout />,
+        element: <UserLayout />,
         children: [
           {
             index: true,
-            element: <PresentationContent />,
+            element: <Home />,
           },
           {
-            path: ROUTES.LOGIN,
-            element: <SignIn />,
+            element: <ProtectedLayout />,
+            children: [
+              {
+                path: ROUTES.FAVORITES,
+                element: <Favorites />,
+              },
+              {
+                path: ROUTES.USER_CREDIT_CARD,
+                element: <CardPage />,
+              },
+              {
+                path: ROUTES.USER_ADD_CREDIT_CARD,
+                element: <AddEditCard />,
+              },
+              { path: ROUTES.ADDRESS, element: <AddressPage /> },
+              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+              {
+                path: ROUTES.ONGOING_ORDER,
+                element: <OngoingOrder />,
+              },
+            ],
           },
+
           {
-            path: ROUTES.CREATE_ACCOUNT,
-            element: <SignUp />,
+            path: "autenticar",
+            element: <AuthenticationLayout />,
+            children: [
+              {
+                index: true,
+                element: <PresentationContent />,
+              },
+              {
+                path: ROUTES.LOGIN,
+                element: <SignIn />,
+              },
+              {
+                path: ROUTES.CREATE_ACCOUNT,
+                element: <SignUp />,
+              },
+            ],
           },
         ],
       },
+
       {
         path: "dashboard",
         children: [
@@ -105,7 +118,7 @@ export const router = createBrowserRouter([
           {
             element: <DashBoardLayout />,
             children: [
-              { index: true, element: <FinancePage /> }, //Trocar para a tela inicial da dashboard
+              { index: true, element: <StoreProfilePage /> },
               { path: ROUTES.FINANCE, element: <FinancePage /> },
               {
                 path: ROUTES.ALERTSETTINGS,
@@ -114,10 +127,6 @@ export const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: ROUTES.ONGOING_ORDER,
-        element: <OngoingOrder />,
       },
     ],
   },
