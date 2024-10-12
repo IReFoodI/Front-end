@@ -60,7 +60,7 @@ export function Header() {
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
-          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 md:w-[50%]">
+          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 xl:w-[50%]">
             <IconSearch
               className="absolute left-0 ml-2 text-primary"
               size={20}
@@ -93,11 +93,11 @@ export function Header() {
           </Link>
           <Popover onOpenChange={handleProfilePopoverOpen}>
             <PopoverTrigger asChild>
-              <Link
+              <div
                 className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
               >
                 <IconUser className="w-full text-center" size={30} />
-              </Link>
+              </div>
             </PopoverTrigger>
 
             <PopoverContent sideOffset={20}>
