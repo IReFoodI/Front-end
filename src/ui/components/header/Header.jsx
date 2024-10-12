@@ -34,7 +34,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 w-screen bg-orange-50 p-4 drop-shadow-md">
-      <div className="relative flex flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
+      <div className="relative flex max-w-screen-2xl flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
         <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
             <Link className="w-24 md:mr-7" to="/">
@@ -60,7 +60,7 @@ export function Header() {
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
-          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 md:ml-20 md:mr-20">
+          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 md:w-[50%]">
             <IconSearch
               className="absolute left-0 ml-2 text-primary"
               size={20}
