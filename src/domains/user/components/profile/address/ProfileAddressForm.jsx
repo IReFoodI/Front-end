@@ -100,9 +100,9 @@ export function ProfileAddressForm({ initialData }) {
                           className="h-12 w-full rounded-md border-2 border-input p-3"
                         >
                           <option value="">UF</option>
-                          {states.map((estado) => (
-                            <option key={estado} value={estado}>
-                              {estado}
+                          {states.map((state) => (
+                            <option key={state} value={state}>
+                              {state}
                             </option>
                           ))}
                         </select>
