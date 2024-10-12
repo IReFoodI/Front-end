@@ -22,6 +22,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/CreateAccountTypes"
 import { SocialAuthButtons } from "./SocialAuthButtons"
+import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
   const navigate = useNavigate()
@@ -45,7 +46,7 @@ export function SignUp() {
   const onSubmit = (data) => {
     if (acceptedTerms) {
       toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/home")
+      navigate("/")
       console.log(data)
       return
     }
@@ -165,7 +166,7 @@ export function SignUp() {
               onCheckedChange={() => setAcceptedTerms(!acceptedTerms)}
             />
             <Label htmlFor="terms" className="ml-2 text-sm">
-              Eu aceito os termos e condições
+              Eu aceito os <TermsOfUse>termos e condições</TermsOfUse>
             </Label>
           </div>
           <Button type="submit">Cadastrar</Button>
@@ -175,12 +176,12 @@ export function SignUp() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/entrar"}
+        navigateTo={"/autenticar/entrar"}
       />
       <TextWithLink
         text={"É uma empresa?"}
         buttonContent={"Criar conta empresarial"}
-        navigateTo={"/criar-conta-empresarial"}
+        navigateTo={"/autenticar/criar-conta-empresarial"}
       />
     </div>
   )
