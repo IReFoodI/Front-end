@@ -11,6 +11,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
+import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
@@ -31,22 +32,22 @@ export function ProfileSheet() {
     {
       iconForButton: <IconHeart />,
       buttonText: "Favoritos",
-      path: "/",
+      path: "/favoritos",
     },
     {
       iconForButton: <IconMap />,
       buttonText: "Endereços",
-      path: "/",
+      path: "/address",
     },
     {
       iconForButton: <IconCreditCard />,
       buttonText: "Cartões",
-      path: "/",
+      path: "/cartoes",
     },
     {
       iconForButton: <IconKey />,
       buttonText: "Alterar Senha",
-      path: "/",
+      path: "/alterar-senha",
     },
   ]
 
@@ -123,17 +124,9 @@ export function ProfileSheet() {
       </div>
 
       <div className="mb-2 flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Link
-            to="/"
-            className="text-sm font-semibold text-orange-600 underline"
-          >
-            Termos e Condições
-          </Link>
-          <Link
-            to="/"
-            className="text-sm font-semibold text-orange-600 underline"
-          >
+        <div className="jus flex flex-col gap-2">
+          <TermsOfUse className={"text-start"}>Termos e condições</TermsOfUse>
+          <Link to="/" className="text-sm font-semibold text-primary underline">
             Ajuda
           </Link>
         </div>
