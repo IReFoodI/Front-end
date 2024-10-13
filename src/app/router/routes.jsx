@@ -13,6 +13,8 @@ import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
+import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -37,6 +39,8 @@ export const ROUTES = {
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
+  RECOVER_PASSWORD: "recuperar-senha",
+  RESET_PASSWORD: "redefinir-senha/:token",
   PROFILESETTINGS: "ajustes/perfil",
 }
 
@@ -90,6 +94,14 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
               },
             ],
           },
