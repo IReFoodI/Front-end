@@ -6,7 +6,7 @@ export function FavoriteButton({ isFavorited, onToggle, className, ...props }) {
   return (
     <Button
       variant="ghost"
-      className={`p-2 ${className}`}
+      className={`p-0 md:p-2 ${className}`}
       onClick={onToggle}
       {...props}
     >

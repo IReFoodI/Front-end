@@ -25,19 +25,19 @@ export function StoreCard({
   return (
     <Card
       className={cn(
-        "relative my-4 grid h-auto w-auto grid-cols-[25%_55%_10%] gap-4 rounded-2xl bg-[hsl(var(--secondary))] shadow-lg sm:p-4 lg:pl-2",
+        "relative grid h-auto min-h-[8.8125rem] w-auto grid-cols-[25%_55%_10%] gap-4 rounded-2xl bg-[hsl(var(--secondary))] p-3 shadow-lg sm:p-4 lg:pl-2",
         className
       )}
       {...props}
     >
-      <CardContent className="relative flex h-full w-full items-center justify-center p-0 pb-12">
+      <CardContent className="relative flex h-full w-full items-center justify-center p-0 sm:p-0">
         <div className="relative h-auto w-full">
           <img
             src={imagePath}
             alt={`${name} Image`}
             className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
-          <div className="absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] -translate-x-1/2 translate-y-1/3 transform">
+          <div className="-translatef-x-1/2 absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
             <img
               src={logoPath}
               alt={`${name} Logo`}
@@ -48,7 +48,7 @@ export function StoreCard({
       </CardContent>
 
       {/* Textos */}
-      <CardContent className="flex flex-col justify-center p-0 pl-4">
+      <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
         <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
           {name}
         </CardTitle>
@@ -60,7 +60,7 @@ export function StoreCard({
           </div>
         )}
 
-        <div className="mt-4 flex items-center">
+        <div className="flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
           <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
             {rating}
@@ -70,7 +70,7 @@ export function StoreCard({
           </span>
         </div>
 
-        <div className="mt-4 flex items-center">
+        <div className="flex items-center">
           <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
             {opening_hours}
           </span>
@@ -78,7 +78,7 @@ export function StoreCard({
       </CardContent>
 
       {/* Botão de favorito */}
-      <CardContent className="flex items-start justify-start p-0">
+      <CardContent className="p-0 pt-0 sm:p-0">
         <FavoriteButton isFavorited={isFavorited} onClick={onFavoriteToggle} />
       </CardContent>
     </Card>
