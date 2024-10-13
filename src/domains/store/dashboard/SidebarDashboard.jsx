@@ -5,7 +5,7 @@ import {
 } from "@tabler/icons-react"
 import { NavLink } from "react-router-dom"
 
-import { StoreProfileOrders } from "@/domains/food/components/StoreProfileOrders/StoreProfileOrders"
+import { StoreProfileOrders } from "@/domains/store/components/StoreProfileOrders/StoreProfileOrders"
 
 import { DashboardConfigMenu } from "./DashboardConfigMenu"
 import { DashboardLogout } from "./DashboardLogout"
