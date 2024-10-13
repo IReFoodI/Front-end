@@ -13,7 +13,7 @@ import { ChangePassword } from "@/domains/user/components/password/ChangePasswor
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
-import { AuthenticationLayoutBusinessLayout } from "@/ui/layouts/AuthenticationLayoutBusinessLayout.jsx"
+import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 
 import App from "../App.jsx"
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/business",
-    element: <AuthenticationLayoutBusinessLayout />,
+    element: <AuthenticationLayoutBusiness />,
     children: [
       {
         index: true,
