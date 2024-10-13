@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
@@ -13,6 +14,8 @@ import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
+import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -38,6 +41,9 @@ export const ROUTES = {
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
+  RECOVER_PASSWORD: "recuperar-senha",
+  RESET_PASSWORD: "redefinir-senha/:token",
+  PROFILESETTINGS: "ajustes/perfil",
   CHANGE_DATA: "alterar-dados",
 }
 
@@ -102,6 +108,14 @@ export const router = createBrowserRouter([
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
               },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
+              },
             ],
           },
         ],
@@ -146,6 +160,15 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,

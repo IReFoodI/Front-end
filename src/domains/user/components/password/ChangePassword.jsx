@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -20,12 +19,6 @@ import { formSchema } from "../../models/ChangePasswordTypes"
 
 export function ChangePassword() {
   const navigate = useNavigate()
-
-  const [passwordVisibility, setPasswordVisibility] = useState({
-    oldPassword: false,
-    newPassword: false,
-    confirmPassword: false,
-  })
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -62,9 +55,6 @@ export function ChangePassword() {
                   <FormLabel>Senha antiga</FormLabel>
                   <FormControl>
                     <PasswordInput
-                      fieldName="oldPassword"
-                      passwordVisibility={passwordVisibility.oldPassword}
-                      setPasswordVisibility={setPasswordVisibility}
                       placeholder="********"
                       className={"!mt-1"}
                       {...field}
@@ -90,9 +80,6 @@ export function ChangePassword() {
                   <FormLabel>Nova senha</FormLabel>
                   <FormControl>
                     <PasswordInput
-                      fieldName="newPassword"
-                      passwordVisibility={passwordVisibility.newPassword}
-                      setPasswordVisibility={setPasswordVisibility}
                       placeholder="********"
                       className={"!mt-1"}
                       {...field}
@@ -111,9 +98,6 @@ export function ChangePassword() {
                   <FormLabel>Confirmar senha</FormLabel>
                   <FormControl>
                     <PasswordInput
-                      fieldName="confirmPassword"
-                      passwordVisibility={passwordVisibility.confirmPassword}
-                      setPasswordVisibility={setPasswordVisibility}
                       placeholder="********"
                       className={"!mt-1"}
                       {...field}
