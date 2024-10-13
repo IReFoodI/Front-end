@@ -13,7 +13,7 @@ export function AddressCard({
     address
 
   return (
-    <div className="flex w-11/12 max-w-[600px] items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
+    <div className="mx-auto flex w-11/12 max-w-[600px] items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
       <div className="flex items-center">
         <div className="flex items-center space-x-2 pe-5">
           <RadioGroupItem
@@ -41,14 +41,14 @@ export function AddressCard({
       <span className="flex items-center justify-between gap-3">
         <button>
           <IconEdit
-            size={40}
-            className="transition duration-300 hover:text-orange-500"
+            size={30}
+            className="transition duration-300 hover:text-orange-500 lg:size-[40px]"
           />
         </button>
         <button onClick={toggleOpenModal}>
           <IconTrash
-            size={40}
-            className="transition duration-300 hover:text-orange-500"
+            size={30}
+            className="transition duration-300 hover:text-orange-500 lg:size-[40px]"
           />
         </button>
       </span>

@@ -12,7 +12,7 @@ export function DashBoardLayout() {
       <HeaderDashboard />
       <div className="flex flex-1 flex-col gap-3 lg:flex-row">
         <SidebarDashboard />
-        <main className="flex flex-1 lg:max-h-max-dashboard lg:overflow-auto">
+        <main className="mx-auto flex max-w-screen-2xl flex-1">
           <Outlet />
         </main>
       </div>
