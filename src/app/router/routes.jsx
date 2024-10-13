@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
@@ -17,6 +18,7 @@ import { ResetPasswordPage } from "@/domains/user/components/password/ResetPassw
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
+import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
@@ -33,11 +35,13 @@ export const ROUTES = {
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
+  PROFILESETTINGS: "ajustes/perfil",
 }
 
 export const router = createBrowserRouter([
@@ -76,9 +80,38 @@ export const router = createBrowserRouter([
               },
             ],
           },
+        ],
+      },
 
+      {
+        path: "dashboard",
+        children: [
           {
-            path: "autenticar",
+            element: <DashBoardLayout />,
+            children: [
+              { index: true, element: <StoreProfilePage /> },
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
+              {
+                path: ROUTES.ALERTSETTINGS,
+                element: <AlertSoundSettingsPage />,
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "autenticar",
+        children: [
+          {
+            path: "",
             element: <AuthenticationLayout />,
             children: [
               {
@@ -93,48 +126,19 @@ export const router = createBrowserRouter([
                 path: ROUTES.CREATE_ACCOUNT,
                 element: <SignUp />,
               },
-              {
-                path: ROUTES.RECOVER_PASSWORD,
-                element: <RecoverPasswordPage />,
-              },
-              {
-                path: ROUTES.RESET_PASSWORD,
-                element: <ResetPasswordPage />,
-              },
             ],
           },
-        ],
-      },
-
-      {
-        path: "dashboard",
-        children: [
           {
-            path: "autenticar",
+            path: "negocios",
+            element: <AuthenticationLayoutBusiness />,
             children: [
               {
                 index: true,
-                element: <PresentationContent />,
-              },
-              {
-                path: ROUTES.LOGIN,
                 element: <SignIn />,
               },
               {
-                path: ROUTES.CREATE_ACCOUNT,
+                path: ROUTES.CREATE_ACCOUNT_BUSINESS,
                 element: <SignUp />,
-              },
-            ],
-          },
-
-          {
-            element: <DashBoardLayout />,
-            children: [
-              { index: true, element: <StoreProfilePage /> },
-              { path: ROUTES.FINANCE, element: <FinancePage /> },
-              {
-                path: ROUTES.ALERTSETTINGS,
-                element: <AlertSoundSettingsPage />,
               },
             ],
           },
@@ -143,6 +147,15 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,

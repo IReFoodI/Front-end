@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -16,10 +16,11 @@ import { Input } from "@/ui/components/ui/input"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
-import { SocialAuthButtons } from "./SocialAuthButtons"
 
 export function SignIn() {
+  const location = useLocation()
   const navigate = useNavigate()
 
   const form = useForm({
@@ -90,13 +91,17 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/autenticar/recuperar-senha" //TODO: fazer rota
+        navigateTo="/autenticar/recuperar-senha"
       />
       <SocialAuthButtons />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
-        navigateTo="/autenticar/criar-conta" //TODO: fazer rota
+        navigateTo={
+          location.pathname == "/autenticar/negocios"
+            ? "/autenticar/negocios/criar-conta"
+            : "/autenticar/criar-conta"
+        }
       />
     </div>
   )
