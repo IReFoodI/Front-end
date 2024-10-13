@@ -36,9 +36,12 @@ export function DashboardConfigMenu() {
               Alertas sonoros
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Horário da loja
-          </DropdownMenuItem>
+          <Link to="/dashboard/ajustes/horário">
+            <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
+              Horário da loja
+            </DropdownMenuItem>
+          </Link>
+
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="bg-slate-900 text-white">
             LOJA

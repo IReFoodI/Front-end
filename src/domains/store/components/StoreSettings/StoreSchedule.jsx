@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { ScheduleRow } from "./ScheduleRow"
+import { ScheduleRow } from "./StoreScheduleRow"
 
 const daysOfWeek = [
   { name: "Segunda-feira", key: "monday" },
@@ -35,16 +35,18 @@ export function StoreSchedule() {
   }
 
   return (
-    <div className="mx-auto max-w-lg p-4">
-      <h2 className="mb-2 text-xl font-bold">Horário da loja</h2>
-      <p className="mb-4 text-gray-500">
+    <div className="mr-auto max-w-lg p-4">
+      <h2 className="mb-2 text-center text-xl font-bold md:text-left">
+        Horário da loja
+      </h2>
+      <p className="mb-4 text-center text-muted-foreground md:text-left">
         Ajuste os horários que sua loja está aberta
       </p>
       {daysOfWeek.map((day, index) => (
         <ScheduleRow
           key={day.key}
           dayName={day.name}
-          disabled={index >= 5}
+          disabled={index >= 7}
           enabled={schedule[index].enabled}
           startHour={schedule[index].startHour}
           startMinute={schedule[index].startMinute}
@@ -67,12 +69,14 @@ export function StoreSchedule() {
           }
         />
       ))}
-      <button
-        onClick={handleSave}
-        className="mt-4 rounded-md border-4 border-primary bg-primary px-4 text-xl font-semibold text-primary-foreground"
-      >
-        Salvar alterações
-      </button>
+      <div className="flex justify-center md:justify-end">
+        <button
+          onClick={handleSave}
+          className="mt-4 rounded-md border-4 border-primary bg-primary px-4 text-xl font-semibold text-primary-foreground"
+        >
+          Salvar alterações
+        </button>
+      </div>
     </div>
   )
 }
