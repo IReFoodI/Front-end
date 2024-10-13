@@ -7,6 +7,9 @@ import {
   TabsTrigger,
 } from "@/ui/components/ui/tabs"
 
+import { PendingOrders } from "./PendingOrders"
+import { ScheduleOrders } from "./ScheduleOrders"
+
 export function TabsStructure() {
   const [isTabActive, setIsTabActive] = useState({
     pending: false,
@@ -40,8 +43,12 @@ export function TabsStructure() {
           </span>
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="pending">Pedidos Pendentes</TabsContent>
-      <TabsContent value="scheduled">Pedidos Agendados</TabsContent>
+      <TabsContent value="pending">
+        <PendingOrders />
+      </TabsContent>
+      <TabsContent value="scheduled">
+        <ScheduleOrders />
+      </TabsContent>
     </Tabs>
   )
 }
