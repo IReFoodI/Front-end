@@ -4,6 +4,7 @@ const CNPJRegex = /^\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}$/
 const phoneRegex = /^\(?\d{2}\)?\s?\d{5}-?\d{4}$/
 
 export const storeFormSchema = z.object({
+  storeID: z.string({ required_error: "Campo obrigatório!" }),
   storeName: z
     .string({
       required_error: "Campo obrigatório!",
@@ -24,6 +25,12 @@ export const storeFormSchema = z.object({
     .min(1, { message: "Campo obrigatório!" })
     .regex(phoneRegex, { message: "Telefone inválido!" })
     .transform((str) => str.replace(/[^\d]/g, "")),
+  storeCategory: z
+    .string({
+      required_error: "Campo obrigatório!",
+    })
+    .min(1, { message: "Campo obrigatório!" })
+    .trim(),
   storeDescription: z
     .string()
     .min(20, { message: "Campo descrição deve ter no mínimo 20 caracteres." }),
