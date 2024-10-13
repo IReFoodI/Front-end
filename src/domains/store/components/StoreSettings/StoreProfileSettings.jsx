@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
+import { CnpjPatternFormat } from "@/ui/components/ui/CNPJ-pattern-format"
 import {
   Form,
   FormControl,
@@ -14,6 +15,7 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import {
   Select,
   SelectContent,
@@ -29,29 +31,34 @@ import { storeFormSchema } from "../../models/StoreAccountTypes"
 
 export function StoreProfileSettings() {
   const [storeInformation] = useState({
-    storeCoverImage:
-      "https://www.estadao.com.br/resizer/v2/L3LYN5Y4MRG6BB47MNHEEXDRGA.jpeg?quality=80&auth=c4f56563b2c83e506971bce35dbc505a5ecdf7d89a70d2f2c5fbb8b0c7071e5f&width=720&height=503&smart=true",
-    storeProfileImage:
-      "https://i.pinimg.com/1200x/00/7d/85/007d85591e9ea14e737977be9345dfe3.jpg",
+    storeCoverImage: "",
+    storeProfileImage: "",
     storeID: "",
     storeName: "",
     storeCNPJ: "",
     storePhone: "",
-    storeCategory: "Lanches",
+    storeCategory: "",
     storeDescription: "",
   })
 
   const form = useForm({
     resolver: zodResolver(storeFormSchema),
     defaultValues: {
-      storeID: "",
-      storeName: "",
-      storeCNPJ: "",
-      storePhone: "",
-      storeCategory: "Lanches",
-      storeDescription: "",
+      storeID: storeInformation.storeID,
+      storeName: storeInformation.storeName,
+      storeCNPJ: storeInformation.storeCNPJ,
+      storePhone: storeInformation.storePhone,
+      storeCategory: storeInformation.storeCategory,
+      storeDescription: storeInformation.storeDescription,
     },
   })
+
+  const formPlaceholders = {
+    storeID: "ID da Loja",
+    storeName: "Nome da Loja",
+    storeCategory: "Escolha uma categoria...",
+    storeDescription: "A descrição da loja vai vir aqui...",
+  }
 
   const categories = [
     {
@@ -129,7 +136,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder={storeInformation.storeID}
+                      placeholder={formPlaceholders.storeID}
                       disabled={true}
                       className="w-full resize-none rounded-md border border-zinc-400 bg-slate-200 p-2"
                       {...field}
@@ -151,7 +158,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder={storeInformation.storeName}
+                      placeholder={formPlaceholders.storeName}
                       {...field}
                     />
                   </FormControl>
@@ -171,12 +178,7 @@ export function StoreProfileSettings() {
                 <FormItem>
                   <FormLabel>CNPJ</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder={storeInformation.storeCNPJ}
-                      className="w-full resize-none rounded-md border border-zinc-400 p-2"
-                      {...field}
-                    />
+                    <CnpjPatternFormat {...field} />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>
@@ -192,12 +194,7 @@ export function StoreProfileSettings() {
                 <FormItem>
                   <FormLabel>Telefone de contato</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder={storeInformation.storePhone}
-                      className="w-full resize-none rounded-md border border-zinc-400 p-2"
-                      {...field}
-                    />
+                    <PhonePatternFormat {...field} />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>
@@ -217,7 +214,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Textarea
                       type="text"
-                      placeholder={storeInformation.storeDescription}
+                      placeholder={formPlaceholders.storeDescription}
                       className="h-32 resize-none rounded-md border border-zinc-400 p-2 outline-orange-500"
                       {...field}
                     />
@@ -228,7 +225,7 @@ export function StoreProfileSettings() {
             />
           </div>
 
-          <div className="order-4 flex h-full w-full flex-col items-center gap-4 lg:order-3 lg:flex-col-reverse lg:items-end">
+          <div className="order-4 flex h-full w-full flex-col items-center gap-12 lg:order-3 lg:flex-col-reverse lg:items-end lg:justify-center">
             <FormField
               className="flex w-full flex-col gap-1"
               id="storeCategory"
@@ -245,13 +242,13 @@ export function StoreProfileSettings() {
                     >
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={storeInformation.storeCategory}
+                          placeholder={formPlaceholders.storeCategory}
                         />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Categorias</SelectLabel>
-                          {categories.map((category) => (
+                          {categories?.map((category) => (
                             <SelectItem
                               key={category.id}
                               value={category.category}
@@ -268,10 +265,8 @@ export function StoreProfileSettings() {
               )}
             />
 
-            <div className="w-2/3 lg:order-1">
-              <Button className="w-full bg-orange-600">
-                Salvar alterações
-              </Button>
+            <div className="lg:order-1">
+              <Button className="w-full">Salvar alterações</Button>
             </div>
           </div>
         </form>
