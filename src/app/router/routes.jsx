@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -9,13 +11,18 @@ import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
+import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
+import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
+import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
+import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
+import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
 
@@ -27,11 +34,17 @@ export const ROUTES = {
   FAVORITES: "favoritos",
   FINANCE: "financas",
   ALERTSETTINGS: "ajustes/alertas-sonoros",
+  DASHBOARD: "dashboard",
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  ONGOING_ORDER: "pedidos/em-andamento",
+  RECOVER_PASSWORD: "recuperar-senha",
+  RESET_PASSWORD: "redefinir-senha/:token",
+  PROFILESETTINGS: "ajustes/perfil",
 }
 
 export const router = createBrowserRouter([
@@ -41,26 +54,35 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        element: <ProtectedLayout />,
+        element: <UserLayout />,
         children: [
           {
-            path: ROUTES.FAVORITES,
-            element: <Favorites />,
+            index: true,
+            element: <Home />,
           },
           {
-            path: ROUTES.USER_CREDIT_CARD,
-            element: <CardPage />,
+            element: <ProtectedLayout />,
+            children: [
+              {
+                path: ROUTES.FAVORITES,
+                element: <Favorites />,
+              },
+              {
+                path: ROUTES.USER_CREDIT_CARD,
+                element: <CardPage />,
+              },
+              {
+                path: ROUTES.USER_ADD_CREDIT_CARD,
+                element: <AddEditCard />,
+              },
+              { path: ROUTES.ADDRESS, element: <AddressPage /> },
+              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+              {
+                path: ROUTES.ONGOING_ORDER,
+                element: <OngoingOrder />,
+              },
+            ],
           },
-          {
-            path: ROUTES.USER_ADD_CREDIT_CARD,
-            element: <AddEditCard />,
-          },
-          { path: ROUTES.ADDRESS, element: <AddressPage /> },
-          { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
         ],
       },
 
@@ -88,26 +110,35 @@ export const router = createBrowserRouter([
 
         path: "autenticar",
         element: <AuthenticationLayout />,
+        path: "dashboard",
         children: [
           {
-            index: true,
-            element: <PresentationContent />,
-          },
-          {
-            path: ROUTES.LOGIN,
-            element: <SignIn />,
-          },
-          {
-            path: ROUTES.CREATE_ACCOUNT,
-            element: <SignUp />,
+            element: <DashBoardLayout />,
+            children: [
+              { index: true, element: <StoreProfilePage /> },
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
+              {
+                path: ROUTES.ALERTSETTINGS,
+                element: <AlertSoundSettingsPage />,
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "dashboard",
+        path: "autenticar",
         children: [
           {
-            path: "autenticar",
+            path: "",
+            element: <AuthenticationLayout />,
             children: [
               {
                 index: true,
@@ -123,15 +154,17 @@ export const router = createBrowserRouter([
               },
             ],
           },
-
           {
-            element: <DashBoardLayout />,
+            path: "negocios",
+            element: <AuthenticationLayoutBusiness />,
             children: [
-              { index: true, element: <FinancePage /> }, //Trocar para a tela inicial da dashboard
-              { path: ROUTES.FINANCE, element: <FinancePage /> },
               {
-                path: ROUTES.ALERTSETTINGS,
-                element: <AlertSoundSettingsPage />,
+                index: true,
+                element: <SignIn />,
+              },
+              {
+                path: ROUTES.CREATE_ACCOUNT_BUSINESS,
+                element: <SignUp />,
               },
             ],
           },
@@ -140,6 +173,15 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,

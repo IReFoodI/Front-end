@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
+import { SocialAuthButtons } from "@/ui/components/SocialAuthButtons"
 import { Button } from "@/ui/components/ui/button/button"
 import { Checkbox } from "@/ui/components/ui/checkbox"
 import {
@@ -21,15 +22,12 @@ import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/CreateAccountTypes"
-import { SocialAuthButtons } from "./SocialAuthButtons"
+import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
+  const location = useLocation()
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-  const [passwordVisibility, setPasswordVisibility] = useState({
-    password: false,
-    confirmPassword: false,
-  })
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -52,6 +50,8 @@ export function SignUp() {
 
     toast.warning("Necessário aceitar os termos")
   }
+
+  const isSignUpPage = location.pathname === "/autenticar/criar-conta"
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -125,9 +125,6 @@ export function SignUp() {
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    fieldName="password"
-                    passwordVisibility={passwordVisibility.password}
-                    setPasswordVisibility={setPasswordVisibility}
                     placeholder="********"
                     className={"!mt-1"}
                     {...field}
@@ -146,9 +143,6 @@ export function SignUp() {
                 <FormLabel>Confirmar senha</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    fieldName="confirmPassword"
-                    passwordVisibility={passwordVisibility.confirmPassword}
-                    setPasswordVisibility={setPasswordVisibility}
                     placeholder="********"
                     className={"!mt-1"}
                     {...field}
@@ -165,7 +159,7 @@ export function SignUp() {
               onCheckedChange={() => setAcceptedTerms(!acceptedTerms)}
             />
             <Label htmlFor="terms" className="ml-2 text-sm">
-              Eu aceito os termos e condições
+              Eu aceito os <TermsOfUse>termos e condições</TermsOfUse>
             </Label>
           </div>
           <Button type="submit">Cadastrar</Button>
@@ -175,12 +169,19 @@ export function SignUp() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={"/autenticar/entrar"}
+        navigateTo={
+          isSignUpPage ? "/autenticar/entrar" : "/autenticar/negocios"
+        }
       />
+
       <TextWithLink
-        text={"É uma empresa?"}
-        buttonContent={"Criar conta empresarial"}
-        navigateTo={"/autenticar/criar-conta-empresarial"}
+        text={isSignUpPage ? "É uma empresa?" : "É um cliente?"}
+        buttonContent={isSignUpPage ? "Criar conta empresarial" : "Criar conta"}
+        navigateTo={
+          isSignUpPage
+            ? "/autenticar/negocios/criar-conta"
+            : "/autenticar/criar-conta"
+        }
       />
     </div>
   )
