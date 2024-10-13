@@ -44,12 +44,12 @@ export function StoreProfileSettings() {
   const form = useForm({
     resolver: zodResolver(storeFormSchema),
     defaultValues: {
-      storeID: storeInformation.storeID,
-      storeName: storeInformation.storeName,
-      storeCNPJ: storeInformation.storeCNPJ,
-      storePhone: storeInformation.storePhone,
-      storeCategory: storeInformation.storeCategory,
-      storeDescription: storeInformation.storeDescription,
+      storeID: storeInformation?.storeID,
+      storeName: storeInformation?.storeName,
+      storeCNPJ: storeInformation?.storeCNPJ,
+      storePhone: storeInformation?.storePhone,
+      storeCategory: storeInformation?.storeCategory,
+      storeDescription: storeInformation?.storeDescription,
     },
   })
 
