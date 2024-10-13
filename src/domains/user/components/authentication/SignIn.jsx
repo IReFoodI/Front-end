@@ -98,17 +98,17 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/autenticar/recuperar-senha" //TODO: fazer rota
+        navigateTo="/autenticar/recuperar-senha"
       />
       <SocialAuthButtons />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
         navigateTo={
-          location.pathname == "/business"
-            ? "/business/criar-conta-empresarial"
-            : "/criar-conta"
-        } //TODO: fazer rota
+          location.pathname == "/autenticar/negocios"
+            ? "/autenticar/negocios/criar-conta"
+            : "/autenticar/criar-conta"
+        }
       />
     </div>
   )
