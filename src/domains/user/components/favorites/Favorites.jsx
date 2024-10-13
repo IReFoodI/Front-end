@@ -8,7 +8,7 @@ export function Favorites() {
 
   return (
     <>
-      <h1 className="col-span-full w-full pb-6 pt-7 text-center text-2xl font-semibold lg:py-10">
+      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
         Alterar Dados
       </h1>
       <div className="flex h-full">
