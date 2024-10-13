@@ -46,9 +46,11 @@ export function DashboardConfigMenu() {
           <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
             Perfil
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Endereço
-          </DropdownMenuItem>
+          <Link to="/dashboard/ajustes/endereco">
+            <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
+              Endereço
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="bg-slate-900 text-white">
             CONTA

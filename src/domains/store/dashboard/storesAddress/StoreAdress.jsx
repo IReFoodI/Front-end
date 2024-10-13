@@ -64,11 +64,13 @@ export function StoreAddressEdit({ initialData }) {
   }
 
   return (
-    <main className="flex flex-col justify-center">
-      <h2 className="p-4 text-center text-3xl font-bold text-[#1E1F2B]">
+    <div className="mx-6 flex flex-grow flex-col justify-center text-center md:flex-none">
+      <h2 className="py-4 text-center text-3xl font-bold text-secondary-foreground md:text-left">
         Endereço
       </h2>
-
+      <p className="pb-6 text-center text-xl font-medium text-muted-foreground md:text-left">
+        Ajuste as informações do endereço
+      </p>
       <div className="relative flex flex-col justify-center bg-white">
         <FormProvider {...formMethods}>
           <form
@@ -216,6 +218,6 @@ export function StoreAddressEdit({ initialData }) {
           </form>
         </FormProvider>
       </div>
-    </main>
+    </div>
   )
 }
