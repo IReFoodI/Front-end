@@ -9,7 +9,7 @@ export function Favorites() {
   return (
     <>
       <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
-        Alterar Dados
+        Favoritos
       </h1>
       <div className="flex h-full">
         <div>
