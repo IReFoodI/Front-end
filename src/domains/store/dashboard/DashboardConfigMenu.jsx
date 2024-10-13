@@ -51,15 +51,20 @@ export function DashboardConfigMenu() {
               Endereço
             </DropdownMenuItem>
           </Link>
+          <Link to="/dashboard/ajustes/perfil">
+            <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
+              Perfil
+            </DropdownMenuItem>
+          </Link>
+          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
+            Endereço
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="bg-slate-900 text-white">
             CONTA
           </DropdownMenuLabel>
           <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Gestão de acesso
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer px-1 hover:bg-slate-100">
-            Alterar senha
+            Configurações
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

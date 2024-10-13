@@ -56,7 +56,7 @@ export function CardPage() {
                   />
                 ))}
               </div>
-              <NavLink to={"/user/cartoes/adicionar"}>
+              <NavLink to={"/cartoes/adicionar"}>
                 <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
                   Adicionar novo cartão
                 </Button>
@@ -72,7 +72,7 @@ export function CardPage() {
                 <p className="w-[250px]">
                   Vamos adicionar seu primeiro cartão para fazer um novo pedido!
                 </p>
-                <NavLink to={"/user/cartoes/adicionar"}>
+                <NavLink to={"/cartoes/adicionar"}>
                   <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
                     Adicionar novo cartão
                   </Button>

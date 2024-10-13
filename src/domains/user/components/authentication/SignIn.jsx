@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -17,10 +17,11 @@ import { Input } from "@/ui/components/ui/input"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
-import { SocialAuthButtons } from "./SocialAuthButtons"
 
 export function SignIn() {
+  const location = useLocation()
   const navigate = useNavigate()
   const [passwordVisibility, setPasswordVisibility] = useState({
     password: false,
@@ -37,7 +38,7 @@ export function SignIn() {
   const onSubmit = (data) => {
     toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
     console.log(data)
-    navigate("/home")
+    navigate("/")
   }
 
   return (
@@ -97,13 +98,17 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/recover-password" //TODO: fazer rota
+        navigateTo="/autenticar/recuperar-senha"
       />
       <SocialAuthButtons />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
-        navigateTo="/criar-conta" //TODO: fazer rota
+        navigateTo={
+          location.pathname == "/autenticar/negocios"
+            ? "/autenticar/negocios/criar-conta"
+            : "/autenticar/criar-conta"
+        }
       />
     </div>
   )
