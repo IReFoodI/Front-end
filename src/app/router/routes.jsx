@@ -15,6 +15,7 @@ import { ChangePassword } from "@/domains/user/components/password/ChangePasswor
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
+import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
@@ -31,6 +32,7 @@ export const ROUTES = {
   CHANGE_PASSWORD: "alterar-senha",
   LOGIN: "entrar",
   CREATE_ACCOUNT: "criar-conta",
+  CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
@@ -72,9 +74,30 @@ export const router = createBrowserRouter([
               },
             ],
           },
+        ],
+      },
 
+      {
+        path: "dashboard",
+        children: [
           {
-            path: "autenticar",
+            element: <DashBoardLayout />,
+            children: [
+              { index: true, element: <StoreProfilePage /> },
+              { path: ROUTES.FINANCE, element: <FinancePage /> },
+              {
+                path: ROUTES.ALERTSETTINGS,
+                element: <AlertSoundSettingsPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "autenticar",
+        children: [
+          {
+            path: "",
             element: <AuthenticationLayout />,
             children: [
               {
@@ -91,38 +114,17 @@ export const router = createBrowserRouter([
               },
             ],
           },
-        ],
-      },
-
-      {
-        path: "dashboard",
-        children: [
           {
-            path: "autenticar",
+            path: "negocios",
+            element: <AuthenticationLayoutBusiness />,
             children: [
               {
                 index: true,
-                element: <PresentationContent />,
-              },
-              {
-                path: ROUTES.LOGIN,
                 element: <SignIn />,
               },
               {
-                path: ROUTES.CREATE_ACCOUNT,
+                path: ROUTES.CREATE_ACCOUNT_BUSINESS,
                 element: <SignUp />,
-              },
-            ],
-          },
-
-          {
-            element: <DashBoardLayout />,
-            children: [
-              { index: true, element: <StoreProfilePage /> },
-              { path: ROUTES.FINANCE, element: <FinancePage /> },
-              {
-                path: ROUTES.ALERTSETTINGS,
-                element: <AlertSoundSettingsPage />,
               },
             ],
           },
