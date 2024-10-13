@@ -22,6 +22,8 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/CreateAccountTypes"
+import { SocialAuthButtons } from "./SocialAuthButtons"
+import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
   const location = useLocation()
@@ -46,7 +48,7 @@ export function SignUp() {
   const onSubmit = (data) => {
     if (acceptedTerms) {
       toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/home")
+      navigate("/")
       console.log(data)
       return
     }
@@ -168,7 +170,7 @@ export function SignUp() {
               onCheckedChange={() => setAcceptedTerms(!acceptedTerms)}
             />
             <Label htmlFor="terms" className="ml-2 text-sm">
-              Eu aceito os termos e condições
+              Eu aceito os <TermsOfUse>termos e condições</TermsOfUse>
             </Label>
           </div>
           <Button type="submit">Cadastrar</Button>
@@ -178,13 +180,13 @@ export function SignUp() {
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={isSignUpPage ? "/entrar" : "/business"}
+        navigateTo={isSignUpPage ? "/autenticar/entrar" : "/criar-conta-empresarial"}
       />
       <TextWithLink
         text={isSignUpPage ? "É uma empresa?" : "É um cliente?"}
         buttonContent={isSignUpPage ? "Criar conta empresarial" : "Criar conta"}
         navigateTo={
-          isSignUpPage ? "/business/criar-conta-empresarial" : "/criar-conta"
+          isSignUpPage ? "/autenticar/criar-conta-empresarial" : "/autenticar/criar-conta"
         }
       />
     </div>

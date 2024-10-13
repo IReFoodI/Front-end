@@ -17,5 +17,5 @@ export function useMediaQuery(query) {
     return () => result.removeEventListener("change", onChange)
   }, [query])
 
-  return value
+  return { value }
 }
