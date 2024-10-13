@@ -17,7 +17,7 @@ import { ChartCard } from "./ChartCard"
 export function StoreProfilePage() {
   return (
     <div className="flex-grow p-4">
-      <main className="flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
+      <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
           <h1 className="mb-4 text-2xl font-semibold sm:text-4xl">
             Olá, [Nome do Restaurente]

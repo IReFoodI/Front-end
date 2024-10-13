@@ -72,13 +72,13 @@ export function AddressPage() {
         Meus Endereços
       </h1>
       <div className="flex h-full">
-        <div className="flex flex-col justify-between lg:w-1/2 lg:ps-5">
+        <div className="flex flex-col lg:w-1/2 lg:justify-between lg:ps-5">
           <RadioGroup
             className="default-style"
             value={selectedAddressId}
             onValueChange={handleAddressChange}
           >
-            <div className="flex flex-col space-y-4 pe-5">
+            <div className="flex flex-col space-y-4 md:pe-5">
               <div className="flex-1">
                 <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
                 {defaultAddress ? (
