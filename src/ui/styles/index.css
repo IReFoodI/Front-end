@@ -66,12 +66,4 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  .bg-dashboard-login {
-    background-image: 
-      linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.35)), 
-      url('/assets/bg-dashboard-login.png');
-    background-size: cover;
-    background-position: center;
-  }
 }
