@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
@@ -36,6 +37,7 @@ export const ROUTES = {
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
+  PROFILESETTINGS: "ajustes/perfil",
 }
 
 export const router = createBrowserRouter([
@@ -133,6 +135,15 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,
