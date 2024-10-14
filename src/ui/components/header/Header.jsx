@@ -33,7 +33,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-10 bg-orange-50 p-4 drop-shadow-md">
+    <header className="sticky top-0 z-10 bg-[#fff7f5] p-4 drop-shadow-md">
       <div className="relative flex max-w-screen-2xl flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
         <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
@@ -43,14 +43,14 @@ export function Header() {
             <div className="hidden items-center gap-5 md:flex">
               <Link
                 to="/"
-                className={`text-md rounded-lg px-2 py-1 hover:bg-orange-100 ${isActive ? "focus:bg-orange-100 focus:text-primary" : ""}`}
+                className={`text-md rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
                 Início
               </Link>
               <Link
                 to="/"
-                className={`text-md rounded-lg px-2 py-1 hover:bg-orange-100 ${isActive ? "focus:bg-orange-100 focus:text-primary" : ""}`}
+                className={`text-md rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
                 Pedidos
@@ -94,7 +94,7 @@ export function Header() {
           <Popover onOpenChange={handleProfilePopoverOpen}>
             <PopoverTrigger asChild>
               <div
-                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
+                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${isProfilePopoverOpen ? "bg-[#ffeae4] text-primary" : " "}`}
               >
                 <IconUser className="w-full text-center" size={30} />
               </div>
@@ -106,7 +106,7 @@ export function Header() {
           </Popover>
           <Link
             to="/"
-            className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+            className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
             onClick={handleClick}
           >
             <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">

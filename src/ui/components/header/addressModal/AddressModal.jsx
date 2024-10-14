@@ -16,7 +16,7 @@ export function AddressModal() {
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:order-2 md:w-fit ${isActive ? "active:bg-orange-100" : ""}`}
+          className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-[#ffeae4] md:order-2 md:w-fit ${isActive ? "active:bg-[#ffeae4]" : ""}`}
           onClick={handleClick}
         >
           <p className="text-sm font-semibold md:text-[15px]">
@@ -52,7 +52,7 @@ export function AddressModal() {
             <p>Não-me-Toque - RS - CEP XX.XXX-XX</p>
           </div>
         </div>
-        <Button className="w-full rounded-xl md:text-xl">
+        <Button className="w-full md:text-xl">
           <Link to="/endereco" className="w-full">
             Meus Endereços
           </Link>
