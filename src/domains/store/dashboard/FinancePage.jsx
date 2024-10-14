@@ -28,7 +28,9 @@ export function FinancePage() {
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
-          <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Finanças</h1>
+          <h1 className="mb-4 text-3xl font-semibold sm:mb-0 lg:text-4xl">
+            Finanças
+          </h1>
           <div className="flex items-center justify-end gap-3">
             <SelectMonth
               selectedMonth={selectedMonth}
@@ -113,7 +115,7 @@ export function FinancePage() {
             </Card>
           </div>
         </section>
-        <section className="mt-5 grid w-full grid-cols-12 gap-4 transition-all sm:grid-cols-6 lg:grid-cols-12">
+        <section className="mt-4 grid w-full grid-cols-12 gap-4 transition-all sm:grid-cols-6 lg:grid-cols-12">
           <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
             <CardContent className="ps-1">
               <p className="p-4 text-xl font-semibold">Overview</p>

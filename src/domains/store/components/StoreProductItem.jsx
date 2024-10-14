@@ -38,7 +38,7 @@ export function StoreProductItem({
   }
 
   return (
-    <Card className="flex items-center justify-start gap-3 bg-zinc-100 p-2">
+    <Card className="flex items-center justify-start gap-3 bg-gray-100 p-2">
       <div className="relative w-24 rounded-lg md:rounded-[1.25rem]">
         <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
           <IconShoppingBag size={12} />
@@ -54,13 +54,13 @@ export function StoreProductItem({
       <div className="flex flex-1 flex-col">
         <h3 className="text-lg font-semibold">{name}</h3>
         {/* Talvez colocar um truncate para não passar de um determinado número de linhas na descrição */}
-        <p className="text-xs font-medium text-zinc-400 lg:text-sm">
+        <p className="text-xs font-medium text-gray-400 lg:text-sm">
           {description}
         </p>
 
         <div className="flex justify-between">
           <div className="flex flex-col justify-center">
-            <p className="text-xs font-semibold text-zinc-400 line-through lg:text-sm">
+            <p className="text-xs font-semibold text-gray-400 line-through lg:text-sm">
               {currencyFormatter(fullPrice)}
             </p>
             <p className="text-lg font-semibold text-primary">

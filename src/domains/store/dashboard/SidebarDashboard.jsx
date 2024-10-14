@@ -12,7 +12,7 @@ import { DashboardLogout } from "./DashboardLogout"
 export function SidebarDashboard() {
   return (
     <>
-      <div className="z-50 flex flex-row items-center justify-center gap-1.5 bg-slate-900 py-2 pt-0 text-sm text-white md:py-6 lg:max-w-24 lg:flex-grow lg:flex-col lg:justify-between lg:gap-3">
+      <div className="z-50 flex flex-row items-center justify-center gap-1.5 bg-slate-900 py-2 pt-0 text-sm text-white md:py-6 lg:max-w-24 lg:flex-grow lg:flex-col lg:justify-between lg:gap-3 lg:px-4">
         <div className="flex flex-row gap-1.5 md:gap-3 lg:flex-col lg:justify-start">
           <NavLink
             to={"/dashboard/pedidos"}

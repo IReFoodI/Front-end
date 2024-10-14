@@ -16,7 +16,7 @@ export function DeleteAccountModal() {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="my-12 w-[50%] bg-white text-center text-xl font-semibold text-slate-700 hover:bg-white hover:drop-shadow-md lg:my-5 lg:rounded-full lg:border lg:border-primary lg:p-5 lg:text-primary">
+          <Button className="my-12 w-[50%] bg-white text-center text-xl font-semibold text-gray-700 hover:bg-white hover:drop-shadow-md lg:my-5 lg:rounded-full lg:border lg:border-primary lg:p-5 lg:text-primary">
             Excluir Conta
           </Button>
         </DialogTrigger>

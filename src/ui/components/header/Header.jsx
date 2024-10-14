@@ -33,7 +33,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-10 bg-[#fff7f5] p-4 drop-shadow-md">
+    <header className="sticky top-0 z-10 bg-[#fff7f5] p-4 text-gray-500 drop-shadow-md">
       <div className="relative flex max-w-screen-2xl flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
         <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
@@ -43,14 +43,14 @@ export function Header() {
             <div className="hidden items-center gap-5 md:flex">
               <Link
                 to="/"
-                className={`text-md rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
+                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
                 Início
               </Link>
               <Link
                 to="/"
-                className={`text-md rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
+                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
                 Pedidos
@@ -72,7 +72,7 @@ export function Header() {
             />
 
             <Popover className="relative" placement="center">
-              <PopoverTrigger className="absolute right-0 mr-2 text-[#616375]">
+              <PopoverTrigger className="absolute right-0 mr-2 text-gray-500">
                 <IconFilter size={20} />
               </PopoverTrigger>
               <PopoverContent

@@ -80,7 +80,7 @@ export function OrderCard({
                 className="h-10 w-10 rounded-full"
               />
               <div>
-                <div className="font-semibold text-[#1E1F2B]">
+                <div className="font-semibold text-gray-700">
                   {restaurantName}
                 </div>
                 <div className="text-sm text-secondary-foreground">
@@ -97,8 +97,8 @@ export function OrderCard({
                 className="flex cursor-pointer items-center justify-between"
                 onClick={() => toggleItemDescription(index)}
               >
-                <div className="text-[#1E1F2B]">{item.name}</div>
-                <div className="text-[#1E1F2B]">
+                <div className="text-gray-700">{item.name}</div>
+                <div className="text-gray-700">
                   {currencyFormatter(item.price)}
                 </div>
               </div>

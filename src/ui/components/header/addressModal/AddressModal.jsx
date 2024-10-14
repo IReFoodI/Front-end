@@ -19,40 +19,36 @@ export function AddressModal() {
           className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-[#ffeae4] md:order-2 md:w-fit ${isActive ? "active:bg-[#ffeae4]" : ""}`}
           onClick={handleClick}
         >
-          <p className="text-sm font-semibold md:text-[15px]">
-            Endereço da pessoa, XX
-          </p>
+          <p className="text-sm md:text-[16px]">Endereço da pessoa, XX</p>
           <span>
-            <IconCaretDownFilled
-              stroke={2}
-              className="text-primary"
-              size={20}
-            />
+            <IconCaretDownFilled className="text-primary" size={20} />
           </span>
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className="relative top-14 md:absolute md:left-0 md:top-5 md:w-96"
+        className="relative top-14 font-inter text-gray-500 md:absolute md:left-0 md:top-5 md:w-96"
         align="start"
       >
         <div className="flex w-full flex-col items-center justify-center gap-2">
-          <h1 className="text-[15px] font-bold md:text-xl">
+          <h1 className="text-[15px] font-bold text-gray-600 md:text-base">
             Seu pedido irá para esse endereço
           </h1>
-          <p className="text-center text-[12px] text-[#898CA4] md:text-[15px]">
+          <p className="text-center text-sm md:text-[15px]">
             As opções e velocidade de entrega podem variar de acordo com a
             região
           </p>
         </div>
-        <div className="my-6 flex w-full flex-col items-start justify-center gap-2 rounded-lg bg-[#F8F9FE] p-2">
-          <h1 className="text-[15px] font-bold md:text-xl">Casa</h1>
-          <div className="text-sm text-[#616375] md:text-[15px]">
+        <div className="my-6 flex w-full flex-col items-start justify-center gap-2 rounded-lg bg-white p-2">
+          <h1 className="text-[15px] font-bold text-gray-600 md:text-base">
+            Casa
+          </h1>
+          <div className="text-sm md:text-[15px]">
             <p>Av Vamo pra Cima, 10 - Apto 02</p>
             <p>Bloco A - Bairro Cruzes</p>
             <p>Não-me-Toque - RS - CEP XX.XXX-XX</p>
           </div>
         </div>
-        <Button className="w-full md:text-xl">
+        <Button className="w-full md:text-base">
           <Link to="/endereco" className="w-full">
             Meus Endereços
           </Link>
