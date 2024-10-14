@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
-import { StoreSchedule } from "@/domains/store/dashboard/StoreHour.jsx/StoreSchedule.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreSchedule } from "@/domains/store/dashboard/StoreHour.jsx/StoreSchedule.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
