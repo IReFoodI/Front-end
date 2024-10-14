@@ -8,6 +8,7 @@ import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
+import { ChangeData } from "@/domains/user/components/change-data/ChangeData.jsx"
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
@@ -21,6 +22,7 @@ import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
+import { ProfileManagementLayout } from "@/ui/layouts/ProfileManagementLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
@@ -44,6 +46,7 @@ export const ROUTES = {
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
   PROFILESETTINGS: "ajustes/perfil",
+  CHANGE_DATA: "alterar-dados",
 }
 
 export const router = createBrowserRouter([
@@ -76,12 +79,25 @@ export const router = createBrowserRouter([
                 element: <OngoingOrder />,
               },
 
-              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
-              { path: ROUTES.ADDRESS, element: <AddressPage /> },
-              { path: ROUTES.ADDRESS_EDIT, element: <ProfileAddressForm /> },
               {
-                path: ROUTES.FAVORITES,
-                element: <Favorites />,
+                element: <ProfileManagementLayout />,
+                children: [
+                  { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+                  { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  {
+                    path: ROUTES.ADDRESS_EDIT,
+                    element: <ProfileAddressForm />,
+                  },
+
+                  {
+                    path: ROUTES.FAVORITES,
+                    element: <Favorites />,
+                  },
+                  {
+                    path: ROUTES.CHANGE_DATA,
+                    element: <ChangeData />,
+                  },
+                ],
               },
             ],
           },

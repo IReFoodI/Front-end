@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-import { TextWithLink } from "@/ui/components/TextWithLink"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -13,49 +12,59 @@ import {
   FormLabel,
   FormMessage,
 } from "@/ui/components/ui/form/form"
-import { PasswordInput } from "@/ui/components/ui/passwordInput"
+import { Input } from "@/ui/components/ui/input"
+import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 
-import { formSchema } from "../../models/ChangePasswordTypes"
+import { formSchema } from "../../models/MyProfileDataTypes"
+import { ModalCancel } from "./ModalCancel"
 
-export function ChangePassword() {
+//todo objeto temporário
+const profileData = {
+  name: "Samilis",
+  email: "samilisbritto@gmail.com",
+  phone: "91993559449",
+}
+
+export function ChangeData() {
   const navigate = useNavigate()
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      oldPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      name: profileData.name,
+      phone: profileData.phone,
+      email: profileData.email,
     },
   })
 
   function onSubmit(data) {
     console.log(data) // enviar para o back
     toast.success("Informações alteradas com sucesso")
-    navigate("/myProfile") //todo: ajustar rota
+    navigate("/my-profile") //todo: ajustar rota
   }
 
   return (
     <>
       <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
-        Alterar senha
+        Alterar Dados
       </h1>
-      <div className="w-full justify-between lg:px-5">
+
+      <div className="w-full justify-between">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="grid gap-2 text-left"
           >
             <FormField
-              id="oldPassword"
-              name="oldPassword"
+              id="name"
+              name="name"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Senha antiga</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <PasswordInput
-                      placeholder="********"
+                    <Input
+                      type="text"
+                      placeholder="Nome completo"
                       className={"!mt-1"}
                       {...field}
                     />
@@ -63,24 +72,19 @@ export function ChangePassword() {
                   <FormMessage className={"text-xs"} />
                 </FormItem>
               )}
-            />
-            <TextWithLink
-              text="Esqueceu sua senha?"
-              buttonContent="Recuperar senha"
-              navigateTo="/recoverPassword"
-              style={"!justify-start"}
             />
 
             <FormField
-              id="newPassword"
-              name="newPassword"
+              id="email"
+              name="email"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nova senha</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <PasswordInput
-                      placeholder="********"
+                    <Input
+                      type="email"
+                      placeholder="Email"
                       className={"!mt-1"}
                       {...field}
                     />
@@ -90,24 +94,21 @@ export function ChangePassword() {
               )}
             />
             <FormField
-              id="confirmPassword"
-              name="confirmPassword"
+              id="phone"
+              name="phone"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirmar senha</FormLabel>
+                  <FormLabel>Contato</FormLabel>
                   <FormControl>
-                    <PasswordInput
-                      placeholder="********"
-                      className={"!mt-1"}
-                      {...field}
-                    />
+                    <PhonePatternFormat {...field} />
                   </FormControl>
                   <FormMessage className={"text-xs"} />
                 </FormItem>
               )}
             />
-            <div className="mt-4 grid gap-3 sm:gap-5">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-5">
+              <ModalCancel />
               <Button type="submit">Salvar</Button>
             </div>
           </form>

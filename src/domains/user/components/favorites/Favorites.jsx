@@ -1,5 +1,4 @@
 import { useStores } from "@/domains/user/hooks/useStores"
-import ilustra from "@/ui/assets/ilustra.png"
 
 import { StoresGrid } from "../storesHome/StoresGrid"
 
@@ -8,23 +7,25 @@ export function Favorites() {
   const favoriteStores = stores.filter((store) => store.isFavorited)
 
   return (
-    <div className="flex h-full">
-      <div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <StoresGrid
-            stores={favoriteStores}
-            toggleFavorite={toggleFavorite}
-            showBanner={false}
-            singleColumn={true}
-            type="favorites"
-          />
-        )}
+    <>
+      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
+        Favoritos
+      </h1>
+      <div className="flex h-full">
+        <div>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <StoresGrid
+              stores={favoriteStores}
+              toggleFavorite={toggleFavorite}
+              showBanner={false}
+              singleColumn={true}
+              type="favorites"
+            />
+          )}
+        </div>
       </div>
-      <div className="hidden lg:flex">
-        <img className="max-h-[700px]" src={ilustra} alt="" />
-      </div>
-    </div>
+    </>
   )
 }
