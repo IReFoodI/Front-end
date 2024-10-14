@@ -15,8 +15,6 @@ export function DashBoardLayout() {
           <SidebarDashboard />
         </div>
         <main className="flex flex-1 overflow-y-auto">
-          {/* max-w-screen-2xl */}
-          {/* max-w-[1216px] */}
           <div className="mx-auto w-full max-w-screen-xl">
             <Outlet />
           </div>
