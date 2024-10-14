@@ -75,16 +75,29 @@ export function StoreAddressEdit({ initialData }) {
         <FormProvider {...formMethods}>
           <form
             onSubmit={formMethods.handleSubmit(onSubmit)}
-            className="relative h-screen space-y-4 text-center"
+            className="relative space-y-4 text-center"
           >
             <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
-              <div className="relative w-full">
-                <Input
-                  placeholder="Pesquisar CEP"
-                  className="h-12 w-full rounded-md border-2 border-input pr-4"
-                  {...formMethods.register("zipCode")}
-                />
-              </div>
+              <FormField
+                control={formMethods.control}
+                name="zipCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative w-full">
+                        <Input
+                          type="number"
+                          placeholder="Pesquisar CEP"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-input pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          {...formMethods.register("zipCode")}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={formMethods.control}
@@ -104,7 +117,7 @@ export function StoreAddressEdit({ initialData }) {
                         ))}
                       </select>
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -121,7 +134,7 @@ export function StoreAddressEdit({ initialData }) {
                         className="h-12 w-full rounded-md border-2 border-input p-4"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -140,7 +153,7 @@ export function StoreAddressEdit({ initialData }) {
                         className="h-12 w-full rounded-md border-2 border-input p-4"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -157,7 +170,7 @@ export function StoreAddressEdit({ initialData }) {
                         className="h-12 w-full rounded-md border-2 border-input p-4"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -169,12 +182,13 @@ export function StoreAddressEdit({ initialData }) {
                   <FormItem>
                     <FormControl>
                       <Input
+                        type="number"
                         placeholder="Número"
                         {...field}
-                        className="h-12 w-full rounded-md border-2 border-input p-4"
+                        className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -191,7 +205,7 @@ export function StoreAddressEdit({ initialData }) {
                         className="h-12 w-full rounded-md border-2 border-input p-4"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
