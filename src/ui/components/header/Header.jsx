@@ -33,7 +33,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-10 w-screen bg-orange-50 p-4 drop-shadow-md">
+    <header className="sticky top-0 z-10 bg-orange-50 p-4 drop-shadow-md">
       <div className="relative flex max-w-screen-2xl flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
         <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
