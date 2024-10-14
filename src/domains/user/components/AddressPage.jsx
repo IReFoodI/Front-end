@@ -21,7 +21,7 @@ const addresses = [
     neighborhood: "Bairro Cruzes",
     city: "Não-me-Toque",
     state: "RS",
-    zipCode: "99.999-99",
+    zipCode: "9999999",
     isDefault: true,
   },
   {
@@ -32,7 +32,7 @@ const addresses = [
     neighborhood: "Centro",
     city: "Porto Alegre",
     state: "RS",
-    zipCode: "90.000-00",
+    zipCode: "9000000",
     isDefault: false,
   },
   {
@@ -43,7 +43,7 @@ const addresses = [
     neighborhood: "Praia do Sol",
     city: "Balneário Camboriú",
     state: "SC",
-    zipCode: "88.888-88",
+    zipCode: "8888888",
     isDefault: false,
   },
 ]

@@ -1,4 +1,5 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react"
+import { useNavigate } from "react-router-dom"
 
 import { Label } from "@/ui/components/ui/label"
 import { RadioGroupItem } from "@/ui/components/ui/radio-group"
@@ -9,9 +10,13 @@ export function AddressCard({
   onAddressSelect,
   toggleOpenModal,
 }) {
+  const navigate = useNavigate() // Hook para navegação
   const { id, type, street, complement, neighborhood, city, state, zipCode } =
     address
 
+  const handleEdit = () => {
+    navigate(`/endereco/editar/${id}`, { state: { address } })
+  }
   return (
     <div className="flex w-full items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
       <div className="flex items-center gap-1">
@@ -39,7 +44,7 @@ export function AddressCard({
         </div>
       </div>
       <span className="flex items-center justify-between gap-3">
-        <button>
+        <button onClick={handleEdit}>
           <IconEdit
             size={30}
             className="transition duration-300 hover:text-orange-500"

@@ -34,7 +34,7 @@ export const changeUserAddressTypes = z.object({
   zipCode: z
     .string()
     .min(8, { message: "Insira um CEP válido com 8 caracteres." }),
-  address: z
+  street: z
     .string()
     .min(5, { message: "O endereço deve ter pelo menos 5 caracteres." }),
   number: z.string().min(1, { message: "O número é obrigatório." }),

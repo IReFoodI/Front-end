@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
+import { useLocation } from "react-router-dom"
 
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
@@ -19,47 +20,50 @@ import { Input } from "@/ui/components/ui/input"
 
 const FormSchema = changeUserAddressTypes
 
-export function ProfileAddressForm({ initialData }) {
+export function ProfileAddressForm() {
+  const location = useLocation()
+  const initialData = useMemo(
+    () =>
+      location.state?.address || {
+        zipCode: "",
+        street: "",
+        number: "",
+        neighborhood: "",
+        complement: "",
+        city: "",
+        state: "",
+        isDefault: false,
+      },
+    [location.state?.address]
+  )
+
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      zipCode: "",
-      address: "",
-      number: "",
-      district: "",
-      additionalInfo: "",
-      city: "",
-      state: "",
-    },
+    defaultValues: initialData,
   })
 
   const { getValues, setValue, reset, watch } = formMethods
   const [encodedAddress, setEncodedAddress] = useState("")
 
   useEffect(() => {
-    if (initialData) {
-      reset(initialData)
-    }
+    reset(initialData)
   }, [initialData, reset])
 
   useCep(getValues("zipCode"), setValue, getValues)
 
   const watchedFields = watch([
     "zipCode",
-    "address",
+    "street",
     "number",
-    "district",
+    "neighborhood",
     "city",
     "state",
   ])
 
   useEffect(() => {
-    const [zipCode, address, number, district, city, state] = watchedFields
+    const [zipCode, street, number, neighborhood, city, state] = watchedFields
 
-    const fullAddress = `${address}, ${number} ${
-      district ? `${district},` : ""
-    } ${city} - ${state}, ${zipCode}`
-
+    const fullAddress = `${street}, ${number} ${neighborhood ? `${neighborhood},` : ""} ${city} - ${state}, ${zipCode}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
 
@@ -93,7 +97,6 @@ export function ProfileAddressForm({ initialData }) {
                             placeholder="Pesquisar CEP"
                             {...field}
                             className="h-12 w-full rounded-md border-2 border-input pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                            {...formMethods.register("zipCode")}
                           />
                         </div>
                       </FormControl>
@@ -127,7 +130,7 @@ export function ProfileAddressForm({ initialData }) {
 
                 <FormField
                   control={formMethods.control}
-                  name="district"
+                  name="neighborhood"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -146,7 +149,7 @@ export function ProfileAddressForm({ initialData }) {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={formMethods.control}
-                  name="address"
+                  name="street"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -163,7 +166,7 @@ export function ProfileAddressForm({ initialData }) {
 
                 <FormField
                   control={formMethods.control}
-                  name="additionalInfo"
+                  name="complement"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>

@@ -29,8 +29,9 @@ import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 import App from "../App.jsx"
 
 export const ROUTES = {
-  ADDRESS: "address",
-  ADDRESS_EDIT: "address/edit",
+  ADDRESS: "endereco",
+  ADDRESS_EDIT: "endereco/editar",
+  ADDRESS_EDIT_ID: "endereco/editar/:addressId",
   HOME: "home",
   FAVORITES: "favoritos",
   FINANCE: "financas",
@@ -84,10 +85,6 @@ export const router = createBrowserRouter([
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
-                  {
-                    path: ROUTES.ADDRESS_EDIT,
-                    element: <ProfileAddressForm />,
-                  },
 
                   {
                     path: ROUTES.FAVORITES,
@@ -98,6 +95,14 @@ export const router = createBrowserRouter([
                     element: <ChangeData />,
                   },
                 ],
+              },
+              {
+                path: ROUTES.ADDRESS_EDIT,
+                element: <ProfileAddressForm />,
+              },
+              {
+                path: ROUTES.ADDRESS_EDIT_ID,
+                element: <ProfileAddressForm />,
               },
             ],
           },
