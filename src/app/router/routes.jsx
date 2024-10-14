@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
-import { StoreSchedule } from "@/domains/store/components/StoreSettings/StoreSchedule.jsx"
+import { StoreSchedule } from "@/domains/store/dashboard/StoreHour.jsx/StoreSchedule.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
@@ -45,7 +45,7 @@ export const ROUTES = {
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
   PROFILESETTINGS: "ajustes/perfil",
-  SCHEDULESETTINGS: "ajustes/horário",
+  SCHEDULESETTINGS: "ajustes/horario",
   CHANGE_DATA: "alterar-dados",
 }
 
