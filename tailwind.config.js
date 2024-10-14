@@ -77,6 +77,10 @@ export default {
         right:
           "4px 0 6px -1px rgba(0, 0, 0, 0.1), 6px 0 6px -1px rgba(0, 0, 0, 0.06)",
       },
+      backgroundImage: {
+        "dashboard-login":
+          "linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.35)), url('@/ui/assets/bg-dashboard-login.png')",
+      },
     },
   },
   plugins: [tailwindAnimate],

@@ -39,15 +39,15 @@ export function CardPage() {
 
   return (
     <div className="mx-auto flex h-screen w-full max-w-[1216px] flex-col items-center gap-6 text-gray-600 antialiased lg:h-auto">
-      <h1 className="w-full py-6 text-center text-2xl font-semibold">
+      <h1 className="w-full pb-6 text-center text-2xl font-semibold">
         Cartões
       </h1>
 
-      <div className="flex w-full flex-col items-start md:px-8">
+      <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col">
           {cardData.length > 0 ? (
             <div className="mx-auto flex w-full flex-col items-center justify-center gap-4">
-              <div className="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mx-auto mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {cardData.map((data, index) => (
                   <SmallCard
                     key={index}
@@ -73,7 +73,7 @@ export function CardPage() {
                   Vamos adicionar seu primeiro cartão para fazer um novo pedido!
                 </p>
                 <NavLink to={"/cartoes/adicionar"}>
-                  <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+                  <Button className="w-full max-w-[19rem] rounded-full px-4 pt-11 text-base font-semibold transition-colors duration-300 ease-in-out">
                     Adicionar novo cartão
                   </Button>
                 </NavLink>
