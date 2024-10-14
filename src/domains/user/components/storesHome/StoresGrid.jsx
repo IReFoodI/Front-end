@@ -17,7 +17,7 @@ export function StoresGrid({
       {stores.length > 0 ? (
         stores.map((store, index) => (
           <React.Fragment key={store.id}>
-            {showBanner && index % 6 === 0 && (
+            {showBanner && index != 0 && index % 6 === 0 && (
               <div className="sm:col-span-full lg:hidden">
                 <BannerPromo title="Confira nossas ofertas especiais!" />
               </div>
