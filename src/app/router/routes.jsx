@@ -9,23 +9,27 @@ import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
+import { ChangeData } from "@/domains/user/components/change-data/ChangeData.jsx"
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
+import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
+import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
 import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutBusiness.jsx"
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
+import { ProfileManagementLayout } from "@/ui/layouts/ProfileManagementLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
 
 export const ROUTES = {
-  ADDRESS: "address",
+  ADDRESS: "endereco",
   HOME: "home",
   FAVORITES: "favoritos",
   FINANCE: "financas",
@@ -39,7 +43,10 @@ export const ROUTES = {
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADRRESS: "ajustes/endereco",
   ONGOING_ORDER: "pedidos/em-andamento",
+  RECOVER_PASSWORD: "recuperar-senha",
+  RESET_PASSWORD: "redefinir-senha/:token",
   PROFILESETTINGS: "ajustes/perfil",
+  CHANGE_DATA: "alterar-dados",
 }
 
 export const router = createBrowserRouter([
@@ -59,10 +66,6 @@ export const router = createBrowserRouter([
             element: <ProtectedLayout />,
             children: [
               {
-                path: ROUTES.FAVORITES,
-                element: <Favorites />,
-              },
-              {
                 path: ROUTES.USER_CREDIT_CARD,
                 element: <CardPage />,
               },
@@ -70,11 +73,25 @@ export const router = createBrowserRouter([
                 path: ROUTES.USER_ADD_CREDIT_CARD,
                 element: <AddEditCard />,
               },
-              { path: ROUTES.ADDRESS, element: <AddressPage /> },
-              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+
               {
                 path: ROUTES.ONGOING_ORDER,
                 element: <OngoingOrder />,
+              },
+              {
+                element: <ProfileManagementLayout />,
+                children: [
+                  { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+                  { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  {
+                    path: ROUTES.FAVORITES,
+                    element: <Favorites />,
+                  },
+                  {
+                    path: ROUTES.CHANGE_DATA,
+                    element: <ChangeData />,
+                  },
+                ],
               },
             ],
           },
@@ -92,6 +109,14 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
+              {
+                path: ROUTES.RESET_PASSWORD,
+                element: <ResetPasswordPage />,
               },
             ],
           },
