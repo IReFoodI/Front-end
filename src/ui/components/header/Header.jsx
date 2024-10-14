@@ -15,6 +15,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * @function Header
+ * @description Componente que renderiza o header da aplicação com as op es de navega o, busca por estabelecimentos, endere o do usu rio, carrinho de compras e op es de perfil.
+ * @returns {ReactElement} O header da aplic a o.
+ */
+/******  3ddd010e-e256-484f-a598-5e957f59aa82  *******/
 export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
