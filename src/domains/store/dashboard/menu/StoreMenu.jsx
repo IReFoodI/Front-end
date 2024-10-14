@@ -29,9 +29,6 @@ import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"
 
-export const description =
-  "An products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions."
-
 export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -53,7 +50,7 @@ export function StoreMenu() {
   // }
 
   return (
-    <div>
+    <div className="w-full">
       <Card className="border-none shadow-none">
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
@@ -61,7 +58,8 @@ export function StoreMenu() {
           <AlertDialog open={isModalOpen}>
             <AlertDialogTrigger onClick={handleOpenModal} asChild>
               <Button size="sm" className="m-0 items-center gap-1 text-lg">
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                <span className="md:hidden">+</span>
+                <span className="sr-only hidden sm:not-sr-only sm:whitespace-nowrap md:inline">
                   + Adicionar produto
                 </span>
               </Button>
@@ -85,29 +83,28 @@ export function StoreMenu() {
           <Table>
             <TableHeader className="border-b-2 border-t-2 border-secondary-foreground">
               <TableRow>
-                <TableHead className="text-center">Foto</TableHead>
-                <TableHead className="text-center">Nome</TableHead>
-                <TableHead className="text-center">Descrição</TableHead>
+                <TableHead className="hidden text-center md:table-cell">
+                  Foto
+                </TableHead>
+                <TableHead className="text-left md:text-center">Nome</TableHead>
+                <TableHead className="hidden text-center md:table-cell">
+                  Descrição
+                </TableHead>
                 <TableHead className="hidden text-center md:table-cell">
                   Validade
                 </TableHead>
-                <TableHead className="hidden text-center md:table-cell">
-                  Quantidade
-                </TableHead>
+                <TableHead className="text-center">Quantidade</TableHead>
                 <TableHead className="hidden text-center md:table-cell">
                   Valor Original
                 </TableHead>
                 <TableHead className="hidden text-center md:table-cell">
                   Valor Venda
                 </TableHead>
-                <TableHead className="hidden text-center md:table-cell">
-                  Status
-                </TableHead>
+                <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center">Ação</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {/* Renderizando um MenuItemCard para cada produto */}
               {productList.map((product) => (
                 <MenuItemCard
                   key={product.id}

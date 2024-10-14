@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
@@ -18,31 +19,33 @@ import {
 import { Input } from "@/ui/components/ui/input"
 
 import { editProductSchema, productSchema } from "../../model/ProductTypes"
+
 export function ProductModal({
   selectedProduct,
   setSelectedProduct,
   setIsModalOpen,
 }) {
-  console.log(typeof selectedProduct)
+  const [image, setImage] = useState(selectedProduct?.image || "")
+  const [dragActive, setDragActive] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(selectedProduct ? editProductSchema : productSchema),
     defaultValues: {
-      name: selectedProduct?.name ? selectedProduct.name : "",
-      description: selectedProduct?.description
-        ? selectedProduct.description
-        : "",
+      name: selectedProduct?.name || "",
+      description: selectedProduct?.description || "",
       expirationDate: selectedProduct?.expirationDate
         ? new Date(selectedProduct.expirationDate)
         : null,
       quantity: selectedProduct?.quantity
         ? String(selectedProduct.quantity)
-        : "",
+        : "0",
       originalPrice: selectedProduct?.originalPrice
         ? String(selectedProduct.originalPrice)
-        : "",
+        : "0",
       sellPrice: selectedProduct?.sellPrice
         ? String(selectedProduct.sellPrice)
-        : "",
+        : "0",
+      status: selectedProduct?.status ?? false,
     },
   })
 
@@ -52,8 +55,36 @@ export function ProductModal({
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    const status = selectedProduct?.status ?? false
+    console.log({ ...data, status, image })
     handleCloseModal()
+  }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => setImage(reader.result)
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+    setDragActive(true)
+  }
+
+  const handleDragLeave = () => setDragActive(false)
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    setDragActive(false)
+    const file = e.dataTransfer.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => setImage(reader.result)
+      reader.readAsDataURL(file)
+    }
   }
 
   return (
@@ -66,12 +97,38 @@ export function ProductModal({
             Adicionar Produto
           </h1>
           <div className="flex w-full flex-col items-center">
-            <img
-              src={selectedProduct?.image}
-              alt={name}
-              className="my-2 aspect-square w-1/3"
-            />
-            <Button type="button" className="!ml-0 !mr-0 md:px-6">
+            <div
+              className={`my-2 aspect-square w-1/3 border-2 ${
+                dragActive ? "border-blue-500" : "border-dashed"
+              } flex items-center justify-center rounded-md`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              {image ? (
+                <img
+                  src={image}
+                  alt="Preview"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <p className="text-center">
+                  Arraste uma imagem ou clique para selecionar
+                </p>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </div>
+            <Button
+              type="button"
+              onClick={() =>
+                document.querySelector('input[type="file"]').click()
+              }
+            >
               Adicionar imagem
             </Button>
           </div>
@@ -88,17 +145,12 @@ export function ProductModal({
                     <FormItem>
                       <FormLabel>Nome do produto</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Nome do Produto"
-                          {...field}
-                          maxLength={200}
-                        />
+                        <Input {...field} maxLength={200} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="description"
@@ -106,11 +158,7 @@ export function ProductModal({
                     <FormItem>
                       <FormLabel>Descrição</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Descrição"
-                          {...field}
-                          maxLength={200}
-                        />
+                        <Input {...field} maxLength={200} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +166,7 @@ export function ProductModal({
                 />
               </div>
 
-              <div className="my-2 grid grid-cols-4 gap-4">
+              <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-4">
                 <FormField
                   control={form.control}
                   name="expirationDate"
@@ -139,9 +187,14 @@ export function ProductModal({
                       <FormControl>
                         <Input
                           type="number"
-                          placeholder="Quantidade"
                           {...field}
                           min={0}
+                          onFocus={(e) =>
+                            e.target.value === "0" && (e.target.value = "")
+                          }
+                          onBlur={(e) =>
+                            e.target.value === "" && (e.target.value = "0")
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -158,30 +211,38 @@ export function ProductModal({
                         <Input
                           type="number"
                           step="0.01"
-                          placeholder="Preço Original *"
                           {...field}
                           min={0}
+                          onFocus={(e) =>
+                            e.target.value === "0" && (e.target.value = "")
+                          }
+                          onBlur={(e) =>
+                            e.target.value === "" && (e.target.value = "0")
+                          }
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="sellPrice"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Preço de Venda</FormLabel>
-
                       <FormControl>
                         <Input
                           type="number"
                           step="0.01"
-                          placeholder="Preço de Venda *"
                           {...field}
                           min={0}
+                          onFocus={(e) =>
+                            e.target.value === "0" && (e.target.value = "")
+                          }
+                          onBlur={(e) =>
+                            e.target.value === "" && (e.target.value = "0")
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -189,9 +250,13 @@ export function ProductModal({
                   )}
                 />
               </div>
+
               <div className="flex justify-end gap-4">
-                <AlertDialogFooter className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4">
-                  <AlertDialogCancel onClick={handleCloseModal}>
+                <AlertDialogFooter className="flex flex-row items-center justify-center gap-4">
+                  <AlertDialogCancel
+                    className="mt-0"
+                    onClick={handleCloseModal}
+                  >
                     Cancelar
                   </AlertDialogCancel>
                   <Button type="submit" className="!ml-0 !mr-0 md:px-6">

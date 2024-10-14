@@ -66,16 +66,12 @@ export function DatePickerSingle({ value, onChange }) {
         <Button
           variant={"outline"}
           className={cn(
-            "justify-start text-left font-normal",
-            !value && "text-muted-foreground"
+            "justify-start p-2 text-left font-normal",
+            !value && "p-2 text-muted-foreground"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {value instanceof Date && !isNaN(value) ? (
-            format(value, "PP")
-          ) : (
-            <span>Pick a date</span>
-          )}
+          {value instanceof Date && !isNaN(value) ? format(value, "PP") : <></>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

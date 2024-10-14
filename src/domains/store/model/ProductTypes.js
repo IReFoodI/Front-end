@@ -36,7 +36,9 @@ export const productSchema = z.object({
   quantity: z
     .string()
     .transform((value) => parseFloat(value))
-    .pipe(z.number().positive("O preço original deve ser maior que zero")),
+    .pipe(
+      z.number().nonnegative("A quantidade deve ser maior ou igual a zero")
+    ),
   originalPrice: z
     .string()
     .transform((value) => parseFloat(value))
