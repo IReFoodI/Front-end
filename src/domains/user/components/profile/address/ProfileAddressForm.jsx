@@ -23,7 +23,7 @@ export function ProfileAddressForm({ initialData }) {
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      cep: "",
+      zipCode: "",
       address: "",
       number: "",
       district: "",
@@ -42,10 +42,10 @@ export function ProfileAddressForm({ initialData }) {
     }
   }, [initialData, reset])
 
-  useCep(getValues("cep"), setValue, getValues)
+  useCep(getValues("zipCode"), setValue, getValues)
 
   const watchedFields = watch([
-    "cep",
+    "zipCode",
     "address",
     "number",
     "district",
@@ -54,11 +54,11 @@ export function ProfileAddressForm({ initialData }) {
   ])
 
   useEffect(() => {
-    const [cep, address, number, district, city, state] = watchedFields
+    const [zipCode, address, number, district, city, state] = watchedFields
 
     const fullAddress = `${address}, ${number} ${
       district ? `${district},` : ""
-    } ${city} - ${state}, ${cep}`
+    } ${city} - ${state}, ${zipCode}`
 
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
@@ -78,16 +78,29 @@ export function ProfileAddressForm({ initialData }) {
           <FormProvider {...formMethods}>
             <form
               onSubmit={formMethods.handleSubmit(onSubmit)}
-              className="relative h-screen space-y-4 text-center"
+              className="relative space-y-4 text-center"
             >
               <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
-                <div className="relative w-full">
-                  <Input
-                    placeholder="Pesquisar CEP"
-                    className="h-12 w-full rounded-md border-2 border-input pr-4"
-                    {...formMethods.register("cep")}
-                  />
-                </div>
+                <FormField
+                  control={formMethods.control}
+                  name="zipCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="relative w-full">
+                          <Input
+                            type="number"
+                            placeholder="Pesquisar CEP"
+                            {...field}
+                            className="h-12 w-full rounded-md border-2 border-input pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                            {...formMethods.register("zipCode")}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-left" />
+                    </FormItem>
+                  )}
+                />
 
                 <FormField
                   control={formMethods.control}
@@ -107,7 +120,7 @@ export function ProfileAddressForm({ initialData }) {
                           ))}
                         </select>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
@@ -124,7 +137,7 @@ export function ProfileAddressForm({ initialData }) {
                           className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
@@ -143,7 +156,7 @@ export function ProfileAddressForm({ initialData }) {
                           className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
@@ -160,7 +173,7 @@ export function ProfileAddressForm({ initialData }) {
                           className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
@@ -172,12 +185,13 @@ export function ProfileAddressForm({ initialData }) {
                     <FormItem>
                       <FormControl>
                         <Input
+                          type="number"
                           placeholder="Número"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
+                          className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
@@ -194,14 +208,14 @@ export function ProfileAddressForm({ initialData }) {
                           className="h-12 w-full rounded-md border-2 border-input p-4"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-left" />
                     </FormItem>
                   )}
                 />
               </div>
               <div
                 id="map"
-                className="top-12 z-20 mx-auto flex w-[80%] items-center justify-center md:h-1/2 md:w-2/3"
+                className="top-12 z-20 mx-auto flex aspect-video w-full items-center justify-center md:h-1/3"
               >
                 <iframe
                   key={encodedAddress}
@@ -213,10 +227,11 @@ export function ProfileAddressForm({ initialData }) {
                   allowFullScreen
                 ></iframe>
               </div>
-
-              <Button type="submit">
-                {initialData ? "Salvar Alterações" : "Adicionar Endereço"}
-              </Button>
+              <div className="md:text-right">
+                <Button type="submit">
+                  {initialData ? "Salvar Alterações" : "Adicionar Endereço"}
+                </Button>
+              </div>
             </form>
           </FormProvider>
         </div>

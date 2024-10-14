@@ -13,9 +13,9 @@ import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
-import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
+import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -29,7 +29,6 @@ import App from "../App.jsx"
 export const ROUTES = {
   ADDRESS: "address",
   ADDRESS_EDIT: "address/edit",
-  ADDRESS_EDIT_ID: "address/edit/:addressId",
   HOME: "home",
   FAVORITES: "favoritos",
   FINANCE: "financas",
@@ -64,10 +63,6 @@ export const router = createBrowserRouter([
             element: <ProtectedLayout />,
             children: [
               {
-                path: ROUTES.FAVORITES,
-                element: <Favorites />,
-              },
-              {
                 path: ROUTES.USER_CREDIT_CARD,
                 element: <CardPage />,
               },
@@ -75,11 +70,18 @@ export const router = createBrowserRouter([
                 path: ROUTES.USER_ADD_CREDIT_CARD,
                 element: <AddEditCard />,
               },
-              { path: ROUTES.ADDRESS, element: <AddressPage /> },
-              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+
               {
                 path: ROUTES.ONGOING_ORDER,
                 element: <OngoingOrder />,
+              },
+
+              { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
+              { path: ROUTES.ADDRESS, element: <AddressPage /> },
+              { path: ROUTES.ADDRESS_EDIT, element: <ProfileAddressForm /> },
+              {
+                path: ROUTES.FAVORITES,
+                element: <Favorites />,
               },
             ],
           },
@@ -87,29 +89,6 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: ROUTES.ADDRESS_EDIT,
-        element: <ProfileAddressForm />,
-      },
-      {
-        path: ROUTES.ADDRESS_EDIT_ID,
-        element: (
-          <ProfileAddressForm
-            initialData={{
-              cep: "01153000",
-              address: "Rua Exemplo",
-              number: "123",
-              additionalInfo: "Bloco 3",
-              city: "São Paulo",
-              state: "SP",
-            }}
-          />
-        ),
-
-        path: ROUTES.USER_CREDIT_CARD,
-        element: <CardPage />,
-
-        path: "autenticar",
-        element: <AuthenticationLayout />,
         path: "dashboard",
         children: [
           {
