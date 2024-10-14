@@ -10,7 +10,7 @@ export function DashBoardLayout() {
     // <ProtectedRoute redirect="/dashboard/autenticar/entrar">
     <div
       id="dashboardLayout"
-      className="font-inter flex min-h-screen w-full flex-col text-gray-500"
+      className="flex min-h-screen w-full flex-col font-inter text-gray-500"
     >
       <HeaderDashboard />
       <div className="flex flex-1 flex-col gap-3 lg:max-h-[calc(100vh-80px)] lg:flex-row">

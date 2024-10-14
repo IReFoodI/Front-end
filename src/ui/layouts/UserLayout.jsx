@@ -4,7 +4,7 @@ import { Header } from "../components/header/Header"
 
 export function UserLayout() {
   return (
-    <div className="font-inter h-screen">
+    <div className="h-screen font-inter">
       <Header />
       <div
         id="userLayout"
