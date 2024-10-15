@@ -17,7 +17,7 @@ export function TabsStructure({ pendingOrders, scheduledOrders }) {
 
   return (
     <Tabs defaultValue="pending" className="flex h-full w-full flex-col">
-      <TabsList className="h-16 w-full flex-grow overflow-hidden rounded-none border-b-2 border-gray-400">
+      <TabsList className="max-h-16 min-h-16 w-full flex-grow overflow-hidden rounded-none border-b-2 border-gray-400">
         <TabsTrigger
           value="pending"
           className="flex h-full w-full gap-3 rounded-none data-[state=active]:border-b-4 data-[state=active]:border-orange-500 data-[state=active]:bg-orange-100 data-[state=active]:text-orange-500"
@@ -47,13 +47,13 @@ export function TabsStructure({ pendingOrders, scheduledOrders }) {
         value="pending"
         className="mt-0 min-h-[400px] flex-grow overflow-y-auto"
       >
-        <OrdersList orders={pendingOrders} />
+        <OrdersList orders={pendingOrders} isDoneOrCanceled={false} />
       </TabsContent>
       <TabsContent
         value="scheduled"
         className="mt-0 min-h-[400px] flex-grow overflow-y-auto"
       >
-        <OrdersList orders={scheduledOrders} />
+        <OrdersList orders={scheduledOrders} isDoneOrCanceled={false} />
       </TabsContent>
     </Tabs>
   )

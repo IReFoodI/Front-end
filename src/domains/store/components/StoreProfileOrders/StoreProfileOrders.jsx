@@ -23,7 +23,7 @@ export function StoreProfileOrders() {
         { itemId: 2, itemName: "Refrigerante", price: 5.0 },
       ],
       totalValue: 25.0,
-      status: "accepted",
+      status: "pending",
     },
     {
       orderId: 2,
@@ -45,7 +45,7 @@ export function StoreProfileOrders() {
         { itemId: 2, itemName: "Chá Verde", price: 10.0 },
       ],
       totalValue: 60.0,
-      status: "accepted",
+      status: "done",
     },
     {
       orderId: 4,
@@ -56,10 +56,10 @@ export function StoreProfileOrders() {
         { itemId: 2, itemName: "Chá Verde", price: 10.0 },
       ],
       totalValue: 60.0,
-      status: "pending",
+      status: "canceled",
     },
     {
-      orderId: 4,
+      orderId: 5,
       clientName: "Carlos Lima",
       orderNumber: 12347,
       items: [
@@ -78,16 +78,14 @@ export function StoreProfileOrders() {
   return (
     <Sheet>
       <SheetTrigger>
-        <div
-          className={`flex w-16 flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary md:w-20 [&.active]:bg-primary`}
-        >
+        <div className="flex w-16 flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary md:w-20 [&.active]:bg-primary">
           <IconPaperBag className="h-6 w-6 md:h-10 md:w-10" />
           <p className="text-xs md:text-sm">Pedidos</p>
         </div>
       </SheetTrigger>
       <SheetContent
         side={`left`}
-        className="m-0 flex h-full flex-col p-0 [&>button]:hidden"
+        className="m-0 flex h-full flex-col gap-0 p-0 lg:gap-0 [&>button]:hidden"
       >
         <div className="flex-grow overflow-y-auto">
           <TabsStructure
@@ -95,8 +93,13 @@ export function StoreProfileOrders() {
             scheduledOrders={filterOrders("accepted")}
           />
         </div>
-        <AccordionsStructure />
-        <SheetHeader>
+        <div className="flex flex-col">
+          <AccordionsStructure
+            doneOrders={filterOrders("done")}
+            canceledOrders={filterOrders("canceled")}
+          />
+        </div>
+        <SheetHeader className="space-y-0">
           <SheetTitle />
           <SheetDescription />
         </SheetHeader>
