@@ -34,7 +34,15 @@ export function StoreMenu() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const [selectedProduct, setSelectedProduct] = useState({})
-  const [productList /* setProductList */] = useState(initialProductList) // State para armazenar a lista de produtos
+  const [productList, setProductList] = useState(initialProductList)
+
+  const handleStatusChange = (id, newStatus) => {
+    setProductList((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === id ? { ...product, status: newStatus } : product
+      )
+    )
+  }
 
   const handleOpenModal = () => {
     setIsModalOpen(true)
@@ -57,11 +65,11 @@ export function StoreMenu() {
 
           <AlertDialog open={isModalOpen}>
             <AlertDialogTrigger onClick={handleOpenModal} asChild>
-              <Button size="sm" className="m-0 items-center gap-1 text-lg">
-                <span className="md:hidden">+</span>
-                <span className="sr-only hidden sm:not-sr-only sm:whitespace-nowrap md:inline">
-                  + Adicionar produto
-                </span>
+              <Button
+                size="sm"
+                className="m-0 !mt-0 items-center gap-1 text-lg"
+              >
+                <span className="m-0 text-base">+ Adicionar produto</span>
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="min-w-fit">
@@ -97,10 +105,10 @@ export function StoreMenu() {
                 <TableHead className="hidden text-center md:table-cell">
                   Valor Original
                 </TableHead>
-                <TableHead className="hidden text-center md:table-cell">
+                <TableHead className="text-center md:table-cell">
                   Valor Venda
                 </TableHead>
-                <TableHead className="text-center">Status</TableHead>
+                <TableHead className="hidden text-center">Status</TableHead>
                 <TableHead className="text-center">Ação</TableHead>
               </TableRow>
             </TableHeader>
@@ -114,6 +122,7 @@ export function StoreMenu() {
                   setSelectedProduct={setSelectedProduct}
                   setIsModalOpen={setIsModalOpen}
                   isModalOpen={isModalOpen}
+                  onStatusChange={handleStatusChange}
                 />
               ))}
             </TableBody>

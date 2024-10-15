@@ -21,6 +21,7 @@ export function MenuItemCard({
   setIsModalOpen,
   setIsDeleteModalOpen,
   setSelectedProduct,
+  onStatusChange,
 }) {
   const {
     name = "",
@@ -52,6 +53,7 @@ export function MenuItemCard({
 
   const handleStatusChange = (checked) => {
     setStatus(checked)
+    onStatusChange(product.id, checked)
   }
 
   function handleOpenModal() {
@@ -104,7 +106,7 @@ export function MenuItemCard({
         />
       </TableCell>
       <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
+        className={`pointer-events-none md:table-cell ${disabledClass}`}
       >
         <Input
           type="text"
@@ -113,7 +115,7 @@ export function MenuItemCard({
           placeholder="Preço de Venda"
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="hidden md:table-cell">
         <Switch checked={status} onCheckedChange={handleStatusChange} />
       </TableCell>
       <TableCell className="flex-col items-center gap-2">
@@ -121,11 +123,12 @@ export function MenuItemCard({
           <DropdownMenuTrigger>
             <IconDots size={25} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="min-w-16">
             <DropdownMenuItem
               onClick={() => {
                 setSelectedProduct(product)
                 handleOpenModal()
+                document.body.style.pointerEvents = ""
               }}
             >
               Editar
@@ -134,6 +137,7 @@ export function MenuItemCard({
               onClick={() => {
                 setIsDeleteModalOpen(true)
                 setSelectedProduct(product)
+                document.body.style.pointerEvents = ""
               }}
             >
               Deletar

@@ -47,14 +47,9 @@ export const productSchema = z.object({
     .string()
     .transform((value) => parseFloat(value))
     .pipe(z.number().positive("O preço original deve ser maior que zero")),
-  // status: z.boolean().optional(), // pode ser omitido, padrão será `false`
 })
 
 export const editProductSchema = z.object({
-  // image: z
-  //   .string()
-  //   .url("URL inválida")
-  //   .max(200, "A URL não pode ter mais de 200 caracteres"),
   name: z
     .string()
     .min(1, "O nome do produto é obrigatório")
@@ -78,5 +73,5 @@ export const editProductSchema = z.object({
     .string()
     .transform((value) => parseFloat(value))
     .pipe(z.number().positive("O preço original deve ser maior que zero")),
-  status: z.boolean().optional(), // pode ser omitido, padrão será `false`
+  status: z.boolean().optional(),
 })

@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Switch } from "@/ui/components/ui/switch"
 
 import { editProductSchema, productSchema } from "../../model/ProductTypes"
 
@@ -27,6 +28,7 @@ export function ProductModal({
 }) {
   const [image, setImage] = useState(selectedProduct?.image || "")
   const [dragActive, setDragActive] = useState(false)
+  const [status, setStatus] = useState(selectedProduct?.status ?? false) // Adicionando estado para o status
 
   const form = useForm({
     resolver: zodResolver(selectedProduct ? editProductSchema : productSchema),
@@ -45,7 +47,6 @@ export function ProductModal({
       sellPrice: selectedProduct?.sellPrice
         ? String(selectedProduct.sellPrice)
         : "0",
-      status: selectedProduct?.status ?? false,
     },
   })
 
@@ -55,9 +56,12 @@ export function ProductModal({
   }
 
   const onSubmit = (data) => {
-    const status = selectedProduct?.status ?? false
-    console.log({ ...data, status, image })
+    console.log({ ...data, status, image }) // Incluindo status na saída
     handleCloseModal()
+  }
+
+  const handleStatusChange = (checked) => {
+    setStatus(checked) // Atualiza o estado do status
   }
 
   const handleImageChange = (e) => {
@@ -94,7 +98,7 @@ export function ProductModal({
       <div className="relative z-10 mx-auto rounded-lg bg-white p-6 shadow-lg">
         <div className="gap-4">
           <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
-            Adicionar Produto
+            {selectedProduct === null ? "Adicionar Produto" : "Editar Produto"}
           </h1>
           <div className="flex w-full flex-col items-center">
             <div
@@ -251,7 +255,18 @@ export function ProductModal({
                 />
               </div>
 
-              <div className="flex justify-end gap-4">
+              <div className="flex justify-between">
+                <FormItem className="flex items-center">
+                  <FormLabel className="mr-2">Status</FormLabel>{" "}
+                  <FormControl>
+                    <Switch
+                      className="!mt-0"
+                      checked={status} // Usando o estado do status
+                      onCheckedChange={handleStatusChange} // Atualiza o estado do status
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
                 <AlertDialogFooter className="flex flex-row items-center justify-center gap-4">
                   <AlertDialogCancel
                     className="mt-0"
@@ -262,23 +277,7 @@ export function ProductModal({
                   <Button type="submit" className="!ml-0 !mr-0 md:px-6">
                     Confirmar
                   </Button>
-                  {/* <Button
-                    type="button"
-                    variant="secondary"
-                    className="w-full md:px-6"
-                  >
-                    Cancelar
-                  </Button>
-                  <Button className="!ml-0 !mr-0 w-full md:px-6">
-                    Confirmar
-                  </Button> */}
                 </AlertDialogFooter>
-                {/* <Button variant="secondary" className="md:px-6">
-                  Cancelar
-                </Button>
-                <Button onClick={onSubmit} className="!ml-0 !mr-0 md:px-6">
-                  Confirmar
-                </Button> */}
               </div>
             </form>
           </Form>
