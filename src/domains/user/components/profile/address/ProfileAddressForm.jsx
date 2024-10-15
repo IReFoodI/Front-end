@@ -10,6 +10,7 @@ import {
 } from "@/domains/user/models/ChangeUserAddressTypes"
 import ilustra from "@/ui/assets/ilustra.png"
 import { Button } from "@/ui/components/ui/button/button"
+import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
   FormControl,
   FormField,
@@ -91,14 +92,10 @@ export function ProfileAddressForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div className="relative w-full">
-                          <Input
-                            type="number"
-                            placeholder="Pesquisar CEP"
-                            {...field}
-                            className="h-12 w-full rounded-md border-2 border-input pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                          />
-                        </div>
+                        <CepPatternFormat
+                          {...field}
+                          placeholder="Pesquisar CEP"
+                        />
                       </FormControl>
                       <FormMessage className="text-left" />
                     </FormItem>
