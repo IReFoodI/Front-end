@@ -1,4 +1,4 @@
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
 import axios from "axios"
 
 import facebook from "@/ui/assets/facebook-icon.svg"
@@ -45,14 +45,14 @@ export function SocialAuthButtons() {
           Continuar com Google
         </Button>
 
-        <GoogleLogin
+        {/* <GoogleLogin
           onSuccess={(credetialResponse) => {
             console.log(credetialResponse)
           }}
           onError={(error) => {
             console.log(error)
           }}
-        ></GoogleLogin>
+        /> */}
         <Button variant="outline">
           <img src={facebook} alt="icone do facebook" className="mr-2 size-4" />
           Continuar com Facebook
