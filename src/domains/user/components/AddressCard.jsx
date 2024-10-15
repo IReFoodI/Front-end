@@ -10,14 +10,22 @@ export function AddressCard({
   onAddressSelect,
   toggleOpenModal,
 }) {
-
   const formatZipCode = (zipCode) => {
-    return zipCode.replace(/(\d{5})(\d{3})/, "$1-$2");
-  };
-  
+    return zipCode.replace(/(\d{5})(\d{3})/, "$1-$2")
+  }
+
   const navigate = useNavigate()
-  const { id, type, street, number, complement, neighborhood, city, state, zipCode } =
-    address
+  const {
+    id,
+    type,
+    street,
+    number,
+    complement,
+    neighborhood,
+    city,
+    state,
+    zipCode,
+  } = address
 
   const handleEdit = () => {
     navigate(`/endereco/editar/${id}`, { state: { address } })
@@ -40,8 +48,10 @@ export function AddressCard({
           <p id="title" className="text-orange-500">
             {type}
           </p>
-          <p>{street}, {number}</p>
-          
+          <p>
+            {street}, {number}
+          </p>
+
           {complement && <p>{complement}</p>}
           <p>{neighborhood}</p>
           <p>
