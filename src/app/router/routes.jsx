@@ -85,6 +85,14 @@ export const router = createBrowserRouter([
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  {
+                    path: ROUTES.ADDRESS_EDIT,
+                    element: <ProfileAddressForm />,
+                  },
+                  {
+                    path: ROUTES.ADDRESS_EDIT_ID,
+                    element: <ProfileAddressForm />,
+                  },
 
                   {
                     path: ROUTES.FAVORITES,
@@ -95,14 +103,6 @@ export const router = createBrowserRouter([
                     element: <ChangeData />,
                   },
                 ],
-              },
-              {
-                path: ROUTES.ADDRESS_EDIT,
-                element: <ProfileAddressForm />,
-              },
-              {
-                path: ROUTES.ADDRESS_EDIT_ID,
-                element: <ProfileAddressForm />,
               },
             ],
           },

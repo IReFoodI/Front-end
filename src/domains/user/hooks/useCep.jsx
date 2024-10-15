@@ -16,7 +16,6 @@ export const useCep = (cep, setValue, getValues) => {
               setValue("additionalInfo", data.complemento)
             if (!getValues("neighborhood"))
               setValue("neighborhood", data.bairro)
-            console.log(data)
           }
         })
         .catch(() => console.error("Erro ao buscar CEP"))

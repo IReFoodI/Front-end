@@ -8,7 +8,6 @@ import {
   changeUserAddressTypes,
   states,
 } from "@/domains/user/models/ChangeUserAddressTypes"
-import ilustra from "@/ui/assets/ilustra.png"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
@@ -37,7 +36,6 @@ export function ProfileAddressForm() {
       },
     [location.state?.address]
   )
-
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: initialData,
@@ -74,12 +72,11 @@ export function ProfileAddressForm() {
 
   return (
     <>
-      <h2 className="p-4 text-center text-3xl font-bold text-[#1E1F2B]">
-        {initialData ? "Alterar Endereço" : "Adicionar Endereço"}
-      </h2>
-
+      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
+        {location.state ? "Alterar Endereço" : "Adicionar Endereço"}
+      </h1>
       <div className="flex justify-center">
-        <div className="relative bg-white p-10">
+        <div className="relative bg-white p-4">
           <FormProvider {...formMethods}>
             <form
               onSubmit={formMethods.handleSubmit(onSubmit)}
@@ -92,10 +89,7 @@ export function ProfileAddressForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <CepPatternFormat
-                          {...field}
-                          placeholder="Pesquisar CEP"
-                        />
+                        <CepPatternFormat {...field} />
                       </FormControl>
                       <FormMessage className="text-left" />
                     </FormItem>
@@ -229,15 +223,11 @@ export function ProfileAddressForm() {
               </div>
               <div className="md:text-right">
                 <Button type="submit">
-                  {initialData ? "Salvar Alterações" : "Adicionar Endereço"}
+                  {location.state ? "Salvar Alterações" : "Adicionar Endereço"}
                 </Button>
               </div>
             </form>
           </FormProvider>
-        </div>
-
-        <div className="hidden lg:flex">
-          <img className="max-h-[700px]" src={ilustra} alt="" />
         </div>
       </div>
     </>

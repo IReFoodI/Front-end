@@ -10,8 +10,13 @@ export function AddressCard({
   onAddressSelect,
   toggleOpenModal,
 }) {
-  const navigate = useNavigate() // Hook para navegação
-  const { id, type, street, complement, neighborhood, city, state, zipCode } =
+
+  const formatZipCode = (zipCode) => {
+    return zipCode.replace(/(\d{5})(\d{3})/, "$1-$2");
+  };
+  
+  const navigate = useNavigate()
+  const { id, type, street, number, complement, neighborhood, city, state, zipCode } =
     address
 
   const handleEdit = () => {
@@ -35,11 +40,12 @@ export function AddressCard({
           <p id="title" className="text-orange-500">
             {type}
           </p>
-          <p>{street}</p>
+          <p>{street}, {number}</p>
+          
           {complement && <p>{complement}</p>}
           <p>{neighborhood}</p>
           <p>
-            {city} - {state} - CEP {zipCode}
+            {city} - {state} - CEP {formatZipCode(zipCode)}
           </p>
         </div>
       </div>
