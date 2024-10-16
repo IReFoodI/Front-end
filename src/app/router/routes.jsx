@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { OrderDetails } from "@/domains/store/components/OrderDetails/OrderDetails.jsx"
 import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
@@ -37,7 +38,8 @@ export const ROUTES = {
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   ONGOING_ORDER: "pedidos/em-andamento",
-  PROFILESETTINGS: "ajustes/perfil",
+  PROFILE_SETTINGS: "ajustes/perfil",
+  ORDER_DETAILS: "pedido/:id",
 }
 
 export const router = createBrowserRouter([
@@ -141,7 +143,8 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.FINANCE, element: <FinancePage /> },
       { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+      { path: ROUTES.PROFILE_SETTINGS, element: <StoreProfileSettings /> },
+      { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
     ],
   },
   {
