@@ -8,7 +8,7 @@ export function Home() {
 
   return (
     <>
-      <div className="lg:min-h52 my-10 lg:left-0 lg:top-0 lg:z-10 lg:block lg:w-full">
+      <div className="lg:min-h52 mb-2 lg:left-0 lg:top-0 lg:z-10 lg:block lg:w-full">
         <BannerCarousel />
       </div>
       {loading ? (
