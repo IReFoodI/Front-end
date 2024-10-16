@@ -30,7 +30,7 @@ import App from "../App.jsx"
 
 export const ROUTES = {
   ADDRESS: "endereco",
-  ADDRESS_EDIT: "endereco/editar",
+  ADDRESS_EDIT: "endereco/adicionar",
   ADDRESS_EDIT_ID: "endereco/editar/:addressId",
   HOME: "home",
   FAVORITES: "favoritos",
