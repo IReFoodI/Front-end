@@ -28,7 +28,7 @@ export function ProfileAddressForm() {
         zipCode: "",
         street: "",
         number: "",
-        neighborhood: "",
+        distritct: "",
         complement: "",
         city: "",
         state: "",
@@ -54,15 +54,15 @@ export function ProfileAddressForm() {
     "zipCode",
     "street",
     "number",
-    "neighborhood",
+    "district",
     "city",
     "state",
   ])
 
   useEffect(() => {
-    const [zipCode, street, number, neighborhood, city, state] = watchedFields
+    const [zipCode, street, number, district, city, state] = watchedFields
 
-    const fullAddress = `${street}, ${number} ${neighborhood ? `${neighborhood},` : ""} ${city} - ${state}, ${zipCode}`
+    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${zipCode}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
 
@@ -121,7 +121,7 @@ export function ProfileAddressForm() {
 
                 <FormField
                   control={formMethods.control}
-                  name="neighborhood"
+                  name="district"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -179,7 +179,7 @@ export function ProfileAddressForm() {
                     <FormItem>
                       <FormControl>
                         <Input
-                          type="number"
+                          type="text"
                           placeholder="Número"
                           {...field}
                           className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"

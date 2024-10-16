@@ -21,7 +21,7 @@ export function AddressCard({
     street,
     number,
     complement,
-    neighborhood,
+    district,
     city,
     state,
     zipCode,
@@ -53,7 +53,7 @@ export function AddressCard({
           </p>
 
           {complement && <p>{complement}</p>}
-          <p>{neighborhood}</p>
+          <p>{district}</p>
           <p>
             {city} - {state} - CEP {formatZipCode(zipCode)}
           </p>
