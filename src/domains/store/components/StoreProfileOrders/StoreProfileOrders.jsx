@@ -16,58 +16,84 @@ export function StoreProfileOrders() {
   const orders = [
     {
       orderId: 1,
-      clientName: "João Silva",
+      client: {
+        clientName: "João Silva",
+        clientPhoneNumber: 99999999999,
+      },
       orderNumber: 12345,
       items: [
         { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
         { itemId: 2, itemName: "Refrigerante", price: 5.0 },
       ],
       totalValue: 25.0,
-      status: "pending",
+      status: "canceled",
+      typeOfReceiving: "Retirada",
+      timeOfDelivery: {
+        day: "02/02/2025",
+        initialTime: "19:52",
+        finalTime: "20:02",
+      },
     },
     {
       orderId: 2,
-      clientName: "Maria Souza",
-      orderNumber: 12346,
+      client: {
+        clientName: "João Silva",
+        clientPhoneNumber: 99999999999,
+      },
+      orderNumber: 12345,
       items: [
-        { itemId: 1, itemName: "Pizza", price: 30.0 },
-        { itemId: 2, itemName: "Suco", price: 7.0 },
+        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
+        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
       ],
-      totalValue: 37.0,
+      totalValue: 25.0,
       status: "accepted",
+      typeOfReceiving: "Retirada",
+      timeOfDelivery: {
+        day: "02/02/2025",
+        initialTime: "19:52",
+        finalTime: "20:02",
+      },
     },
     {
       orderId: 3,
-      clientName: "Carlos Lima",
-      orderNumber: 12347,
+      client: {
+        clientName: "João Silva",
+        clientPhoneNumber: 99999999999,
+      },
+      orderNumber: 12345,
       items: [
-        { itemId: 1, itemName: "Sushi", price: 50.0 },
-        { itemId: 2, itemName: "Chá Verde", price: 10.0 },
+        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
+        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
       ],
-      totalValue: 60.0,
+      totalValue: 25.0,
       status: "done",
+      typeOfReceiving: "Retirada",
+      timeOfDelivery: {
+        day: "02/02/2025",
+        initialTime: "19:52",
+        finalTime: "20:02",
+      },
     },
     {
       orderId: 4,
-      clientName: "Carlos Lima",
-      orderNumber: 12347,
+      client: {
+        clientName: "João Silva",
+        clientPhoneNumber: 99999999999,
+      },
+      orderNumber: 12345,
       items: [
-        { itemId: 1, itemName: "Sushi", price: 50.0 },
-        { itemId: 2, itemName: "Chá Verde", price: 10.0 },
+        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
+        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
+        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
       ],
-      totalValue: 60.0,
-      status: "canceled",
-    },
-    {
-      orderId: 5,
-      clientName: "Carlos Lima",
-      orderNumber: 12347,
-      items: [
-        { itemId: 1, itemName: "Sushi", price: 50.0 },
-        { itemId: 2, itemName: "Chá Verde", price: 10.0 },
-      ],
-      totalValue: 60.0,
+      totalValue: 25.0,
       status: "pending",
+      typeOfReceiving: "Retirada",
+      timeOfDelivery: {
+        day: "02/02/2025",
+        initialTime: "19:52",
+        finalTime: "20:02",
+      },
     },
   ]
 
