@@ -31,9 +31,7 @@ export const states = [
 ]
 
 export const StoreAddressSchema = z.object({
-  zipCode: z
-    .string()
-    .min(8, { message: "Insira um CEP válido com 8 caracteres." }),
+  cep: z.string().min(8, { message: "Insira um CEP válido com 8 caracteres." }),
   address: z
     .string()
     .min(5, { message: "O endereço deve ter pelo menos 5 caracteres." }),
