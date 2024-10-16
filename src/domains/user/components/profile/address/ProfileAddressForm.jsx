@@ -28,7 +28,7 @@ export function ProfileAddressForm() {
         zipCode: "",
         street: "",
         number: "",
-        distritct: "",
+        district: "",
         complement: "",
         city: "",
         state: "",

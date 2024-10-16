@@ -8,14 +8,14 @@ export const useCep = (cep, setValue, getValues) => {
         .get(`https://viacep.com.br/ws/${cep}/json/`)
         .then((response) => {
           const data = response.data
+          console.log(data)
           if (!data.erro) {
             setValue("city", data.localidade)
             setValue("state", data.uf)
             if (!getValues("street")) setValue("street", data.logradouro)
-            if (!getValues("additionalInfo"))
-              setValue("additionalInfo", data.complemento)
-            if (!getValues("neighborhood"))
-              setValue("neighborhood", data.bairro)
+            if (!getValues("complement"))
+              setValue("complement", data.complemento)
+            if (!getValues("district")) setValue("district", data.bairro)
           }
         })
         .catch(() => console.error("Erro ao buscar CEP"))
