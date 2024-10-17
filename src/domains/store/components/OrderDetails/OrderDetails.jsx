@@ -114,7 +114,7 @@ export function OrderDetails() {
   const status = getStatus(currentOrder)
 
   return (
-    <div className="m-6 flex w-full flex-col justify-between lg:m-8">
+    <div className="m-4 flex flex-col justify-between lg:m-8">
       <div className="flex flex-col justify-center gap-4">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 lg:gap-1">

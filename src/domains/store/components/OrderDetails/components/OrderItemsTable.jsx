@@ -13,7 +13,7 @@ export function OrderItemsTable({ orderItems, totalValue }) {
   const items = groupItems(orderItems)
 
   return (
-    <Table className="overflow-hidden rounded-xl bg-gray-200 p-2">
+    <Table className="rounded-xl bg-gray-200">
       <TableHeader className="text-sm">
         <TableRow>
           <TableHead colSpan={1}>Quant.</TableHead>
