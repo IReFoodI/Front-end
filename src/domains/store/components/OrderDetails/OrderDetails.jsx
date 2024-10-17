@@ -190,7 +190,7 @@ export function OrderDetails() {
           Preciso de ajuda
         </span>
         <span className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400">
-          Preciso de ajuda
+          Cancelar Pedido
         </span>
       </div>
     </div>
