@@ -11,11 +11,10 @@ export const useCep = (cep, setValue, getValues) => {
           if (!data.erro) {
             setValue("city", data.localidade)
             setValue("state", data.uf)
-            if (!getValues("address")) setValue("address", data.logradouro)
-            if (!getValues("additionalInfo"))
-              setValue("additionalInfo", data.complemento)
+            if (!getValues("street")) setValue("street", data.logradouro)
+            if (!getValues("complement"))
+              setValue("complement", data.complemento)
             if (!getValues("district")) setValue("district", data.bairro)
-            console.log(data)
           }
         })
         .catch(() => console.error("Erro ao buscar CEP"))

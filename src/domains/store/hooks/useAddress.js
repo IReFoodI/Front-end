@@ -7,6 +7,5 @@ export async function fetchAddressData(reset, setError) {
     setError(null)
   } catch (err) {
     console.error("Erro ao buscar dados:", err)
-    setError("Falha ao carregar o endereço.")
   }
 }
