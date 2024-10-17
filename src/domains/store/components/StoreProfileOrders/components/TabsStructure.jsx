@@ -9,7 +9,7 @@ import {
 
 import { OrdersList } from "./OrdersList"
 
-export function TabsStructure({ pendingOrders, scheduledOrders }) {
+export function TabsStructure({ pendingOrders, scheduledOrders, setOrder }) {
   const [isTabActive, setIsTabActive] = useState({
     pending: true,
     scheduled: false,
@@ -45,15 +45,23 @@ export function TabsStructure({ pendingOrders, scheduledOrders }) {
       </TabsList>
       <TabsContent
         value="pending"
-        className="mt-0 min-h-[400px] flex-grow overflow-y-auto"
+        className="mt-0 min-h-[300px] flex-grow overflow-y-auto lg:min-h-[400px]"
       >
-        <OrdersList orders={pendingOrders} isDoneOrCanceled={false} />
+        <OrdersList
+          orders={pendingOrders}
+          isDoneOrCanceled={false}
+          setOrder={setOrder}
+        />
       </TabsContent>
       <TabsContent
         value="scheduled"
-        className="mt-0 min-h-[400px] flex-grow overflow-y-auto"
+        className="lg:min-h[400px] mt-0 min-h-[300px] flex-grow overflow-y-auto"
       >
-        <OrdersList orders={scheduledOrders} isDoneOrCanceled={false} />
+        <OrdersList
+          orders={scheduledOrders}
+          isDoneOrCanceled={false}
+          setOrder={setOrder}
+        />
       </TabsContent>
     </Tabs>
   )

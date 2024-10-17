@@ -7,7 +7,7 @@ import {
 
 import { OrdersList } from "./OrdersList"
 
-export function AccordionsStructure({ doneOrders, canceledOrders }) {
+export function AccordionsStructure({ doneOrders, canceledOrders, setOrder }) {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="done" className="w-full flex-grow overflow-hidden">
@@ -20,7 +20,11 @@ export function AccordionsStructure({ doneOrders, canceledOrders }) {
           </p>
         </AccordionTrigger>
         <AccordionContent className="max-h-60 overflow-y-auto">
-          <OrdersList orders={doneOrders} isDoneOrCanceled={true} />
+          <OrdersList
+            orders={doneOrders}
+            isDoneOrCanceled={true}
+            setOrder={setOrder}
+          />
         </AccordionContent>
       </AccordionItem>
       <AccordionItem
@@ -36,7 +40,11 @@ export function AccordionsStructure({ doneOrders, canceledOrders }) {
           </p>
         </AccordionTrigger>
         <AccordionContent className="max-h-60 overflow-y-auto">
-          <OrdersList orders={canceledOrders} isDoneOrCanceled={true} />
+          <OrdersList
+            orders={canceledOrders}
+            isDoneOrCanceled={true}
+            setOrder={setOrder}
+          />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

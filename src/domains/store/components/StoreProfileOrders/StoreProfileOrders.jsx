@@ -1,23 +1,12 @@
-import { IconPaperBag } from "@tabler/icons-react"
-
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/ui/components/ui/sheet"
-
 import { AccordionsStructure } from "./components/AccordionsStructure"
 import { TabsStructure } from "./components/TabsStructure"
 
-export function StoreProfileOrders() {
+export function StoreProfileOrders({ setOrder }) {
   const orders = [
     {
       orderId: 1,
       client: {
-        clientName: "João Silva",
+        clientName: "Marcos Daniel ",
         clientPhoneNumber: 99999999999,
       },
       orderNumber: 12345,
@@ -33,11 +22,13 @@ export function StoreProfileOrders() {
         initialTime: "19:52",
         finalTime: "20:02",
       },
+      payment: "Pix",
+      paymentStatus: "aprovado",
     },
     {
       orderId: 2,
       client: {
-        clientName: "João Silva",
+        clientName: "Yasmin Carloto",
         clientPhoneNumber: 99999999999,
       },
       orderNumber: 12345,
@@ -53,11 +44,13 @@ export function StoreProfileOrders() {
         initialTime: "19:52",
         finalTime: "20:02",
       },
+      payment: "Pix",
+      paymentStatus: "aprovado",
     },
     {
       orderId: 3,
       client: {
-        clientName: "João Silva",
+        clientName: "Ingryd Duarte",
         clientPhoneNumber: 99999999999,
       },
       orderNumber: 12345,
@@ -73,11 +66,13 @@ export function StoreProfileOrders() {
         initialTime: "19:52",
         finalTime: "20:02",
       },
+      payment: "Pix",
+      paymentStatus: "aprovado",
     },
     {
       orderId: 4,
       client: {
-        clientName: "João Silva",
+        clientName: "Teste da Silva",
         clientPhoneNumber: 99999999999,
       },
       orderNumber: 12345,
@@ -94,6 +89,8 @@ export function StoreProfileOrders() {
         initialTime: "19:52",
         finalTime: "20:02",
       },
+      payment: "Pix",
+      paymentStatus: "aprovado",
     },
   ]
 
@@ -102,34 +99,21 @@ export function StoreProfileOrders() {
   }
 
   return (
-    <Sheet>
-      <SheetTrigger>
-        <div className="flex w-16 flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary md:w-20 [&.active]:bg-primary">
-          <IconPaperBag className="h-6 w-6 md:h-10 md:w-10" />
-          <p className="text-xs md:text-sm">Pedidos</p>
-        </div>
-      </SheetTrigger>
-      <SheetContent
-        side={`left`}
-        className="m-0 flex h-full flex-col gap-0 p-0 lg:gap-0 [&>button]:hidden"
-      >
-        <div className="flex-grow overflow-y-auto">
-          <TabsStructure
-            pendingOrders={filterOrders("pending")}
-            scheduledOrders={filterOrders("accepted")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <AccordionsStructure
-            doneOrders={filterOrders("done")}
-            canceledOrders={filterOrders("canceled")}
-          />
-        </div>
-        <SheetHeader className="space-y-0">
-          <SheetTitle />
-          <SheetDescription />
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/4">
+      <div className="flex-grow overflow-y-auto">
+        <TabsStructure
+          pendingOrders={filterOrders("pending")}
+          scheduledOrders={filterOrders("accepted")}
+          setOrder={setOrder}
+        />
+      </div>
+      <div className="flex flex-col">
+        <AccordionsStructure
+          doneOrders={filterOrders("done")}
+          canceledOrders={filterOrders("canceled")}
+          setOrder={setOrder}
+        />
+      </div>
+    </div>
   )
 }

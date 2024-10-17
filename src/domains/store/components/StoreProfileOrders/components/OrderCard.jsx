@@ -1,13 +1,11 @@
 import { IconCaretRightFilled } from "@tabler/icons-react"
-import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { getStatus, groupItems } from "@/app/utils/OrderUtils"
 import { Button } from "@/ui/components/ui/button/button"
 import { Separator } from "@/ui/components/ui/separator"
-import { SheetClose } from "@/ui/components/ui/sheet"
 
-export function OrderCard({ order, isDoneOrCanceled }) {
+export function OrderCard({ order, isDoneOrCanceled, setOrder }) {
   const groupedItems = groupItems(order.items)
   const status = getStatus(order)
 
@@ -21,18 +19,18 @@ export function OrderCard({ order, isDoneOrCanceled }) {
           <p className="text-sm font-semibold">Pedido #{order.orderNumber}</p>
         </div>
 
-        <Link
-          to={`pedido/${order.orderId}`}
+        <button
           className="flex items-center gap-3 rounded-md p-2 hover:bg-orange-200"
+          onClick={() => setOrder(order)}
         >
-          <SheetClose className="flex h-full w-full items-center justify-center gap-2">
+          <div className="flex h-full w-full items-center justify-center gap-2">
             <div className="flex items-center gap-1">
               {status.icon}
               <p className="text-sm">{status.status}</p>
             </div>
             <IconCaretRightFilled size={16} />
-          </SheetClose>
-        </Link>
+          </div>
+        </button>
       </div>
       <Separator />
       {groupedItems.map((item) => (

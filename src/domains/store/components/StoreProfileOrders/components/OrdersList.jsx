@@ -1,6 +1,6 @@
 import { OrderCard } from "@/domains/store/components/StoreProfileOrders/components/OrderCard"
 
-export function OrdersList({ orders, isDoneOrCanceled }) {
+export function OrdersList({ orders, isDoneOrCanceled, setOrder }) {
   return (
     <div>
       {orders?.map((order) => (
@@ -8,6 +8,7 @@ export function OrdersList({ orders, isDoneOrCanceled }) {
           key={order.orderId}
           order={order}
           isDoneOrCanceled={isDoneOrCanceled}
+          setOrder={setOrder}
         />
       ))}
     </div>

@@ -49,7 +49,7 @@ export const ROUTES = {
   RESET_PASSWORD: "redefinir-senha/:token",
   CHANGE_DATA: "alterar-dados",
   PROFILE_SETTINGS: "ajustes/perfil",
-  ORDER_DETAILS: "pedido/:id",
+  ORDER_DETAILS: "pedidos",
 }
 
 export const router = createBrowserRouter([
