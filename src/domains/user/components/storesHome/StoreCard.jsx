@@ -12,7 +12,7 @@ export function StoreCard({
   ...props
 }) {
   const {
-    name = "Nome não disponível",
+    fantasy = "Nome não disponível",
     discount = "",
     rating = "0.0",
     category = "Categoria não disponível",
@@ -34,23 +34,22 @@ export function StoreCard({
         <div className="relative h-auto w-full">
           <img
             src={imagePath}
-            alt={`${name} Image`}
+            alt={`${fantasy} Image`}
             className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
           <div className="-translatef-x-1/2 absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
             <img
               src={logoPath}
-              alt={`${name} Logo`}
+              alt={`${fantasy} Logo`}
               className="h-full w-full rounded-full object-cover"
             />
           </div>
         </div>
       </CardContent>
 
-      {/* Textos */}
       <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
         <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
-          {name}
+          {fantasy}
         </CardTitle>
         {discount && (
           <div className="mt-2 inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
@@ -77,7 +76,6 @@ export function StoreCard({
         </div>
       </CardContent>
 
-      {/* Botão de favorito */}
       <CardContent className="p-0 pt-0 sm:p-0">
         <FavoriteButton isFavorited={isFavorited} onClick={onFavoriteToggle} />
       </CardContent>

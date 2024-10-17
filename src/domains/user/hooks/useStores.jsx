@@ -1,31 +1,36 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 
-import { storesData as initialStoresData } from "../models/storesData"
-
 export function useStores() {
-  const [stores, setstores] = useState([])
+  const [stores, setStores] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const storedStores = localStorage.getItem("storesData")
-
-    if (storedStores) {
-      setstores(JSON.parse(storedStores))
-      setLoading(false)
-    } else {
-      setTimeout(() => {
-        setstores(initialStoresData)
-        localStorage.setItem("storesData", JSON.stringify(initialStoresData))
+    const fetchStores = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8080/api/restaurants"
+        )
+        console.log(data)
+        setStores(data)
+        localStorage.setItem("storesData", JSON.stringify(data))
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error)
+      } finally {
         setLoading(false)
-      }, 100)
+      }
     }
+
+    fetchStores()
   }, [])
 
-  const toggleFavorite = (id) => {
+  const toggleFavorite = (restaurantId) => {
     const updatedStores = stores.map((store) =>
-      store.id === id ? { ...store, isFavorited: !store.isFavorited } : store
+      store.restaurantId === restaurantId
+        ? { ...store, isFavorited: !store.isFavorited }
+        : store
     )
-    setstores(updatedStores)
+    setStores(updatedStores)
     localStorage.setItem("storesData", JSON.stringify(updatedStores))
   }
 

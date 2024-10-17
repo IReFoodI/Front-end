@@ -14,7 +14,7 @@ export function StoresGrid({
     >
       {stores.length > 0 ? (
         stores.map((store) => (
-          <React.Fragment key={store.id}>
+          <React.Fragment key={store.restaurantId}>
             <StoreCard
               storeData={store}
               onFavoriteToggle={() => toggleFavorite(store.id)}
