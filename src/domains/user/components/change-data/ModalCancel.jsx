@@ -27,7 +27,7 @@ export function ModalCancel() {
             As alterações feitas até o momento serão perdidas
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:flex-col">
+        <DialogFooter className="">
           <Button
             type="button"
             variant="outline"

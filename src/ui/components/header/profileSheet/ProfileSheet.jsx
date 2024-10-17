@@ -37,7 +37,7 @@ export function ProfileSheet() {
     {
       iconForButton: <IconMap />,
       buttonText: "Endereços",
-      path: "/address",
+      path: "/endereco",
     },
     {
       iconForButton: <IconCreditCard />,
@@ -76,7 +76,6 @@ export function ProfileSheet() {
         </div>
 
         <div className="flex w-full flex-col items-center justify-center">
-          {/* A cor lilac não existe no tailwind */}
           <div className="w-full rounded-xl bg-gray-200 p-4 text-center">
             <h2 className="text-sm font-semibold leading-5">
               Você ainda não possuí pedidos em andamento
