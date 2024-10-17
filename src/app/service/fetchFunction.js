@@ -1,3 +1,5 @@
+import axios from "axios"
+
 import { getLocalStorageToken } from "../utils/storage-token"
 
 export async function fetchFunction({
@@ -18,25 +20,30 @@ export async function fetchFunction({
     token = getLocalStorageToken()
     headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  try {
+    const response = await axios(`${baseApiUrl}${url}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      credentials: "include",
+      body,
+      ...rest,
+    })
 
-  const response = await fetch(`${baseApiUrl}${url}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-    },
-    credentials: "include",
-    body: JSON.stringify(body),
-    ...rest,
-  })
+    if (response.status >= 200 && response.status < 300) {
+      return { error: false, response: response.data }
+    }
 
-  if (response.ok) {
-    const responseData = await response.json()
-
-    return { error: false, responseData }
+    return { error: true, response: response.data }
+  } catch (error) {
+    console.log(error)
+    console.log("Ocorreu um erro ao tentar realizar a requisição")
+    return {
+      error: true,
+      response: { errorMessage: error.message },
+      errorMessage: error,
+    }
   }
-
-  const responseData = await response.json()
-
-  return { error: true, responseData }
 }
