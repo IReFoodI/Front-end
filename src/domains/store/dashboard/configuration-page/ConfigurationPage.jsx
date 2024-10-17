@@ -4,8 +4,6 @@ import { ChangeEmailForm } from "./ChangeEmailForm"
 import { ChangePasswordForm } from "./ChangePasswordForm"
 
 export function ConfigurationPage() {
-  const currentEmail = "johndoe@example.com"
-
   return (
     <div className="flex w-full max-w-screen-2xl flex-col items-center justify-start gap-6 p-4">
       <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -16,15 +14,13 @@ export function ConfigurationPage() {
           Ajuste as informações de senha e e-mail
         </h3>
       </div>
-      <div className="flex w-full flex-col items-center justify-start gap-6 lg:flex-row lg:gap-12">
+      <div className="flex h-fit w-full flex-col items-center justify-start gap-6 lg:flex-row lg:gap-12">
         <section className="flex w-full flex-col gap-2 lg:h-full lg:justify-between">
           <div className="flex flex-col">
             <p className="text-lg font-semibold">E-mail</p>
             <Separator />
           </div>
-          <p className="items-start text-sm text-zinc-800 lg:flex-1">
-            E-mail atual: <span className="text-primary">{currentEmail}</span>
-          </p>
+
           <ChangeEmailForm />
         </section>
 

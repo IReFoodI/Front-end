@@ -16,9 +16,12 @@ import { Input } from "@/ui/components/ui/input"
 import { changeEmailTypes } from "../../models/dashboard/ChangeEmailTypes"
 
 export function ChangeEmailForm() {
+  const currentEmail = "johndoe@example.com"
+
   const form = useForm({
     resolver: zodResolver(changeEmailTypes),
     defaultValues: {
+      oldEmail: currentEmail,
       email: "",
       confirmEmail: "",
     },
@@ -35,6 +38,30 @@ export function ChangeEmailForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid w-full gap-2 text-left lg:items-end"
       >
+        <FormField
+          id="oldEmail"
+          name="oldEmail"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex w-full gap-2">
+                <p className="items-start text-sm text-zinc-800">
+                  E-mail atual:{" "}
+                </p>
+                <FormControl>
+                  <input
+                    type="email"
+                    placeholder="E-mail Atual"
+                    className={"bg-transparent text-sm text-primary"}
+                    disabled
+                    {...field}
+                  />
+                </FormControl>
+              </div>
+              <FormMessage className={"text-xs"} />
+            </FormItem>
+          )}
+        />
         <FormField
           id="email"
           name="email"
