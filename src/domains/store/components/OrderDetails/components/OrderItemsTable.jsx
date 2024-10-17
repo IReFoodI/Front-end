@@ -1,3 +1,4 @@
+import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { groupItems } from "@/app/utils/OrderUtils"
 import {
   Table,
@@ -33,7 +34,7 @@ export function OrderItemsTable({ orderItems, totalValue }) {
             <TableCell colSpan={1}>{item.quantity}</TableCell>
             <TableCell colSpan={1}>{item.itemName}</TableCell>
             <TableCell colSpan={3} className="text-right">
-              R$ {item.price}
+              {currencyFormatter(item.price)}
             </TableCell>
           </TableRow>
         ))}
@@ -43,7 +44,7 @@ export function OrderItemsTable({ orderItems, totalValue }) {
         <TableRow className="text-lg font-semibold text-gray-900">
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell colSpan={3} className="text-right">
-            R$ {totalValue}
+            {currencyFormatter(totalValue)}
           </TableCell>
         </TableRow>
       </TableFooter>

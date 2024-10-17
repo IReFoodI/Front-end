@@ -1,6 +1,7 @@
 import { IconCaretRightFilled } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
+import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { getStatus, groupItems } from "@/app/utils/OrderUtils"
 import { Button } from "@/ui/components/ui/button/button"
 import { Separator } from "@/ui/components/ui/separator"
@@ -43,14 +44,14 @@ export function OrderCard({ order, isDoneOrCanceled }) {
               <span>{item.quantity}x</span>
               <p>{item.itemName}</p>
             </div>
-            <p className="text-base">R$ {item.price}</p>
+            <p className="text-base">{currencyFormatter(item.price)}</p>
           </div>
           <Separator />
         </div>
       ))}
       <div className="flex w-full justify-between py-2 text-lg font-semibold">
         <p>Total</p>
-        <p className="font-bold">R$ {order.totalValue}</p>
+        <p className="font-bold">{currencyFormatter(order.totalValue)}</p>
       </div>
       {order.status == "pending" && (
         <div className="flex w-full justify-around gap-1 pt-4">
