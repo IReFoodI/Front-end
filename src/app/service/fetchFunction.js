@@ -6,7 +6,7 @@ export async function fetchFunction({
   url = "",
   method = "GET",
   headers = {},
-  body,
+  data,
   privateRoute = false,
   ...rest
 }) {
@@ -14,36 +14,29 @@ export async function fetchFunction({
     ? import.meta.env.VITE_API_URL
     : "http://localhost:8080"
 
-  let token
-
   if (privateRoute) {
-    token = getLocalStorageToken()
+    const token = getLocalStorageToken()
     headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  try {
-    const response = await axios(`${baseApiUrl}${url}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      credentials: "include",
-      body,
-      ...rest,
-    })
 
-    if (response.status >= 200 && response.status < 300) {
-      return { error: false, response: response.data }
-    }
+  const response = await axios(`${baseApiUrl}${url}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+    credentials: "include",
+    data,
+    ...rest,
+  })
 
-    return { error: true, response: response.data }
-  } catch (error) {
-    console.log(error)
-    console.log("Ocorreu um erro ao tentar realizar a requisição")
-    return {
-      error: true,
-      response: { errorMessage: error.message },
-      errorMessage: error,
-    }
+  console.log(response)
+  if (response.status >= 200 && response.status < 300) {
+    return { error: false, data: response.data }
   }
+  if (response.status >= 400) {
+    return { error: true, data: response.data }
+  }
+
+  return { error: false, data: response.data }
 }
