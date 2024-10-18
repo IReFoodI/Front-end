@@ -104,7 +104,7 @@ export function SignIn() {
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
         navigateTo={
-          location.pathname == "/autenticar/negocios"
+          location.pathname === "/autenticar/negocios"
             ? "/autenticar/negocios/criar-conta"
             : "/autenticar/criar-conta"
         }
