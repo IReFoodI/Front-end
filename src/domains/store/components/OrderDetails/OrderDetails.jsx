@@ -33,10 +33,10 @@ export function OrderDetails() {
       {currentOrder !== undefined ? (
         <div
           ref={targetOrderRef}
-          className="m-4 flex w-full flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3"
+          className="m-4 flex flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3"
         >
-          <div className="flex w-full flex-col justify-center gap-4">
-            <div className="flex w-full flex-col gap-3">
+          <div className="flex flex-col justify-center gap-4">
+            <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 lg:gap-1">
                 <p className="text-lg font-semibold lg:text-xl">
                   Pedido #{currentOrder.orderNumber}
@@ -62,7 +62,7 @@ export function OrderDetails() {
               </div>
             </div>
 
-            <div className="flex w-full flex-col gap-4">
+            <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 rounded border-2 border-gray-300 bg-gray-200 p-1">
                   <IconClockHour5 className="text-orange-500" />
@@ -107,7 +107,7 @@ export function OrderDetails() {
             </div>
           </div>
 
-          <div className="flex w-full justify-between py-5">
+          <div className="flex justify-between py-5">
             <span className="cursor-pointer text-lg font-semibold text-orange-600 underline hover:text-orange-500">
               Preciso de ajuda
             </span>
