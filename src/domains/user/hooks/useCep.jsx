@@ -8,7 +8,6 @@ export const useCep = (cep, setValue, getValues) => {
         .get(`https://viacep.com.br/ws/${cep}/json/`)
         .then((response) => {
           const data = response.data
-          console.log(data)
           if (!data.erro) {
             setValue("city", data.localidade)
             setValue("state", data.uf)
