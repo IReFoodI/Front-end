@@ -36,8 +36,11 @@ export function SignIn() {
   const onSubmit = (data) => {
     toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
     console.log(data)
-
-    navigate(redirectPath ? redirectPath : "/")
+    if (redirectPath) {
+      navigate(redirectPath)
+    } else {
+      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
+    }
   }
 
   return (
