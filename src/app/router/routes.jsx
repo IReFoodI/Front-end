@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom"
 import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
@@ -45,6 +46,7 @@ export const ROUTES = {
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADRRESS: "ajustes/endereco",
+  MENU: "cardapio",
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
@@ -174,7 +176,15 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.MENU, element: <StoreMenu /> },
+    ],
+  },
   {
     path: "dashboard",
     element: <DashBoardLayout />,
