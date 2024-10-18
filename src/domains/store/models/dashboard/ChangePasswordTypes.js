@@ -47,8 +47,8 @@ export const changePasswordTypes = z
       return data.oldPassword !== data.password
     },
     {
-      message: "A senha antiga não pode ser igual a nova",
-      path: ["oldPassword"],
+      message: "A nova senha não pode ser igual a antiga",
+      path: ["password"],
     }
   )
   .refine((data) => data.password === data.confirmPassword, {

@@ -36,15 +36,16 @@ export function ChangeEmailForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-2 text-left lg:items-end"
+        className="flex h-full w-full flex-col gap-2 text-left"
       >
         <FormField
           id="oldEmail"
           name="oldEmail"
           control={form.control}
+          className="flex w-full justify-start"
           render={({ field }) => (
             <FormItem>
-              <div className="flex w-full gap-2">
+              <div className="flex w-full justify-start gap-2">
                 <p className="items-start text-sm text-zinc-800">
                   E-mail atual:{" "}
                 </p>
@@ -62,47 +63,51 @@ export function ChangeEmailForm() {
             </FormItem>
           )}
         />
-        <FormField
-          id="email"
-          name="email"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>E-mail</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="E-mail"
-                  className={"!mt-1"}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className={"text-xs"} />
-            </FormItem>
-          )}
-        />
+        <div className="flex w-full flex-1 flex-col justify-end gap-2">
+          <FormField
+            id="email"
+            name="email"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>E-mail</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="E-mail"
+                    className={"!mt-1"}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className={"text-xs"} />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          id="confirmEmail"
-          name="confirmEmail"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirmar E-mail</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="E-mail"
-                  className={"!mt-1"}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className={"text-xs"} />
-            </FormItem>
-          )}
-        />
+          <FormField
+            id="confirmEmail"
+            name="confirmEmail"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirmar E-mail</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="E-mail"
+                    className={"!mt-1"}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className={"text-xs"} />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <Button type="submit">Trocar email</Button>
+        <Button type="submit" className="w-full">
+          Trocar email
+        </Button>
       </form>
     </Form>
   )

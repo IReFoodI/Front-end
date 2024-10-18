@@ -34,7 +34,7 @@ export function ChangePasswordForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full gap-2 text-left"
+        className="flex w-full flex-1 flex-col justify-end gap-2 text-left"
       >
         <FormField
           id="oldPassword"

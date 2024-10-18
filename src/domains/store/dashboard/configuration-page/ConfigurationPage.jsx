@@ -14,17 +14,16 @@ export function ConfigurationPage() {
           Ajuste as informações de senha e e-mail
         </h3>
       </div>
-      <div className="flex h-fit w-full flex-col items-center justify-start gap-6 lg:flex-row lg:gap-12">
-        <section className="flex w-full flex-col gap-2 lg:h-full lg:justify-between">
+      <div className="flex h-fit w-full flex-col items-center justify-start gap-6 lg:h-[19rem] lg:flex-row lg:gap-12">
+        <section className="flex w-full flex-col gap-2 lg:h-full">
           <div className="flex flex-col">
             <p className="text-lg font-semibold">E-mail</p>
             <Separator />
           </div>
-
           <ChangeEmailForm />
         </section>
 
-        <section className="flex w-full flex-col gap-2">
+        <section className="flex w-full flex-col gap-2 lg:h-full">
           <div className="flex flex-col">
             <p className="text-lg font-semibold">Senha</p>
             <Separator />
