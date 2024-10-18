@@ -28,7 +28,7 @@ export function PresentationContent() {
           Acesse sua conta
         </Button>
         <Button
-          onClick={() => navigate("/404")}
+          onClick={() => navigate("/autenticar/negocios")}
           variant="link"
           className={"underline"}
         >
