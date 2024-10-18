@@ -1,7 +1,7 @@
 import { AccordionsStructure } from "./components/AccordionsStructure"
 import { TabsStructure } from "./components/TabsStructure"
 
-export function StoreProfileOrders({ setOrder }) {
+export function StoreProfileOrders({ setOrder, orderRef }) {
   const orders = [
     {
       orderId: 1,
@@ -105,6 +105,7 @@ export function StoreProfileOrders({ setOrder }) {
           pendingOrders={filterOrders("pending")}
           scheduledOrders={filterOrders("accepted")}
           setOrder={setOrder}
+          orderRef={orderRef}
         />
       </div>
       <div className="flex flex-col">
@@ -112,6 +113,7 @@ export function StoreProfileOrders({ setOrder }) {
           doneOrders={filterOrders("done")}
           canceledOrders={filterOrders("canceled")}
           setOrder={setOrder}
+          orderRef={orderRef}
         />
       </div>
     </div>

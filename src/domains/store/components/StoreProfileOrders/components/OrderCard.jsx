@@ -5,9 +5,14 @@ import { getStatus, groupItems } from "@/app/utils/OrderUtils"
 import { Button } from "@/ui/components/ui/button/button"
 import { Separator } from "@/ui/components/ui/separator"
 
-export function OrderCard({ order, isDoneOrCanceled, setOrder }) {
+export function OrderCard({ order, isDoneOrCanceled, setOrder, orderRef }) {
   const groupedItems = groupItems(order.items)
   const status = getStatus(order)
+
+  function onStatusButtonClick() {
+    setOrder(order)
+    orderRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   return (
     <div
@@ -21,7 +26,7 @@ export function OrderCard({ order, isDoneOrCanceled, setOrder }) {
 
         <button
           className="flex items-center gap-3 rounded-md p-2 hover:bg-orange-200"
-          onClick={() => setOrder(order)}
+          onClick={() => onStatusButtonClick()}
         >
           <div className="flex h-full w-full items-center justify-center gap-2">
             <div className="flex items-center gap-1">

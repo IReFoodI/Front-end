@@ -4,7 +4,7 @@ import {
   IconPhone,
   IconTruck,
 } from "@tabler/icons-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { getStatus } from "@/app/utils/OrderUtils"
 import { Button } from "@/ui/components/ui/button/button"
@@ -15,6 +15,7 @@ import { OrderItemsTable } from "./components/OrderItemsTable"
 export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
+  const targetOrderRef = useRef(null)
 
   useEffect(() => {
     if (currentOrder !== undefined) {
@@ -24,11 +25,16 @@ export function OrderDetails() {
 
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
-      <StoreProfileOrders setOrder={setCurrentOrder} />
+      <StoreProfileOrders
+        setOrder={setCurrentOrder}
+        orderRef={targetOrderRef}
+      />
 
-      {/* Implementar alternativa de visualização quando o currentOrder estiver undefined */}
       {currentOrder !== undefined ? (
-        <div className="m-4 flex w-full flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3">
+        <div
+          ref={targetOrderRef}
+          className="m-4 flex w-full flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3"
+        >
           <div className="flex w-full flex-col justify-center gap-4">
             <div className="flex w-full flex-col gap-3">
               <div className="flex items-center gap-2 lg:gap-1">
