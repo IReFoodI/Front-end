@@ -1,4 +1,4 @@
-import { OrderCard } from "@/domains/store/components/StoreProfileOrders/components/OrderCard"
+import { OrderCard } from "@/domains/store/dashboard/StoreProfileOrders/components/OrderCard"
 
 export function OrdersList({ orders, isDoneOrCanceled, setOrder, orderRef }) {
   return (
