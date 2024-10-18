@@ -3,12 +3,11 @@ import { useEffect } from "react"
 
 export const useCep = (cep, setValue, getValues) => {
   useEffect(() => {
-    if (cep.length === 8) {
+    if (cep?.length === 8) {
       axios
         .get(`https://viacep.com.br/ws/${cep}/json/`)
         .then((response) => {
           const data = response.data
-          console.log(data)
           if (!data.erro) {
             setValue("city", data.localidade)
             setValue("state", data.uf)
