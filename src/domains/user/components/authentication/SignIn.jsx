@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
+import { setLocalStorageToken } from "@/app/utils/storage-token"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -18,6 +19,7 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
+import { authService } from "../../services/authService"
 
 export function SignIn() {
   const location = useLocation()
@@ -31,10 +33,19 @@ export function SignIn() {
     },
   })
 
-  const onSubmit = (data) => {
-    toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
-    console.log(data)
-    navigate("/")
+  const onSubmit = async (data) => {
+    try {
+      const response = await authService.signInWithEmailAndPassword(data)
+      if (!response?.data?.token) {
+        toast.error("Erro interno")
+        return
+      }
+      setLocalStorageToken(response.data.token)
+      toast.success("Login realizado com sucesso! Bem-vindo(a)!")
+      navigate("/")
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
   }
 
   return (

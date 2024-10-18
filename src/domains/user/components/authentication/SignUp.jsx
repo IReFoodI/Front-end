@@ -22,6 +22,7 @@ import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/CreateAccountTypes"
+import { userService } from "../../services/userService"
 import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
@@ -40,15 +41,20 @@ export function SignUp() {
     },
   })
 
-  const onSubmit = (data) => {
-    if (acceptedTerms) {
-      toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/")
-      console.log(data)
-      return
+  //todo: incluir hook de requisição
+  const onSubmit = async (data) => {
+    try {
+      if (acceptedTerms) {
+        await userService.createUserAccount(data)
+        toast.success("Conta criada com sucesso!")
+        navigate("/autenticar/entrar")
+        return
+      }
+      toast.warning("Necessário aceitar os termos")
+    } catch (error) {
+      toast.error(error.response.data.message)
+      console.error("erro ao criar usuário", error)
     }
-
-    toast.warning("Necessário aceitar os termos")
   }
 
   const isSignUpPage = location.pathname === "/autenticar/criar-conta"
