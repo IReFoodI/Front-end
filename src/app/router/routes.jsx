@@ -116,6 +116,10 @@ export const router = createBrowserRouter([
                 path: ROUTES.RESET_PASSWORD,
                 element: <ResetPasswordPage />,
               },
+              {
+                path: ROUTES.PROFILESETTINGS,
+                element: <StoreProfileSettings />,
+              },
             ],
           },
         ],
@@ -160,15 +164,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-  {
-    path: "dashboard",
-    element: <DashBoardLayout />,
-    children: [
-      { path: ROUTES.FINANCE, element: <FinancePage /> },
-      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
-    ],
-  },
   {
     path: "*",
     element: <PageNotFound />,
