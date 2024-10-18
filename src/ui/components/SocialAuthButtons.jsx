@@ -1,13 +1,12 @@
 import { useGoogleLogin } from "@react-oauth/google"
 import axios from "axios"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
-export function SocialAuthButtons() {
-  const location = useLocation()
+export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
@@ -23,10 +22,15 @@ export function SocialAuthButtons() {
           }
         )
         toast.success("Login efetuado com sucesso!")
-        if (location.pathname == "/autenticar/negocios") {
-          navigate("/dashboard")
+
+        if (redirectPath) {
+          navigate(`/${redirectPath}`)
         } else {
-          navigate("/")
+          if (locationPathname === "/autenticar/negocios") {
+            navigate("/dashboard")
+          } else {
+            navigate("/")
+          }
         }
 
         console.log(response)
