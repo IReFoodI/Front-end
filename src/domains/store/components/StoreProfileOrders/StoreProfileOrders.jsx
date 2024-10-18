@@ -99,7 +99,7 @@ export function StoreProfileOrders({ setOrder }) {
   }
 
   return (
-    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/4">
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/3">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
           pendingOrders={filterOrders("pending")}

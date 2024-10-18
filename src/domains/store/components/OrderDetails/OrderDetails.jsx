@@ -26,10 +26,11 @@ export function OrderDetails() {
     <div className="flex h-full w-full flex-col lg:flex-row">
       <StoreProfileOrders setOrder={setCurrentOrder} />
 
-      {currentOrder !== undefined && (
-        <div className="m-4 flex w-full flex-col justify-between lg:m-10 lg:w-2/3">
-          <div className="flex flex-col justify-center gap-4">
-            <div className="flex flex-col gap-3">
+      {/* Implementar alternativa de visualização quando o currentOrder estiver undefined */}
+      {currentOrder !== undefined ? (
+        <div className="m-4 flex w-full flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3">
+          <div className="flex w-full flex-col justify-center gap-4">
+            <div className="flex w-full flex-col gap-3">
               <div className="flex items-center gap-2 lg:gap-1">
                 <p className="text-lg font-semibold lg:text-xl">
                   Pedido #{currentOrder.orderNumber}
@@ -55,7 +56,7 @@ export function OrderDetails() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex w-full flex-col gap-4">
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 rounded border-2 border-gray-300 bg-gray-200 p-1">
                   <IconClockHour5 className="text-orange-500" />
@@ -108,6 +109,12 @@ export function OrderDetails() {
               Cancelar Pedido
             </span>
           </div>
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center text-center">
+          <p className="m-12 text-xl font-semibold text-orange-500">
+            Selecione um pedido para saber mais detalhes sobre ele!
+          </p>
         </div>
       )}
     </div>
