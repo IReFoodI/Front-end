@@ -41,9 +41,6 @@ export const changePasswordTypes = z
   })
   .refine(
     (data) => {
-      console.log(data.oldPassword, data.password)
-      console.log(data.oldPassword !== data.password)
-
       return data.oldPassword !== data.password
     },
     {
