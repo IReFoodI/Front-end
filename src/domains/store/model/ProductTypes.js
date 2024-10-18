@@ -30,16 +30,16 @@ export const productSchema = z.object({
 
   quantity: z
     .string()
-    .transform((value) => parseFloat(value))
+    .transform((value) => parseFloat(value) || 0)
     .pipe(
       z.number().nonnegative("A quantidade deve ser maior ou igual a zero")
     ),
   originalPrice: z
     .string()
-    .transform((value) => parseFloat(value))
+    .transform((value) => parseFloat(value) || 0)
     .pipe(z.number().positive("O preço original deve ser maior que zero")),
   sellPrice: z
     .string()
-    .transform((value) => parseFloat(value))
+    .transform((value) => parseFloat(value) || 0)
     .pipe(z.number().positive("O preço original deve ser maior que zero")),
 })
