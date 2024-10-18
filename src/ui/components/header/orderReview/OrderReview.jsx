@@ -3,8 +3,10 @@ import { IconPlus, IconTrash } from "@tabler/icons-react"
 import { IconEdit } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
+import { currencyFormatter } from "@/app/utils/currencyFormatter"
+
 import { Button } from "../../ui/button/button"
-import { SheetHeader, SheetTitle } from "../../ui/sheet"
+import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 
 export function OrderReview() {
   return (
@@ -13,11 +15,12 @@ export function OrderReview() {
         <SheetTitle className="w-full text-left font-semibold text-primary lg:text-xl">
           Revise o Pedido
         </SheetTitle>
+        <SheetDescription></SheetDescription>
         <div className="flex items-center justify-between rounded-md bg-secondary p-2 text-sm">
           <div className="flex flex-col">
             <p className="text-sm font-bold lg:text-lg">1x Item a venda</p>
             <span className="text-left text-xs font-semibold lg:text-base">
-              R$ 20,99
+              {currencyFormatter(20.99)}
             </span>
           </div>
           <IconTrash stroke={2} className="cursor-pointer" />
@@ -56,7 +59,7 @@ export function OrderReview() {
         </div>
         <Link
           to="/"
-          className="mt-2 flex items-center justify-start gap-2 rounded-md bg-secondary p-2 text-sm font-semibold lg:text-lg"
+          className="mt-2 flex items-center justify-start gap-2 rounded-md bg-secondary p-2 text-sm font-semibold lg:text-base"
         >
           <IconPlus stroke={2} />
           <p>Adicionar novo cartão</p>
@@ -64,9 +67,9 @@ export function OrderReview() {
       </SheetHeader>
 
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between text-sm font-bold lg:text-xl">
+        <div className="flex justify-between text-base font-bold lg:text-xl">
           <p>Subtotal</p>
-          <span>R$ 20,99</span>
+          <span>{currencyFormatter(20.99)}</span>
         </div>
         <Button className="rounded-full border-gray-400 lg:p-5 lg:text-xl">
           Pagar agora
