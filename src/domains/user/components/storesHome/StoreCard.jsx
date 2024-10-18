@@ -14,7 +14,7 @@ export function StoreCard({
   const {
     fantasy = "Nome não disponível",
     discount = "",
-    rating = "0.0",
+    averageRating = "0.0",
     category = "Categoria não disponível",
     opening_hours = "Horário não disponível",
     isFavorited = false,
@@ -62,7 +62,7 @@ export function StoreCard({
         <div className="flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
           <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
-            {rating}
+            {averageRating}
           </span>
           <span className="font-inter ml-4 font-semibold text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
             {category}
