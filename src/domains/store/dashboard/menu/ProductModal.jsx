@@ -19,7 +19,7 @@ import {
 import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 
-import { editProductSchema, productSchema } from "../../model/ProductTypes"
+import { productSchema } from "../../model/ProductTypes"
 
 export function ProductModal({
   selectedProduct,
@@ -28,10 +28,10 @@ export function ProductModal({
 }) {
   const [image, setImage] = useState(selectedProduct?.image || "")
   const [dragActive, setDragActive] = useState(false)
-  const [status, setStatus] = useState(selectedProduct?.status ?? false) // Adicionando estado para o status
+  const [status, setStatus] = useState(selectedProduct?.status ?? false)
 
   const form = useForm({
-    resolver: zodResolver(selectedProduct ? editProductSchema : productSchema),
+    resolver: zodResolver(productSchema),
     defaultValues: {
       name: selectedProduct?.name || "",
       description: selectedProduct?.description || "",
@@ -56,12 +56,12 @@ export function ProductModal({
   }
 
   const onSubmit = (data) => {
-    console.log({ ...data, status, image }) // Incluindo status na saída
+    console.log({ ...data, status, image })
     handleCloseModal()
   }
 
   const handleStatusChange = (checked) => {
-    setStatus(checked) // Atualiza o estado do status
+    setStatus(checked)
   }
 
   const handleImageChange = (e) => {
@@ -130,7 +130,7 @@ export function ProductModal({
             <Button
               type="button"
               onClick={() =>
-                document.querySelector('input[type="file"]').click()
+                document.querySelector('input[type="file"]')?.click()
               }
             >
               Adicionar imagem
@@ -261,8 +261,8 @@ export function ProductModal({
                   <FormControl>
                     <Switch
                       className="!mt-0"
-                      checked={status} // Usando o estado do status
-                      onCheckedChange={handleStatusChange} // Atualiza o estado do status
+                      checked={status}
+                      onCheckedChange={handleStatusChange}
                     />
                   </FormControl>
                   <FormMessage />
