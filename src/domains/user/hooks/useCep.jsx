@@ -3,7 +3,7 @@ import { useEffect } from "react"
 
 export const useCep = (cep, setValue, getValues) => {
   useEffect(() => {
-    if (cep.length === 8) {
+    if (cep?.length === 8) {
       axios
         .get(`https://viacep.com.br/ws/${cep}/json/`)
         .then((response) => {
