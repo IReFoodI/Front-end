@@ -185,7 +185,7 @@ export function StoreAddressEdit() {
                       <FormItem>
                         <FormControl>
                           <Input
-                            type="number"
+                            type="text"
                             placeholder="Número"
                             {...field}
                             className="h-12 w-full rounded-md border-2 border-input p-4"
