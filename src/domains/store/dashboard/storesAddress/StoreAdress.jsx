@@ -66,10 +66,7 @@ export function StoreAddressEdit() {
   useEffect(() => {
     const [zipCode, street, number, district, city, state] = watchedFields
 
-    const fullAddress = `${street}, ${number} ${
-      district ? `${district},` : ""
-    } ${city} - ${state}, ${zipCode}`
-
+    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${zipCode}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
 
@@ -224,7 +221,7 @@ export function StoreAddressEdit() {
                     className="rounded-xl border-0"
                     src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
                     allowFullScreen
-                  ></iframe>
+                  />
                 </div>
                 <div className="md:text-right">
                   <Button type="submit">

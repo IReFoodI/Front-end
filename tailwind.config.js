@@ -81,6 +81,9 @@ export default {
         "dashboard-login":
           "linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.35)), url('@/ui/assets/bg-dashboard-login.png')",
       },
+      maxHeight: {
+        "max-dashboard": "calc(100vh - 5rem)",
+      },
     },
   },
   plugins: [tailwindAnimate],
