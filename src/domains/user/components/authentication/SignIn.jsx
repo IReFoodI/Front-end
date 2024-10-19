@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { setLocalStorageToken } from "@/app/utils/storage-token"
@@ -24,7 +24,7 @@ import { signInWithEmailAndPassword } from "../../services/authService"
 
 export function SignIn() {
   const location = useLocation()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const { executeFetch, isLoading, response } = useFetch(
     signInWithEmailAndPassword
   )
@@ -44,7 +44,16 @@ export function SignIn() {
     //   toast.error("Erro interno")
     //   return
     // }
-    executeFetch(data, true, "Login realizado com sucesso! Bem-vindo(a)!")
+    function redirect() {
+      navigate("/")
+    }
+
+    executeFetch(
+      data,
+      redirect(),
+      true,
+      "Login realizado com sucesso! Bem-vindo(a)!"
+    )
     setLocalStorageToken(response?.data?.jwt)
     console.log(response)
     // if (response?.error) {

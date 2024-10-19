@@ -10,6 +10,7 @@ export function useFetch(fetchFunction) {
   // Função para disparar a requisição manualmente
   const executeFetch = async (
     params = {},
+    callback,
     useToast,
     toastSuccessMessage,
     toastErrorMessage
@@ -28,7 +29,9 @@ export function useFetch(fetchFunction) {
       if (useToast) {
         toast.success(toastSuccessMessage)
       }
+      callback && callback()
     } catch (requestError) {
+      console.log(requestError)
       setError(requestError)
       setIsError(true)
       if (useToast) {
