@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router-dom"
 
-import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
+import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
+import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetails.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
+import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -50,8 +52,11 @@ export const ROUTES = {
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
-  PROFILESETTINGS: "ajustes/perfil",
   CHANGE_DATA: "alterar-dados",
+  DASHBOARD_CONFIG: "ajustes/configuracoes",
+  PROFILE_SETTINGS: "ajustes/perfil",
+  ORDER_DETAILS: "pedidos",
+
 }
 
 export const router = createBrowserRouter([
@@ -133,6 +138,15 @@ export const router = createBrowserRouter([
                 path: ROUTES.RESET_PASSWORD,
                 element: <ResetPasswordPage />,
               },
+              { path: ROUTES.MENU, element: <StoreMenu /> },
+
+              { path: ROUTES.STORE_ADRRESS, element: <StoreAddressEdit /> },
+
+              {
+                path: ROUTES.PROFILE_SETTINGS,
+                element: <StoreProfileSettings />,
+              },
+              { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
             ],
           },
         ],
@@ -176,23 +190,19 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
   {
+
     path: "dashboard",
     element: <DashBoardLayout />,
     children: [
       { path: ROUTES.FINANCE, element: <FinancePage /> },
       { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-      { path: ROUTES.MENU, element: <StoreMenu /> },
-    ],
-  },
-  {
-    path: "dashboard",
-    element: <DashBoardLayout />,
-    children: [
-      { path: ROUTES.FINANCE, element: <FinancePage /> },
-      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-      { path: ROUTES.STORE_ADRRESS, element: <StoreAddressEdit /> },
       { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+      {
+        path: ROUTES.DASHBOARD_CONFIG,
+        element: <ConfigurationPage />,
+      },
     ],
   },
   {
