@@ -16,6 +16,7 @@ import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrde
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
+import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -29,6 +30,8 @@ import App from "../App.jsx"
 
 export const ROUTES = {
   ADDRESS: "endereco",
+  ADDRESS_EDIT: "endereco/adicionar",
+  ADDRESS_EDIT_ID: "endereco/editar/:addressId",
   HOME: "home",
   FAVORITES: "favoritos",
   FINANCE: "financas",
@@ -76,11 +79,21 @@ export const router = createBrowserRouter([
                 path: ROUTES.ONGOING_ORDER,
                 element: <OngoingOrder />,
               },
+
               {
                 element: <ProfileManagementLayout />,
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  {
+                    path: ROUTES.ADDRESS_EDIT,
+                    element: <ProfileAddressForm />,
+                  },
+                  {
+                    path: ROUTES.ADDRESS_EDIT_ID,
+                    element: <ProfileAddressForm />,
+                  },
+
                   {
                     path: ROUTES.FAVORITES,
                     element: <Favorites />,
