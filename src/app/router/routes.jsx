@@ -56,7 +56,6 @@ export const ROUTES = {
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
-
 }
 
 export const router = createBrowserRouter([
@@ -192,7 +191,6 @@ export const router = createBrowserRouter([
   },
 
   {
-
     path: "dashboard",
     element: <DashBoardLayout />,
     children: [
