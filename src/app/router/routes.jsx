@@ -1,10 +1,13 @@
 import { createBrowserRouter } from "react-router-dom"
 
-import { StoreProfileSettings } from "@/domains/store/components/StoreSettings/StoreProfileSettings.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
+import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
+import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetails.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
+import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
+import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
 import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
@@ -44,12 +47,16 @@ export const ROUTES = {
   CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
+  STORE_ADRRESS: "ajustes/endereco",
+  MENU: "cardapio",
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
-  PROFILESETTINGS: "ajustes/perfil",
   CHANGE_DATA: "alterar-dados",
   DASHBOARD_CONFIG: "ajustes/configuracoes",
+  PROFILE_SETTINGS: "ajustes/perfil",
+  ORDER_DETAILS: "pedidos",
+
 }
 
 export const router = createBrowserRouter([
@@ -131,6 +138,15 @@ export const router = createBrowserRouter([
                 path: ROUTES.RESET_PASSWORD,
                 element: <ResetPasswordPage />,
               },
+              { path: ROUTES.MENU, element: <StoreMenu /> },
+
+              { path: ROUTES.STORE_ADRRESS, element: <StoreAddressEdit /> },
+
+              {
+                path: ROUTES.PROFILE_SETTINGS,
+                element: <StoreProfileSettings />,
+              },
+              { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
             ],
           },
         ],
@@ -176,6 +192,7 @@ export const router = createBrowserRouter([
   },
 
   {
+
     path: "dashboard",
     element: <DashBoardLayout />,
     children: [
