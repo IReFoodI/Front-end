@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
+import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
 import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetails.jsx"
@@ -52,8 +53,10 @@ export const ROUTES = {
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
   CHANGE_DATA: "alterar-dados",
+  DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
+
 }
 
 export const router = createBrowserRouter([
@@ -188,6 +191,20 @@ export const router = createBrowserRouter([
     ],
   },
 
+  {
+
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    children: [
+      { path: ROUTES.FINANCE, element: <FinancePage /> },
+      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
+      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
+      {
+        path: ROUTES.DASHBOARD_CONFIG,
+        element: <ConfigurationPage />,
+      },
+    ],
+  },
   {
     path: "*",
     element: <PageNotFound />,
