@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
-import { toast } from "sonner"
+import { useLocation } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { setLocalStorageToken } from "@/app/utils/storage-token"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -14,16 +14,20 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
-import { authService } from "../../services/authService"
+import { signInWithEmailAndPassword } from "../../services/authService"
 
 export function SignIn() {
   const location = useLocation()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const { executeFetch, isLoading, response } = useFetch(
+    signInWithEmailAndPassword
+  )
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -34,19 +38,34 @@ export function SignIn() {
   })
 
   const onSubmit = async (data) => {
-    try {
-      const response = await authService.signInWithEmailAndPassword(data)
-      if (!response?.data?.token) {
-        toast.error("Erro interno")
-        return
-      }
-      setLocalStorageToken(response.data.token)
-      toast.success("Login realizado com sucesso! Bem-vindo(a)!")
-      navigate("/")
-    } catch (error) {
-      toast.error(error.response.data.message)
-    }
+    // try {
+    // const response = await signInWithEmailAndPassword(data)
+    // if (!response?.data?.token) {
+    //   toast.error("Erro interno")
+    //   return
+    // }
+    executeFetch(data, true, "Login realizado com sucesso! Bem-vindo(a)!")
+    setLocalStorageToken(response?.data?.jwt)
+    console.log(response)
+    // if (response?.error) {
+    //   toast.error(response.error)
+    // } else {
+    //   console.log(error)
+    //   toast.success("Login realizado com sucesso! Bem-vindo(a)!")
+    //   // navigate("/")
+    // }
+    // } catch (error) {
+    //   console.log(error)
+    //   toast.error(error.message)
+    // }
   }
+  if (isLoading) {
+    return <Loading />
+  }
+
+  // if (isError) {
+  //   return <div>Ocorreu um erro</div>
+  // }
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">

@@ -1,7 +1,8 @@
-import { createAxiosInstance } from "@/app/service/axiosConfig"
+// import { createAxiosInstance } from "@/app/service/axiosConfig"
+import { fetchFunction } from "@/app/service/fetchFunction"
 // import { fetchFunction } from "@/app/service/fetchFunction"
-const BASE_URL = "/api/user"
-const axios = createAxiosInstance()
+// const BASE_URL = "/api/user"
+// const axios = createAxiosInstance()
 
 /**
  * Create user
@@ -14,7 +15,8 @@ const axios = createAxiosInstance()
  * @param {string} data.password - The user's password (hashed or plain).
  */
 async function createUserAccount(data) {
-  return await axios.post(BASE_URL, data)
+  // return await axios.post(BASE_URL, data)
+  return await fetchFunction({ url: "/api/user", method: "POST", data })
 }
 
 export const userService = { createUserAccount }

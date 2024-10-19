@@ -1,7 +1,6 @@
-import { createAxiosInstance } from "@/app/service/axiosConfig"
+// import { createAxiosInstance } from "@/app/service/axiosConfig"
+import { fetchFunction } from "@/app/service/fetchFunction"
 // import { fetchFunction } from "@/app/service/fetchFunction"
-const BASE_URL = "/auth/login"
-const axios = createAxiosInstance()
 
 /**
  * SignIn
@@ -11,7 +10,22 @@ const axios = createAxiosInstance()
  * @param {string} data.password - The user's password (hashed or plain).
  */
 async function signInWithEmailAndPassword(data) {
-  return await axios.post(BASE_URL, data)
+  // return await axios.post(BASE_URL, data)
+  console.log(data)
+
+  const response = await fetchFunction({
+    method: "POST",
+    data,
+    url: "/auth/login",
+  })
+  console.log(response)
+  if (response?.error) {
+    return {
+      ...response,
+      errorMessage: "Ocorreu um erro ao tentar realizar o login",
+    }
+  }
+  return response
 }
 
-export const authService = { signInWithEmailAndPassword }
+export { signInWithEmailAndPassword }
