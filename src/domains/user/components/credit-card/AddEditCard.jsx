@@ -21,7 +21,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
     resolver: zodResolver(creditCardSchema),
     defaultValues: {
       number: card?.number ? card.number : "",
-      name: card?.name ? card.name : "",
+      holderName: card?.holderName ? card.holderName : "",
       cpf: card?.cpf ? card.cpf : "",
       validity: card?.validity ? card.validity : "",
       cvv: card?.cvv ? card.cvv : "",
@@ -29,7 +29,11 @@ export function AddEditCard({ type = "add", card, closeModal }) {
   })
 
   const { watch } = form
-  const [number, name, validity] = watch(["number", "name", "validity"])
+  const [number, holderName, validity] = watch([
+    "number",
+    "holderName",
+    "validity",
+  ])
 
   const onSubmit = (data) => {
     try {
@@ -57,7 +61,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
           </p>
           <div className="flex w-full items-center justify-between gap-2 text-sm">
             <p className="max-w-64 truncate">
-              {name === "" ? "Nome do Titular" : name}
+              {holderName === "" ? "Nome do Titular" : holderName}
             </p>
             <p className="min-w-14 items-center justify-center">
               {validity === "" ? "Validade" : validity}
@@ -99,7 +103,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
 
             <FormField
               control={form.control}
-              name="name"
+              name="holderName"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

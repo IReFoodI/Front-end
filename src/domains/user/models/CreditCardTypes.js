@@ -10,7 +10,7 @@ export const creditCardSchema = z.object({
       "Preencha todos os números do cartão"
     )
     .transform((str) => str.replace(/\s/g, "")),
-  name: z
+  holderName: z
     .string({
       required_error: "Digite o nome do titular",
     })
@@ -41,7 +41,6 @@ export const creditCardSchema = z.object({
     .trim()
     .min(1, { message: "Digite a validade" })
     .regex(/^\d{2}\/\d{2}$/, "Digite a validade")
-    .transform((str) => str.replace(/\//g, ""))
     .refine(
       (data) => {
         const date = new Date()

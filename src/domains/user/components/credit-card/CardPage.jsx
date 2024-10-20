@@ -15,17 +15,17 @@ import { SmallCard } from "./SmallCard"
 
 const cardData = [
   {
-    name: "Dalia Bezerra",
+    holderName: "Dalia Bezerra",
     number: "0000000000001234",
     validity: "06/25",
   },
   {
-    name: "Hortência Flores",
+    holderName: "Hortência Flores",
     number: "1233 1233 1212 0000",
     validity: "11/35",
   },
   {
-    name: "Isaac Flores",
+    holderName: "Isaac Flores",
     number: "1111 2222 3333 1554",
     validity: "09/38",
   },
