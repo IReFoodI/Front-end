@@ -17,17 +17,16 @@ import { QuantityInput } from "./QuantityInput"
 
 export function MenuItemCard({
   product,
-  onClick,
   setIsModalOpen,
   setIsDeleteModalOpen,
   setSelectedProduct,
   onStatusChange,
 }) {
   const {
-    name = "",
+    nameProd = "",
     image = "",
     description: initialDescription,
-    status: initialStatus,
+    active: initialStatus,
     expirationDate: initialExpirationDate,
     quantity: initialQuantity,
     originalPrice: initialOriginalPrice,
@@ -38,66 +37,64 @@ export function MenuItemCard({
     initialExpirationDate ? new Date(initialExpirationDate) : null
   )
   const [description, setDescription] = useState(initialDescription || "")
-  const [quantity] = useState(initialQuantity || 0)
   const [originalPrice, setOriginalPrice] = useState(
     currencyFormatter(initialOriginalPrice || 0)
   )
   const [sellPrice, setSellPrice] = useState(
     currencyFormatter(initialSellPrice || 0)
   )
-  const [status, setStatus] = useState(!!initialStatus)
+  const [active, setActive] = useState(!!initialStatus)
 
   const handleChange = (setter) => (e) => {
     setter(e.target.value)
   }
 
   const handleStatusChange = (checked) => {
-    setStatus(checked)
-    onStatusChange(product.id, checked)
+    console.log(product.productId)
+    setActive(checked)
+    onStatusChange(product.productId, checked)
   }
 
-  function handleOpenModal() {
+  const openEditModal = () => {
+    setSelectedProduct(product)
     setIsModalOpen(true)
   }
 
-  const disabledClass = status ? "" : "opacity-50"
+  const openDeleteModal = () => {
+    setSelectedProduct(product)
+    setIsDeleteModalOpen(true)
+  }
+
+  const disabledClass = active ? "" : "opacity-50"
 
   return (
     <TableRow className={disabledClass}>
       <TableCell className="hidden sm:table-cell">
         <img
-          alt={name || "Product image"}
+          alt={nameProd || "Product image"}
           className="aspect-square rounded-md object-cover"
           height="64"
           src={image}
           width="64"
         />
       </TableCell>
-      <TableCell onClick={onClick} className="font-medium">
-        {name}
-      </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
+      <TableCell className="font-medium">{nameProd}</TableCell>
+      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
         <Input
           type="text"
-          disabled={!status}
+          disabled={!active}
           value={description}
           onChange={handleChange(setDescription)}
           placeholder="Descrição do produto"
         />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
+      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
         <DatePickerSingle value={expirationDate} onChange={setExpirationDate} />
       </TableCell>
       <TableCell className={disabledClass}>
-        <QuantityInput items={quantity} />
+        <QuantityInput items={initialQuantity || 0} />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
+      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
         <Input
           type="text"
           value={originalPrice}
@@ -105,9 +102,7 @@ export function MenuItemCard({
           placeholder="Preço Original"
         />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none md:table-cell ${disabledClass}`}
-      >
+      <TableCell className={disabledClass}>
         <Input
           type="text"
           value={sellPrice}
@@ -116,30 +111,16 @@ export function MenuItemCard({
         />
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        <Switch checked={status} onCheckedChange={handleStatusChange} />
+        <Switch checked={active} onCheckedChange={handleStatusChange} />
       </TableCell>
-      <TableCell className="flex-col items-center gap-2">
+      <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <IconDots size={25} />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="min-w-16">
-            <DropdownMenuItem
-              onClick={() => {
-                setSelectedProduct(product)
-                handleOpenModal()
-                document.body.style.pointerEvents = ""
-              }}
-            >
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                setIsDeleteModalOpen(true)
-                setSelectedProduct(product)
-                document.body.style.pointerEvents = ""
-              }}
-            >
+            <DropdownMenuItem onClick={openEditModal}>Editar</DropdownMenuItem>
+            <DropdownMenuItem onClick={openDeleteModal}>
               Deletar
             </DropdownMenuItem>
           </DropdownMenuContent>

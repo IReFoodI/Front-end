@@ -1,9 +1,9 @@
+import axios from "axios"
 import { useState } from "react"
 
 import {
   AlertDialog,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/ui/components/ui/table"
 
-import { productList as initialProductList } from "../../model/productList"
+import { useProducts } from "../../hooks/useProdutcList"
 import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"
@@ -32,30 +32,33 @@ import { ProductModal } from "./ProductModal"
 export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-
   const [selectedProduct, setSelectedProduct] = useState({})
-  const [productList, setProductList] = useState(initialProductList)
+  const { products, loading } = useProducts()
 
-  const handleStatusChange = (id, newStatus) => {
-    setProductList((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id ? { ...product, status: newStatus } : product
+  const handleStatusChange = async (productId, newStatus) => {
+    console.log("Updating product ID:", productId) // Log the product ID
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/api/product/${productId}`, // Use singular 'product'
+        { active: newStatus },
+        { headers: { "Content-Type": "application/json" } }
       )
-    )
-  }
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
+      if (response.status !== 200) {
+        // Check for a successful response
+        throw new Error("Erro ao atualizar o status do produto.")
+      }
+      console.log(
+        `Status do produto ${productId} atualizado para: ${newStatus ? "Ativo" : "Inativo"}`
+      )
+    } catch (error) {
+      console.error("Erro ao atualizar o status:", error)
+      if (error.response) {
+        console.error("Response data:", error.response.data)
+        console.error("Response status:", error.response.status)
+      }
+    }
   }
-  //todo fazer a parte de atualizar o produto
-  // Função para atualizar o produto na lista
-  // const handleUpdateProduct = (updatedProduct) => {
-  //   setProductList((prevList) =>
-  //     prevList.map((product) =>
-  //       product.id === updatedProduct.id ? updatedProduct : product
-  //     )
-  //   )
-  // }
 
   return (
     <div className="w-full">
@@ -64,86 +67,83 @@ export function StoreMenu() {
           <CardTitle>Cardápio</CardTitle>
 
           <AlertDialog open={isModalOpen}>
-            <AlertDialogTrigger onClick={handleOpenModal} asChild>
+            <AlertDialogTrigger asChild>
               <Button
                 size="sm"
                 className="m-0 !mt-0 items-center gap-1 text-lg"
+                onClick={() => setIsModalOpen(true)}
               >
                 <span className="m-0 text-base">+ Adicionar produto</span>
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="min-w-fit">
+            <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle />
-                <AlertDialogDescription />
+                <AlertDialogTitle>Produto</AlertDialogTitle>
               </AlertDialogHeader>
               <ProductModal
-                setIsDeleteModalOpen={setIsDeleteModalOpen}
-                selectedProduct={selectedProduct}
-                setSelectedProduct={setSelectedProduct}
                 setIsModalOpen={setIsModalOpen}
-                isModalOpen={isModalOpen}
+                setSelectedProduct={setSelectedProduct}
+                selectedProduct={selectedProduct}
               />
             </AlertDialogContent>
           </AlertDialog>
         </CardHeader>
+
         <CardContent>
           <Table>
-            <TableHeader className="border-b-2 border-t-2 border-secondary-foreground">
+            <TableHeader>
               <TableRow>
-                <TableHead className="hidden text-center md:table-cell">
-                  Foto
-                </TableHead>
-                <TableHead className="text-left md:text-center">Nome</TableHead>
-                <TableHead className="hidden text-center md:table-cell">
+                <TableHead className="hidden md:table-cell">Foto</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead className="hidden md:table-cell">
                   Descrição
                 </TableHead>
-                <TableHead className="hidden text-center md:table-cell">
-                  Validade
-                </TableHead>
-                <TableHead className="text-center">Quantidade</TableHead>
-                <TableHead className="hidden text-center md:table-cell">
+                <TableHead className="hidden md:table-cell">Validade</TableHead>
+                <TableHead>Quantidade</TableHead>
+                <TableHead className="hidden md:table-cell">
                   Valor Original
                 </TableHead>
-                <TableHead className="text-center md:table-cell">
-                  Valor Venda
-                </TableHead>
-                <TableHead className="hidden text-center">Status</TableHead>
-                <TableHead className="text-center">Ação</TableHead>
+                <TableHead>Valor Venda</TableHead>
+                <TableHead className="hidden md:table-cell">Status</TableHead>
+                <TableHead>Ação</TableHead>
               </TableRow>
             </TableHeader>
+
             <TableBody>
-              {productList.map((product) => (
-                <MenuItemCard
-                  key={product.id}
-                  product={product}
-                  setIsDeleteModalOpen={setIsDeleteModalOpen}
-                  selectedProduct={selectedProduct}
-                  setSelectedProduct={setSelectedProduct}
-                  setIsModalOpen={setIsModalOpen}
-                  isModalOpen={isModalOpen}
-                  onStatusChange={handleStatusChange}
-                />
-              ))}
+              {loading ? (
+                <TableRow>
+                  <td colSpan="8" className="text-center">
+                    Carregando produtos...
+                  </td>
+                </TableRow>
+              ) : (
+                products.map((product) => (
+                  <MenuItemCard
+                    key={product.productId}
+                    product={product}
+                    setIsModalOpen={setIsModalOpen}
+                    setIsDeleteModalOpen={setIsDeleteModalOpen}
+                    setSelectedProduct={setSelectedProduct}
+                    onStatusChange={handleStatusChange}
+                  />
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
+
         <CardFooter>
-          <div className="text-xs text-muted-foreground">
-            Exibindo{" "}
-            <strong>
-              1-
-              {initialProductList.length < 10 ? initialProductList.length : 10}
-            </strong>{" "}
-            de <strong>{initialProductList.length}</strong> produtos
+          <div className="text-xs">
+            Exibindo <strong>1-{Math.min(products.length, 10)}</strong> de{" "}
+            <strong>{products.length}</strong> produtos
           </div>
         </CardFooter>
       </Card>
+
       <DeleteProductModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         selectedProduct={selectedProduct}
-        setSelectedProduct={setSelectedProduct}
       />
     </div>
   )

@@ -28,12 +28,12 @@ export function ProductModal({
 }) {
   const [image, setImage] = useState(selectedProduct?.image || "")
   const [dragActive, setDragActive] = useState(false)
-  const [status, setStatus] = useState(selectedProduct?.status ?? false)
+  const [active, setActive] = useState(selectedProduct?.active ?? false)
 
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      name: selectedProduct?.name || "",
+      name: selectedProduct?.nameProd || "",
       description: selectedProduct?.description || "",
       expirationDate: selectedProduct?.expirationDate
         ? new Date(selectedProduct.expirationDate)
@@ -56,12 +56,12 @@ export function ProductModal({
   }
 
   const onSubmit = (data) => {
-    console.log({ ...data, status, image })
+    console.log({ ...data, active, image })
     handleCloseModal()
   }
 
   const handleStatusChange = (checked) => {
-    setStatus(checked)
+    setActive(checked)
   }
 
   const handleImageChange = (e) => {
@@ -261,7 +261,7 @@ export function ProductModal({
                   <FormControl>
                     <Switch
                       className="!mt-0"
-                      checked={status}
+                      checked={active}
                       onCheckedChange={handleStatusChange}
                     />
                   </FormControl>
