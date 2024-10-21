@@ -1,6 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { decodeJwt } from "jose"
-import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -18,6 +16,7 @@ import { Input } from "@/ui/components/ui/input"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
+import { useTokenValidation } from "../../../../app/hooks/useTokenValidation"
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
 
@@ -27,23 +26,7 @@ export function SignIn() {
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwtRefoods")
-    if (!token) {
-      return
-    }
-    try {
-      const decode = decodeJwt(token)
-
-      if (decode.exp * 1000 < Date.now()) {
-        localStorage.removeItem("jwtRefoods")
-        return
-      }
-    } catch (error) {
-      console.error(error)
-    }
-    navigate("/")
-  }, [navigate])
+  useTokenValidation()
 
   const form = useForm({
     resolver: zodResolver(formSchema),

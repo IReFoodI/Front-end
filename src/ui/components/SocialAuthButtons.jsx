@@ -29,7 +29,7 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
         }
 
         const response = await axios.post(
-          "http://localhost:8080/auth/google/success",
+          `${import.meta.env.VITE_API_BASE_URL}/auth/google/success`,
           userDTO
         )
 
@@ -49,7 +49,8 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
         console.log(response)
       } catch (error) {
-        console.log(error)
+        console.error("Erro durante o login com Google:", error)
+        toast.error("Ocorreu um erro durante o login. Tente novamente.")
       }
     },
 
