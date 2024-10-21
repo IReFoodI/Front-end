@@ -1,4 +1,4 @@
-import { IconStarFilled } from "@tabler/icons-react"
+import { IconClockHour4, IconStarFilled } from "@tabler/icons-react"
 
 import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
@@ -22,7 +22,7 @@ export function StoreCard({
     urlLogo = "",
   } = storeData
   const formatBusinessHours = hours
-    .map((hours) => `${hours.openingTime} - ${hours.closingTime}`)
+    .map((hours) => `${hours.openingTime} às ${hours.closingTime}`)
     .join(", ")
 
   return (
@@ -55,7 +55,7 @@ export function StoreCard({
           {fantasy}
         </CardTitle>
         {discount && (
-          <div className="mt-2 inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
+          <div className="inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
             <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
               {discount}
             </span>
@@ -73,6 +73,7 @@ export function StoreCard({
         </div>
 
         <div className="flex items-center">
+          <IconClockHour4 className="mr-2 text-[hsl(var(--muted-foreground))]" />
           <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
             {formatBusinessHours || "Horário não disponível"}
           </span>
