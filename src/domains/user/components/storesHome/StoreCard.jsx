@@ -16,12 +16,17 @@ export function StoreCard({
     discount = "",
     averageRating = "0.0",
     category = "Categoria não disponível",
-    opening_hours = "Horário não disponível",
+    hours = [],
     isFavorited = false,
     imagePath = "",
     logoPath = "",
   } = storeData
 
+  const formatBusinessHours = hours
+    .map((hours) => `${hours.openingTime} - ${hours.closingTime}`)
+    .join(", ")
+
+  console.log(formatBusinessHours)
   return (
     <Card
       className={cn(
@@ -71,7 +76,7 @@ export function StoreCard({
 
         <div className="flex items-center">
           <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-            {opening_hours}
+            {formatBusinessHours || "Horário não disponível"}
           </span>
         </div>
       </CardContent>

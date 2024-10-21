@@ -6,14 +6,25 @@ export function useStores() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchStores = async () => {
+    const fetchStoresAndHours = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:8080/api/restaurants"
-        )
-        console.log(data)
-        setStores(data)
-        localStorage.setItem("storesData", JSON.stringify(data))
+        const [storesRes, hoursRes] = await Promise.all([
+          axios.get("http://localhost:8080/api/restaurants"),
+          axios.get("http://localhost:8080/api/restaurant-hours/today"),
+        ])
+
+        const storesData = storesRes.data
+        const hoursData = hoursRes.data
+
+        const mergedData = storesData.map((store) => ({
+          ...store,
+          hours: hoursData.filter(
+            (hour) => hour.restaurantId === store.restaurantId
+          ),
+        }))
+
+        setStores(mergedData)
+        localStorage.setItem("storesData", JSON.stringify(mergedData))
       } catch (error) {
         console.error("Erro ao buscar dados:", error)
       } finally {
@@ -21,7 +32,7 @@ export function useStores() {
       }
     }
 
-    fetchStores()
+    fetchStoresAndHours()
   }, [])
 
   const toggleFavorite = (restaurantId) => {
