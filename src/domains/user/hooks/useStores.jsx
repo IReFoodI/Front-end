@@ -23,6 +23,7 @@ export function useStores() {
           ),
         }))
 
+        console.log(mergedData)
         setStores(mergedData)
         localStorage.setItem("storesData", JSON.stringify(mergedData))
       } catch (error) {

@@ -18,15 +18,13 @@ export function StoreCard({
     category = "Categoria não disponível",
     hours = [],
     isFavorited = false,
-    imagePath = "",
-    logoPath = "",
+    urlBanner = "",
+    urlLogo = "",
   } = storeData
-
   const formatBusinessHours = hours
     .map((hours) => `${hours.openingTime} - ${hours.closingTime}`)
     .join(", ")
 
-  console.log(formatBusinessHours)
   return (
     <Card
       className={cn(
@@ -38,13 +36,13 @@ export function StoreCard({
       <CardContent className="relative flex h-full w-full items-center justify-center p-0 sm:p-0">
         <div className="relative h-auto w-full">
           <img
-            src={imagePath}
-            alt={`${fantasy} Image`}
+            src={urlBanner}
+            alt={`${name}`}
             className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
           <div className="-translatef-x-1/2 absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
             <img
-              src={logoPath}
+              src={urlLogo}
               alt={`${fantasy} Logo`}
               className="h-full w-full rounded-full object-cover"
             />
