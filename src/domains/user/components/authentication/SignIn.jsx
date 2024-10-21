@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { decodeJwt } from "jose"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -24,6 +26,24 @@ export function SignIn() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtRefoods")
+    if (!token) {
+      return
+    }
+    try {
+      const decode = decodeJwt(token)
+
+      if (decode.exp * 1000 < Date.now()) {
+        localStorage.removeItem("jwtRefoods")
+        return
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    navigate("/")
+  }, [navigate])
 
   const form = useForm({
     resolver: zodResolver(formSchema),

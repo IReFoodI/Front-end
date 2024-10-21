@@ -9,6 +9,7 @@ import {
 } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
@@ -22,6 +23,7 @@ import { InformationButton } from "./InformationButton"
 export function ProfileSheet() {
   const { value } = useMediaQuery("(max-width: 768px)")
   const [activeInformationButton, setActiveInformationButton] = useState(null)
+  const navigate = useNavigate()
 
   const informationButtons = [
     {
@@ -50,6 +52,11 @@ export function ProfileSheet() {
       path: "/alterar-senha",
     },
   ]
+
+  const logout = () => {
+    localStorage.removeItem("jwtRefoods")
+    navigate("/autenticar/entrar")
+  }
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -129,7 +136,10 @@ export function ProfileSheet() {
             Ajuda
           </Link>
         </div>
-        <Button className="w-full rounded-3xl bg-primary text-base font-semibold">
+        <Button
+          onClick={logout}
+          className="w-full rounded-3xl bg-primary text-base font-semibold"
+        >
           Sair
         </Button>
       </div>

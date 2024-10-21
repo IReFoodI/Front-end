@@ -13,7 +13,7 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
       console.log(credetialResponse)
 
       try {
-        const response = await axios.get(
+        const userInfoResponse = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
             headers: {
@@ -21,6 +21,20 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
             },
           }
         )
+
+        const userDTO = {
+          email: userInfoResponse.data.email,
+          name: userInfoResponse.data.name,
+          sub: userInfoResponse.data.sub,
+        }
+
+        const response = await axios.post(
+          "http://localhost:8080/auth/google/success",
+          userDTO
+        )
+
+        localStorage.setItem("jwtRefoods", response.data.jwt)
+
         toast.success("Login efetuado com sucesso!")
 
         if (redirectPath) {
