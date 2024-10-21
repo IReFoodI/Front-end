@@ -1,54 +1,54 @@
-import { useState } from "react"
+import React from "react"
 import { toast } from "sonner"
 
-export function useFetch(fetchFunction) {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [response, setResponse] = useState(null)
-  const [error, setError] = useState(null)
+/**
+ * Hook personalizado para realizar requisições assíncronas e gerenciar o estado de carregamento e dados.
+ *
+ * @returns {Object} Retorna um objeto contendo `data`, `loading` e a função `onRequest`.
+ *
+ * @property {any} data - Dados retornados pela requisição. Inicialmente é `null`.
+ * @property {boolean} loading - Estado de carregamento da requisição. `true` enquanto a requisição está em andamento, e `false` quando finaliza.
+ * @property {function} onRequest - Função que executa uma requisição assíncrona e trata sucesso ou erro.
+ * Executa uma requisição assíncrona e atualiza os estados de `data` e `loading`.
+ *
+ * @param {Object} options - Parâmetros da requisição.
+ * @param {function} options.request - Função assíncrona que faz a requisição (deve retornar uma promessa).
+ * @param {function} [options.onSuccess] - Função opcional que será executada em caso de sucesso da requisição, recebendo os dados retornados.
+ * @param {string} [options.successMessage] - Mensagem de sucesso a ser exibida quando a requisição for concluída com sucesso.
+ * @param {string} [options.errorMessage] - Mensagem de erro a ser exibida em caso de falha na requisição (caso não fornecida, será usada a mensagem do erro ou uma mensagem genérica).
+ *
+ * @returns {void}
+ */
+const useFetch = () => {
+  const [data, setData] = React.useState(null)
+  const [loading, setLoading] = React.useState(null)
 
-  // Função para disparar a requisição manualmente
-  const executeFetch = async (
-    params = {},
-    callback,
-    useToast,
-    toastSuccessMessage,
-    toastErrorMessage
-  ) => {
-    setIsLoading(true)
-    setIsError(false) // Reseta o estado de erro antes de cada nova requisição
-    let toastMessage
-
-    const translateMessage = {
-      "Invalid credentials": "E-mail ou senha incorretos.",
-    }
-    try {
-      const result = await fetchFunction(params)
-      setResponse(result)
-      console.log(result)
-      if (useToast) {
-        toast.success(toastSuccessMessage)
+  const onRequest = React.useCallback(
+    async ({ request, onSuccess, successMessage, errorMessage }) => {
+      let response
+      try {
+        setLoading(true)
+        response = await request()
+        setData(response.data)
+        onSuccess && onSuccess(response.data)
+        console.log(response)
+        toast.success(successMessage)
+      } catch (err) {
+        setData(null)
+        toast.error(
+          errorMessage ??
+            err?.response?.data?.message ??
+            err?.message ??
+            "Ocorreu um erro"
+        )
+      } finally {
+        setLoading(false)
       }
-      callback && callback()
-    } catch (requestError) {
-      console.log(requestError)
-      setError(requestError)
-      setIsError(true)
-      if (useToast) {
-        if (requestError?.response?.data?.message) {
-          toastMessage = translateMessage[requestError?.response?.data?.message]
-        }
+    },
+    []
+  )
 
-        if (toastErrorMessage) {
-          toastMessage = toastErrorMessage
-        }
-        toast.error(toastMessage ? toastMessage : "Ocorreu um erro.")
-      }
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // Retorna os estados e a função que dispara a requisição
-  return { isLoading, isError, response, error, executeFetch }
+  return { data, loading, onRequest }
 }
+
+export default useFetch

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { getLocalStorageToken } from "../utils/storage-token"
+import { localStorageUtil } from "../utils/localStorageUtil"
 
 const baseApiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080"
 
@@ -8,7 +8,7 @@ export const createAxiosInstance = (privateRoute = false) => {
   let headers = {}
 
   if (privateRoute) {
-    const token = getLocalStorageToken()
+    const token = localStorageUtil.getLocalStorageToken()
     if (token) {
       headers["Authorization"] = `Bearer ${token}`
     }

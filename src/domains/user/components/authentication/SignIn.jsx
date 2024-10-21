@@ -2,8 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { useFetch } from "@/app/hooks/useFetch"
-import { setLocalStorageToken } from "@/app/utils/storage-token"
+import useFetch from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -20,14 +20,12 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
-import { signInWithEmailAndPassword } from "../../services/authService"
+import { authService } from "../../services/authService"
 
 export function SignIn() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { executeFetch, isLoading, response } = useFetch(
-    signInWithEmailAndPassword
-  )
+  const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -37,44 +35,24 @@ export function SignIn() {
     },
   })
 
-  const onSubmit = async (data) => {
-    // try {
-    // const response = await signInWithEmailAndPassword(data)
-    // if (!response?.data?.token) {
-    //   toast.error("Erro interno")
-    //   return
-    // }
-    function redirect() {
-      navigate("/")
-    }
-
-    executeFetch(
-      data,
-      redirect(),
-      true,
-      "Login realizado com sucesso! Bem-vindo(a)!"
-    )
-    setLocalStorageToken(response?.data?.jwt)
-    console.log(response)
-    // if (response?.error) {
-    //   toast.error(response.error)
-    // } else {
-    //   console.log(error)
-    //   toast.success("Login realizado com sucesso! Bem-vindo(a)!")
-    //   // navigate("/")
-    // }
-    // } catch (error) {
-    //   console.log(error)
-    //   toast.error(error.message)
-    // }
+  function redirect(data) {
+    localStorageUtil.setLocalStorageToken(data?.jwt)
+    localStorageUtil.setLocalStorageUserId(data.id)
+    navigate("/")
   }
-  if (isLoading) {
+
+  const onSubmit = async (data) => {
+    await onRequestLogin({
+      request: () => authService.signInWithEmailAndPassword(data),
+      onSuccess: redirect,
+      successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
+      errorMessage: "Credenciais incorretas",
+    })
+  }
+
+  if (loadingLogin) {
     return <Loading />
   }
-
-  // if (isError) {
-  //   return <div>Ocorreu um erro</div>
-  // }
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -123,7 +101,9 @@ export function SignIn() {
               </FormItem>
             )}
           />
-          <Button type="submit">Entrar</Button>
+          <Button disabled={loadingLogin} type="submit">
+            Entrar
+          </Button>
         </form>
       </Form>
 
