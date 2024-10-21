@@ -40,7 +40,7 @@ export function StoreCard({
             alt={`${name}`}
             className="h-auto max-h-full w-full rounded-[23px] object-cover"
           />
-          <div className="-translatef-x-1/2 absolute left-1/2 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
+          <div className="-translatef-x-1/2 absolute left-1/4 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
             <img
               src={urlLogo}
               alt={`${fantasy} Logo`}
