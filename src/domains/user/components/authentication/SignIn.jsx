@@ -37,7 +37,6 @@ export function SignIn() {
 
   function redirect(data) {
     localStorageUtil.setLocalStorageToken(data?.jwt)
-    localStorageUtil.setLocalStorageUserId(data.id)
     navigate("/")
   }
 

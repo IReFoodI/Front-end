@@ -21,27 +21,7 @@ function getLocalStorageToken() {
   }
 }
 
-function setLocalStorageUserId(id) {
-  try {
-    const storageId = localStorage?.setItem(KEYS.USER_ID, id)
-    return storageId
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-function getLocalStorageUserId() {
-  try {
-    const storageId = localStorage?.getItem(KEYS.USER_ID)
-    return storageId
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export const localStorageUtil = {
   setLocalStorageToken,
   getLocalStorageToken,
-  setLocalStorageUserId,
-  getLocalStorageUserId,
 }
