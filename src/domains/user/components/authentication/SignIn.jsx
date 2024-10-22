@@ -116,7 +116,7 @@ export function SignIn() {
       />
       <SocialAuthButtons
         locationPathname={location?.pathname}
-        redirectPath={redirectPath}
+        // redirectPath={redirectPath}
       />
       <TextWithLink
         text="Ainda não tem conta?"
