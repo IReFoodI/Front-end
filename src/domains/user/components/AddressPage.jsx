@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
@@ -100,9 +101,11 @@ export function AddressPage() {
           </div>
         </RadioGroup>
         <div className="lg:py-0">
-          <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
-            Adicionar novo endereço
-          </Button>
+          <Link to="/endereco/adicionar">
+            <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+              Adicionar novo endereço
+            </Button>
+          </Link>
         </div>
       </div>
 
