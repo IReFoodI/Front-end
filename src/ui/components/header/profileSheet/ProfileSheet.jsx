@@ -11,6 +11,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
+import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
@@ -31,22 +32,22 @@ export function ProfileSheet() {
     {
       iconForButton: <IconHeart />,
       buttonText: "Favoritos",
-      path: "/",
+      path: "/favoritos",
     },
     {
       iconForButton: <IconMap />,
       buttonText: "Endereços",
-      path: "/",
+      path: "/endereco",
     },
     {
       iconForButton: <IconCreditCard />,
       buttonText: "Cartões",
-      path: "/",
+      path: "/cartoes",
     },
     {
       iconForButton: <IconKey />,
       buttonText: "Alterar Senha",
-      path: "/",
+      path: "/alterar-senha",
     },
   ]
 
@@ -56,7 +57,7 @@ export function ProfileSheet() {
         <div className="mt-4 flex justify-between gap-2">
           {value ? (
             <SheetHeader className="w-full">
-              <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
+              <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
                 <ProfileImagePlaceholder className="z-2 m-1 w-14" />
                 <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
                   Olá, Usuário.
@@ -65,7 +66,7 @@ export function ProfileSheet() {
               </div>
             </SheetHeader>
           ) : (
-            <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-orange-700 to-orange-400">
+            <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
               <ProfileImagePlaceholder className="z-2 m-1 w-14" />
               <h1 className="m-1 text-lg font-semibold leading-5 text-white">
                 Olá, Usuário
@@ -75,7 +76,6 @@ export function ProfileSheet() {
         </div>
 
         <div className="flex w-full flex-col items-center justify-center">
-          {/* A cor lilac não existe no tailwind */}
           <div className="w-full rounded-xl bg-gray-200 p-4 text-center">
             <h2 className="text-sm font-semibold leading-5">
               Você ainda não possuí pedidos em andamento
@@ -123,21 +123,13 @@ export function ProfileSheet() {
       </div>
 
       <div className="mb-2 flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Link
-            to="/"
-            className="text-sm font-semibold text-orange-600 underline"
-          >
-            Termos e Condições
-          </Link>
-          <Link
-            to="/"
-            className="text-sm font-semibold text-orange-600 underline"
-          >
+        <div className="jus flex flex-col gap-2">
+          <TermsOfUse className={"text-start"}>Termos e condições</TermsOfUse>
+          <Link to="/" className="text-sm font-semibold text-primary underline">
             Ajuda
           </Link>
         </div>
-        <Button className="w-full rounded-3xl bg-orange-700 text-base font-semibold">
+        <Button className="w-full rounded-3xl bg-primary text-base font-semibold">
           Sair
         </Button>
       </div>
