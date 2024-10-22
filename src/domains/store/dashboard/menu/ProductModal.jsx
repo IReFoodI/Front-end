@@ -26,11 +26,13 @@ export function ProductModal({
   selectedProduct,
   setSelectedProduct,
   setIsModalOpen,
+  restaurantId,
 }) {
-  const [urlImgProd, setImage] = useState(selectedProduct?.urlImgProd || "")
+  const [urlImgProd, seturlImgProd] = useState(
+    selectedProduct?.urlImgProd || ""
+  )
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
-  console.log("Prod", selectedProduct)
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -63,14 +65,24 @@ export function ProductModal({
     if (file) {
       const formData = new FormData()
       formData.append("file", file)
-
+      console.log(file)
       try {
-        const response = await axios.post(
-          "http://localhost:8080/upload",
+        const uploadResponse = await axios.post(
+          "http://localhost:8080/api/product/upload",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         )
-        setImage(response.data) // A URL retornada do backend
+
+        console.log("Response:", uploadResponse.data)
+        seturlImgProd(uploadResponse.data)
+
+        const getImageResponse = await axios.get(
+          `http://localhost:8080/api/product/images/uploads/${file.name}`,
+          { responseType: "blob" } // Define o tipo de resposta como
+        )
+
+        const imgUrl = URL.createObjectURL(getImageResponse.data)
+        seturlImgProd(imgUrl)
       } catch (error) {
         console.error("Erro ao fazer upload da imagem:", error)
       }
@@ -90,7 +102,7 @@ export function ProductModal({
     const file = e.dataTransfer.files[0]
     if (file) {
       const reader = new FileReader()
-      reader.onload = () => setImage(reader.result)
+      reader.onload = () => seturlImgProd(reader.result)
       reader.readAsDataURL(file)
     }
   }
@@ -102,7 +114,7 @@ export function ProductModal({
         active,
         urlImgProd,
         additionDate: new Date().toISOString(),
-        restaurantId: 1,
+        restaurantId,
         categoryProduct: "MISTO",
       }
       console.log("Product data:", productData)

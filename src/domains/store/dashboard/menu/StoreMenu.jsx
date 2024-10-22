@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useState } from "react"
 
 import {
@@ -33,27 +32,7 @@ export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const { products, loading } = useProducts()
-
-  const handleStatusChange = async (productId, newStatus) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:8080/api/product/${productId}`,
-        { active: newStatus },
-        { headers: { "Content-Type": "application/json" } }
-      )
-
-      if (response.status !== 200) {
-        throw new Error("Erro ao atualizar o status do produto.")
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar o status:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
-    }
-  }
+  const { products, loading, restaurantId, handleStatusChange } = useProducts() // Adicione handleStatusChange aqui
 
   return (
     <div className="w-full">
@@ -79,7 +58,7 @@ export function StoreMenu() {
                 setIsModalOpen={setIsModalOpen}
                 setSelectedProduct={setSelectedProduct}
                 selectedProduct={selectedProduct}
-                setProductId={selectedProduct?.productId || null}
+                restaurantId={restaurantId}
               />
             </AlertDialogContent>
           </AlertDialog>
