@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
@@ -26,15 +27,15 @@ export function ProductModal({
   setSelectedProduct,
   setIsModalOpen,
 }) {
-  const [image, setImage] = useState(selectedProduct?.image || "")
+  const [urlImgProd, setImage] = useState(selectedProduct?.urlImgProd || "")
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
-
+  console.log("Prod", selectedProduct)
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      name: selectedProduct?.nameProd || "",
-      description: selectedProduct?.description || "",
+      nameProd: selectedProduct?.nameProd || "",
+      descriptionProd: selectedProduct?.descriptionProd || "",
       expirationDate: selectedProduct?.expirationDate
         ? new Date(selectedProduct.expirationDate)
         : null,
@@ -55,21 +56,24 @@ export function ProductModal({
     setSelectedProduct(null)
   }
 
-  const onSubmit = (data) => {
-    console.log({ ...data, active, image })
-    handleCloseModal()
-  }
+  const handleStatusChange = (checked) => setActive(checked)
 
-  const handleStatusChange = (checked) => {
-    setActive(checked)
-  }
-
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
-      const reader = new FileReader()
-      reader.onload = () => setImage(reader.result)
-      reader.readAsDataURL(file)
+      const formData = new FormData()
+      formData.append("file", file)
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/upload",
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        )
+        setImage(response.data) // A URL retornada do backend
+      } catch (error) {
+        console.error("Erro ao fazer upload da imagem:", error)
+      }
     }
   }
 
@@ -91,6 +95,66 @@ export function ProductModal({
     }
   }
 
+  const onSubmit = async (data) => {
+    try {
+      const productData = {
+        ...data,
+        active,
+        urlImgProd,
+        additionDate: new Date().toISOString(),
+        restaurantId: 1,
+        categoryProduct: "MISTO",
+      }
+      console.log("Product data:", productData)
+      const response = await axios.post(
+        "http://localhost:8080/api/product",
+        productData,
+        { headers: { "Content-Type": "application/json" } }
+      )
+
+      if (response.status !== 201) {
+        throw new Error("Erro ao criar o produto.")
+      }
+
+      console.log("Produto criado com sucesso:", response.data)
+      handleCloseModal()
+    } catch (error) {
+      console.error("Erro ao criar o produto:", error)
+      if (error.response) {
+        console.error("Response data:", error.response.data)
+        console.error("Response status:", error.response.status)
+      }
+    }
+    handleCloseModal()
+  }
+
+  const handleChange = async (productId, data) => {
+    const produtctUpdate = {
+      ...data,
+      active,
+      urlImgProd,
+      additionDate: new Date().toISOString(),
+    }
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/api/product/${productId}`,
+        produtctUpdate,
+        { headers: { "Content-Type": "application/json" } }
+      )
+
+      if (response.status !== 200) {
+        throw new Error("Erro ao atualizar o status do produto.")
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar o status:", error)
+      if (error.response) {
+        console.error("Response data:", error.response.data)
+        console.error("Response status:", error.response.status)
+      }
+    }
+    handleCloseModal()
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black opacity-50"></div>
@@ -109,9 +173,9 @@ export function ProductModal({
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
-              {image ? (
+              {urlImgProd ? (
                 <img
-                  src={image}
+                  src={urlImgProd}
                   alt="Preview"
                   className="h-full w-full object-cover"
                 />
@@ -122,7 +186,7 @@ export function ProductModal({
               )}
               <input
                 type="file"
-                accept="image/*"
+                accept="urlImgProd/*"
                 className="hidden"
                 onChange={handleImageChange}
               />
@@ -138,13 +202,17 @@ export function ProductModal({
           </div>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(onSubmit)}
+              onSubmit={form.handleSubmit((data) =>
+                selectedProduct
+                  ? handleChange(selectedProduct.productId, data)
+                  : onSubmit(data)
+              )}
               className="flex flex-col gap-4"
             >
               <div className="my-2 grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="nameProd"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nome do produto</FormLabel>
@@ -157,7 +225,7 @@ export function ProductModal({
                 />
                 <FormField
                   control={form.control}
-                  name="description"
+                  name="descriptionProd"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Descrição</FormLabel>

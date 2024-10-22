@@ -32,25 +32,20 @@ import { ProductModal } from "./ProductModal"
 export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState({})
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const { products, loading } = useProducts()
 
   const handleStatusChange = async (productId, newStatus) => {
-    console.log("Updating product ID:", productId) // Log the product ID
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/product/${productId}`, // Use singular 'product'
+        `http://localhost:8080/api/product/${productId}`,
         { active: newStatus },
         { headers: { "Content-Type": "application/json" } }
       )
 
       if (response.status !== 200) {
-        // Check for a successful response
         throw new Error("Erro ao atualizar o status do produto.")
       }
-      console.log(
-        `Status do produto ${productId} atualizado para: ${newStatus ? "Ativo" : "Inativo"}`
-      )
     } catch (error) {
       console.error("Erro ao atualizar o status:", error)
       if (error.response) {
@@ -84,6 +79,7 @@ export function StoreMenu() {
                 setIsModalOpen={setIsModalOpen}
                 setSelectedProduct={setSelectedProduct}
                 selectedProduct={selectedProduct}
+                setProductId={selectedProduct?.productId || null}
               />
             </AlertDialogContent>
           </AlertDialog>

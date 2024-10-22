@@ -24,15 +24,14 @@ export function MenuItemCard({
 }) {
   const {
     nameProd = "",
-    image = "",
-    description: initialDescription,
+    urlImgProd = "",
+    descriptionProd: initialDescription,
     active: initialStatus,
     expirationDate: initialExpirationDate,
     quantity: initialQuantity,
     originalPrice: initialOriginalPrice,
     sellPrice: initialSellPrice,
   } = product
-
   const [expirationDate, setExpirationDate] = useState(
     initialExpirationDate ? new Date(initialExpirationDate) : null
   )
@@ -74,7 +73,7 @@ export function MenuItemCard({
           alt={nameProd || "Product image"}
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={image}
+          src={urlImgProd}
           width="64"
         />
       </TableCell>
