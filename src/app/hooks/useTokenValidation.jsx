@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-function checkTokenExpiration(token) {
+export function checkTokenExpiration(token) {
   try {
     const decoded = decodeJwt(token)
     if (decoded.exp * 1000 < Date.now()) {

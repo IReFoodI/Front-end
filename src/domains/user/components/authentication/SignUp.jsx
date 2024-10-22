@@ -21,7 +21,6 @@ import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
-import { useTokenValidation } from "../../../../app/hooks/useTokenValidation"
 import { formSchema } from "../../models/CreateAccountTypes"
 import { TermsOfUse } from "./TermsOfUse"
 
@@ -29,8 +28,6 @@ export function SignUp() {
   const location = useLocation()
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-
-  useTokenValidation()
 
   const form = useForm({
     resolver: zodResolver(formSchema),

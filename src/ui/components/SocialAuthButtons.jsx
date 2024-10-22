@@ -1,13 +1,17 @@
 import { useGoogleLogin } from "@react-oauth/google"
 import axios from "axios"
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
+import { AuthContext } from "../../app/context/AuthContext"
+
 export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
+  const { signIn } = useContext(AuthContext)
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
       console.log(credetialResponse)
@@ -34,6 +38,9 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
         )
 
         localStorage.setItem("jwtRefoods", response.data.jwt)
+        localStorage.setItem("userRefoods", JSON.stringify(userDTO))
+
+        signIn(userDTO)
 
         toast.success("Login efetuado com sucesso!")
 

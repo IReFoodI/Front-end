@@ -55,6 +55,7 @@ export function ProfileSheet() {
 
   const logout = () => {
     localStorage.removeItem("jwtRefoods")
+    localStorage.removeItem("userRefoods")
     navigate("/autenticar/entrar")
   }
 

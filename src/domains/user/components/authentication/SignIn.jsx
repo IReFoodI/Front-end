@@ -16,7 +16,6 @@ import { Input } from "@/ui/components/ui/input"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
-import { useTokenValidation } from "../../../../app/hooks/useTokenValidation"
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
 
@@ -25,8 +24,6 @@ export function SignIn() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
-
-  useTokenValidation()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
