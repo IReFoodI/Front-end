@@ -59,38 +59,6 @@ export function Header() {
               </Link>
             </div>
           </div>
-          <div className="right-0 flex gap-3 md:absolute">
-            <Popover onOpenChange={handleProfilePopoverOpen}>
-              <PopoverTrigger asChild>
-                <Link
-                  className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-orange-100 md:flex ${isProfilePopoverOpen ? "bg-orange-100 text-primary" : " "}`}
-                >
-                  <IconUser className="w-full text-center" size={30} />
-                </Link>
-              </PopoverTrigger>
-
-              <PopoverContent sideOffset={20}>
-                <ProfileSheet />
-              </PopoverContent>
-            </Popover>
-
-            <Sheet onOpenChange={handleClick}>
-              <SheetTrigger asChild>
-                <Link
-                  to="/"
-                  className={`relative m-auto w-10 rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-                >
-                  <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-                    {orderQuantity}
-                  </span>
-                  <IconShoppingBag className="w-full text-center" size={30} />
-                </Link>
-              </SheetTrigger>
-              <SheetContent className="w-[85%]">
-                <OrderReview />
-              </SheetContent>
-            </Sheet>
-          </div>
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
@@ -138,16 +106,20 @@ export function Header() {
               <ProfileSheet />
             </PopoverContent>
           </Popover>
-          <Link
-            to="/"
-            className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-            onClick={handleClick}
-          >
-            <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-              {orderQuantity}
-            </span>
-            <IconShoppingBag className="w-full text-center" size={30} />
-          </Link>
+
+          <Sheet>
+            <SheetTrigger
+              className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+            >
+              <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
+                {orderQuantity}
+              </span>
+              <IconShoppingBag className="w-full text-center" size={30} />
+            </SheetTrigger>
+            <SheetContent>
+              <OrderReview />
+            </SheetContent>
+          </Sheet>
         </section>
       </div>
     </header>
