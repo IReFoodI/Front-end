@@ -23,6 +23,7 @@ import { formSchema } from "../../models/LoginTypes"
 import { authService } from "../../services/authService"
 
 export function SignIn() {
+  const { addUser } = useStoreUser()
   const location = useLocation()
   const navigate = useNavigate()
   const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
