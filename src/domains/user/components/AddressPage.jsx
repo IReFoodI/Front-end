@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 
-import { getLocalStorageId } from "@/app/utils/storage-id"
+import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Dialog,
@@ -9,32 +9,37 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/ui/components/ui/dialog"
+import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
 import { addressService } from "../services/addressService"
 import { AddressCard } from "./AddressCard"
 
 export function AddressPage() {
-  const id = getLocalStorageId()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [defaultAddress, setDefaultAddress] = useState([])
   const [otherAddresses, setOtherAddresses] = useState([])
+  const { loading: loadingAddress, onRequest: onRequestAddress } = useFetch()
+
   // const [selectedAddressId, setSelectedAddressId] = useState(defaultAddress?.id)
 
-  const fetchAddresses = useCallback(async () => {
-    try {
-      const response = await addressService.listAddresses(id)
-      const defaultAddr = response?.data?.find((address) => address.isStandard)
-      console.log(defaultAddr)
-      const otherAddrs = response?.data?.filter(
-        (address) => !address.isStandard
-      )
-      setDefaultAddress(() => defaultAddr)
-      setOtherAddresses(() => otherAddrs)
-    } catch (error) {
-      console.log("deu merda", error)
-    }
-  }, [id])
+  function filterAddresses(data) {
+    const defaultAddr = data.find((address) => address.isStandard)
+    console.log("padrao ", defaultAddr)
+    const otherAddrs = data.filter((address) => !address.isStandard)
+    setDefaultAddress(() => defaultAddr)
+    setOtherAddresses(() => otherAddrs)
+  }
+
+  const fetchAddresses = useCallback(
+    async (data) => {
+      await onRequestAddress({
+        request: () => addressService.listAddresses(data),
+        onSuccess: filterAddresses,
+      })
+    },
+    [onRequestAddress]
+  )
 
   useEffect(() => {
     fetchAddresses()
@@ -44,8 +49,12 @@ export function AddressPage() {
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleAddressChange = (id) => {
+  const handleAddressChange = () => {
     // setSelectedAddressId(id)
+  }
+
+  if (loadingAddress) {
+    return <Loading />
   }
 
   return (

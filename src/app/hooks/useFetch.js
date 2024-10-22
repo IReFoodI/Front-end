@@ -32,7 +32,7 @@ const useFetch = () => {
         setData(response.data)
         onSuccess && onSuccess(response.data)
         console.log(response)
-        toast.success(successMessage)
+        successMessage && toast.success(successMessage)
       } catch (err) {
         setData(null)
         toast.error(

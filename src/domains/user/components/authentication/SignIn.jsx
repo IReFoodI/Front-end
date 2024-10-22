@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import useFetch from "@/app/hooks/useFetch"
+import { useStoreUser } from "@/app/hooks/useStoreUser"
 import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -38,6 +39,7 @@ export function SignIn() {
 
   function redirect(data) {
     localStorageUtil.setLocalStorageToken(data?.jwt)
+    addUser(data)
     navigate("/")
   }
 

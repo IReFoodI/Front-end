@@ -9,7 +9,7 @@ import { router } from "./app/router/routes"
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Toaster position="top-right" richColors />
+    <Toaster position="top-right" richColors duration={2000} />
     <RouterProvider router={router} />
   </StrictMode>
 )
