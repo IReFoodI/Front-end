@@ -12,6 +12,8 @@ import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
+import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
@@ -31,8 +33,8 @@ export function Header() {
     setOrderQuantity(9 + "+")
   }
 
-  function handleClick() {
-    setIsActive(true)
+  function handleClick(open) {
+    setIsActive(open)
   }
 
   function handleProfilePopoverOpen(open) {
@@ -40,7 +42,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-10 w-screen bg-orange-50 p-4 drop-shadow-md">
+    <header className="sticky top-0 z-10 bg-orange-50 p-4 drop-shadow-md">
       <div className="relative flex max-w-screen-2xl flex-col items-center justify-between gap-2 md:m-auto md:w-[85%] md:flex-row lg:w-[70%]">
         <section className="hidden w-full items-center justify-between md:order-1 md:flex md:w-fit">
           <div className="flex items-center justify-start">
@@ -111,16 +113,20 @@ export function Header() {
               <ProfileSheet />
             </PopoverContent>
           </Popover>
-          <Link
-            to="/"
-            className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-            onClick={handleClick}
-          >
-            <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-              {orderQuantity}
-            </span>
-            <IconShoppingBag className="w-full text-center" size={30} />
-          </Link>
+
+          <Sheet>
+            <SheetTrigger
+              className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+            >
+              <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
+                {orderQuantity}
+              </span>
+              <IconShoppingBag className="w-full text-center" size={30} />
+            </SheetTrigger>
+            <SheetContent className="max-h-screen overflow-auto">
+              <OrderReview />
+            </SheetContent>
+          </Sheet>
         </section>
       </div>
     </header>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -16,34 +17,37 @@ const addresses = [
   {
     id: "1",
     type: "Casa",
-    street: "Av Vamo pra Cima, 10 - Apto 02",
-    complement: "Bloco A",
-    neighborhood: "Bairro Cruzes",
+    street: "Av Vamo pra Cima",
+    number: "10",
+    complement: "Bloco A - Apto 02",
+    district: "Bairro Cruzes",
     city: "Não-me-Toque",
     state: "RS",
-    zipCode: "99.999-99",
+    zipCode: "99999999",
     isDefault: true,
   },
   {
     id: "2",
     type: "Trabalho",
-    street: "Rua do Trabalho, 123 - Sala 45",
-    complement: "Edifício Centro",
-    neighborhood: "Centro",
+    street: "Rua do Trabalho",
+    number: "123",
+    complement: "Edifício Centro - Sala 45",
+    district: "Centro",
     city: "Porto Alegre",
     state: "RS",
-    zipCode: "90.000-00",
+    zipCode: "90000000",
     isDefault: false,
   },
   {
     id: "3",
     type: "Casa de Praia",
-    street: "Praia do Sol, 100 - Casa 3",
-    complement: "",
-    neighborhood: "Praia do Sol",
+    street: "Praia do Sol,",
+    number: "100",
+    complement: "Casa 3",
+    district: "Praia do Sol",
     city: "Balneário Camboriú",
     state: "SC",
-    zipCode: "88.888-88",
+    zipCode: "88888888",
     isDefault: false,
   },
 ]
@@ -105,9 +109,11 @@ export function AddressPage() {
           </div>
         </RadioGroup>
         <div className="lg:py-0">
-          <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
-            Adicionar novo endereço
-          </Button>
+          <Link to="/endereco/adicionar">
+            <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+              Adicionar novo endereço
+            </Button>
+          </Link>
         </div>
       </div>
 

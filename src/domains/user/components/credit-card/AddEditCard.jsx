@@ -43,14 +43,14 @@ export function AddEditCard({ type = "add", card, closeModal }) {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center justify-center">
-      <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold md:hidden">
+    <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center justify-center p-3 md:p-4 lg:p-5">
+      <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold lg:hidden">
         {type === "add" ? "Adicionar" : "Editar"} Cartão
       </h1>
-      <div className="flex w-full min-w-[19rem] flex-col items-center justify-center gap-3 md:flex-row md:gap-10">
+      <div className="flex w-full min-w-[19rem] flex-col items-center justify-center gap-3 lg:flex-row lg:gap-10">
         <section
           id="credit-card"
-          className="flex max-h-52 min-h-44 w-full min-w-80 flex-col items-start justify-end gap-3 rounded-xl bg-gray-600 p-4 font-semibold text-zinc-50 md:order-2"
+          className="flex max-h-52 min-h-44 w-full min-w-80 max-w-[26.5rem] flex-col items-start justify-end gap-3 rounded-xl bg-gray-600 p-4 font-semibold text-zinc-50 lg:order-2"
         >
           <p className="text-lg">
             {number === "" ? "Número do cartão" : number}
@@ -70,7 +70,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-3 md:min-w-[35rem]"
           >
-            <h1 className="hidden w-full justify-center text-center text-xl font-semibold md:flex">
+            <h1 className="hidden w-full justify-center text-center text-xl font-semibold lg:flex">
               {type === "add" ? "Adicionar" : "Editar"} Cartão
             </h1>
             <FormField
