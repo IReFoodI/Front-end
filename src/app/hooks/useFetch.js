@@ -35,7 +35,6 @@ const useFetch = () => {
         response = await request()
         setData(response.data)
         onSuccess && onSuccess(response.data)
-        console.log(response)
         successMessage && toast.success(successMessage)
       } catch (err) {
         setError(err)

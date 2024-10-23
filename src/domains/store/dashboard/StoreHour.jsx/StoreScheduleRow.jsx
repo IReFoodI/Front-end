@@ -1,55 +1,63 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
 import { scheduleSchema } from "@/domains/store/models/ScheduleSchemaTypes"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/ui/components/ui/form/form"
+import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 
 export function ScheduleRow({
   dayName,
   enabled,
+  disabled,
+  onToggleEnabled,
   startHour,
   startMinute,
   endHour,
   endMinute,
-  disabled,
-  onToggleEnabled,
-  onStartHourChange,
-  onStartMinuteChange,
-  onEndHourChange,
-  onEndMinuteChange,
+  onError,
 }) {
-  const handleHourInput = (value, setValue) => {
-    const result = scheduleSchema.safeParse({
-      startHour: value,
-      startMinute: startMinute,
-      endHour: endHour,
-      endMinute: endMinute,
-    })
+  const form = useForm({
+    resolver: zodResolver(scheduleSchema),
+    defaultValues: {
+      startHour: startHour || "",
+      startMinute: startMinute || "",
+      endHour: endHour || "",
+      endMinute: endMinute || "",
+    },
+    mode: "onChange",
+  })
 
-    if (result.success) {
-      setValue(value)
-    } else {
-      console.log(result.error.format())
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
+  const handleValidation = async () => {
+    const isValid = await form.trigger()
+    if (!isValid) {
+      onError?.(form.formState.errors) // Envia erros ao componente pai
     }
   }
 
-  const handleMinuteInput = (value, setValue) => {
-    const result = scheduleSchema.safeParse({
-      startHour: startHour,
-      startMinute: value,
-      endHour: endHour,
-      endMinute: endMinute,
-    })
-
-    if (result.success) {
-      setValue(value)
-    } else {
-      console.log(result.error.format())
+  const handleHourChange = (field) => async (event) => {
+    const value = event.target.value
+    if (/^(2[0-3]|[0-1]?[0-9]?)?$/.test(value)) {
+      field.onChange(value)
+      await handleValidation()
     }
   }
 
-  const formatWithLeadingZero = (value, setValue) => {
-    if (value.length === 1) {
-      setValue("0" + value)
-    } else if (value === "") {
-      setValue("00")
+  const handleMinuteChange = (field) => async (event) => {
+    const value = event.target.value
+    if (/^(5[0-9]|[0-4]?[0-9]?)?$/.test(value)) {
+      field.onChange(value)
+      await handleValidation()
     }
   }
 
@@ -57,79 +65,116 @@ export function ScheduleRow({
     <div
       className={`flex flex-col items-center space-y-2 border-b border-gray-300 py-2 sm:flex-row sm:space-x-4 sm:space-y-0 ${disabled ? "opacity-50" : ""}`}
     >
-      <Switch
-        checked={enabled}
-        onCheckedChange={onToggleEnabled}
-        disabled={disabled}
-        className="mr-2"
-      />
-      <span
-        className={`font-semibold text-center${disabled ? "text-gray-400" : "text-gray-700"} min-w-[120px] flex-grow`}
-      >
-        {dayName}
-      </span>
-      <span className={`mr-2 ${disabled ? "text-gray-400" : "text-gray-500"}`}>
-        das
-      </span>
-      <div className="flex items-center space-x-1">
-        <div className="flex items-center space-x-1">
-          <input
-            type="text"
-            value={startHour}
-            onChange={(e) => handleHourInput(e.target.value, onStartHourChange)}
-            onBlur={() => formatWithLeadingZero(startHour, onStartHourChange)}
-            className="w-12 rounded-md border text-center"
-            maxLength={2}
-            placeholder="00"
-            disabled={disabled || !enabled}
-          />
-          <span>:</span>
-          <input
-            type="text"
-            value={startMinute}
-            onChange={(e) =>
-              handleMinuteInput(e.target.value, onStartMinuteChange)
-            }
-            onBlur={() =>
-              formatWithLeadingZero(startMinute, onStartMinuteChange)
-            }
-            className="w-12 rounded-md border text-center"
-            maxLength={2}
-            placeholder="00"
-            disabled={disabled || !enabled}
-          />
-        </div>
+      <div className="flex items-center">
+        <Switch
+          checked={enabled}
+          onCheckedChange={onToggleEnabled}
+          disabled={disabled}
+          className="mr-2"
+        />
         <span
-          className={`mx-2 ${disabled ? "text-gray-400" : "text-gray-500"}`}
+          className={`text-center font-semibold ${disabled ? "text-gray-400" : "text-gray-700"} min-w-[120px] flex-grow`}
         >
-          até
+          {dayName}
         </span>
-        <div className="flex items-center space-x-1">
-          <input
-            type="text"
-            value={endHour}
-            onChange={(e) => handleHourInput(e.target.value, onEndHourChange)}
-            onBlur={() => formatWithLeadingZero(endHour, onEndHourChange)}
-            className="w-12 rounded-md border text-center"
-            maxLength={2}
-            placeholder="00"
-            disabled={disabled || !enabled}
-          />
-          <span>:</span>
-          <input
-            type="text"
-            value={endMinute}
-            onChange={(e) =>
-              handleMinuteInput(e.target.value, onEndMinuteChange)
-            }
-            onBlur={() => formatWithLeadingZero(endMinute, onEndMinuteChange)}
-            className="w-12 rounded-md border text-center"
-            maxLength={2}
-            placeholder="00"
-            disabled={disabled || !enabled}
-          />
-        </div>
       </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <div className="flex items-center justify-center space-x-1">
+            <div className="flex items-center space-x-1">
+              <FormField
+                control={form.control}
+                name="startHour"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        maxLength={2}
+                        placeholder="00"
+                        disabled={disabled || !enabled}
+                        className="w-12 rounded-md border text-center"
+                        onChange={handleHourChange(field)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <span>:</span>
+              <FormField
+                control={form.control}
+                name="startMinute"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        maxLength={2}
+                        placeholder="00"
+                        disabled={disabled || !enabled}
+                        className="w-12 rounded-md border text-center"
+                        onChange={handleMinuteChange(field)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <span
+              className={`mx-2 ${disabled ? "text-gray-400" : "text-gray-500"}`}
+            >
+              até
+            </span>
+            <div className="flex items-center space-x-1">
+              <FormField
+                control={form.control}
+                name="endHour"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        maxLength={2}
+                        placeholder="00"
+                        disabled={disabled || !enabled}
+                        className="w-12 rounded-md border text-center"
+                        onChange={handleHourChange(field)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <span>:</span>
+              <FormField
+                control={form.control}
+                name="endMinute"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        maxLength={2}
+                        placeholder="00"
+                        disabled={disabled || !enabled}
+                        className="w-12 rounded-md border text-center"
+                        onChange={handleMinuteChange(field)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+        </form>
+      </Form>
     </div>
   )
 }
