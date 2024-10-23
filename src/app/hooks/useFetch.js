@@ -39,7 +39,7 @@ const useFetch = () => {
         successMessage && toast.success(successMessage)
       } catch (err) {
         setError(err)
-        onError() && onError(err)
+        onError && onError(err)
         setData(null)
         toast.error(
           errorMessage ??
