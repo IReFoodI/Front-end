@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Dialog,
@@ -9,61 +10,52 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/ui/components/ui/dialog"
+import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
+import { addressService } from "../services/addressService"
 import { AddressCard } from "./AddressCard"
 
-const addresses = [
-  {
-    id: "1",
-    type: "Casa",
-    street: "Av Vamo pra Cima",
-    number: "10",
-    complement: "Bloco A - Apto 02",
-    district: "Bairro Cruzes",
-    city: "Não-me-Toque",
-    state: "RS",
-    zipCode: "99999999",
-    isDefault: true,
-  },
-  {
-    id: "2",
-    type: "Trabalho",
-    street: "Rua do Trabalho",
-    number: "123",
-    complement: "Edifício Centro - Sala 45",
-    district: "Centro",
-    city: "Porto Alegre",
-    state: "RS",
-    zipCode: "90000000",
-    isDefault: false,
-  },
-  {
-    id: "3",
-    type: "Casa de Praia",
-    street: "Praia do Sol,",
-    number: "100",
-    complement: "Casa 3",
-    district: "Praia do Sol",
-    city: "Balneário Camboriú",
-    state: "SC",
-    zipCode: "88888888",
-    isDefault: false,
-  },
-]
-
 export function AddressPage() {
-  const defaultAddress = addresses.find((address) => address.isDefault)
-  const otherAddresses = addresses.filter((address) => !address.isDefault)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedAddressId, setSelectedAddressId] = useState(defaultAddress?.id)
+  const [defaultAddress, setDefaultAddress] = useState([])
+  const [otherAddresses, setOtherAddresses] = useState([])
+  const { loading: loadingAddress, onRequest: onRequestAddress } = useFetch()
+
+  // const [selectedAddressId, setSelectedAddressId] = useState(defaultAddress?.id)
+
+  function filterAddresses(data) {
+    const defaultAddr = data.find((address) => address.isStandard)
+    console.log("padrao ", defaultAddr)
+    const otherAddrs = data.filter((address) => !address.isStandard)
+    setDefaultAddress(() => defaultAddr)
+    setOtherAddresses(() => otherAddrs)
+  }
+
+  const fetchAddresses = useCallback(
+    async (data) => {
+      await onRequestAddress({
+        request: () => addressService.listAddresses(data),
+        onSuccess: filterAddresses,
+      })
+    },
+    [onRequestAddress]
+  )
+
+  useEffect(() => {
+    fetchAddresses()
+  }, [fetchAddresses])
 
   const toggleOpenModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleAddressChange = (id) => {
-    setSelectedAddressId(id)
+  const handleAddressChange = () => {
+    // setSelectedAddressId(id)
+  }
+
+  if (loadingAddress) {
+    return <Loading />
   }
 
   return (
@@ -75,7 +67,7 @@ export function AddressPage() {
       <div className="w-full justify-between">
         <RadioGroup
           className="default-style pb-4"
-          value={selectedAddressId}
+          // value={selectedAddressId}
           onValueChange={handleAddressChange}
         >
           <div className="flex flex-col space-y-4">
@@ -84,7 +76,7 @@ export function AddressPage() {
               {defaultAddress ? (
                 <AddressCard
                   address={defaultAddress}
-                  isSelected={selectedAddressId === defaultAddress.id}
+                  isSelected={defaultAddress.isStantard}
                   onAddressSelect={handleAddressChange}
                   toggleOpenModal={toggleOpenModal}
                 />
@@ -97,7 +89,7 @@ export function AddressPage() {
                   <AddressCard
                     key={address.id}
                     address={address}
-                    isSelected={selectedAddressId === address.id}
+                    isSelected={address.isStantard}
                     onAddressSelect={handleAddressChange}
                     toggleOpenModal={toggleOpenModal}
                   />

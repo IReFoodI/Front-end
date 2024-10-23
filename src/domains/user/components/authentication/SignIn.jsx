@@ -2,8 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 
-import { useFetch } from "@/app/hooks/useFetch"
-import { setLocalStorageToken } from "@/app/utils/storage-token"
+import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -20,16 +19,16 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
-import { signInWithEmailAndPassword } from "../../services/authService"
+import { authService } from "../../services/authService"
 
 export function SignIn() {
+  // const { addUser } = useStoreUser()
   const location = useLocation()
   const navigate = useNavigate()
-  const { executeFetch, isLoading, response } = useFetch(
-    signInWithEmailAndPassword
-  )
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
+
+  const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -39,33 +38,26 @@ export function SignIn() {
     },
   })
 
-  const onSubmit = async (data) => {
-    function redirect() {
-      if (redirectPath) {
-        navigate(redirectPath)
-      } else {
-        navigate(
-          location.pathname == "/autenticar/negocios" ? "/dashboard" : "/"
-        )
-      }
+  function redirect() {
+    if (redirectPath) {
+      navigate(redirectPath)
+    } else {
+      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
     }
-
-    executeFetch(
-      data,
-      redirect(),
-      true,
-      "Login realizado com sucesso! Bem-vindo(a)!"
-    )
-    setLocalStorageToken(response?.data?.jwt)
-    console.log(response)
   }
-  if (isLoading) {
+
+  const onSubmit = async (data) => {
+    await onRequestLogin({
+      request: () => authService.signInWithEmailAndPassword(data),
+      onSuccess: redirect,
+      successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
+      errorMessage: "Credenciais incorretas",
+    })
+  }
+
+  if (loadingLogin) {
     return <Loading />
   }
-
-  // if (isError) {
-  //   return <div>Ocorreu um erro</div>
-  // }
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -114,7 +106,9 @@ export function SignIn() {
               </FormItem>
             )}
           />
-          <Button type="submit">Entrar</Button>
+          <Button disabled={loadingLogin} type="submit">
+            Entrar
+          </Button>
         </form>
       </Form>
 
@@ -123,10 +117,12 @@ export function SignIn() {
         buttonContent="Recuperar senha"
         navigateTo="/autenticar/recuperar-senha"
       />
-      <SocialAuthButtons
-        locationPathname={location?.pathname}
-        redirectPath={redirectPath}
-      />
+      {location?.pathname !== "/autenticar/negocios" && (
+        <SocialAuthButtons
+          locationPathname={location?.pathname}
+          // redirectPath={redirectPath}
+        />
+      )}
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"

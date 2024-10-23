@@ -4,44 +4,41 @@ import { useNavigate } from "react-router-dom"
 import { Label } from "@/ui/components/ui/label"
 import { RadioGroupItem } from "@/ui/components/ui/radio-group"
 
-export function AddressCard({
-  address,
-  isSelected,
-  onAddressSelect,
-  toggleOpenModal,
-}) {
-  const formatZipCode = (zipCode) => {
-    return zipCode.replace(/(\d{5})(\d{3})/, "$1-$2")
+export function AddressCard({ address, onAddressSelect, toggleOpenModal }) {
+  const formatCep = (Cep) => {
+    return Cep?.replace(/(\d{5})(\d{3})/, "$1-$2")
   }
 
   const navigate = useNavigate()
   const {
-    id,
-    type,
+    addressId,
+    city,
+    cep,
+    state,
+    district,
     street,
     number,
     complement,
-    district,
-    city,
-    state,
-    zipCode,
+    isStandard,
+    type,
   } = address
 
   const handleEdit = () => {
-    navigate(`/endereco/editar/${id}`, { state: { address } })
+    navigate(`/endereco/editar/${addressId}`, { state: { address } })
   }
+
   return (
     <div className="flex w-full items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
       <div className="flex items-center gap-1">
         <div className="flex items-center space-x-2">
           <RadioGroupItem
             name="address-default"
-            id={`address-${id}`}
-            value={id}
-            checked={isSelected}
-            onChange={() => onAddressSelect(id)}
+            id={`address-${addressId}`}
+            value={addressId}
+            checked={isStandard}
+            onChange={() => onAddressSelect(addressId)}
           />
-          <Label htmlFor={`address-${id}`}></Label>
+          <Label htmlFor={`address-${addressId}`}></Label>
         </div>
 
         <div>
@@ -55,7 +52,7 @@ export function AddressCard({
           {complement && <p>{complement}</p>}
           <p>{district}</p>
           <p>
-            {city} - {state} - CEP {formatZipCode(zipCode)}
+            {city} - {state} - CEP {formatCep(cep)}
           </p>
         </div>
       </div>

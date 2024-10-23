@@ -3,17 +3,21 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
+import { useStoreUser } from "@/app/hooks/useStoreUser"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
+  const { addUser } = useStoreUser()
+
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
       console.log(credetialResponse)
 
       try {
-        const response = await axios.get(
+        const userInfoResponse = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
             headers: {
@@ -21,6 +25,24 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
             },
           }
         )
+
+        const userDTO = {
+          email: userInfoResponse.data.email,
+          name: userInfoResponse.data.name,
+          sub: userInfoResponse.data.sub,
+        }
+
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/auth/google/success`,
+          userDTO
+        )
+
+        localStorageUtil.setLocalStorageToken(response.data.jwt)
+
+        localStorage.setItem("userRefoods", JSON.stringify(userDTO))
+
+        addUser(userDTO)
+
         toast.success("Login efetuado com sucesso!")
 
         if (redirectPath) {
@@ -35,7 +57,8 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
         console.log(response)
       } catch (error) {
-        console.log(error)
+        console.error("Erro durante o login com Google:", error)
+        toast.error("Ocorreu um erro durante o login. Tente novamente.")
       }
     },
 

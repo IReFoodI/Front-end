@@ -9,8 +9,10 @@ import {
 } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
+import { useStoreUser } from "@/app/hooks/useStoreUser"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
@@ -21,7 +23,9 @@ import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
   const { value } = useMediaQuery("(max-width: 768px)")
+  const { user } = useStoreUser()
   const [activeInformationButton, setActiveInformationButton] = useState(null)
+  const navigate = useNavigate()
 
   const informationButtons = [
     {
@@ -51,6 +55,12 @@ export function ProfileSheet() {
     },
   ]
 
+  const logout = () => {
+    localStorage.removeItem("jwtRefoods")
+    localStorage.removeItem("userRefoods")
+    navigate("/autenticar/entrar")
+  }
+
   return (
     <div className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-3">
@@ -60,7 +70,7 @@ export function ProfileSheet() {
               <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
                 <ProfileImagePlaceholder className="z-2 m-1 w-14" />
                 <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
-                  Olá, Usuário.
+                  Olá, {user?.nome}!
                 </SheetTitle>
                 <SheetDescription></SheetDescription>
               </div>
@@ -69,7 +79,7 @@ export function ProfileSheet() {
             <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
               <ProfileImagePlaceholder className="z-2 m-1 w-14" />
               <h1 className="m-1 text-lg font-semibold leading-5 text-white">
-                Olá, Usuário
+                Olá, {user?.nome}!
               </h1>
             </div>
           )}
@@ -129,7 +139,10 @@ export function ProfileSheet() {
             Ajuda
           </Link>
         </div>
-        <Button className="w-full rounded-3xl bg-primary text-base font-semibold">
+        <Button
+          onClick={logout}
+          className="w-full rounded-3xl bg-primary text-base font-semibold"
+        >
           Sair
         </Button>
       </div>
