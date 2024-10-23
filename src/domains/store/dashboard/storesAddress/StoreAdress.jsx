@@ -2,7 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useMemo, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 
-import { fetchAddressData } from "@/domains/store/hooks/useAddress"
+import {
+  fetchAddressData,
+  updateAddress,
+} from "@/domains/store/hooks/useAddress"
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
   changeUserAddressTypes,
@@ -22,10 +25,11 @@ const FormSchema = changeUserAddressTypes
 
 export function StoreAddressEdit() {
   const [error, setError] = useState(null)
+  const [originalData, setOriginalData] = useState({})
 
   const initialData = useMemo(
     () => ({
-      zipCode: "",
+      cep: "",
       street: "",
       number: "",
       district: "",
@@ -42,20 +46,21 @@ export function StoreAddressEdit() {
     defaultValues: initialData,
   })
 
-  const { getValues, setValue, reset, watch } = formMethods
+  const { getValues, setValue, reset, watch, handleSubmit } = formMethods
   const [encodedAddress, setEncodedAddress] = useState("")
 
   useEffect(() => {
     async function fetchData() {
-      await fetchAddressData(reset, setError)
+      const data = await fetchAddressData(reset, setError)
+      setOriginalData(data)
     }
+
     fetchData()
   }, [reset])
-
-  useCep(getValues("zipCode"), setValue, getValues)
+  useCep(getValues("cep"), setValue, getValues)
 
   const watchedFields = watch([
-    "zipCode",
+    "cep",
     "street",
     "number",
     "district",
@@ -64,14 +69,19 @@ export function StoreAddressEdit() {
   ])
 
   useEffect(() => {
-    const [zipCode, street, number, district, city, state] = watchedFields
-
-    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${zipCode}`
+    const [cep, street, number, district, city, state] = watchedFields
+    const fullAddress = `${street}, ${number} ${
+      district ? `${district},` : ""
+    } ${city} - ${state}, ${cep}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
 
-  function onSubmit(data) {
-    console.log("Dados enviados:", data)
+  function onSubmit(formData) {
+    const updatedData = {
+      ...originalData,
+      ...formData,
+    }
+    updateAddress(3, updatedData, setError) // tem que subsituir o id: 1 pelo do usuario
   }
 
   return (
@@ -79,20 +89,20 @@ export function StoreAddressEdit() {
       <main className="mx-auto flex w-fit max-w-[1216px] flex-col items-center justify-start gap-6 text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Endereço</h1>
-          <p>Ajuste as informações do endereços</p>
+          <p>Ajuste as informações do endereço</p>
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex justify-center">
           <div className="relative bg-white">
             <FormProvider {...formMethods}>
               <form
-                onSubmit={formMethods.handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
                 className="relative space-y-4 text-center"
               >
                 <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
                   <FormField
                     control={formMethods.control}
-                    name="zipCode"
+                    name="cep"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
