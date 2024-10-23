@@ -12,6 +12,8 @@ import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
+import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
@@ -24,8 +26,8 @@ export function Header() {
     setOrderQuantity(9 + "+")
   }
 
-  function handleClick() {
-    setIsActive(true)
+  function handleClick(open) {
+    setIsActive(open)
   }
 
   function handleProfilePopoverOpen(open) {
@@ -104,16 +106,20 @@ export function Header() {
               <ProfileSheet />
             </PopoverContent>
           </Popover>
-          <Link
-            to="/"
-            className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
-            onClick={handleClick}
-          >
-            <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-              {orderQuantity}
-            </span>
-            <IconShoppingBag className="w-full text-center" size={30} />
-          </Link>
+
+          <Sheet>
+            <SheetTrigger
+              className={`relative rounded-sm p-1 hover:bg-orange-100 md:rounded-lg ${isActive ? "focus:bg-orange-100 focus:text-primary" : " "}`}
+            >
+              <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
+                {orderQuantity}
+              </span>
+              <IconShoppingBag className="w-full text-center" size={30} />
+            </SheetTrigger>
+            <SheetContent className="max-h-screen overflow-auto">
+              <OrderReview />
+            </SheetContent>
+          </Sheet>
         </section>
       </div>
     </header>
