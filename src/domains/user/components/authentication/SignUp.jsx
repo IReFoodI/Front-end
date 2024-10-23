@@ -174,7 +174,9 @@ export function SignUp() {
           <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
-      <SocialAuthButtons />
+      {!location?.pathname.includes("/autenticar/negocios") && (
+        <SocialAuthButtons />
+      )}
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}

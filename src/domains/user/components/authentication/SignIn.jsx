@@ -114,10 +114,12 @@ export function SignIn() {
         buttonContent="Recuperar senha"
         navigateTo="/autenticar/recuperar-senha"
       />
-      <SocialAuthButtons
-        locationPathname={location?.pathname}
-        // redirectPath={redirectPath}
-      />
+      {location?.pathname !== "/autenticar/negocios" && (
+        <SocialAuthButtons
+          locationPathname={location?.pathname}
+          // redirectPath={redirectPath}
+        />
+      )}
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
