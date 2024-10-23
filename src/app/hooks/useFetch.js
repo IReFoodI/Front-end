@@ -33,10 +33,10 @@ export function useFetch() {
         setError(null)
         setLoading(true)
         response = await request()
-        setData(response.data)
-        onSuccess && onSuccess(response.data)
+        setData(response?.data)
+        onSuccess && onSuccess(response?.data)
         console.log(response)
-        successMessage && toast.success(successMessage)
+        successMessage && toast?.success(successMessage)
       } catch (err) {
         setError(err)
         onError && onError(err)
