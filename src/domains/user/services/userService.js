@@ -1,6 +1,6 @@
 import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 const BASE_URL = "/api/user"
-const axios = createAxiosInstance()
+const axios = createAxiosInstance(true)
 
 /**
  * Create user
@@ -17,4 +17,10 @@ async function createUserAccount(data) {
   // return await axios({ url: "/api/user", method: "POST", data })
 }
 
-export const userService = { createUserAccount }
+async function getUser() {
+  //todo falta ver a rota pra pegar as informações do usuario
+  const response = await axios.get(`${BASE_URL}`)
+  return response
+}
+
+export const userService = { createUserAccount, getUser }
