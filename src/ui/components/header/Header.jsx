@@ -116,7 +116,7 @@ export function Header() {
               </span>
               <IconShoppingBag className="w-full text-center" size={30} />
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="max-h-screen overflow-auto">
               <OrderReview />
             </SheetContent>
           </Sheet>
