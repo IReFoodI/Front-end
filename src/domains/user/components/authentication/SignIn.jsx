@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { setLocalStorageToken } from "@/app/utils/storage-token"
@@ -28,6 +28,8 @@ export function SignIn() {
   const { executeFetch, isLoading, response } = useFetch(
     signInWithEmailAndPassword
   )
+  const [searchParams] = useSearchParams()
+  const redirectPath = searchParams.get("redirect")
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -38,14 +40,14 @@ export function SignIn() {
   })
 
   const onSubmit = async (data) => {
-    // try {
-    // const response = await signInWithEmailAndPassword(data)
-    // if (!response?.data?.token) {
-    //   toast.error("Erro interno")
-    //   return
-    // }
     function redirect() {
-      navigate("/")
+      if (redirectPath) {
+        navigate(redirectPath)
+      } else {
+        navigate(
+          location.pathname == "/autenticar/negocios" ? "/dashboard" : "/"
+        )
+      }
     }
 
     executeFetch(
@@ -56,17 +58,6 @@ export function SignIn() {
     )
     setLocalStorageToken(response?.data?.jwt)
     console.log(response)
-    // if (response?.error) {
-    //   toast.error(response.error)
-    // } else {
-    //   console.log(error)
-    //   toast.success("Login realizado com sucesso! Bem-vindo(a)!")
-    //   // navigate("/")
-    // }
-    // } catch (error) {
-    //   console.log(error)
-    //   toast.error(error.message)
-    // }
   }
   if (isLoading) {
     return <Loading />
@@ -132,12 +123,15 @@ export function SignIn() {
         buttonContent="Recuperar senha"
         navigateTo="/autenticar/recuperar-senha"
       />
-      <SocialAuthButtons />
+      <SocialAuthButtons
+        locationPathname={location?.pathname}
+        redirectPath={redirectPath}
+      />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
         navigateTo={
-          location.pathname == "/autenticar/negocios"
+          location?.pathname === "/autenticar/negocios"
             ? "/autenticar/negocios/criar-conta"
             : "/autenticar/criar-conta"
         }
