@@ -21,7 +21,7 @@ import { toast } from "sonner"
  *
  * @returns {void}
  */
-const useFetch = () => {
+export function useFetch() {
   const [error, setError] = useState(null)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(null)
@@ -56,5 +56,3 @@ const useFetch = () => {
 
   return { data, loading, onRequest, error }
 }
-
-export default useFetch
