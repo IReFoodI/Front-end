@@ -9,11 +9,10 @@ import {
 } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
-import { useStoreUser } from "@/app/hooks/useStoreUser"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
+import userStore from "@/domains/user/stores/userStore"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
@@ -23,9 +22,9 @@ import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
   const { value } = useMediaQuery("(max-width: 768px)")
-  const { user } = useStoreUser()
+  const { user } = userStore()
   const [activeInformationButton, setActiveInformationButton] = useState(null)
-  const navigate = useNavigate()
+  const { logout } = userStore()
 
   const informationButtons = [
     {
@@ -54,12 +53,6 @@ export function ProfileSheet() {
       path: "/alterar-senha",
     },
   ]
-
-  const logout = () => {
-    localStorage.removeItem("jwtRefoods")
-    localStorage.removeItem("userRefoods")
-    navigate("/autenticar/entrar")
-  }
 
   return (
     <div className="flex h-full flex-col justify-between">

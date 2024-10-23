@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { SocialAuthButtons } from "@/ui/components/SocialAuthButtons"
 import { Button } from "@/ui/components/ui/button/button"
 import { Checkbox } from "@/ui/components/ui/checkbox"

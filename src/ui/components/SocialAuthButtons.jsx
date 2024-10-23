@@ -3,14 +3,14 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-import { useStoreUser } from "@/app/hooks/useStoreUser"
 import { localStorageUtil } from "@/app/utils/localStorageUtil"
+import userStore from "@/domains/user/stores/userStore"
 import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
-  const { addUser } = useStoreUser()
+  const { setUser } = userStore()
 
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
@@ -41,7 +41,7 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
         localStorage.setItem("userRefoods", JSON.stringify(userDTO))
 
-        addUser(userDTO)
+        setUser(userDTO)
 
         toast.success("Login efetuado com sucesso!")
 
