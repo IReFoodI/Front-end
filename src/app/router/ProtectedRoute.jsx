@@ -1,31 +1,41 @@
 import { useEffect } from "react"
-import { Navigate, useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
-import { useStoreUser } from "../hooks/useStoreUser"
+import userStore from "@/domains/user/stores/userStore"
+import { Loading } from "@/ui/components/ui/loading"
+
 import { checkTokenExpiration } from "../hooks/useTokenValidation"
 import { localStorageUtil } from "../utils/localStorageUtil"
 
 export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
   const location = useLocation()
-  const pathname = location?.pathname
-  const { addUser, user } = useStoreUser()
-
-  useEffect(() => {
-    const token = localStorageUtil.getLocalStorageToken()
-    const userRefoods = localStorage.getItem("userRefoods")
-    if (token && userRefoods) {
-      addUser(JSON.parse(userRefoods))
-    }
-  }, [])
-
+  const navigate = useNavigate()
   const token = localStorageUtil.getLocalStorageToken()
   const isTokenValid = token ? checkTokenExpiration(token) : false
+  const pathname = location?.pathname
+  const { user, logout, isUserLoading } = userStore()
 
-  if (!user || !isTokenValid) {
+  useEffect(() => {
+    if (!isUserLoading && (!user || !isTokenValid)) {
+      logout()
+      navigate(`${redirect}${pathname && `?redirect=${location.pathname}`}`)
+    }
+  }, [
+    isUserLoading,
+    user,
+    isTokenValid,
+    pathname,
+    logout,
+    navigate,
+    redirect,
+    location.pathname,
+  ])
+
+  if (isUserLoading) {
     return (
-      <Navigate
-        to={`${redirect}${pathname && `?redirect=${location.pathname}`}`}
-      />
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <Loading />
+      </div>
     )
   }
 

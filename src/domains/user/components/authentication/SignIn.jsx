@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
-import { useStoreUser } from "@/app/hooks/useStoreUser"
+import { useFetch } from "@/app/hooks/useFetch"
 import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -22,13 +21,16 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
 import { authService } from "../../services/authService"
+import userStore from "../../stores/userStore"
 
 export function SignIn() {
-  const { addUser } = useStoreUser()
-  const location = useLocation()
+  const { user, setUser } = userStore()
   const navigate = useNavigate()
-  const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const redirectPath = searchParams.get("redirect")
 
+  const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,16 +39,25 @@ export function SignIn() {
     },
   })
 
-  function redirect(data) {
-    localStorageUtil.setLocalStorageToken(data?.jwt)
-    addUser(data)
-    navigate("/")
+  function redirect() {
+    if (redirectPath) {
+      navigate(redirectPath)
+    } else {
+      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
+    }
+  }
+
+  function handleSuccess(data) {
+    setUser(data)
+    localStorageUtil?.setLocalStorageToken(data?.jwt)
+    console.log("usuario", user)
+    redirect()
   }
 
   const onSubmit = async (data) => {
     await onRequestLogin({
       request: () => authService.signInWithEmailAndPassword(data),
-      onSuccess: redirect,
+      onSuccess: handleSuccess,
       successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
       errorMessage: "Credenciais incorretas",
     })
