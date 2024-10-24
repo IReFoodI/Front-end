@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { PatternFormat } from "react-number-format"
+import { useNavigate } from "react-router-dom"
 
+import useFetch from "@/app/hooks/useFetch"
 import { AlertDialogFooter } from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -12,11 +14,17 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 
 import { creditCardSchema } from "../../models/CreditCardTypes"
+import {
+  createCreditCard,
+  updateCreditCard,
+} from "../../services/credit-card-service"
 import { CardExpiryFormat } from "./CardExpiryFormat"
 
 export function AddEditCard({ type = "add", card, closeModal }) {
+  const navigate = useNavigate()
   const form = useForm({
     resolver: zodResolver(creditCardSchema),
     defaultValues: {
@@ -27,6 +35,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
       cvv: card?.cvv ? card.cvv : "",
     },
   })
+  const { loading, onRequest } = useFetch()
 
   const { watch } = form
   const [number, holderName, validity] = watch([
@@ -35,15 +44,30 @@ export function AddEditCard({ type = "add", card, closeModal }) {
     "validity",
   ])
 
-  const onSubmit = (data) => {
-    try {
-      console.log(data)
-      {
-        type === "edit" && closeModal()
-      }
-    } catch (error) {
-      console.log(error)
+  function redirect() {
+    navigate("/cartoes")
+  }
+
+  const onSubmit = async (formData) => {
+    if (type === "edit") {
+      await onRequest({
+        request: () => updateCreditCard(formData),
+        onSuccess: closeModal,
+        successMessage: "Cartão editado com sucesso!",
+        errorMessage: "Ocorreu um erro ao tentar editar o cartão.",
+      })
+    } else if (type === "add") {
+      await onRequest({
+        request: () => createCreditCard(formData),
+        onSuccess: redirect,
+        successMessage: "Cartão cadastrado com sucesso!",
+        errorMessage: "Ocorreu um erro ao tentar cadastrar o cartão.",
+      })
     }
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
