@@ -1,12 +1,10 @@
 import React from "react"
 
-import { BannerPromo } from "./BannerPromo"
 import { StoreCard } from "./StoreCard"
 
 export function StoresGrid({
   stores,
   toggleFavorite,
-  showBanner,
   singleColumn,
   type = "home",
 }) {
@@ -15,7 +13,7 @@ export function StoresGrid({
       className={`grid gap-6 ${singleColumn ? "grid-cols-1" : "sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"}`}
     >
       {stores.length > 0 ? (
-        stores.map((store, index) => (
+        stores.map((store) => (
           <React.Fragment key={store.id}>
             {showBanner && index != 0 && index % 6 === 0 && (
               <div className="sm:col-span-full lg:hidden">

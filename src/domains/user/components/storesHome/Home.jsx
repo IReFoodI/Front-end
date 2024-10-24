@@ -1,6 +1,6 @@
 import { useStores } from "@/domains/user/hooks/useStores"
 
-import { BannerPromo } from "./BannerPromo"
+import { BannerCarousel } from "./BannerCarousel"
 import { StoresGrid } from "./StoresGrid"
 
 export function Home() {
@@ -9,16 +9,12 @@ export function Home() {
   return (
     <>
       <div className="my-6">
-        <BannerPromo title="Confira nossas ofertas especiais!" />
+        <BannerCarousel />
       </div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <StoresGrid
-          stores={stores}
-          toggleFavorite={toggleFavorite}
-          showBanner={true}
-        />
+        <StoresGrid stores={stores} toggleFavorite={toggleFavorite} />
       )}
     </>
   )
