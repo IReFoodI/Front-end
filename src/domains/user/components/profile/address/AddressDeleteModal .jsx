@@ -1,4 +1,4 @@
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { addressService } from "@/domains/user/services/addressService"
 import { Button } from "@/ui/components/ui/button/button"
 import {

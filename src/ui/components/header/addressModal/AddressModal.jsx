@@ -2,7 +2,7 @@ import { IconCaretDownFilled } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { addressService } from "@/domains/user/services/addressService"
 
 import { Button } from "../../ui/button/button"
@@ -21,8 +21,6 @@ export function AddressModal() {
       onSuccess: (data) => setDefaultAddress(data),
     })
   }
-
-  console.log("de", defaultAddress)
 
   function handleClick() {
     setIsActive(!isActive)

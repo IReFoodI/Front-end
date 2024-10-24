@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
   changeUserAddressTypes,
