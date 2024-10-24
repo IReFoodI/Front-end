@@ -35,14 +35,14 @@ const useFetch = () => {
         response = await request()
         setData(response.data)
         onSuccess && onSuccess(response.data)
-        console.log(response)
         successMessage && toast.success(successMessage)
       } catch (err) {
         setError(err)
-        onError() && onError(err)
+        onError && onError(err)
         setData(null)
         toast.error(
           errorMessage ??
+            err?.response?.data?.error ??
             err?.response?.data?.message ??
             err?.message ??
             "Ocorreu um erro"
