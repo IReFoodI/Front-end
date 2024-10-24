@@ -36,7 +36,7 @@ export function OngoingOrder() {
   return (
     <div
       id="page"
-      className="mx-auto flex h-screen w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto"
+      className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto"
     >
       <div className="flex h-full flex-col md:flex-row">
         <div className="flex flex-col justify-between px-10 lg:w-1/2 lg:ps-5">

@@ -31,7 +31,7 @@ export function AddressCard({
     navigate(`/endereco/editar/${id}`, { state: { address } })
   }
   return (
-    <div className="flex w-full items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
+    <div className="flex w-full max-w-[460px] items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
       <div className="flex items-center gap-1">
         <div className="flex items-center space-x-2">
           <RadioGroupItem
