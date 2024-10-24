@@ -109,10 +109,10 @@ export function AddressPage() {
           </div>
         </RadioGroup>
         <div className="text-center lg:ps-8 lg:text-left">
-        <Link to="/endereco/adicionar">
-          <Button className="w-full max-w-[360px] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
-            Adicionar novo endereço
-          </Button>
+          <Link to="/endereco/adicionar">
+            <Button className="w-full max-w-[360px] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+              Adicionar novo endereço
+            </Button>
           </Link>
         </div>
       </div>
