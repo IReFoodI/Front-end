@@ -1,13 +1,6 @@
-// import { createAxiosInstance } from "@/app/service/axiosConfig"
-// import { fetchFunction } from "@/app/service/fetchFunction"
-
 import { createAxiosInstance } from "@/app/service/createAxiosInstace"
+const BASE_URL = "/auth"
 
-// import { fetchFunction } from "@/app/service/fetchFunction"
-
-const BASE_URL = "/auth/login"
-
-const axios = createAxiosInstance()
 /**
  * SignIn
  *
@@ -16,7 +9,8 @@ const axios = createAxiosInstance()
  * @param {string} data.password - The user's password (hashed or plain).
  */
 async function signInWithEmailAndPassword(data) {
-  return await axios.post(BASE_URL, data)
+  const axios = createAxiosInstance()
+  return await axios.post(`${BASE_URL}/login`, data)
 }
 
 export const authService = { signInWithEmailAndPassword }

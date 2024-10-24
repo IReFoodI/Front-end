@@ -1,6 +1,5 @@
 import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 const BASE_URL = "/api/user"
-const axios = createAxiosInstance()
 
 /**
  * Create user
@@ -13,8 +12,8 @@ const axios = createAxiosInstance()
  * @param {string} data.password - The user's password (hashed or plain).
  */
 async function createUserAccount(data) {
+  const axios = createAxiosInstance()
   return await axios.post(BASE_URL, data)
-  // return await axios({ url: "/api/user", method: "POST", data })
 }
 
 export const userService = { createUserAccount }
