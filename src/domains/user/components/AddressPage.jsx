@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -67,18 +68,18 @@ export function AddressPage() {
 
   return (
     <>
-      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
+      <h1 className="fixed left-1/2 -translate-x-1/2 transform text-center text-2xl font-semibold">
         Meus Endereços
       </h1>
 
-      <div className="w-full justify-between">
+      <div className="flex h-full flex-col gap-8 pt-24">
         <RadioGroup
-          className="default-style pb-4"
+          className="pb-4"
           value={selectedAddressId}
           onValueChange={handleAddressChange}
         >
-          <div className="flex flex-col space-y-4">
-            <div className="flex-1">
+          <div className="flex flex-col">
+            <div className="mx-auto lg:mx-0">
               <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
               {defaultAddress ? (
                 <AddressCard
@@ -107,10 +108,12 @@ export function AddressPage() {
             </div>
           </div>
         </RadioGroup>
-        <div className="lg:py-0">
-          <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
-            Adicionar novo endereço
-          </Button>
+        <div className="text-center lg:ps-8 lg:text-left">
+          <Link to="/endereco/adicionar">
+            <Button className="w-full max-w-[360px] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
+              Adicionar novo endereço
+            </Button>
+          </Link>
         </div>
       </div>
 

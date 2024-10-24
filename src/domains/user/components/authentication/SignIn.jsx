@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -22,6 +22,8 @@ import { formSchema } from "../../models/LoginTypes"
 export function SignIn() {
   const location = useLocation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirectPath = searchParams.get("redirect")
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -34,7 +36,11 @@ export function SignIn() {
   const onSubmit = (data) => {
     toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
     console.log(data)
-    navigate("/")
+    if (redirectPath) {
+      navigate(redirectPath)
+    } else {
+      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
+    }
   }
 
   return (
@@ -93,12 +99,15 @@ export function SignIn() {
         buttonContent="Recuperar senha"
         navigateTo="/autenticar/recuperar-senha"
       />
-      <SocialAuthButtons />
+      <SocialAuthButtons
+        locationPathname={location?.pathname}
+        redirectPath={redirectPath}
+      />
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
         navigateTo={
-          location.pathname == "/autenticar/negocios"
+          location?.pathname === "/autenticar/negocios"
             ? "/autenticar/negocios/criar-conta"
             : "/autenticar/criar-conta"
         }

@@ -51,7 +51,7 @@ export function StoreCard({
       </CardContent>
 
       <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
-        <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
+        <CardTitle className="truncate font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
           {fantasy}
         </CardTitle>
         {discount && (
@@ -64,10 +64,10 @@ export function StoreCard({
 
         <div className="flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
-          <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
+          <span className="ml-4 font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
             {averageRating}
           </span>
-          <span className="font-inter ml-4 font-semibold text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
+          <span className="ml-4 font-inter text-sm font-semibold text-gray-500">
             {category}
           </span>
         </div>

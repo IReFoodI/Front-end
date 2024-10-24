@@ -73,7 +73,7 @@ export function ReviewModal({ reviewStars }) {
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}
                     className={cn(
-                      "w-full px-2 py-1 text-zinc-300 opacity-100 hover:bg-transparent hover:text-primary",
+                      "w-full px-2 py-1 text-gray-300 opacity-100 hover:bg-transparent hover:text-primary",
                       (hover ? hover : stars) > index && "text-primary"
                     )}
                     variant="ghost"
@@ -100,7 +100,7 @@ export function ReviewModal({ reviewStars }) {
               maxLength={maxLengthReview}
               className="min-w-72 flex-1 resize-none"
             ></Textarea>
-            <footer className="flex w-full items-center justify-between text-sm placeholder-zinc-500">
+            <footer className="flex w-full items-center justify-between text-sm placeholder-gray-500">
               <p className="text-xs opacity-50">
                 Seu comentário vai ajudar muitas pessoas
               </p>

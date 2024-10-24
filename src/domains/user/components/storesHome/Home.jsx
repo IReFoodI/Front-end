@@ -8,13 +8,17 @@ export function Home() {
 
   return (
     <>
-      <div className="lg:min-h52 mb-2 lg:left-0 lg:top-0 lg:z-10 lg:block lg:w-full">
+      <div className="my-6">
         <BannerCarousel />
       </div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <StoresGrid stores={stores} toggleFavorite={toggleFavorite} />
+        <StoresGrid
+          stores={stores}
+          toggleFavorite={toggleFavorite}
+          showBanner={true}
+        />
       )}
     </>
   )
