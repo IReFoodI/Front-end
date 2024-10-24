@@ -1,6 +1,7 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react"
 import { useNavigate } from "react-router-dom"
 
+import { Button } from "@/ui/components/ui/button/button"
 import { Label } from "@/ui/components/ui/label"
 import { RadioGroupItem } from "@/ui/components/ui/radio-group"
 
@@ -63,12 +64,17 @@ export function AddressCard({ address, onAddressSelect, toggleOpenModal }) {
             className="transition duration-300 hover:text-orange-500"
           />
         </button>
-        <button onClick={toggleOpenModal}>
-          <IconTrash
-            size={30}
-            className="transition duration-300 hover:text-orange-500"
-          />
-        </button>
+        {!address.isStandard && (
+          <Button
+            onClick={() => toggleOpenModal(true, addressId)}
+            variant="ghost"
+          >
+            <IconTrash
+              size={30}
+              className="transition duration-300 hover:text-orange-500"
+            />
+          </Button>
+        )}
       </span>
     </div>
   )
