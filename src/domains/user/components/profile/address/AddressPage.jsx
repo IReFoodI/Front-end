@@ -75,7 +75,14 @@ export function AddressPage() {
                   onAddressSelect={handleAddressChange}
                 />
               ) : (
-                <p>Não há endereço padrão.</p>
+                <div className="my-3 rounded-lg bg-secondary p-2 text-center">
+                  <p className="text-base font-semibold text-primary md:text-xl">
+                    Você ainda não possue endereço padrão!
+                  </p>
+                  <p className="mt-2">
+                    Adicone um endereço para para melhorar a sua experiência{" "}
+                  </p>
+                </div>
               )}
               {otherAddresses.length > 0 && (
                 <>
