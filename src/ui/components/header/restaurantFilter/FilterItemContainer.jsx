@@ -18,7 +18,7 @@ export function FilterItemContainer({ title, items }) {
               key={index}
               className={`flex items-center rounded-full p-1 text-xs font-semibold ${
                 activeItem === index
-                  ? "bg-orange-100 text-orange-800"
+                  ? "bg-orange-100 text-primary"
                   : "bg-gray-200 text-gray-600"
               }`}
               onClick={() => handleClick(index)}
