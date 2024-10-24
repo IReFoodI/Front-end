@@ -44,11 +44,11 @@ export function ChangeData() {
 
   return (
     <>
-      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
+      <h1 className="fixed left-1/2 -translate-x-1/2 transform text-center text-2xl font-semibold">
         Alterar Dados
       </h1>
 
-      <div className="w-full justify-between">
+      <div className="w-full justify-between pt-24">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
