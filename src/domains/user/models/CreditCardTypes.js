@@ -48,7 +48,7 @@ export const creditCardSchema = z.object({
         const currentYear = Number(String(date.getFullYear()).slice(2, 4))
 
         const cardMonth = Number(data.slice(0, 2))
-        const cardYear = Number(data.slice(2, 4))
+        const cardYear = Number(data.slice(3, 5))
 
         if (cardYear < currentYear) {
           return false
