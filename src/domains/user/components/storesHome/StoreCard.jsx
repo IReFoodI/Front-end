@@ -12,15 +12,18 @@ export function StoreCard({
   ...props
 }) {
   const {
-    fantasy = "Nome não disponível",
-    discount = "",
-    averageRating = "0.0",
-    category = "Categoria não disponível",
     hours = [],
-    isFavorited = false,
-    urlBanner = "",
-    urlLogo = "",
+    isFavorited,
+    restaurant: {
+      fantasy = "Nome não disponível",
+      discount = "",
+      averageRating = "0.0",
+      category = "Categoria não disponível",
+      urlBanner = "",
+      urlLogo = "",
+    } = {},
   } = storeData
+
   const formatBusinessHours = hours
     .map((hours) => `${hours.openingTime} às ${hours.closingTime}`)
     .join(", ")

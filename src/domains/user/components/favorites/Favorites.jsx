@@ -19,7 +19,6 @@ export function Favorites() {
             <StoresGrid
               stores={favoriteStores}
               toggleFavorite={toggleFavorite}
-              showBanner={false}
               singleColumn={true}
               type="favorites"
             />

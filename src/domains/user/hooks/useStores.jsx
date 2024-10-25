@@ -1,50 +1,109 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+
+import useFetch from "@/app/hooks/useFetch"
 
 export function useStores() {
   const [stores, setStores] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { loading, onRequest, error } = useFetch()
+
+  const userId = 1 // tem que trocar pela chamada do usuario logado
+
+  const fetchFavorites = useCallback(
+    async (storesData) => {
+      await onRequest({
+        request: async () =>
+          axios.get(`http://localhost:8080/api/favorites/user/${userId}`),
+        onSuccess: async (favRes) => {
+          const updatedStores = storesData.map((store) => {
+            const favorite = favRes.find(
+              (fav) => fav.restaurantId === store.restaurant.restaurantId
+            )
+            return {
+              ...store,
+              isFavorited: !!favorite,
+              favoriteId: favorite ? favorite.favoriteId : null,
+            }
+          })
+          setStores(updatedStores)
+          localStorage.setItem("storesData", JSON.stringify(updatedStores))
+        },
+        onError: () =>
+          console.error("Erro ao buscar dados dos favoritos:", error),
+      })
+    },
+    [onRequest, userId, error]
+  )
 
   useEffect(() => {
-    const fetchStoresAndHours = async () => {
-      try {
-        const [storesRes, hoursRes] = await Promise.all([
-          axios.get("http://localhost:8080/api/restaurants"),
-          axios.get("http://localhost:8080/api/restaurant-hours/today"),
-        ])
-
-        const storesData = storesRes.data
-        const hoursData = hoursRes.data
-
-        const mergedData = storesData.map((store) => ({
-          ...store,
-          hours: hoursData.filter(
-            (hour) => hour.restaurantId === store.restaurantId
-          ),
-        }))
-
-        console.log(mergedData)
-        setStores(mergedData)
-        localStorage.setItem("storesData", JSON.stringify(mergedData))
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error)
-      } finally {
-        setLoading(false)
-      }
+    const fetchStores = async () => {
+      await onRequest({
+        request: async () =>
+          axios.get("http://localhost:8080/api/restaurants/today"),
+        onSuccess: async (storesRes) => {
+          const storesData = storesRes
+          setStores(storesData)
+          await fetchFavorites(storesData)
+        },
+        onError: () => console.error("Erro ao buscar dados:", error),
+      })
     }
 
-    fetchStoresAndHours()
-  }, [])
+    fetchStores()
+  }, [onRequest, error, fetchFavorites])
 
-  const toggleFavorite = (restaurantId) => {
+  const addFavorite = async (userId, restaurantId) => {
+    await onRequest({
+      request: async () =>
+        axios.post(`http://localhost:8080/api/favorites`, {
+          userId,
+          restaurantId,
+        }),
+      onSuccess: async () => {
+        console.log("Atualizado com sucesso")
+        await refreshStores()
+      },
+      onError: () => console.error("Erro ao atualizar favorito:", error),
+    })
+  }
+
+  const deleteFavorite = async (favoriteId) => {
+    await onRequest({
+      request: async () =>
+        axios.delete(`http://localhost:8080/api/favorites/${favoriteId}`),
+      onSuccess: async () => {
+        console.log("Atualizado com sucesso")
+        await refreshStores()
+      },
+      onError: () => console.error("Erro ao atualizar favorito:", error),
+    })
+  }
+
+  const toggleFavorite = async (restaurantId, favoriteId) => {
+    console.log(restaurantId, favoriteId)
     const updatedStores = stores.map((store) =>
-      store.restaurantId === restaurantId
+      store.restaurant.restaurantId === restaurantId
         ? { ...store, isFavorited: !store.isFavorited }
         : store
     )
+    if (favoriteId) {
+      await deleteFavorite(favoriteId)
+    } else await addFavorite(userId, restaurantId)
     setStores(updatedStores)
     localStorage.setItem("storesData", JSON.stringify(updatedStores))
   }
 
-  return { stores, loading, toggleFavorite }
+  const refreshStores = async () => {
+    await onRequest({
+      request: async () =>
+        axios.get("http://localhost:8080/api/restaurants/today"),
+      onSuccess: async (storesRes) => {
+        const storesData = storesRes
+        await fetchFavorites(storesData)
+      },
+      onError: () => console.error("Erro ao atualizar dados:", error),
+    })
+  }
+
+  return { stores, loading, toggleFavorite, error }
 }
