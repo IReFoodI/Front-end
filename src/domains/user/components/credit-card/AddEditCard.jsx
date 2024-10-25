@@ -21,10 +21,12 @@ import {
   createCreditCard,
   updateCreditCard,
 } from "../../services/credit-card-service"
+import cardStore from "../../stores/cardStore"
 import { CardExpiryFormat } from "./CardExpiryFormat"
 
 export function AddEditCard({ type = "add", card, closeModal }) {
   const navigate = useNavigate()
+  const { addCard, updateCard } = cardStore()
   const form = useForm({
     resolver: zodResolver(creditCardSchema),
     defaultValues: {
@@ -48,18 +50,28 @@ export function AddEditCard({ type = "add", card, closeModal }) {
     navigate("/cartoes")
   }
 
+  function handleEditSuccess(data) {
+    closeModal()
+    updateCard(data)
+  }
+
+  function handleAddSuccess(data) {
+    redirect()
+    addCard(data)
+  }
+
   const onSubmit = async (formData) => {
     if (type === "edit") {
       await onRequest({
-        request: () => updateCreditCard(formData),
-        onSuccess: closeModal,
+        request: () => updateCreditCard({ ...formData, cardId: card?.cardId }),
+        onSuccess: handleEditSuccess,
         successMessage: "Cartão editado com sucesso!",
         errorMessage: "Ocorreu um erro ao tentar editar o cartão.",
       })
     } else if (type === "add") {
       await onRequest({
         request: () => createCreditCard(formData),
-        onSuccess: redirect,
+        onSuccess: handleAddSuccess,
         successMessage: "Cartão cadastrado com sucesso!",
         errorMessage: "Ocorreu um erro ao tentar cadastrar o cartão.",
       })
@@ -214,6 +226,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
             {type === "edit" ? (
               <AlertDialogFooter className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4">
                 <Button
+                  type="button"
                   onClick={closeModal}
                   variant="secondary"
                   className="w-full md:px-6"
