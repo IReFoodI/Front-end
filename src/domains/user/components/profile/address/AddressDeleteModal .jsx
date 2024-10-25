@@ -10,7 +10,7 @@ import {
 } from "@/ui/components/ui/dialog"
 
 export function AddressDeleteModal({
-  toggleOpenModal,
+  toggleOpenModalDelete,
   addressId,
   isModalOpen,
   fetchAddresses,
@@ -18,7 +18,7 @@ export function AddressDeleteModal({
   const { loading, onRequest } = useFetch()
 
   const handleAddressDelete = async (addressId) => {
-    toggleOpenModal(false)
+    toggleOpenModalDelete(false)
     return await onRequest({
       request: () => addressService.deleteAddressById(addressId),
       onSuccess: fetchAddresses,
@@ -27,7 +27,7 @@ export function AddressDeleteModal({
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={toggleOpenModal}>
+    <Dialog open={isModalOpen} onOpenChange={toggleOpenModalDelete}>
       <DialogContent>
         <DialogTitle>Deseja realmente excluir este endereço?</DialogTitle>
         <DialogDescription>
@@ -37,8 +37,8 @@ export function AddressDeleteModal({
         <DialogFooter>
           <Button
             className="rounded-full"
-            variant="ghost"
-            onClick={() => toggleOpenModal()}
+            variant="secondary"
+            onClick={() => toggleOpenModalDelete()}
           >
             Cancelar
           </Button>

@@ -1,11 +1,16 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react"
+import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import { Label } from "@/ui/components/ui/label"
 import { RadioGroupItem } from "@/ui/components/ui/radio-group"
 
-export function AddressCard({ address, onAddressSelect, toggleOpenModal }) {
+export function AddressCard({
+  address,
+  toggleOpenModalDelete,
+  toggleOpenModalDefault,
+}) {
   const formatCep = (Cep) => {
     return Cep?.replace(/(\d{5})(\d{3})/, "$1-$2")
   }
@@ -29,19 +34,27 @@ export function AddressCard({ address, onAddressSelect, toggleOpenModal }) {
   }
 
   return (
-    <div className="flex w-full items-center justify-between rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100">
-      <div className="flex items-center gap-1">
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem
-            name="address-default"
-            id={`address-${addressId}`}
-            value={addressId}
-            checked={isStandard}
-            onChange={() => onAddressSelect(addressId)}
-          />
-          <Label htmlFor={`address-${addressId}`}></Label>
-        </div>
-
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      className="grid grid-flow-col grid-cols-[1fr_10fr] items-center gap-1 rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100"
+    >
+      <Button
+        onClick={() => toggleOpenModalDefault(true, addressId)}
+        className={`flex h-full items-center space-x-2 p-1 ${isStandard && "cursor-default"}`}
+        variant="gost"
+      >
+        <RadioGroupItem
+          name="address-default"
+          id={`address-${addressId}`}
+          value={addressId}
+          className={`${isStandard && "cursor-default"}`}
+          checked={isStandard}
+        />
+        <Label htmlFor={`address-${addressId}`}></Label>
+      </Button>
+      <div className="flex justify-between">
         <div>
           <p id="title" className="text-orange-500">
             {type}
@@ -56,26 +69,29 @@ export function AddressCard({ address, onAddressSelect, toggleOpenModal }) {
             {city} - {state} - CEP {formatCep(cep)}
           </p>
         </div>
-      </div>
-      <span className="flex items-center justify-between gap-3">
-        <button onClick={handleEdit}>
-          <IconEdit
-            size={30}
-            className="transition duration-300 hover:text-orange-500"
-          />
-        </button>
-        {!address.isStandard && (
+
+        <div
+          aria-label="Navegação de editar e excluir endereço"
+          className="flex items-center justify-between"
+        >
           <Button
-            onClick={() => toggleOpenModal(true, addressId)}
+            onClick={handleEdit}
             variant="ghost"
+            className={"px-2 transition duration-300 hover:text-orange-500"}
           >
-            <IconTrash
-              size={30}
-              className="transition duration-300 hover:text-orange-500"
-            />
+            <IconEdit size={30} />
           </Button>
-        )}
-      </span>
-    </div>
+          {!address.isStandard && (
+            <Button
+              onClick={() => toggleOpenModalDelete(true, addressId)}
+              variant="ghost"
+              className={"px-2 transition duration-300 hover:text-orange-500"}
+            >
+              <IconTrash size={30} />
+            </Button>
+          )}
+        </div>
+      </div>
+    </motion.div>
   )
 }

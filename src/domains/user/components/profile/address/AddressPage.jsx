@@ -9,10 +9,13 @@ import { RadioGroup } from "@/ui/components/ui/radio-group"
 import { addressService } from "../../../services/addressService"
 import { AddressCard } from "./AddressCard"
 import { AddressDeleteModal } from "./AddressDeleteModal "
+import { ModalConfirmDefaultAddress } from "./modalConfirmDefaultAddress"
 
 export function AddressPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalDefaultOpen, setIsModalDefaultOpen] = useState(false)
   const [selectAddressId, setSelectAddressId] = useState(null)
+  const [selectAddressIdDefault, setSelectAddressIdDefault] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState([])
   const [otherAddresses, setOtherAddresses] = useState([])
   const { loading: loadingAddress, onRequest: onRequestAddress } = useFetch()
@@ -44,10 +47,20 @@ export function AddressPage() {
     setSelectAddressId(addressId)
   }
 
+  const toggleOpenModalDefault = (isOpen, addressId) => {
+    console.log("tá berto e o ednereço", isOpen, addressId)
+    setIsModalDefaultOpen(isOpen)
+    setSelectAddressIdDefault(addressId)
+  }
+
   const handleAddressChange = async (id) => {
     await onRequestdefaultAddress({
       request: () => addressService.patchAddressById(id),
-      onSuccess: () => fetchAddresses(),
+      onSuccess: () => {
+        fetchAddresses()
+        toggleOpenModalDefault(false, null)
+      },
+      successMessage: "Endereço padrão atualizado",
     })
   }
 
@@ -61,10 +74,7 @@ export function AddressPage() {
       </h1>
 
       <div className="w-full justify-between">
-        <RadioGroup
-          className="default-style pb-4"
-          onValueChange={handleAddressChange}
-        >
+        <RadioGroup className="default-style pb-4">
           <div className="flex flex-col space-y-4">
             <div className="flex-1">
               <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
@@ -72,7 +82,6 @@ export function AddressPage() {
                 <AddressCard
                   address={defaultAddress}
                   isSelected={defaultAddress.isStantard}
-                  onAddressSelect={handleAddressChange}
                 />
               ) : (
                 <div className="my-3 rounded-lg bg-secondary p-2 text-center">
@@ -94,8 +103,8 @@ export function AddressPage() {
                     <AddressCard
                       key={address.addressId}
                       address={address}
-                      onAddressSelect={handleAddressChange}
-                      toggleOpenModal={toggleOpenModal}
+                      toggleOpenModalDelete={toggleOpenModal}
+                      toggleOpenModalDefault={toggleOpenModalDefault}
                     />
                   ))}
                 </>
@@ -103,20 +112,24 @@ export function AddressPage() {
             </div>
           </div>
         </RadioGroup>
-        <div className="lg:py-0">
-          <Link to="/endereco/adicionar">
-            <Button className="w-full rounded-full border-2 px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
-              Adicionar novo endereço
-            </Button>
-          </Link>
-        </div>
+        <Link to="/endereco/adicionar" className="flex justify-end">
+          <Button className="w-full rounded-full border-2 py-5 text-base font-semibold transition-colors duration-300 ease-in-out sm:w-auto">
+            Adicionar novo endereço
+          </Button>
+        </Link>
       </div>
 
       <AddressDeleteModal
-        toggleOpenModal={toggleOpenModal}
+        toggleOpenModalDelete={toggleOpenModal}
         addressId={selectAddressId}
         isModalOpen={isModalOpen}
         fetchAddresses={fetchAddresses}
+      />
+      <ModalConfirmDefaultAddress
+        toggleOpenModal={toggleOpenModalDefault}
+        onAddressSelect={handleAddressChange}
+        isModalOpen={isModalDefaultOpen}
+        addressId={selectAddressIdDefault}
       />
     </>
   )
