@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import userStore from "@/domains/user/stores/userStore"
@@ -16,7 +16,7 @@ export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
   const { user, logout, isUserLoading } = userStore()
 
   useEffect(() => {
-    if (!isUserLoading && (!user || !isTokenValid)) {
+    if (!isUserLoading && (!user || !isTokenValid || !token)) {
       logout()
       navigate(`${redirect}${pathname && `?redirect=${location.pathname}`}`)
     }
@@ -29,6 +29,7 @@ export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
     navigate,
     redirect,
     location.pathname,
+    token,
   ])
 
   if (isUserLoading) {
@@ -37,6 +38,10 @@ export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
         <Loading />
       </div>
     )
+  }
+
+  if (!isUserLoading && (!user || !isTokenValid || !token)) {
+    return <></>
   }
 
   return children

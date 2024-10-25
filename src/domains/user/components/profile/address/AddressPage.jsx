@@ -28,6 +28,7 @@ export function AddressPage() {
         onSuccess: (data) => setAddresses(data),
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [onRequestAddress]
   )
 

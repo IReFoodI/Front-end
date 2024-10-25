@@ -66,17 +66,12 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        element: (
-          // <ProtectedRoute redirect="/autenticar/entrar">
-          <UserLayout />
-          // </ProtectedRoute>
-        ),
+        element: <UserLayout />,
         children: [
-          { index: true, element: <Home /> },
-
           {
             element: <ProtectedLayout />,
             children: [
+              { index: true, element: <Home /> },
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
               { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },

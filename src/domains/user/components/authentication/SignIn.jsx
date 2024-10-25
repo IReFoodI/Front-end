@@ -24,7 +24,7 @@ import { authService } from "../../services/authService"
 import userStore from "../../stores/userStore"
 
 export function SignIn() {
-  const { user, setUser } = userStore()
+  const { setUser } = userStore()
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams] = useSearchParams()
