@@ -3,17 +3,16 @@ import { useEffect, useMemo, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { useLocation } from "react-router-dom"
 
+import { states } from "@/domains/store/models/StoreAddressType"
 import { useCep } from "@/domains/user/hooks/useCep"
-import {
-  changeUserAddressTypes,
-  states,
-} from "@/domains/user/models/ChangeUserAddressTypes"
+import { changeUserAddressTypes } from "@/domains/user/models/ChangeUserAddressTypes"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
@@ -101,12 +100,15 @@ export function ProfileAddressForm() {
                   name="state"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>UF</FormLabel>
                       <FormControl>
                         <select
+                          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-3"
                         >
-                          <option value="">UF</option>
+                          <option value="" disabled className="">
+                            UF
+                          </option>
                           {states.map((state) => (
                             <option key={state} value={state}>
                               {state}
@@ -128,7 +130,7 @@ export function ProfileAddressForm() {
                         <Input
                           placeholder="Bairro"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
+                          className="p-4"
                         />
                       </FormControl>
                       <FormMessage className="text-left" />
@@ -144,11 +146,7 @@ export function ProfileAddressForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input
-                          placeholder="Rua"
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
-                        />
+                        <Input placeholder="Rua" {...field} className="p-4" />
                       </FormControl>
                       <FormMessage className="text-left" />
                     </FormItem>
@@ -164,7 +162,7 @@ export function ProfileAddressForm() {
                         <Input
                           placeholder="Complemento"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
+                          className="p-4"
                         />
                       </FormControl>
                       <FormMessage className="text-left" />
@@ -182,7 +180,7 @@ export function ProfileAddressForm() {
                           type="text"
                           placeholder="Número"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          className="p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
                       </FormControl>
                       <FormMessage className="text-left" />
@@ -199,7 +197,7 @@ export function ProfileAddressForm() {
                         <Input
                           placeholder="Cidade"
                           {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
+                          className="p-4"
                         />
                       </FormControl>
                       <FormMessage className="text-left" />
