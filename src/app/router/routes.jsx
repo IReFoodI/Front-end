@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreSignUp } from "@/domains/store/components/authentication/StoreSignUp.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
@@ -181,7 +182,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: ROUTES.CREATE_ACCOUNT_BUSINESS,
-                element: <SignUp />,
+                element: <StoreSignUp />,
               },
             ],
           },
