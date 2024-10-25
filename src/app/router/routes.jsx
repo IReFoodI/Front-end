@@ -73,6 +73,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           { index: true, element: <Home /> },
+
           {
             element: <ProtectedLayout />,
             children: [
@@ -112,10 +113,6 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
-              },
-              {
-                path: ROUTES.RECOVER_PASSWORD,
-                element: <RecoverPasswordPage />,
               },
               { path: ROUTES.RESET_PASSWORD, element: <ResetPasswordPage /> },
               { path: ROUTES.MENU, element: <StoreMenu /> },
@@ -158,6 +155,10 @@ export const router = createBrowserRouter([
                   </PublicRoute>
                 ),
               },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
+              },
             ],
           },
           {
@@ -181,6 +182,14 @@ export const router = createBrowserRouter([
                 element: (
                   <PublicRoute>
                     <SignUp />
+                  </PublicRoute>
+                ),
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: (
+                  <PublicRoute>
+                    <RecoverPasswordPage />
                   </PublicRoute>
                 ),
               },

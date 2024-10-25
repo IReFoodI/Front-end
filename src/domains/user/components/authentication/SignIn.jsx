@@ -123,7 +123,11 @@ export function SignIn() {
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/autenticar/recuperar-senha"
+        navigateTo={
+          location?.pathname === "/autenticar/negocios"
+            ? "/autenticar/negocios/recuperar-senha"
+            : "/autenticar/recuperar-senha"
+        }
       />
       {location?.pathname !== "/autenticar/negocios" && (
         <SocialAuthButtons
@@ -131,6 +135,7 @@ export function SignIn() {
           // redirectPath={redirectPath}
         />
       )}
+
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
