@@ -43,6 +43,7 @@ export function useFetch() {
         setData(null)
         toast.error(
           errorMessage ??
+            err?.response?.data?.error ??
             err?.response?.data?.message ??
             err?.message ??
             "Ocorreu um erro"

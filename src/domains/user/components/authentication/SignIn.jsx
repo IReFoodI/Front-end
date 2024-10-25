@@ -50,7 +50,6 @@ export function SignIn() {
   function handleSuccess(data) {
     setUser(data)
     localStorageUtil?.setLocalStorageToken(data?.jwt)
-    console.log("usuario", user)
     redirect()
   }
 

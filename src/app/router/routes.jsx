@@ -8,7 +8,6 @@ import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetail
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
 import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
-import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
@@ -20,6 +19,7 @@ import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrde
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
+import { AddressPage } from "@/domains/user/components/profile/address/AddressPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
@@ -31,7 +31,7 @@ import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
-import { ProtectedRoute } from "./ProtectedRoute.jsx"
+// import { ProtectedRoute } from "./ProtectedRoute.jsx"
 import { PublicRoute } from "./PublicRoute.jsx"
 
 export const ROUTES = {
@@ -67,9 +67,9 @@ export const router = createBrowserRouter([
     children: [
       {
         element: (
-          <ProtectedRoute redirect="/autenticar/entrar">
-            <UserLayout />
-          </ProtectedRoute>
+          // <ProtectedRoute redirect="/autenticar/entrar">
+          <UserLayout />
+          // </ProtectedRoute>
         ),
         children: [
           { index: true, element: <Home /> },
