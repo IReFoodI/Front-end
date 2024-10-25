@@ -99,187 +99,187 @@ export function ProfileAddressForm() {
       <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
         {params?.addressId ? "Alterar Endereço" : "Adicionar Endereço"}
       </h1>
-      <div className="flex justify-center">
-        <div className="relative bg-white p-4">
-          <FormProvider {...formMethods}>
-            <form
-              onSubmit={formMethods.handleSubmit(onSubmit)}
-              className="relative space-y-2 text-left sm:space-y-4"
+      <div className="relative bg-white p-4">
+        <FormProvider {...formMethods}>
+          <form
+            onSubmit={formMethods.handleSubmit(onSubmit)}
+            className="relative space-y-2 text-left sm:space-y-4"
+          >
+            <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
+              <FormField
+                control={formMethods.control}
+                name="cep"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cep</FormLabel>
+                    <FormControl>
+                      <CepPatternFormat {...field} />
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={formMethods.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>UF</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className="h-12 w-full rounded-md border-2 border-input p-3"
+                      >
+                        <option value="">UF</option>
+                        {states.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={formMethods.control}
+                name="district"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bairro</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Bairro"
+                        {...field}
+                        className="h-12 w-full rounded-md border-2 border-input p-4"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField
+                control={formMethods.control}
+                name="street"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rua</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Rua"
+                        {...field}
+                        className="h-12 w-full rounded-md border-2 border-input p-4"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={formMethods.control}
+                name="complement"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Complemento</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Complemento"
+                        {...field}
+                        className="h-12 w-full rounded-md border-2 border-input p-4"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-2">
+                <FormField
+                  control={formMethods.control}
+                  name="number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nº</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Número"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-left" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={formMethods.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Etiqueta</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Tipo"
+                          {...field}
+                          className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-left" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={formMethods.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cidade</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Cidade"
+                        {...field}
+                        className="h-12 w-full rounded-md border-2 border-input p-4"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-left" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div
+              id="map"
+              className="z-20 mx-auto flex aspect-video w-full items-center justify-center md:h-1/3"
             >
-              <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
-                <FormField
-                  control={formMethods.control}
-                  name="cep"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Cep</FormLabel>
-                      <FormControl>
-                        <CepPatternFormat {...field} />
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={formMethods.control}
-                  name="state"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>UF</FormLabel>
-                      <FormControl>
-                        <select
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-3"
-                        >
-                          <option value="">UF</option>
-                          {states.map((state) => (
-                            <option key={state} value={state}>
-                              {state}
-                            </option>
-                          ))}
-                        </select>
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={formMethods.control}
-                  name="district"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bairro</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Bairro"
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
-                        />
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <FormField
-                  control={formMethods.control}
-                  name="street"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Rua</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Rua"
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
-                        />
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={formMethods.control}
-                  name="complement"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Complemento</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Complemento"
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
-                        />
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-                <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-2">
-                  <FormField
-                    control={formMethods.control}
-                    name="number"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nº</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="Número"
-                            {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-left" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={formMethods.control}
-                    name="type"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Etiqueta</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="Tipo"
-                            {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-left" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={formMethods.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Cidade</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Cidade"
-                          {...field}
-                          className="h-12 w-full rounded-md border-2 border-input p-4"
-                        />
-                      </FormControl>
-                      <FormMessage className="text-left" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div
-                id="map"
-                className="top-12 z-20 mx-auto flex aspect-video w-full items-center justify-center md:h-1/3"
+              <iframe
+                key={encodedAddress}
+                title="Google Maps"
+                width="100%"
+                height="100%"
+                className="rounded-xl border-0"
+                src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div className="mt-9 flex justify-end">
+              <Button
+                disabled={loadingSaveAddress}
+                type="submit"
+                className="w-full sm:w-auto md:text-right"
               >
-                <iframe
-                  key={encodedAddress}
-                  title="Google Maps"
-                  width="100%"
-                  height="100%"
-                  className="rounded-xl border-0"
-                  src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="md:text-right">
-                <Button disabled={loadingSaveAddress} type="submit">
-                  {params?.addressId
-                    ? "Salvar Alterações"
-                    : "Adicionar Endereço"}
-                </Button>
-              </div>
-            </form>
-          </FormProvider>
-        </div>
+                {params?.addressId ? "Salvar Alterações" : "Adicionar Endereço"}
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
       </div>
     </>
   )
