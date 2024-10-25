@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { addressService } from "@/domains/user/services/addressService"
+import { userAddressStore } from "@/domains/user/stores/userAddressStore"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
-import { addressService } from "../../../services/addressService"
 import { AddressCard } from "./AddressCard"
 import { AddressDeleteModal } from "./AddressDeleteModal "
 import { ModalConfirmDefaultAddress } from "./modalConfirmDefaultAddress"
@@ -16,23 +17,15 @@ export function AddressPage() {
   const [isModalDefaultOpen, setIsModalDefaultOpen] = useState(false)
   const [selectAddressId, setSelectAddressId] = useState(null)
   const [selectAddressIdDefault, setSelectAddressIdDefault] = useState(null)
-  const [defaultAddress, setDefaultAddress] = useState([])
-  const [otherAddresses, setOtherAddresses] = useState([])
   const { loading: loadingAddress, onRequest: onRequestAddress } = useFetch()
   const { onRequest: onRequestdefaultAddress } = useFetch()
-
-  function filterAddresses(data) {
-    const defaultAddr = data.find((address) => address.isStandard)
-    const otherAddrs = data.filter((address) => !address.isStandard)
-    setDefaultAddress(() => defaultAddr)
-    setOtherAddresses(() => otherAddrs)
-  }
+  const { setAddresses, defaultAddress, otherAddresses } = userAddressStore()
 
   const fetchAddresses = useCallback(
     async (data) => {
       await onRequestAddress({
         request: () => addressService.listAddresses(data),
-        onSuccess: filterAddresses,
+        onSuccess: (data) => setAddresses(data),
       })
     },
     [onRequestAddress]
@@ -48,7 +41,6 @@ export function AddressPage() {
   }
 
   const toggleOpenModalDefault = (isOpen, addressId) => {
-    console.log("tá berto e o ednereço", isOpen, addressId)
     setIsModalDefaultOpen(isOpen)
     setSelectAddressIdDefault(addressId)
   }
@@ -89,11 +81,11 @@ export function AddressPage() {
                     Você ainda não possue endereço padrão!
                   </p>
                   <p className="mt-2">
-                    Adicone um endereço para para melhorar a sua experiência{" "}
+                    Adicione um endereço para para melhorar a sua experiência{" "}
                   </p>
                 </div>
               )}
-              {otherAddresses.length > 0 && (
+              {otherAddresses?.length > 0 && (
                 <>
                   <h3 className="w-full px-5 text-left font-semibold">
                     Outros

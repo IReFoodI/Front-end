@@ -1,9 +1,10 @@
 import { IconCaretDownFilled } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { addressService } from "@/domains/user/services/addressService"
+import { userAddressStore } from "@/domains/user/stores/userAddressStore"
 
 import { Button } from "../../ui/button/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
@@ -12,20 +13,20 @@ export function AddressModal() {
   const formatCep = (Cep) => {
     return Cep?.replace(/(\d{5})(\d{3})/, "$1-$2")
   }
+  const { defaultAddress, setAddresses } = userAddressStore()
   const [isActive, setIsActive] = useState(false)
-  const [defaultAddress, setDefaultAddress] = useState()
   const { onRequest } = useFetch()
+
   async function fetchAddressDefault() {
     await onRequest({
-      request: () => addressService.getAddressDefault(),
-      onSuccess: (data) => setDefaultAddress(data),
+      request: () => addressService.listAddresses(),
+      onSuccess: (data) => setAddresses(data),
     })
   }
 
-  function handleClick() {
-    setIsActive(!isActive)
+  useEffect(() => {
     fetchAddressDefault()
-  }
+  }, [])
 
   return (
     <Popover>
@@ -33,7 +34,7 @@ export function AddressModal() {
         <Button
           variant="ghost"
           className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:order-2 md:w-fit ${isActive ? "active:bg-orange-100" : ""}`}
-          onClick={handleClick}
+          onClick={() => setIsActive(!isActive)}
         >
           <p className="text-sm font-semibold md:text-base">Endereço</p>
           <span>

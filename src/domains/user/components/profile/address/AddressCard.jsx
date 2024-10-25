@@ -40,10 +40,9 @@ export function AddressCard({
       transition={{ duration: 1 }}
       className="grid grid-flow-col grid-cols-[1fr_10fr] items-center gap-1 rounded-lg p-5 text-left text-sm text-gray-500 antialiased hover:bg-gray-100"
     >
-      <Button
+      <div
         onClick={() => toggleOpenModalDefault(true, addressId)}
-        className={`flex h-full items-center space-x-2 p-1 ${isStandard && "cursor-default"}`}
-        variant="gost"
+        className={`flex h-full cursor-pointer items-center space-x-2 p-1 ${isStandard && "cursor-default"}`}
       >
         <RadioGroupItem
           name="address-default"
@@ -53,7 +52,7 @@ export function AddressCard({
           checked={isStandard}
         />
         <Label htmlFor={`address-${addressId}`}></Label>
-      </Button>
+      </div>
       <div className="flex justify-between">
         <div>
           <p id="title" className="text-orange-500">
