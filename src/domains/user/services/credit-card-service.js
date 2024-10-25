@@ -8,15 +8,24 @@ async function createCreditCard(data) {
 }
 
 async function updateCreditCard(data) {
-  return await axios.put(BASE_URL, data)
+  return await axios.put(`${BASE_URL}/${data?.cardId}`, data)
 }
 
-async function getCreditCard() {
-  return await axios.get(`${BASE_URL}/user`)
+async function getCreditCardById(id) {
+  return await axios.get(`${BASE_URL}/${id}`)
+}
+async function getAllCreditCard() {
+  return await axios.get(`${BASE_URL}`)
 }
 
-async function deleteCreditCard() {
-  return await axios.delete(`${BASE_URL}/user`)
+async function deleteCreditCard(id) {
+  return await axios.delete(`${BASE_URL}/${id}`)
 }
 
-export { createCreditCard, deleteCreditCard, getCreditCard, updateCreditCard }
+export {
+  createCreditCard,
+  deleteCreditCard,
+  getAllCreditCard,
+  getCreditCardById,
+  updateCreditCard,
+}
