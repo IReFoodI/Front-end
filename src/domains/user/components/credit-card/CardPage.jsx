@@ -1,48 +1,42 @@
 import { IconCreditCard } from "@tabler/icons-react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router-dom"
-import { toast } from "sonner"
 
-import { useFetchOnOpen } from "@/app/hooks/useFetchOnOpen"
+import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 
-import { getCreditCard } from "../../services/credit-card-service"
+import { getAllCreditCard } from "../../services/credit-card-service"
+import cardStore from "../../stores/cardStore"
 import { DeleteCardDialog } from "./Delete-card-dialog"
 import { SmallCard } from "./SmallCard"
 
-const cardDataTeste = [
-  {
-    cardId: 1,
-    holderName: "Dalia Bezerra",
-    number: "0000000000001234",
-    validity: "06/25",
-  },
-  {
-    cardId: 2,
-    holderName: "Hortência Flores",
-    number: "1233 1233 1212 0000",
-    validity: "11/35",
-  },
-  {
-    cardId: 3,
-    holderName: "Isaac Flores",
-    number: "1111 2222 3333 1554",
-    validity: "09/38",
-  },
-]
 export function CardPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-  const [cardData, setCardData] = useState(cardDataTeste)
+  const { cardData, setCardData, isCardLoading, loadedCards } = cardStore()
   const cardToDelete = useRef(null)
 
-  const { isLoading, isError } = useFetchOnOpen(getCreditCard)
+  const { loading, onRequest } = useFetch()
 
-  console.log(cardData)
+  function handleSuccess(data) {
+    setCardData(data)
+    loadedCards()
+  }
+  function handleError() {
+    loadedCards()
+  }
 
-  // const toggleOpenModal = () => {
-  //   setIsDeleteModalOpen(!isModalOpen)
-  // }
+  useEffect(() => {
+    async function request() {
+      await onRequest({
+        request: getAllCreditCard,
+        onSuccess: handleSuccess,
+        onError: handleError,
+      })
+    }
+    request()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function closeDeleteCardModal() {
     setIsDeleteModalOpen(false)
@@ -52,12 +46,8 @@ export function CardPage() {
     setIsDeleteModalOpen(true)
   }
 
-  if (isLoading) {
+  if (loading || isCardLoading) {
     return <Loading />
-  }
-
-  if (isError) {
-    toast.error("Ocorreu um erro ao tentar buscar os cartões.")
   }
 
   return (
@@ -112,7 +102,6 @@ export function CardPage() {
 
       <DeleteCardDialog
         cardToDelete={cardToDelete}
-        setCardData={setCardData}
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         openDeleteCardModal={openDeleteCardModal}
