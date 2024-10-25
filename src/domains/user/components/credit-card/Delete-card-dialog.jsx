@@ -11,27 +11,23 @@ import {
 import { Loading } from "@/ui/components/ui/loading"
 
 import { deleteCreditCard } from "../../services/credit-card-service"
+import cardStore from "../../stores/cardStore"
 
 export function DeleteCardDialog({
   cardToDelete,
   isDeleteModalOpen,
   setIsDeleteModalOpen,
   closeDeleteCardModal,
-  setCardData,
 }) {
   const { loading, onRequest } = useFetch()
-
+  const { deleteCard } = cardStore()
   function handleSuccess() {
     closeDeleteCardModal()
-    setCardData((cardData) => {
-      return cardData.filter((card) => card?.cardId !== cardToDelete.current)
-    })
+    deleteCard(cardToDelete.current)
   }
   async function onSubmit() {
-    console.log("first")
     await onRequest({
-      //todo tem que passar o id do cartao a ser deletado, pegar o id de alguma forma
-      request: () => deleteCreditCard(),
+      request: () => deleteCreditCard(cardToDelete?.current),
       onSuccess: handleSuccess,
       successMessage: "Cartão excluído com sucesso!",
       errorMessage: "Ocorreu um erro ao tentar excluir o cartão.",
@@ -68,7 +64,6 @@ export function DeleteCardDialog({
                 variant="destructive"
                 onClick={() => {
                   onSubmit()
-                  console.log("first")
                 }}
               >
                 Confirmar
