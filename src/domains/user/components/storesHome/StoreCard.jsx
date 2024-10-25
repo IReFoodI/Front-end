@@ -49,12 +49,12 @@ export function StoreCard({
 
       {/* Textos */}
       <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
-        <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
+        <CardTitle className="truncate font-inter font-semibold text-gray-700 lg:text-xl">
           {name}
         </CardTitle>
         {discount && (
           <div className="mt-2 inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
-            <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
+            <span className="font-inter text-sm font-semibold text-[hsl(var(--primary-foreground))]">
               {discount}
             </span>
           </div>
@@ -62,16 +62,16 @@ export function StoreCard({
 
         <div className="flex items-center">
           <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
-          <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
+          <span className="ml-4 font-inter text-sm font-semibold text-gray-700">
             {rating}
           </span>
-          <span className="font-inter ml-4 font-semibold text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
+          <span className="ml-4 font-inter text-sm font-semibold text-gray-500">
             {category}
           </span>
         </div>
 
         <div className="flex items-center">
-          <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
+          <span className="font-inter text-sm font-medium text-gray-500">
             {opening_hours}
           </span>
         </div>

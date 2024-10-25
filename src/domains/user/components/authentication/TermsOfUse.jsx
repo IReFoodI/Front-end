@@ -18,7 +18,7 @@ export function TermsOfUse({ children, className }) {
         <DialogHeader>
           <DialogTitle className="py-3">Termos e Condições de Uso</DialogTitle>
           <DialogDescription />
-          <div className="flex max-h-[75vh] flex-col gap-4 overflow-auto px-1 text-justify text-zinc-950 md:max-h-[80vh] md:px-3">
+          <div className="flex max-h-[75vh] flex-col gap-4 overflow-auto px-1 text-justify text-gray-950 md:max-h-[80vh] md:px-3">
             <p> Última atualização: 11/10/2024</p>
             <div>
               Bem-vindo ao{" "}

@@ -7,7 +7,7 @@ export function MenuMobile() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="w-9 cursor-pointer rounded-sm bg-orange-100 p-1 md:hidden">
+        <div className="w-9 cursor-pointer rounded-sm bg-[#ffeae4] p-1 md:hidden">
           <IconMenu2 className="m-auto text-primary" size={24} />
         </div>
       </SheetTrigger>

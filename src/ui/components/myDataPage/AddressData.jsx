@@ -1,7 +1,7 @@
 export function AddressData({ address }) {
   return (
     <div className="my-2 flex w-[80%] flex-col justify-start">
-      <h2 className="text-xl font-bold text-black">{address.name}</h2>
+      <h2 className="text-xl font-bold text-gray-600">{address.name}</h2>
       <div className="text-sm">
         <p>
           {address?.street}, {address?.number} - {address?.additionalInfo01}

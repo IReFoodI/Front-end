@@ -61,7 +61,7 @@ export function CardPage() {
   }
 
   return (
-    <div className="mx-auto flex h-screen w-full max-w-[1216px] flex-col items-center gap-6 text-gray-600 antialiased lg:h-auto">
+    <div className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center gap-6 text-gray-600 antialiased lg:h-auto">
       <h1 className="w-full pb-6 text-center text-2xl font-semibold">
         Cartões
       </h1>
@@ -80,7 +80,10 @@ export function CardPage() {
                   />
                 ))}
               </div>
-              <NavLink to={"/cartoes/adicionar"}>
+              <NavLink
+                to={"/cartoes/adicionar"}
+                className={"w-full text-center"}
+              >
                 <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
                   Adicionar novo cartão
                 </Button>
