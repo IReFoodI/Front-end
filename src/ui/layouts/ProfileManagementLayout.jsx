@@ -6,7 +6,7 @@ export function ProfileManagementLayout() {
   return (
     <div
       id="page"
-      className="h-screen max-h-full items-start text-gray-600 antialiased lg:grid lg:h-auto lg:grid-cols-2 lg:gap-x-8"
+      className="max-h-full items-start text-gray-600 antialiased lg:grid lg:h-auto lg:grid-cols-2 lg:gap-x-8"
     >
       <Outlet />
       <div className="hidden lg:grid">
