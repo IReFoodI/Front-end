@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useEffect, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { useCep } from "@/domains/user/hooks/useCep"
@@ -269,11 +269,23 @@ export function ProfileAddressForm() {
                 allowFullScreen
               ></iframe>
             </div>
-            <div className="mt-9 flex justify-end">
+            <div className="mt-9 flex flex-col justify-end gap-2 sm:flex-row">
+              {params?.addressId && (
+                <Link className="order-2 sm:order-1" to={"/endereco"}>
+                  <Button
+                    disabled={loadingSaveAddress}
+                    variant="secondary"
+                    className="w-full rounded-full border-2 py-5 text-base font-semibold transition-colors duration-300 ease-in-out sm:w-auto"
+                  >
+                    Cancelar Alterações
+                  </Button>
+                </Link>
+              )}
+
               <Button
                 disabled={loadingSaveAddress}
                 type="submit"
-                className="w-full sm:w-auto md:text-right"
+                className="order-1 w-full rounded-full border-2 py-5 text-base font-semibold transition-colors duration-300 ease-in-out sm:w-auto"
               >
                 {params?.addressId ? "Salvar Alterações" : "Adicionar Endereço"}
               </Button>
