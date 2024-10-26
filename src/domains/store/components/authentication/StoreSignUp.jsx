@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { toast } from "sonner"
 
+import useFetch from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import { CnpjPatternFormat } from "@/ui/components/ui/CNPJ-pattern-format"
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import {
   Select,
@@ -25,70 +26,77 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/components/ui/select"
-import { Textarea } from "@/ui/components/ui/textarea"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { states } from "../../models/StoreAddressType"
 import { storeFormSchemaSignUp } from "../../models/StoreSignUpTypes"
+import { restaurantService } from "../../services/restaurantService"
 
 export function StoreSignUp() {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
+  const { onRequest } = useFetch()
 
   const form = useForm({
     resolver: zodResolver(storeFormSchemaSignUp),
     defaultValues: {
-      storeName: "",
-      storeCNPJ: "",
-      storePhone: "",
-      storeCategory: "",
-      storeDescription: "",
-      cep: "",
-      state: "",
-      district: "",
-      street: "",
-      complement: "",
-      number: "",
-      type: "",
-      city: "",
+      fantasy: "",
+      cnpj: "",
+      phone: "",
+      category: "",
+      email: "",
+      password: "",
+      address: {
+        cep: "",
+        state: "",
+        street: "",
+        complement: "",
+        number: "",
+        city: "",
+      },
     },
   })
 
-  console.log(location)
-  const onSubmit = (data) => {
-    toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
+  const onSubmit = async (data) => {
     console.log(data)
-    if (redirectPath) {
-      navigate(redirectPath)
-    } else {
-      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
-    }
+    await onRequest({
+      request: () =>
+        restaurantService.createRestaurant({
+          ...data,
+          address: {
+            ...data.address,
+            type: "LOJA",
+            isStandard: true,
+            addressType: "RESTAURANT",
+          },
+        }),
+      onSuccess: () => navigate("/autenticar/negocios"),
+      successMessage: "Restaurante criado com sucesso",
+    })
   }
   const categories = [
     {
-      id: 1,
-      category: "Lanches",
+      id: "RESTAURANTE",
+      category: "RESTAURANTE",
     },
     {
-      id: 2,
-      category: "Teste 1",
+      id: "PADARIA",
+      category: "PADARIA",
     },
     {
-      id: 3,
-      category: "Teste 2",
+      id: "SUPERMERCADO",
+      category: "SUPERMERCADO",
     },
     {
-      id: 4,
-      category: "Teste 3",
-    },
-    {
-      id: 5,
-      category: "Teste 4",
+      id: "LANCHERIA",
+      category: "LANCHERIA",
     },
   ]
+
+  console.log(form.formState.errors)
 
   return (
     <div className="grid gap-2 sm:px-8">
@@ -102,8 +110,8 @@ export function StoreSignUp() {
         >
           <section className="flex flex-col gap-3">
             <FormField
-              id="storeName"
-              name="storeName"
+              id="fantasy"
+              name="fantasy"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -121,8 +129,8 @@ export function StoreSignUp() {
             />
 
             <FormField
-              id="storeCNPJ"
-              name="storeCNPJ"
+              id="cnpj"
+              name="cnpj"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -135,8 +143,8 @@ export function StoreSignUp() {
               )}
             />
             <FormField
-              id="storeCategory"
-              name="storeCategory"
+              id="category"
+              name="category"
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -169,10 +177,27 @@ export function StoreSignUp() {
                 </FormItem>
               )}
             />
-
             <FormField
-              id="storePhone"
-              name="storePhone"
+              id="email"
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email@gmail.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              id="phone"
+              name="phone"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -186,21 +211,20 @@ export function StoreSignUp() {
             />
 
             <FormField
-              id="storeDescription"
-              name="storeDescription"
+              id="password"
+              name="password"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Descrição da loja</FormLabel>
+                <FormItem>
+                  <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Textarea
-                      type="text"
-                      placeholder="Digite a descrição da loja"
-                      className="h-8 resize-none rounded-md border p-2 outline-orange-500"
+                    <PasswordInput
+                      placeholder="********"
+                      className={"!mt-1"}
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" />
+                  <FormMessage className={"text-xs"} />
                 </FormItem>
               )}
             />
@@ -209,7 +233,7 @@ export function StoreSignUp() {
             <div className="grid grid-cols-1 gap-2 rounded-lg md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="cep"
+                name="address.cep"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Cep</FormLabel>
@@ -223,7 +247,7 @@ export function StoreSignUp() {
 
               <FormField
                 control={form.control}
-                name="state"
+                name="address.state"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>UF</FormLabel>
@@ -250,7 +274,7 @@ export function StoreSignUp() {
             </div>
             <FormField
               control={form.control}
-              name="city"
+              name="address.city"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Cidade</FormLabel>
@@ -264,7 +288,7 @@ export function StoreSignUp() {
 
             <FormField
               control={form.control}
-              name="district"
+              name="address.district"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Bairro</FormLabel>
@@ -278,7 +302,7 @@ export function StoreSignUp() {
 
             <FormField
               control={form.control}
-              name="street"
+              name="address.street"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Rua</FormLabel>
@@ -291,7 +315,7 @@ export function StoreSignUp() {
             />
             <FormField
               control={form.control}
-              name="number"
+              name="address.number"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nº</FormLabel>
@@ -309,7 +333,7 @@ export function StoreSignUp() {
             />
             <FormField
               control={form.control}
-              name="complement"
+              name="address.complement"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Complemento</FormLabel>
