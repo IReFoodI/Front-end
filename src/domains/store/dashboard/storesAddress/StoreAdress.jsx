@@ -51,7 +51,7 @@ export function StoreAddressEdit() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetchAddressData(reset, setError)
+      const data = await fetchAddressData(1, reset, setError) // tem que subsituir o id: 1 pelo do usuario
       setOriginalData(data)
     }
 
@@ -81,7 +81,7 @@ export function StoreAddressEdit() {
       ...originalData,
       ...formData,
     }
-    updateAddress(3, updatedData, setError) // tem que subsituir o id: 1 pelo do usuario
+    updateAddress(updatedData.addressId, updatedData, setError)
   }
 
   return (
