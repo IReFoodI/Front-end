@@ -1,10 +1,10 @@
 import { IconClockHour4, IconStarFilled } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
 
 import { FavoriteButton } from "../favorites/FavoriteButton"
-import { Link } from "react-router-dom"
 
 export function StoreCard({
   className,
@@ -38,7 +38,9 @@ export function StoreCard({
       {...props}
     >
       <CardContent className="relative flex h-full w-full items-center justify-center p-0 sm:p-0">
-        <Link to="/"> {/* TODO: Link para o perfil do estabelecimento, precisa ser ajustado quando a página de perfil do estabelecimento estiver pronta */}
+        <Link to="/">
+          {" "}
+          {/* TODO: Link para o perfil do estabelecimento, precisa ser ajustado quando a página de perfil do estabelecimento estiver pronta */}
           <div className="relative h-auto w-full">
             <img
               src={urlBanner}
@@ -58,7 +60,7 @@ export function StoreCard({
 
       <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
         <Link to="/">
-          <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
+          <CardTitle className="truncate font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
             {fantasy}
           </CardTitle>
           {discount && (
@@ -71,10 +73,10 @@ export function StoreCard({
 
           <div className="flex items-center">
             <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
-            <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
+            <span className="ml-4 font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
               {averageRating}
             </span>
-            <span className="font-inter ml-4 text-sm font-semibold text-gray-500">
+            <span className="ml-4 font-inter text-sm font-semibold text-gray-500">
               {category}
             </span>
           </div>
