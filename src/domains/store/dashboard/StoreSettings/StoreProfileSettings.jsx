@@ -89,10 +89,12 @@ export function StoreProfileSettings() {
   }
 
   return (
-    <div className="m-4 w-full lg:m-8">
+    <div className="m-4 w-auto lg:m-8">
       <div className="flex flex-col gap-0">
-        <h1 className="text-3xl font-semibold lg:mb-0 lg:text-4xl">Perfil</h1>
-        <p className="text-base font-semibold text-zinc-500 lg:text-lg">
+        <h1 className="text-3xl font-semibold text-gray-600 md:text-4xl lg:mb-0">
+          Perfil
+        </h1>
+        <p className="text-base font-semibold text-gray-500 lg:text-lg">
           Ajuste as informações da sua loja
         </p>
       </div>
@@ -102,7 +104,7 @@ export function StoreProfileSettings() {
           <img
             src={storeInformation.storeCoverImage}
             alt={`Imagem de fundo da loja ${storeInformation.storeName}`}
-            className="h-full w-full rounded-xl border-2 border-zinc-400 object-cover"
+            className="h-full w-full rounded-xl border-2 border-gray-400 object-cover"
           />
 
           <button className="absolute right-0 top-0 m-2 rounded-md bg-black p-1 transition hover:bg-orange-500 hover:ease-in">
@@ -138,7 +140,7 @@ export function StoreProfileSettings() {
                       type="text"
                       placeholder={formPlaceholders.storeID}
                       disabled={true}
-                      className="w-full resize-none rounded-md border border-zinc-400 bg-slate-200 p-2"
+                      className="w-full resize-none rounded-md border border-gray-400 bg-slate-200 p-2"
                       {...field}
                     />
                   </FormControl>
@@ -215,7 +217,7 @@ export function StoreProfileSettings() {
                     <Textarea
                       type="text"
                       placeholder={formPlaceholders.storeDescription}
-                      className="h-32 resize-none rounded-md border border-zinc-400 p-2 outline-orange-500"
+                      className="h-32 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
                       {...field}
                     />
                   </FormControl>
@@ -236,7 +238,7 @@ export function StoreProfileSettings() {
                   <FormLabel>Categoria</FormLabel>
                   <FormControl className="">
                     <Select
-                      className="w-full border-4 border-zinc-400"
+                      className="w-full border-4 border-gray-400"
                       value={field.value}
                       onValueChange={field.onChange}
                     >

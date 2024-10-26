@@ -1,4 +1,5 @@
 import "./ui/styles/index.css"
+import "@fontsource/inter"
 
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { StrictMode } from "react"

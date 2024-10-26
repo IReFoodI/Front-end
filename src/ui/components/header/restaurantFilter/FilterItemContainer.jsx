@@ -8,7 +8,7 @@ export function FilterItemContainer({ title, items }) {
   }
 
   return (
-    <div className="flex flex-col gap-1 p-2">
+    <div className="flex flex-col gap-1 p-2 text-gray-600">
       <h2 className="text-sm font-semibold">{title}</h2>
 
       <div className="flex gap-2">
@@ -18,8 +18,8 @@ export function FilterItemContainer({ title, items }) {
               key={index}
               className={`flex items-center rounded-full p-1 text-xs font-semibold ${
                 activeItem === index
-                  ? "bg-orange-100 text-orange-800"
-                  : "text-lilac-900 bg-gray-200"
+                  ? "bg-orange-100 text-primary"
+                  : "bg-gray-200 text-gray-600"
               }`}
               onClick={() => handleClick(index)}
             >
