@@ -80,7 +80,6 @@ export function useStores() {
   }
 
   const toggleFavorite = async (restaurantId, favoriteId) => {
-    console.log(restaurantId, favoriteId)
     const updatedStores = stores.map((store) =>
       store.restaurant.restaurantId === restaurantId
         ? { ...store, isFavorited: !store.isFavorited }

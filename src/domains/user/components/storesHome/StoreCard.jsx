@@ -4,6 +4,7 @@ import { cn } from "@/app/utils/cn"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
 
 import { FavoriteButton } from "../favorites/FavoriteButton"
+import { Link } from "react-router-dom"
 
 export function StoreCard({
   className,
@@ -37,50 +38,54 @@ export function StoreCard({
       {...props}
     >
       <CardContent className="relative flex h-full w-full items-center justify-center p-0 sm:p-0">
-        <div className="relative h-auto w-full">
-          <img
-            src={urlBanner}
-            alt={`${name}`}
-            className="h-auto max-h-full w-full rounded-[23px] object-cover"
-          />
-          <div className="-translatef-x-1/2 absolute left-1/4 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
+        <Link to="/"> {/* TODO: Link para o perfil do estabelecimento, precisa ser ajustado quando a página de perfil do estabelecimento estiver pronta */}
+          <div className="relative h-auto w-full">
             <img
-              src={urlLogo}
-              alt={`${fantasy} Logo`}
-              className="h-full w-full rounded-full object-cover"
+              src={urlBanner}
+              alt={`${name}`}
+              className="h-auto max-h-full w-full rounded-[23px] object-cover"
             />
+            <div className="-translatef-x-1/2 absolute left-1/4 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
+              <img
+                src={urlLogo}
+                alt={`${fantasy} Logo`}
+                className="h-full w-full rounded-full object-cover"
+              />
+            </div>
           </div>
-        </div>
+        </Link>
       </CardContent>
 
       <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
-        <CardTitle className="truncate font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
-          {fantasy}
-        </CardTitle>
-        {discount && (
-          <div className="inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
-            <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
-              {discount}
+        <Link to="/">
+          <CardTitle className="font-inter truncate font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
+            {fantasy}
+          </CardTitle>
+          {discount && (
+            <div className="inline-block w-fit rounded-[10px] bg-[hsl(var(--primary))] px-2 py-1">
+              <span className="font-inter font-semibold text-[hsl(var(--primary-foreground))] sm:text-2xl lg:text-sm">
+                {discount}
+              </span>
+            </div>
+          )}
+
+          <div className="flex items-center">
+            <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
+            <span className="font-inter ml-4 font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
+              {averageRating}
+            </span>
+            <span className="font-inter ml-4 text-sm font-semibold text-gray-500">
+              {category}
             </span>
           </div>
-        )}
 
-        <div className="flex items-center">
-          <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
-          <span className="ml-4 font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
-            {averageRating}
-          </span>
-          <span className="ml-4 font-inter text-sm font-semibold text-gray-500">
-            {category}
-          </span>
-        </div>
-
-        <div className="flex items-center">
-          <IconClockHour4 className="mr-2 text-[hsl(var(--muted-foreground))]" />
-          <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-            {formatBusinessHours || "Horário não disponível"}
-          </span>
-        </div>
+          <div className="flex items-center">
+            <IconClockHour4 className="mr-2 text-[hsl(var(--muted-foreground))]" />
+            <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
+              {formatBusinessHours || "Horário não disponível"}
+            </span>
+          </div>
+        </Link>
       </CardContent>
 
       <CardContent className="p-0 pt-0 sm:p-0">
