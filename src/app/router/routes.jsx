@@ -21,6 +21,7 @@ import { ChangePassword } from "@/domains/user/components/password/ChangePasswor
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
+import { MydataPage } from "@/domains/user/components/profile/MyDataPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -46,6 +47,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
+  USER_DATA: "meus-dados",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADRRESS: "ajustes/endereco",
   MENU: "cardapio",
@@ -93,6 +95,7 @@ export const router = createBrowserRouter([
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  { path: ROUTES.USER_DATA, element: <MydataPage /> },
                   {
                     path: ROUTES.ADDRESS_EDIT,
                     element: <ProfileAddressForm />,

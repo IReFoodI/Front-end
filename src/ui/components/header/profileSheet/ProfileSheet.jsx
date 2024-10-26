@@ -27,7 +27,7 @@ export function ProfileSheet() {
     {
       iconForButton: <IconUser />,
       buttonText: "Meus Dados",
-      path: "/",
+      path: "/meus-dados",
     },
     {
       iconForButton: <IconHeart />,
