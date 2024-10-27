@@ -2,7 +2,7 @@ import { IconCreditCard } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { PatternFormat } from "react-number-format"
 import { useNavigate } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { AlertDialogFooter } from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
