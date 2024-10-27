@@ -12,6 +12,7 @@ import { Link } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
+import userStore from "@/domains/user/stores/userStore"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
@@ -21,7 +22,9 @@ import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
   const { value } = useMediaQuery("(max-width: 768px)")
+  const { user } = userStore()
   const [activeInformationButton, setActiveInformationButton] = useState(null)
+  const { logout } = userStore()
 
   const informationButtons = [
     {
@@ -60,7 +63,7 @@ export function ProfileSheet() {
               <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
                 <ProfileImagePlaceholder className="z-2 m-1 w-14" />
                 <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
-                  Olá, Usuário.
+                  Olá, {user?.nome}!
                 </SheetTitle>
                 <SheetDescription></SheetDescription>
               </div>
@@ -69,7 +72,7 @@ export function ProfileSheet() {
             <div className="z-1 flex h-12 w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
               <ProfileImagePlaceholder className="z-2 m-1 w-14" />
               <h1 className="m-1 text-lg font-semibold leading-5 text-white">
-                Olá, Usuário
+                Olá, {user?.nome}!
               </h1>
             </div>
           )}
@@ -129,7 +132,10 @@ export function ProfileSheet() {
             Ajuda
           </Link>
         </div>
-        <Button className="w-full rounded-3xl bg-primary text-base font-semibold">
+        <Button
+          onClick={logout}
+          className="w-full rounded-3xl bg-primary text-base font-semibold"
+        >
           Sair
         </Button>
       </div>

@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Button } from "@/ui/components/ui/button/button"
@@ -17,6 +17,10 @@ import { Input } from "@/ui/components/ui/input"
 import { recoverPasswordTypes } from "../../models/RecoverPasswordTypes"
 
 export function RecoverPasswordPage() {
+  const location = useLocation()
+  const pathname = location?.pathname
+  const isBusiness = pathname === "/autenticar/negocios/recuperar-senha"
+  console.log(pathname)
   const form = useForm({
     resolver: zodResolver(recoverPasswordTypes),
     defaultValues: {
@@ -66,7 +70,14 @@ export function RecoverPasswordPage() {
       <div>
         <p>
           Ainda não tem conta?{" "}
-          <Link to="/criar-conta" className="text-primary underline">
+          <Link
+            to={
+              isBusiness
+                ? "/autenticar/negocios/criar-conta"
+                : "/autenticar/criar-conta"
+            }
+            className="text-primary underline"
+          >
             Criar conta
           </Link>
         </p>
