@@ -38,16 +38,12 @@ export function AddressModal() {
         >
           <p className="text-sm font-semibold md:text-base">Endereço</p>
           <span>
-            <IconCaretDownFilled
-              stroke={2}
-              className="text-primary"
-              size={20}
-            />
+            <IconCaretDownFilled className="text-primary" size={20} />
           </span>
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="relative top-14 md:absolute md:left-0 md:top-5 md:w-96"
+        className="relative top-14 font-inter text-gray-500 md:absolute md:left-0 md:top-5 md:w-96"
         align="start"
       >
         <div className="flex w-full flex-col items-center justify-center gap-2">

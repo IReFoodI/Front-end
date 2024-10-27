@@ -85,7 +85,7 @@ export function ProfileSheet() {
             </h2>
             <Link
               to="/"
-              className="text-xs font-semibold text-orange-700 hover:text-orange-400"
+              className="text-xs font-semibold text-primary hover:text-orange-400"
             >
               Que tal fazer um agora?
             </Link>
@@ -94,7 +94,7 @@ export function ProfileSheet() {
           <div className="m-2 flex w-full justify-between gap-2">
             <ContainerStatus
               containerIcon={
-                <IconShoppingBag size={30} className="text-orange-700" />
+                <IconShoppingBag size={30} className="text-primary" />
               }
               content="1"
               title="pedidos feitos"
@@ -102,7 +102,7 @@ export function ProfileSheet() {
 
             <ContainerStatus
               containerIcon={
-                <IconMoneybag size={30} className="text-orange-700" />
+                <IconMoneybag size={30} className="text-primary" />
               }
               content="R$ 10,00"
               title="economizados"
