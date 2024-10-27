@@ -21,7 +21,7 @@ import { toast } from "sonner"
  *
  * @returns {void}
  */
-const useFetch = () => {
+export function useFetch() {
   const [error, setError] = useState(null)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(null)
@@ -33,16 +33,17 @@ const useFetch = () => {
         setError(null)
         setLoading(true)
         response = await request()
-        setData(response.data)
-        onSuccess && onSuccess(response.data)
+        setData(response?.data)
+        onSuccess && onSuccess(response?.data)
         console.log(response)
-        successMessage && toast.success(successMessage)
+        successMessage && toast?.success(successMessage)
       } catch (err) {
         setError(err)
         onError && onError(err)
         setData(null)
         toast.error(
           errorMessage ??
+            err?.response?.data?.error ??
             err?.response?.data?.message ??
             err?.message ??
             "Ocorreu um erro"
@@ -56,5 +57,3 @@ const useFetch = () => {
 
   return { data, loading, onRequest, error }
 }
-
-export default useFetch

@@ -9,7 +9,6 @@ import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetail
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
 import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
-import { AddressPage } from "@/domains/user/components/AddressPage.jsx"
 import { PresentationContent } from "@/domains/user/components/authentication/PresentationContent.jsx"
 import { SignIn } from "@/domains/user/components/authentication/SignIn.jsx"
 import { SignUp } from "@/domains/user/components/authentication/SignUp.jsx"
@@ -21,6 +20,7 @@ import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrde
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
+import { AddressPage } from "@/domains/user/components/profile/address/AddressPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
@@ -32,6 +32,8 @@ import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
+// import { ProtectedRoute } from "./ProtectedRoute.jsx"
+import { PublicRoute } from "./PublicRoute.jsx"
 
 export const ROUTES = {
   ADDRESS: "endereco",
@@ -48,7 +50,7 @@ export const ROUTES = {
   CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
-  STORE_ADRRESS: "ajustes/endereco",
+  STORE_ADDRESS: "ajustes/endereco",
   MENU: "cardapio",
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
@@ -63,32 +65,17 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-
     children: [
       {
         element: <UserLayout />,
         children: [
           {
-            index: true,
-            element: <Home />,
-          },
-          {
             element: <ProtectedLayout />,
             children: [
-              {
-                path: ROUTES.USER_CREDIT_CARD,
-                element: <CardPage />,
-              },
-              {
-                path: ROUTES.USER_ADD_CREDIT_CARD,
-                element: <AddEditCard />,
-              },
-
-              {
-                path: ROUTES.ONGOING_ORDER,
-                element: <OngoingOrder />,
-              },
-
+              { index: true, element: <Home /> },
+              { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
+              { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
+              { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
               {
                 element: <ProfileManagementLayout />,
                 children: [
@@ -102,15 +89,8 @@ export const router = createBrowserRouter([
                     path: ROUTES.ADDRESS_EDIT_ID,
                     element: <ProfileAddressForm />,
                   },
-
-                  {
-                    path: ROUTES.FAVORITES,
-                    element: <Favorites />,
-                  },
-                  {
-                    path: ROUTES.CHANGE_DATA,
-                    element: <ChangeData />,
-                  },
+                  { path: ROUTES.FAVORITES, element: <Favorites /> },
+                  { path: ROUTES.CHANGE_DATA, element: <ChangeData /> },
                 ],
               },
             ],
@@ -130,23 +110,15 @@ export const router = createBrowserRouter([
                 path: ROUTES.ALERTSETTINGS,
                 element: <AlertSoundSettingsPage />,
               },
-              {
-                path: ROUTES.RECOVER_PASSWORD,
-                element: <RecoverPasswordPage />,
-              },
-              {
-                path: ROUTES.RESET_PASSWORD,
-                element: <ResetPasswordPage />,
-              },
+              { path: ROUTES.RESET_PASSWORD, element: <ResetPasswordPage /> },
               { path: ROUTES.MENU, element: <StoreMenu /> },
-
-              { path: ROUTES.STORE_ADRRESS, element: <StoreAddressEdit /> },
-
+              { path: ROUTES.STORE_ADDRESS, element: <StoreAddressEdit /> },
               {
                 path: ROUTES.PROFILE_SETTINGS,
                 element: <StoreProfileSettings />,
               },
               { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
+              { path: ROUTES.DASHBOARD_CONFIG, element: <ConfigurationPage /> },
             ],
           },
         ],
@@ -156,51 +128,70 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <AuthenticationLayout />,
+            element: (
+              <PublicRoute>
+                <AuthenticationLayout />
+              </PublicRoute>
+            ),
             children: [
-              {
-                index: true,
-                element: <PresentationContent />,
-              },
+              { index: true, element: <PresentationContent /> },
               {
                 path: ROUTES.LOGIN,
-                element: <SignIn />,
+                element: (
+                  <PublicRoute>
+                    <SignIn />
+                  </PublicRoute>
+                ),
               },
               {
                 path: ROUTES.CREATE_ACCOUNT,
-                element: <SignUp />,
+                element: (
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                ),
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: <RecoverPasswordPage />,
               },
             ],
           },
           {
             path: "negocios",
-            element: <AuthenticationLayoutBusiness />,
+            element: (
+              <PublicRoute>
+                <AuthenticationLayoutBusiness />
+              </PublicRoute>
+            ),
             children: [
               {
                 index: true,
-                element: <SignIn />,
+                element: (
+                  <PublicRoute>
+                    <SignIn />
+                  </PublicRoute>
+                ),
               },
               {
                 path: ROUTES.CREATE_ACCOUNT_BUSINESS,
-                element: <StoreSignUp />,
+                element: (
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                ),
+              },
+              {
+                path: ROUTES.RECOVER_PASSWORD,
+                element: (
+                  <PublicRoute>
+                    <RecoverPasswordPage />
+                  </PublicRoute>
+                ),
               },
             ],
           },
         ],
-      },
-    ],
-  },
-
-  {
-    path: "dashboard",
-    element: <DashBoardLayout />,
-    children: [
-      { path: ROUTES.FINANCE, element: <FinancePage /> },
-      { path: ROUTES.ALERTSETTINGS, element: <AlertSoundSettingsPage /> },
-      { path: ROUTES.PROFILESETTINGS, element: <StoreProfileSettings /> },
-      {
-        path: ROUTES.DASHBOARD_CONFIG,
-        element: <ConfigurationPage />,
       },
     ],
   },
