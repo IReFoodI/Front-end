@@ -128,15 +128,13 @@ export function SignIn() {
             : "/autenticar/recuperar-senha"
         }
       />
-      {location?.pathname !== "/autenticar/negocios" && (
-        {location.pathname == "/autenticar/entrar" && (
-        <SocialAuthButtons
+      {location?.pathname !== "/autenticar/negocios" &&
+        location?.pathname == "/autenticar/entrar" && (
+          <SocialAuthButtons
             locationPathname={location?.pathname}
             // redirectPath={redirectPath}
           />
-      )}
-
-      )}
+        )}
 
       <TextWithLink
         text="Ainda não tem conta?"

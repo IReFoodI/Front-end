@@ -177,7 +177,7 @@ export const router = createBrowserRouter([
                 path: ROUTES.CREATE_ACCOUNT_BUSINESS,
                 element: (
                   <PublicRoute>
-                    <SignUp />
+                    <StoreSignUp />
                   </PublicRoute>
                 ),
               },

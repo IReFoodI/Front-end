@@ -4,11 +4,9 @@ import { FormProvider, useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { states } from "@/domains/store/models/StoreAddressType"
 import { useCep } from "@/domains/user/hooks/useCep"
-import {
-  changeUserAddressTypes,
-  states,
-} from "@/domains/user/models/ChangeUserAddressTypes"
+import { changeUserAddressTypes } from "@/domains/user/models/ChangeUserAddressTypes"
 import { addressService } from "@/domains/user/services/addressService"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
@@ -211,7 +209,7 @@ export function ProfileAddressForm() {
                           type="text"
                           placeholder="Número"
                           {...field}
-                          className="p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          className="h-12 w-full rounded-md border-2 border-input p-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
                       </FormControl>
                       <FormMessage className="text-left" />

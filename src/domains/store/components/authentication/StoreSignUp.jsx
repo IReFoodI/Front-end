@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 
-import useFetch from "@/app/hooks/useFetch"
+import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import { CnpjPatternFormat } from "@/ui/components/ui/CNPJ-pattern-format"
