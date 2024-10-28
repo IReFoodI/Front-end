@@ -354,27 +354,15 @@ export function StoreSignUp() {
           </Button>
         </form>
       </Form>
-
       <TextWithLink
-        text="Esqueceu sua senha?"
-        buttonContent="Recuperar senha"
-        navigateTo="/autenticar/recuperar-senha"
+        text="Já tem conta?"
+        buttonContent="Faça Login"
+        navigateTo={"/autenticar/negocios"}
       />
-      {location.pathname == "/autenticar/entrar" && (
-        <SocialAuthButtons
-          locationPathname={location?.pathname}
-          redirectPath={redirectPath}
-        />
-      )}
-
       <TextWithLink
-        text="Ainda não tem conta?"
+        text="É um cliente?"
         buttonContent="Criar conta"
-        navigateTo={
-          location?.pathname === "/autenticar/negocios"
-            ? "/autenticar/negocios/criar-conta"
-            : "/autenticar/criar-conta"
-        }
+        navigateTo={"/autenticar/criar-conta"}
       />
     </div>
   )

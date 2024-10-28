@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -28,7 +28,6 @@ import { userService } from "../../services/userService"
 import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
-  const location = useLocation()
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const { loading: loadingSignUp, onRequest: onRequestSignUp } = useFetch()
@@ -59,8 +58,6 @@ export function SignUp() {
   if (loadingSignUp) {
     return <Loading />
   }
-
-  const isSignUpPage = location.pathname === "/autenticar/criar-conta"
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -174,25 +171,18 @@ export function SignUp() {
           <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
-      {!location?.pathname.includes("/autenticar/negocios") && (
-        <SocialAuthButtons />
-      )}
+
+      <SocialAuthButtons />
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={
-          isSignUpPage ? "/autenticar/entrar" : "/autenticar/negocios"
-        }
+        navigateTo={"/autenticar/entrar"}
       />
 
       <TextWithLink
-        text={isSignUpPage ? "É uma empresa?" : "É um cliente?"}
-        buttonContent={isSignUpPage ? "Criar conta empresarial" : "Criar conta"}
-        navigateTo={
-          isSignUpPage
-            ? "/autenticar/negocios/criar-conta"
-            : "/autenticar/criar-conta"
-        }
+        text={"É uma empresa?"}
+        buttonContent={"Criar conta empresarial"}
+        navigateTo={"/autenticar/negocios/criar-conta"}
       />
     </div>
   )
