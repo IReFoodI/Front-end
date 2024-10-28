@@ -6,13 +6,14 @@ import {
   IconMapPin,
   IconStarFilled,
 } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
 import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
-export function StoreProfilePage() {
+export function UserStoreProfilePage() {
   return (
     <div
       id="page"
@@ -36,7 +37,12 @@ export function StoreProfilePage() {
           id="icons-mobile"
           className="flex justify-end gap-2 py-3 text-gray-400 xl:hidden"
         >
-          <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
+          <Link
+            to="/loja/informacoes"
+            onClick={() => console.log("Link clicado")}
+          >
+            <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
+          </Link>
           <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-600" />
         </div>
         <div id="cards-mobile" className="flex flex-col gap-5 xl:hidden">

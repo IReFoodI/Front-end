@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreInformationInfo } from "@/domains/store/components/StoreInformationInfo.jsx"
+import { UserStoreProfilePage } from "@/domains/store/components/StoreProfilePage.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
@@ -58,6 +60,8 @@ export const ROUTES = {
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
+  USER_STORE_PROFILE: "loja",
+  USER_STORE_PROFILE_INFO: "loja/informacoes",
 }
 
 export const router = createBrowserRouter([
@@ -75,6 +79,14 @@ export const router = createBrowserRouter([
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
               { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
+              {
+                path: ROUTES.USER_STORE_PROFILE,
+                element: <UserStoreProfilePage />,
+              },
+              {
+                path: ROUTES.USER_STORE_PROFILE_INFO,
+                element: <StoreInformationInfo />,
+              },
               {
                 element: <ProfileManagementLayout />,
                 children: [

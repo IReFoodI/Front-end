@@ -7,6 +7,7 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 import capa from "./capa.png"
 import logo from "./logo-loja.png"
@@ -59,7 +60,12 @@ export function StoreProfilePageTopDesktop() {
               Dragão Verde
             </button>
             <div id="icons" className="flex justify-end gap-2 text-gray-400">
-              <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
+              <Link
+                to="/loja/informacoes"
+                onClick={() => console.log("Link clicado")}
+              >
+                <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
+              </Link>
               <button
                 onClick={toggleHeart}
                 className="flex transition duration-300 hover:text-primary"

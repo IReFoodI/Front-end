@@ -10,12 +10,12 @@ import { Card } from "@/ui/components/ui/card"
 import image from "./foto-produto.png"
 
 export function StoreProductItem({
-  fullPrice = 60,
-  price = 40.020202,
-  name = "Combo Hamburguer",
+  originalPrice,
+  sellPrice,
+  nameProd = "Combo Hamburguer",
   quantity = 10,
   imageUrl = image,
-  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi possimus illum eveniet libero cumque, minima veniam excepturi deserunt totam sed.",
+  descriptionProd,
 }) {
   const [amountAdded, setAmountAdded] = useState(1)
 
@@ -47,24 +47,24 @@ export function StoreProductItem({
         </Badge>
         <img
           src={imageUrl}
-          alt={name}
+          alt={nameProd}
           className="h-24 w-24 bg-cover bg-center"
         />
       </div>
       <div className="flex flex-1 flex-col">
-        <h3 className="text-lg font-semibold">{name}</h3>
+        <h3 className="text-lg font-semibold">{nameProd}</h3>
         {/* Talvez colocar um truncate para não passar de um determinado número de linhas na descrição */}
         <p className="text-xs font-medium text-gray-400 lg:text-sm">
-          {description}
+          {descriptionProd}
         </p>
 
         <div className="flex justify-between">
           <div className="flex flex-col justify-center">
             <p className="text-xs font-semibold text-gray-400 line-through lg:text-sm">
-              {currencyFormatter(fullPrice)}
+              {currencyFormatter(originalPrice)}
             </p>
             <p className="text-lg font-semibold text-primary">
-              {currencyFormatter(price)}
+              {currencyFormatter(sellPrice)}
             </p>
           </div>
           <div className="flex items-center justify-center gap-2">
