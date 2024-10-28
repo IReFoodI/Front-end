@@ -61,7 +61,6 @@ export function StoreSignUp() {
   })
 
   const onSubmit = async (data) => {
-    console.log(data)
     await onRequest({
       request: () =>
         restaurantService.createRestaurant({
@@ -77,6 +76,8 @@ export function StoreSignUp() {
       successMessage: "Restaurante criado com sucesso",
     })
   }
+
+  // todo: puxar do banco as categorias
   const categories = [
     {
       id: "RESTAURANTE",
