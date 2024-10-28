@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IconCamera } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import { CnpjPatternFormat } from "@/ui/components/ui/CNPJ-pattern-format"
 import {
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import {
   Select,
@@ -28,66 +29,85 @@ import {
 import { Textarea } from "@/ui/components/ui/textarea"
 
 import { storeFormSchema } from "../../models/StoreAccountTypes"
+import { restaurantService } from "../../services/restaurantService"
 
 export function StoreProfileSettings() {
+  const { loading, onRequest } = useFetch()
   const [storeInformation] = useState({
-    storeCoverImage: "",
-    storeProfileImage: "",
-    storeID: "",
-    storeName: "",
-    storeCNPJ: "",
-    storePhone: "",
-    storeCategory: "",
-    storeDescription: "",
+    urlBanner: "",
+    urlLogo: "",
+    restaurantId: "",
+    fantasy: "",
+    cnpj: "",
+    phone: "",
+    category: "",
+    description: "",
   })
 
   const form = useForm({
     resolver: zodResolver(storeFormSchema),
     defaultValues: {
-      storeID: storeInformation?.storeID,
-      storeName: storeInformation?.storeName,
-      storeCNPJ: storeInformation?.storeCNPJ,
-      storePhone: storeInformation?.storePhone,
-      storeCategory: storeInformation?.storeCategory,
-      storeDescription: storeInformation?.storeDescription,
+      restaurantId: storeInformation?.restaurantId,
+      fantasy: storeInformation?.fantasy,
+      cnpj: storeInformation?.cnpj,
+      phone: storeInformation?.phone,
+      category: storeInformation?.category,
+      description: storeInformation?.description,
     },
   })
 
-  const formPlaceholders = {
-    storeID: "ID da Loja",
-    storeName: "Nome da Loja",
-    storeCategory: "Escolha uma categoria...",
-    storeDescription: "A descrição da loja vai vir aqui...",
+  const { reset } = form
+
+  const fetchStoreProfileSettings = async () => {
+    await onRequest({
+      request: () => restaurantService.getRestaurant(),
+      onSuccess: (data) => reset(data),
+    })
   }
 
+  useEffect(() => {
+    fetchStoreProfileSettings()
+  }, [])
+
+  const onSubmit = async () => {
+    await onRequest({
+      request: () => restaurantService.updateRestaurant(form.getValues()),
+      successMessage: "Dados atualizado",
+    })
+  }
+
+  console.log(form.formState.errors)
+
+  const formPlaceholders = {
+    restaurantId: "ID da Loja",
+    fantasy: "Nome da Loja",
+    category: "Escolha uma categoria...",
+    description: "A descrição da loja vai vir aqui...",
+  }
+
+  // todo: puxar do banco as categorias
   const categories = [
     {
-      id: 1,
-      category: "Lanches",
+      id: "RESTAURANTE",
+      category: "RESTAURANTE",
     },
     {
-      id: 2,
-      category: "Teste 1",
+      id: "PADARIA",
+      category: "PADARIA",
     },
     {
-      id: 3,
-      category: "Teste 2",
+      id: "SUPERMERCADO",
+      category: "SUPERMERCADO",
     },
     {
-      id: 4,
-      category: "Teste 3",
-    },
-    {
-      id: 5,
-      category: "Teste 4",
+      id: "LANCHERIA",
+      category: "LANCHERIA",
     },
   ]
 
-  function onSubmit(data) {
-    toast.success("Conta atualizada com sucesso!")
-    console.log(data)
+  if (loading) {
+    return <Loading />
   }
-
   return (
     <div className="m-4 w-auto lg:m-8">
       <div className="flex flex-col gap-0">
@@ -100,22 +120,25 @@ export function StoreProfileSettings() {
       </div>
 
       <div className="relative mb-14 mt-4 flex flex-col items-center">
-        <div className="relative h-64 w-full">
+        <div className="relative h-32 w-full">
           <img
-            src={storeInformation.storeCoverImage}
-            alt={`Imagem de fundo da loja ${storeInformation.storeName}`}
+            src={storeInformation.urlBanner}
+            alt={`Imagem de fundo da loja ${storeInformation.fantasy}`}
             className="h-full w-full rounded-xl border-2 border-gray-400 object-cover"
           />
 
-          <button className="absolute right-0 top-0 m-2 rounded-md bg-black p-1 transition hover:bg-orange-500 hover:ease-in">
-            <IconCamera className="text-white" size={32} />
-          </button>
+          <Button
+            onClick={() => console.log("nao aguento mais")}
+            className="absolute right-0 top-0 m-2 rounded-md bg-black p-1 transition hover:ease-in"
+          >
+            <IconCamera className="text-white" size={30} />
+          </Button>
         </div>
 
         <div className="absolute bottom-0 flex h-24 w-24 pt-12">
           <img
-            src={storeInformation.storeProfileImage}
-            alt={`Imagem de perfil da loja ${storeInformation.storeName}`}
+            src={storeInformation.urlLogo}
+            alt={`Imagem de perfil da loja ${storeInformation.fantasy}`}
             className="h-24 w-24 rounded-full border-2 border-white object-cover"
           />
         </div>
@@ -129,8 +152,8 @@ export function StoreProfileSettings() {
           <div className="order-1 flex flex-col gap-6">
             <FormField
               className="flex flex-col gap-1"
-              id="storeID"
-              name="storeID"
+              id="restaurantId"
+              name="restaurantId"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -138,7 +161,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder={formPlaceholders.storeID}
+                      placeholder={formPlaceholders.restaurantId}
                       disabled={true}
                       className="w-full resize-none rounded-md border border-gray-400 bg-slate-200 p-2"
                       {...field}
@@ -151,8 +174,8 @@ export function StoreProfileSettings() {
 
             <FormField
               className="flex flex-col gap-1"
-              id="storeName"
-              name="storeName"
+              id="fantasy"
+              name="fantasy"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -160,7 +183,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder={formPlaceholders.storeName}
+                      placeholder={formPlaceholders.fantasy}
                       {...field}
                     />
                   </FormControl>
@@ -173,8 +196,8 @@ export function StoreProfileSettings() {
           <div className="order-2 flex flex-col gap-6">
             <FormField
               className="flex flex-col gap-1"
-              id="storeCNPJ"
-              name="storeCNPJ"
+              id="cnpj"
+              name="cnpj"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -189,8 +212,8 @@ export function StoreProfileSettings() {
 
             <FormField
               className="flex flex-col gap-1"
-              id="storePhone"
-              name="storePhone"
+              id="phone"
+              name="phone"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -207,8 +230,8 @@ export function StoreProfileSettings() {
           <div className="order-3 flex w-full flex-col gap-6 lg:order-4 lg:col-span-3 lg:mt-2 lg:items-end">
             <FormField
               className="flex flex-col gap-1 lg:order-2"
-              id="storeDescription"
-              name="storeDescription"
+              id="description"
+              name="description"
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-full">
@@ -216,7 +239,7 @@ export function StoreProfileSettings() {
                   <FormControl>
                     <Textarea
                       type="text"
-                      placeholder={formPlaceholders.storeDescription}
+                      placeholder={formPlaceholders.description}
                       className="h-32 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
                       {...field}
                     />
@@ -229,23 +252,20 @@ export function StoreProfileSettings() {
 
           <div className="order-4 flex h-full w-full flex-col items-center gap-12 lg:order-3 lg:flex-col-reverse lg:items-end lg:justify-center">
             <FormField
-              className="flex w-full flex-col gap-1"
-              id="storeCategory"
-              name="storeCategory"
+              id="category"
+              name="category"
               control={form.control}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Categoria</FormLabel>
-                  <FormControl className="">
+                  <FormControl>
                     <Select
                       className="w-full border-4 border-gray-400"
                       value={field.value}
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger>
-                        <SelectValue
-                          placeholder={formPlaceholders.storeCategory}
-                        />
+                        <SelectValue placeholder="Categoria" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -266,9 +286,10 @@ export function StoreProfileSettings() {
                 </FormItem>
               )}
             />
-
             <div className="lg:order-1">
-              <Button className="w-full">Salvar alterações</Button>
+              <Button disabled={loading} className="w-full">
+                Salvar alterações
+              </Button>
             </div>
           </div>
         </form>
