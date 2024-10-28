@@ -30,7 +30,16 @@ export function ProfileAddressForm() {
 
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
-    defaultValues: {},
+    defaultValues: {
+      cep: "",
+      state: "",
+      district: "",
+      street: "",
+      complement: "",
+      number: "",
+      type: "",
+      city: "",
+    },
   })
 
   const { getValues, setValue, reset, watch } = formMethods
