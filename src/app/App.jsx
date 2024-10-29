@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 
-// import { addressService } from "@/domains/user/services/addressService"
-// import { userService } from "@/domains/user/services/userService"
 import userStore from "@/domains/user/stores/userStore"
 import { Loading } from "@/ui/components/ui/loading"
+
+import { tokenService } from "./service/tokenService"
 
 function App() {
   const { setUser, setIsUserLoading, isUserLoading } = userStore()
@@ -13,11 +13,8 @@ function App() {
     async function authenticate() {
       setIsUserLoading(true)
       try {
-        // isso aqui tá chmando requisiçao em qualquer tela, mesmo a pessoa nao estando logada
-        //todo criar uma rota pra pegar informações do usuario
-        // const user = await userService.getUser()
-        // const user = await addressService.listAddresses()
-        // setUser(user)
+        const user = await tokenService.getInfoUsingToken()
+        setUser(user?.data)
       } catch (error) {
         console.log(error)
       } finally {
