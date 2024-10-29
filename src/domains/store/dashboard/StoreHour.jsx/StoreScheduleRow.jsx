@@ -42,9 +42,9 @@ export function ScheduleRow({
   const handleValidation = async () => {
     const isValid = await form.trigger()
     if (!isValid) {
-      onError?.(form.formState.errors) // Envia erros para o componente pai
+      onError?.(form.formState.errors)
     } else {
-      onError?.(null) // Reseta erro se a validação for bem-sucedida
+      onError?.(null)
     }
   }
 

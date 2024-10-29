@@ -1,5 +1,6 @@
 import { decodeJwt } from "jose"
 import { useCallback, useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { localStorageUtil } from "@/app/utils/localStorageUtil"
@@ -25,13 +26,12 @@ export function StoreSchedule() {
   const [hasError, setHasError] = useState(false)
   const { loading, error, onRequest } = useFetch()
 
-  const restaurantId = 1
   const token = localStorageUtil.getLocalStorageToken()
   const decoded = decodeJwt(token)
-
+  const restaurantId = decoded.userId
   useEffect(() => {
     onRequest({
-      request: () => fetchRestaurantHours(1),
+      request: () => fetchRestaurantHours(restaurantId),
       onSuccess: (data) => {
         const initialSchedule = daysOfWeek.map((day) => {
           const hoursForDay =
@@ -43,7 +43,8 @@ export function StoreSchedule() {
             startMinute: hoursForDay.openingTime?.split(":")[1] || "",
             endHour: hoursForDay.closingTime?.split(":")[0] || "",
             endMinute: hoursForDay.closingTime?.split(":")[1] || "",
-            restaurantId: hoursForDay.restaurantId,
+            restaurantId: restaurantId,
+            id: hoursForDay.id,
           }
         })
         setSchedule(initialSchedule)
@@ -55,11 +56,7 @@ export function StoreSchedule() {
   const handleScheduleChange = useCallback(
     (index, field, value) => {
       console.log({ index, field, value })
-
-      // Cria uma cópia profunda do item que será modificado
       const updatedItem = { ...schedule[index], [field]: value }
-
-      // Atualiza o estado com a nova lista
       const updatedSchedule = schedule.map((item, i) =>
         i === index ? updatedItem : item
       )
@@ -83,23 +80,28 @@ export function StoreSchedule() {
       openingTime: `${item.startHour.padStart(2, "0")}:${item.startMinute.padStart(2, "0")}`,
       closingTime: `${item.endHour.padStart(2, "0")}:${item.endMinute.padStart(2, "0")}`,
       restaurantId: item.restaurantId,
+      id: item?.id || null,
       enabled: item.enabled,
     }))
   }
-
+  const postSchedule = (data) => {
+    onRequest({
+      request: () => addRestaurantHours(data),
+      onSuccess: () => {
+        toast.success("Horário salvo com sucesso com sucesso!")
+      },
+      errorMessage: "Erro ao salvar hor YYS.",
+    })
+  }
   const handleSave = () => {
     console.log({ schedule })
     const data = transformScheduleData(schedule)
-
-    console.log({ data })
-
-    // onRequest({
-    //   request: () => addRestaurantHours(data),
-    //   onSuccess: () => {
-    //     console.log("Horários salvos com sucesso!")
-    //   },
-    //   errorMessage: "Erro ao salvar horários.",
-    // })
+    data.map((item) => {
+      if (item.enabled === false) {
+        return "Sem horário"
+      }
+      postSchedule(item)
+    })
   }
 
   const handleError = (error) => {
@@ -140,7 +142,7 @@ export function StoreSchedule() {
           className={`mt-4 rounded-md border-4 border-primary bg-primary px-4 text-xl font-semibold text-primary-foreground ${
             hasError ? "cursor-not-allowed opacity-50" : ""
           }`}
-          disabled={hasError} // Desativa o botão se houver erro
+          disabled={hasError}
         >
           Salvar alterações
         </button>
