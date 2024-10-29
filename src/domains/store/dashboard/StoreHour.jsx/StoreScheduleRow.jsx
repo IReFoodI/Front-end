@@ -22,6 +22,7 @@ export function ScheduleRow({
   endHour,
   endMinute,
   onError,
+  onUpdate,
 }) {
   const form = useForm({
     resolver: zodResolver(scheduleSchema),
@@ -35,13 +36,15 @@ export function ScheduleRow({
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    onUpdate(data)
   }
 
   const handleValidation = async () => {
     const isValid = await form.trigger()
     if (!isValid) {
-      onError?.(form.formState.errors) // Envia erros ao componente pai
+      onError?.(form.formState.errors) // Envia erros para o componente pai
+    } else {
+      onError?.(null) // Reseta erro se a validação for bem-sucedida
     }
   }
 
@@ -50,6 +53,7 @@ export function ScheduleRow({
     if (/^(2[0-3]|[0-1]?[0-9]?)?$/.test(value)) {
       field.onChange(value)
       await handleValidation()
+      onSubmit(form.getValues())
     }
   }
 
@@ -58,6 +62,7 @@ export function ScheduleRow({
     if (/^(5[0-9]|[0-4]?[0-9]?)?$/.test(value)) {
       field.onChange(value)
       await handleValidation()
+      onSubmit(form.getValues())
     }
   }
 

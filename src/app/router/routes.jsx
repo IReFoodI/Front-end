@@ -121,6 +121,7 @@ export const router = createBrowserRouter([
               },
               { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
               { path: ROUTES.DASHBOARD_CONFIG, element: <ConfigurationPage /> },
+              { path: ROUTES.SCHEDULESETTINGS, element: <StoreSchedule /> },
             ],
           },
         ],

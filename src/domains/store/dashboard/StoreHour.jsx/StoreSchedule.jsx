@@ -1,7 +1,12 @@
+import { decodeJwt } from "jose"
 import { useCallback, useEffect, useState } from "react"
 
-import useFetch from "@/app/hooks/useFetch"
-import { fetchRestaurantHours } from "@/domains/store/hooks/fetchRestaurantHours"
+import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
+import {
+  addRestaurantHours,
+  fetchRestaurantHours,
+} from "@/domains/store/hooks/fetchRestaurantHours"
 
 import { ScheduleRow } from "./StoreScheduleRow"
 
@@ -20,11 +25,13 @@ export function StoreSchedule() {
   const [hasError, setHasError] = useState(false)
   const { loading, error, onRequest } = useFetch()
 
-  const restaurantId = 1 // substituir pelo ID do usuário
+  const restaurantId = 1
+  const token = localStorageUtil.getLocalStorageToken()
+  const decoded = decodeJwt(token)
 
   useEffect(() => {
     onRequest({
-      request: () => fetchRestaurantHours(restaurantId),
+      request: () => fetchRestaurantHours(1),
       onSuccess: (data) => {
         const initialSchedule = daysOfWeek.map((day) => {
           const hoursForDay =
@@ -36,6 +43,7 @@ export function StoreSchedule() {
             startMinute: hoursForDay.openingTime?.split(":")[1] || "",
             endHour: hoursForDay.closingTime?.split(":")[0] || "",
             endMinute: hoursForDay.closingTime?.split(":")[1] || "",
+            restaurantId: hoursForDay.restaurantId,
           }
         })
         setSchedule(initialSchedule)
@@ -46,20 +54,57 @@ export function StoreSchedule() {
 
   const handleScheduleChange = useCallback(
     (index, field, value) => {
-      const updatedSchedule = [...schedule]
-      updatedSchedule[index][field] = value
+      console.log({ index, field, value })
+
+      // Cria uma cópia profunda do item que será modificado
+      const updatedItem = { ...schedule[index], [field]: value }
+
+      // Atualiza o estado com a nova lista
+      const updatedSchedule = schedule.map((item, i) =>
+        i === index ? updatedItem : item
+      )
+
       setSchedule(updatedSchedule)
     },
     [schedule]
   )
 
+  const handleUpdateSchedule = (index, data) => {
+    console.log({ index, data })
+    const updatedItem = { ...schedule[index], ...data }
+    const updatedSchedule = schedule.map((item, i) =>
+      i === index ? updatedItem : item
+    )
+    setSchedule(updatedSchedule)
+  }
+  const transformScheduleData = (schedule) => {
+    return schedule.map((item) => ({
+      dayOfWeek: daysOfWeek.find((day) => day.name === item.day)?.key,
+      openingTime: `${item.startHour.padStart(2, "0")}:${item.startMinute.padStart(2, "0")}`,
+      closingTime: `${item.endHour.padStart(2, "0")}:${item.endMinute.padStart(2, "0")}`,
+      restaurantId: item.restaurantId,
+      enabled: item.enabled,
+    }))
+  }
+
   const handleSave = () => {
-    console.log("Horário salvo:", schedule)
+    console.log({ schedule })
+    const data = transformScheduleData(schedule)
+
+    console.log({ data })
+
+    // onRequest({
+    //   request: () => addRestaurantHours(data),
+    //   onSuccess: () => {
+    //     console.log("Horários salvos com sucesso!")
+    //   },
+    //   errorMessage: "Erro ao salvar horários.",
+    // })
   }
 
   const handleError = (error) => {
-    console.log(error)
-    setHasError(true) // Marca que houve um erro
+    if (error === null) return setHasError(false)
+    setHasError(true)
   }
 
   if (loading) return <p>Carregando...</p>
@@ -82,22 +127,11 @@ export function StoreSchedule() {
           startMinute={item.startMinute}
           endHour={item.endHour}
           endMinute={item.endMinute}
-          onToggleEnabled={(enabled) =>
-            handleScheduleChange(index, "enabled", enabled)
+          onToggleEnabled={() =>
+            handleScheduleChange(index, "enabled", !item.enabled)
           }
-          onStartHourChange={(value) =>
-            handleScheduleChange(index, "startHour", value)
-          }
-          onStartMinuteChange={(value) =>
-            handleScheduleChange(index, "startMinute", value)
-          }
-          onEndHourChange={(value) =>
-            handleScheduleChange(index, "endHour", value)
-          }
-          onEndMinuteChange={(value) =>
-            handleScheduleChange(index, "endMinute", value)
-          }
-          onError={handleError} // Lida com erros ao validar os campos
+          onUpdate={(data) => handleUpdateSchedule(index, data)}
+          onError={handleError}
         />
       ))}
       <div className="flex justify-center md:justify-end">
