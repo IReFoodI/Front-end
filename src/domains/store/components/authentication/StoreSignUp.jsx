@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
@@ -28,16 +28,12 @@ import {
 } from "@/ui/components/ui/select"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
-import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { states } from "../../models/StoreAddressType"
 import { storeFormSchemaSignUp } from "../../models/StoreSignUpTypes"
 import { restaurantService } from "../../services/restaurantService"
 
 export function StoreSignUp() {
-  const location = useLocation()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const redirectPath = searchParams.get("redirect")
   const { onRequest } = useFetch()
 
   const form = useForm({

@@ -30,10 +30,17 @@ import { Textarea } from "@/ui/components/ui/textarea"
 
 import { storeFormSchema } from "../../models/StoreAccountTypes"
 import { restaurantService } from "../../services/restaurantService"
+import { ModalCoverphoto } from "./ModalCoverphoto"
+import { ModalProfilePhoto } from "./ModalProfilePhoto"
+import { ModalSaveChanges } from "./ModalSaveChanges"
 
 export function StoreProfileSettings() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalProfileOpen, setIsModalProfileOpen] = useState(false)
+  const [isModalSaveChangesOpen, setIsModalSaveChangesProfileOpen] =
+    useState(false)
   const { loading, onRequest } = useFetch()
-  const [storeInformation] = useState({
+  const [storeInformation, setStoreInformation] = useState({
     urlBanner: "",
     urlLogo: "",
     restaurantId: "",
@@ -57,11 +64,12 @@ export function StoreProfileSettings() {
   })
 
   const { reset } = form
-
   const fetchStoreProfileSettings = async () => {
     await onRequest({
       request: () => restaurantService.getRestaurant(),
-      onSuccess: (data) => reset(data),
+      onSuccess: (data) => {
+        reset(data), setStoreInformation({ ...data })
+      },
     })
   }
 
@@ -72,18 +80,26 @@ export function StoreProfileSettings() {
   const onSubmit = async () => {
     await onRequest({
       request: () => restaurantService.updateRestaurant(form.getValues()),
+      onSuccess: () => setIsModalSaveChangesProfileOpen(false),
+      onError: () => setIsModalSaveChangesProfileOpen(false),
       successMessage: "Dados atualizado",
     })
   }
-
-  console.log(form.formState.errors)
 
   const formPlaceholders = {
     restaurantId: "ID da Loja",
     fantasy: "Nome da Loja",
     category: "Escolha uma categoria...",
-    description: "A descrição da loja vai vir aqui...",
+    description: "Fale mais sobre seu estabelecimento",
   }
+  const toggleOpenModal = () => {
+    setIsModalOpen((prev) => !prev)
+  }
+  const toggleOpenModalProfile = () => {
+    setIsModalProfileOpen((prev) => !prev)
+  }
+  const toggleOpenModalSaveChanges = () =>
+    setIsModalSaveChangesProfileOpen((prev) => !prev)
 
   // todo: puxar do banco as categorias
   const categories = [
@@ -120,7 +136,7 @@ export function StoreProfileSettings() {
       </div>
 
       <div className="relative mb-14 mt-4 flex flex-col items-center">
-        <div className="relative h-32 w-full">
+        <div className="relative h-40 w-full">
           <img
             src={storeInformation.urlBanner}
             alt={`Imagem de fundo da loja ${storeInformation.fantasy}`}
@@ -128,7 +144,7 @@ export function StoreProfileSettings() {
           />
 
           <Button
-            onClick={() => console.log("nao aguento mais")}
+            onClick={() => toggleOpenModal()}
             className="absolute right-0 top-0 m-2 rounded-md bg-black p-1 transition hover:ease-in"
           >
             <IconCamera className="text-white" size={30} />
@@ -141,12 +157,20 @@ export function StoreProfileSettings() {
             alt={`Imagem de perfil da loja ${storeInformation.fantasy}`}
             className="h-24 w-24 rounded-full border-2 border-white object-cover"
           />
+          <Button
+            onClick={() => toggleOpenModalProfile()}
+            className="absolute -bottom-14 -right-5 m-2 rounded-md bg-black p-1 transition hover:ease-in"
+          >
+            <IconCamera className="text-white" size={30} />
+          </Button>
         </div>
       </div>
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(() => {
+            toggleOpenModalSaveChanges()
+          })}
           className="flex flex-col gap-6 lg:grid lg:grid-cols-3 lg:grid-rows-2 lg:gap-x-14"
         >
           <div className="order-1 flex flex-col gap-6">
@@ -240,7 +264,7 @@ export function StoreProfileSettings() {
                     <Textarea
                       type="text"
                       placeholder={formPlaceholders.description}
-                      className="h-32 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
+                      className="h-20 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
                       {...field}
                     />
                   </FormControl>
@@ -294,6 +318,24 @@ export function StoreProfileSettings() {
           </div>
         </form>
       </Form>
+      <ModalCoverphoto
+        toggleOpenModal={toggleOpenModal}
+        isModalOpen={isModalOpen}
+        storeInformation={form.getValues()}
+        fetchStoreProfileSettings={fetchStoreProfileSettings}
+      />
+      <ModalProfilePhoto
+        toggleOpenModal={toggleOpenModalProfile}
+        isModalOpen={isModalProfileOpen}
+        storeInformation={form.getValues()}
+        fetchStoreProfileSettings={fetchStoreProfileSettings}
+      />
+
+      <ModalSaveChanges
+        toggleOpenModal={toggleOpenModalSaveChanges}
+        isModalOpen={isModalSaveChangesOpen}
+        onConfirm={onSubmit}
+      />
     </div>
   )
 }
