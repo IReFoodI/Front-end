@@ -27,6 +27,7 @@ export function SignIn() {
   const { setUser } = userStore()
   const navigate = useNavigate()
   const location = useLocation()
+  const pathname = location?.pathname
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
 
@@ -43,19 +44,36 @@ export function SignIn() {
     if (redirectPath) {
       navigate(redirectPath)
     } else {
-      navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
+      navigate(pathname == "/autenticar/negocios" ? "/dashboard" : "/")
     }
   }
 
   function handleSuccess(data) {
-    setUser(data)
+    console.log("sucesso", data)
+    if (
+      pathname == "/autenticar/negocios" ||
+      pathname == "/autenticar/negocios"
+    ) {
+      setUser({ ...data, restaurantId: data?.id })
+    } else {
+      setUser({ ...data, userId: data?.id })
+    }
     localStorageUtil?.setLocalStorageToken(data?.jwt)
     redirect()
   }
 
   const onSubmit = async (data) => {
     await onRequestLogin({
-      request: () => authService.signInWithEmailAndPassword(data),
+      request: () => {
+        if (
+          pathname == "/autenticar/negocios" ||
+          pathname == "/autenticar/negocios"
+        ) {
+          return authService.signInWithEmailAndPasswordRestaurant(data)
+        } else {
+          return authService.signInWithEmailAndPassword(data)
+        }
+      },
       onSuccess: handleSuccess,
       successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
       errorMessage: "Credenciais incorretas",
