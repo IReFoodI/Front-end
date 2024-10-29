@@ -9,8 +9,7 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import capa from "./capa.png"
-import logo from "./logo-loja.png"
+import { useRestaurant } from "../hooks/useRestaurant"
 
 export function StoreProfilePageTopDesktop() {
   const [isHeartFilled, setIsHeartFilled] = useState(false)
@@ -19,12 +18,19 @@ export function StoreProfilePageTopDesktop() {
     setIsHeartFilled((prevState) => !prevState)
   }
 
+  const urlBanner = "http://localhost:8080/images/banner.png"
+  const urlLogo = "http://localhost:8080/images/logo.png"
+
+  const { restaurant } = useRestaurant()
+
+  const { fantasy, category, averageRating, totalEvaluations } = restaurant
+
   return (
     <div className="text-gray-500 antialiased">
       <div
         id="capa"
         className="relative hidden h-[200px] w-full bg-cover bg-center px-5 xl:flex xl:rounded-[14px]"
-        style={{ backgroundImage: `url(${capa})` }}
+        style={{ backgroundImage: `url(${urlBanner})` }}
       ></div>
       <div
         id="icons-desktop"
@@ -52,12 +58,12 @@ export function StoreProfilePageTopDesktop() {
         <button
           id="logo"
           className="relative bottom-1 right-9 h-36 w-36 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${logo})` }}
+          style={{ backgroundImage: `url(${urlLogo})` }}
         />
         <div id="info" className="ms-[-10px] flex-1 py-3 pe-3">
           <div className="flex justify-between">
             <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
-              Dragão Verde
+              {fantasy}
             </button>
             <div id="icons" className="flex justify-end gap-2 text-gray-400">
               <Link
@@ -83,8 +89,10 @@ export function StoreProfilePageTopDesktop() {
             <span>
               <IconStarFilled size={15} className="text-primary" />
             </span>
-            <span>5,0 (10 avaliações)</span>
-            <span className="text-gray-400">Restaurante</span>
+            <span>
+              {averageRating} ( {totalEvaluations} avaliações )
+            </span>
+            <span className="text-gray-400">{category}</span>
           </div>
         </div>
       </div>
