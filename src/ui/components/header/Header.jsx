@@ -1,21 +1,15 @@
-import {
-  IconFilter,
-  IconSearch,
-  IconShoppingBag,
-  IconUser,
-} from "@tabler/icons-react"
+import { IconShoppingBag, IconUser } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
-import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
-import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
+import { SearchInput } from "./search/searchInput"
 
 export function Header() {
   const [isActive, setIsActive] = useState(false)
@@ -62,30 +56,7 @@ export function Header() {
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
-          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 xl:w-[50%]">
-            <IconSearch
-              className="absolute left-0 ml-2 text-primary"
-              size={20}
-            />
-            <Input
-              type="text"
-              placeholder="Busque por estabelecimentos"
-              className="bg-background pl-8"
-            />
-
-            <Popover className="relative" placement="center">
-              <PopoverTrigger className="absolute right-0 mr-2 text-gray-500">
-                <IconFilter size={20} />
-              </PopoverTrigger>
-              <PopoverContent
-                align="end"
-                sideOffset={20}
-                className="relative left-2 w-full"
-              >
-                <RestaurantFilter />
-              </PopoverContent>
-            </Popover>
-          </div>
+          <SearchInput />
           <AddressModal />
         </section>
         <section className="order-1 flex w-full items-center justify-between gap-2 md:order-last md:w-fit">
