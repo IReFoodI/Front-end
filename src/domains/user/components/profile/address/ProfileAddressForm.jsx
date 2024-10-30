@@ -84,7 +84,7 @@ export function ProfileAddressForm() {
               ...data,
               addressType: "USER",
               addressId: params?.addressId,
-            }), // todo: ficará assim até ajustarem a lógica para a empresa
+            }),
       onSuccess: () => navigate("/endereco"),
       successMessage: `${!params?.addressId ? "Endereço criado com sucesso!" : "Endereço alterado com sucesso!"}`,
     })
