@@ -5,8 +5,6 @@ import {
 } from "@tabler/icons-react"
 import { useState } from "react"
 
-import { useRestaurant } from "../hooks/useRestaurant"
-
 export function StoreInformationInfo() {
   const [isShowing, setIsShowing] = useState(false)
   const address =
@@ -16,8 +14,6 @@ export function StoreInformationInfo() {
   const toggleAccordion = () => {
     setIsShowing(!isShowing)
   }
-
-  const { restaurantHours } = useRestaurant()
 
   const daysOfWeek = [
     {

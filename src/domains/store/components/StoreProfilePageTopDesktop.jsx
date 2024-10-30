@@ -53,9 +53,6 @@ export function StoreProfilePageTopDesktop() {
           <span>
             <IconMapPin size={15} />
           </span>
-          <span className="text-gray-400 transition duration-300 hover:text-primary">
-            2.5 Km
-          </span>
         </button>
       </div>
       <div
