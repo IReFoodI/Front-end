@@ -1,8 +1,6 @@
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { PopoverClose } from "@radix-ui/react-popover"
-//
 import { IconMapPin } from "@tabler/icons-react"
-import { IconStar } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { Slider } from "@/ui/components/ui/slider"
@@ -13,41 +11,42 @@ import { SliderMetric } from "./SliderMetric"
 export function RestaurantFilter() {
   const [sliderValue, setSlidervalue] = useState([0])
 
-  const ordinateBy = [
-    {
-      buttonTitle: "Mais próximos",
-      imageSource: <IconMapPin className="size-4" />,
-    },
-    {
-      buttonTitle: "Mais próximos",
-      imageSource: <IconStar className="size-4" />,
-    },
-  ]
+  // const ordinateBy = [
+  //   {
+  //     buttonTitle: "Mais próximos",
+  //     imageSource: <IconMapPin className="size-4" />,
+  //   },
+  //   {
+  //     buttonTitle: "Mais próximos",
+  //     imageSource: <IconStar className="size-4" />,
+  //   },
+  // ]
 
-  const kindOfDelivery = [
-    { buttonTitle: "Retirada", imageSource: <IconMapPin className="size-4" /> },
-    { buttonTitle: "Entrega", imageSource: <IconMapPin className="size-4" /> },
-  ]
+  // const kindOfDelivery = [
+  //   { buttonTitle: "Retirada", imageSource: <IconMapPin className="size-4" /> },
+  //   { buttonTitle: "Entrega", imageSource: <IconMapPin className="size-4" /> },
+  // ]
 
   const categories = [
     { buttonTitle: "Salgado", imageSource: <IconMapPin className="size-4" /> },
     { buttonTitle: "Doce", imageSource: <IconMapPin className="size-4" /> },
-    { buttonTitle: "Misto", imageSource: <IconMapPin className="size-4" /> },
+    // { buttonTitle: "Misto", imageSource: <IconMapPin className="size-4" /> },
   ]
 
   return (
-    <div>
-      <div className="flex">
+    <div className="relative">
+      <div className="flex flex-col">
+        <h2 className="text-lg font-medium">Filtrar por</h2>
         <div>
-          <FilterItemContainer title={`Ordenar por`} items={ordinateBy} />
-          <FilterItemContainer
+          {/* <FilterItemContainer title={`Ordenar por`} items={ordinateBy} /> */}
+          {/* <FilterItemContainer
             title={`Tipo de entrega`}
             items={kindOfDelivery}
-          />
+          /> */}
           <FilterItemContainer title={`Categoria`} items={categories} />
         </div>
 
-        <PopoverClose className="flex justify-center">
+        <PopoverClose className="absolute right-0 top-0 flex justify-center">
           <Cross1Icon className="text-lilac-800 size-6" />
         </PopoverClose>
       </div>
