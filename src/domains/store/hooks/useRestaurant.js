@@ -6,6 +6,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 export function useRestaurant() {
   const [restaurant, setRestaurant] = useState([])
   const [restaurantHours, setRestaurantHours] = useState([])
+  const [restaurantHoursToday, setRestaurantHoursToday] = useState([])
   const { loading, onRequest, error } = useFetch()
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export function useRestaurant() {
           axios.get("http://localhost:8080/api/restaurants/1"),
         onSuccess: async (restaurantRes) => {
           console.log("Restaurant:", restaurantRes)
-          setRestaurant(...restaurantRes)
+          setRestaurant(restaurantRes)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
@@ -40,6 +41,22 @@ export function useRestaurant() {
     fetchRestaurantHours()
   }, [onRequest, error])
 
+  useEffect(() => {
+    const fetchRestaurantHoursToday = async () => {
+      await onRequest({
+        request: async () =>
+          axios.get("http://localhost:8080/api/restaurant-hours/today"),
+        onSuccess: async (restaurantHoursTodayRes) => {
+          console.log("Restaurant Hours:", restaurantHoursTodayRes)
+          setRestaurantHoursToday(restaurantHoursTodayRes)
+        },
+        onError: () => console.error("Erro ao buscar dados:", error),
+      })
+    }
+
+    fetchRestaurantHoursToday()
+  }, [onRequest, error])
+
   const handleStatusChange = async (restaurantId, newStatus) => {
     try {
       const response = await axios.patch(
@@ -60,7 +77,13 @@ export function useRestaurant() {
     }
   }
 
-  return { restaurant, restaurantHours, loading, handleStatusChange }
+  return {
+    restaurant,
+    restaurantHours,
+    restaurantHoursToday,
+    loading,
+    handleStatusChange,
+  }
 }
 
 // Função para decodificar o token JWT

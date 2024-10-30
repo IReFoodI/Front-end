@@ -21,7 +21,7 @@ export function StoreProfilePageTopDesktop() {
   const urlBanner = "http://localhost:8080/images/banner.png"
   const urlLogo = "http://localhost:8080/images/logo.png"
 
-  const { restaurant } = useRestaurant()
+  const { restaurant, restaurantHoursToday } = useRestaurant()
 
   const { fantasy, category, averageRating, totalEvaluations } = restaurant
 
@@ -41,7 +41,14 @@ export function StoreProfilePageTopDesktop() {
             <IconClock size={15} />
           </span>
           <span className="text-gray-400 transition duration-300 hover:text-primary">
-            10:00 às 23:00
+            {restaurantHoursToday.map(
+              (res) =>
+                res.restaurantId === 1 && (
+                  <span key={res.id}>
+                    {res.openingTime} às {res.closingTime}
+                  </span>
+                )
+            )}
           </span>
           <span>
             <IconMapPin size={15} />

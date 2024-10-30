@@ -13,7 +13,7 @@ import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
-  const { restaurant } = useRestaurant()
+  const { restaurant, restaurantHoursToday } = useRestaurant()
 
   const urlBanner = "http://localhost:8080/images/banner.png"
   const urlLogo = "http://localhost:8080/images/logo.png"
@@ -72,7 +72,14 @@ export function UserStoreProfilePage() {
                   <IconClock size={15} className="text-gray-500" />
                 </span>
                 <span className="transition duration-300 hover:text-primary">
-                  10:00 às 23:00
+                  {restaurantHoursToday.map(
+                    (res) =>
+                      res.restaurantId === 1 && (
+                        <span key={res.id}>
+                          {res.openingTime} às {res.closingTime}
+                        </span>
+                      )
+                  )}
                 </span>
                 <span>
                   <IconMapPin size={15} className="text-gray-500" />
