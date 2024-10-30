@@ -12,6 +12,14 @@ function setLocalStorageToken(token) {
   }
 }
 
+function removeLocalStorageToken() {
+  try {
+    localStorage?.removeItem(KEYS?.TOKEN)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 function getLocalStorageToken() {
   try {
     const storageToken = localStorage?.getItem(KEYS.TOKEN)
@@ -24,4 +32,5 @@ function getLocalStorageToken() {
 export const localStorageUtil = {
   setLocalStorageToken,
   getLocalStorageToken,
+  removeLocalStorageToken,
 }
