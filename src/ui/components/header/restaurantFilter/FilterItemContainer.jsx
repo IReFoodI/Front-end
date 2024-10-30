@@ -1,23 +1,27 @@
 import { useState } from "react"
-//
+import { v4 as uuid } from "uuid"
 export function FilterItemContainer({ title, items }) {
-  const [activeItem, setActiveItem] = useState(null)
+  const [activeItems, setActiveItems] = useState([])
 
   function handleClick(index) {
-    setActiveItem(index)
+    if (activeItems.some((val) => val === index)) {
+      setActiveItems((prev) => prev.filter((val) => val !== index))
+      return
+    }
+    setActiveItems((prev) => [...prev, index])
   }
 
   return (
-    <div className="flex flex-col gap-1 p-2 text-gray-600">
+    <div className="flex flex-col gap-1 py-2 text-gray-600">
       <h2 className="text-sm font-semibold">{title}</h2>
 
       <div className="flex gap-2">
         {items.map((item, index) => {
           return (
             <button
-              key={index}
+              key={uuid()}
               className={`flex items-center rounded-full p-1 text-xs font-semibold ${
-                activeItem === index
+                activeItems.some((i) => i === index)
                   ? "bg-orange-100 text-primary"
                   : "bg-gray-200 text-gray-600"
               }`}
