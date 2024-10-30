@@ -50,9 +50,6 @@ export function StoreProfilePageTopDesktop() {
                 )
             )}
           </span>
-          <span>
-            <IconMapPin size={15} />
-          </span>
         </button>
       </div>
       <div

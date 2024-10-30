@@ -84,9 +84,6 @@ export function UserStoreProfilePage() {
                       )
                   )}
                 </span>
-                <span>
-                  <IconMapPin size={15} className="text-gray-500" />
-                </span>
               </button>
             </div>
           </div>
