@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -13,18 +14,23 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
+import { authService } from "../../services/authService"
+import userStore from "../../stores/userStore"
 
 export function SignIn() {
-  const location = useLocation()
+  const { setUser } = userStore()
   const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams] = useSearchParams()
   const redirectPath = searchParams.get("redirect")
 
+  const { loading: loadingLogin, onRequest: onRequestLogin } = useFetch()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,14 +39,31 @@ export function SignIn() {
     },
   })
 
-  const onSubmit = (data) => {
-    toast.success("Login realizado com sucesso! Bem-vindo(a) de volta!")
-    console.log(data)
+  function redirect() {
     if (redirectPath) {
       navigate(redirectPath)
     } else {
       navigate(location.pathname == "/autenticar/negocios" ? "/dashboard" : "/")
     }
+  }
+
+  function handleSuccess(data) {
+    setUser(data)
+    localStorageUtil?.setLocalStorageToken(data?.jwt)
+    redirect()
+  }
+
+  const onSubmit = async (data) => {
+    await onRequestLogin({
+      request: () => authService.signInWithEmailAndPassword(data),
+      onSuccess: handleSuccess,
+      successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
+      errorMessage: "Credenciais incorretas",
+    })
+  }
+
+  if (loadingLogin) {
+    return <Loading />
   }
 
   return (
@@ -90,19 +113,28 @@ export function SignIn() {
               </FormItem>
             )}
           />
-          <Button type="submit">Entrar</Button>
+          <Button disabled={loadingLogin} type="submit">
+            Entrar
+          </Button>
         </form>
       </Form>
 
       <TextWithLink
         text="Esqueceu sua senha?"
         buttonContent="Recuperar senha"
-        navigateTo="/autenticar/recuperar-senha"
+        navigateTo={
+          location?.pathname === "/autenticar/negocios"
+            ? "/autenticar/negocios/recuperar-senha"
+            : "/autenticar/recuperar-senha"
+        }
       />
-      <SocialAuthButtons
-        locationPathname={location?.pathname}
-        redirectPath={redirectPath}
-      />
+      {location?.pathname !== "/autenticar/negocios" && (
+        <SocialAuthButtons
+          locationPathname={location?.pathname}
+          // redirectPath={redirectPath}
+        />
+      )}
+
       <TextWithLink
         text="Ainda não tem conta?"
         buttonContent="Criar conta"
