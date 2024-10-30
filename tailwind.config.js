@@ -19,6 +19,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -83,6 +86,8 @@ export default {
       },
       maxHeight: {
         "max-dashboard": "calc(100vh - 5rem)",
+        "max-orders-sheet": "calc(100vh - 26rem)",
+        "max-orders-sheet-lg": "calc(100vh - 27rem)",
       },
     },
   },

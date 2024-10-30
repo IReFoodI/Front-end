@@ -8,11 +8,11 @@ export function Favorites() {
 
   return (
     <>
-      <h1 className="col-span-full w-full pb-6 text-center text-2xl font-semibold">
+      <h1 className="fixed left-1/2 -translate-x-1/2 transform text-center text-2xl font-semibold">
         Favoritos
       </h1>
-      <div className="flex h-full">
-        <div>
+      <div className="flex h-full pt-24">
+        <div className="mx-auto lg:mx-0">
           {loading ? (
             <p>Loading...</p>
           ) : (
