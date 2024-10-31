@@ -5,8 +5,9 @@ import { useFetch } from "@/app/hooks/useFetch"
 
 export function useAddressUserStoreProfile() {
   const [address, setAddress] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const { loading, onRequest, error } = useFetch()
+  const { onRequest, error } = useFetch()
 
   useEffect(() => {
     const fetchAddressUserStoreProfileData = async () => {
@@ -15,6 +16,7 @@ export function useAddressUserStoreProfile() {
         onSuccess: async (addressRes) => {
           console.log("Address:", addressRes)
           setAddress(addressRes)
+          setIsLoading(false)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
@@ -32,7 +34,7 @@ export function useAddressUserStoreProfile() {
       )
 
       if (response.status !== 200) {
-        throw new Error("Erro ao atualizar o status do produto.")
+        throw new Error("Erro ao atualizar o status do endereço.")
       }
     } catch (error) {
       console.error("Erro ao atualizar o status:", error)
@@ -43,7 +45,7 @@ export function useAddressUserStoreProfile() {
     }
   }
 
-  return { address, loading, handleStatusChange }
+  return { address, isLoading, handleStatusChange }
 }
 
 // Função para decodificar o token JWT

@@ -3,7 +3,6 @@ import {
   IconHeart,
   IconHeartFilled,
   IconInfoCircle,
-  IconMapPin,
   IconStarFilled,
 } from "@tabler/icons-react"
 import { useState } from "react"
