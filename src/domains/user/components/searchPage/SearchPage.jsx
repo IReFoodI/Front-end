@@ -29,7 +29,8 @@ export function SearchPage() {
   function handleError() {
     console.log("erro")
   }
-
+  console.log("text", searchText)
+  console.log("size", searchParams.size)
   function handleRemoveFilter(param, role) {
     setSearchParams((prev) => {
       const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
@@ -105,8 +106,9 @@ export function SearchPage() {
           </Badge>
         )}
       </section>
-
-      <h2>Buscando produtos por &quot;{searchText}&quot;</h2>
+      {searchText !== null && (
+        <h2>Buscando produtos por &quot;{searchText}&quot;</h2>
+      )}
 
       <section>
         {products?.length > 0 ? (
