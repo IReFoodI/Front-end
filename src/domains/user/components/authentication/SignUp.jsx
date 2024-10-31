@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { SocialAuthButtons } from "@/ui/components/SocialAuthButtons"
 import { Button } from "@/ui/components/ui/button/button"
 import { Checkbox } from "@/ui/components/ui/checkbox"
@@ -17,17 +18,19 @@ import {
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
 import { Label } from "@/ui/components/ui/label"
+import { Loading } from "@/ui/components/ui/loading"
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 
 import { formSchema } from "../../models/CreateAccountTypes"
+import { userService } from "../../services/userService"
 import { TermsOfUse } from "./TermsOfUse"
 
 export function SignUp() {
-  const location = useLocation()
   const navigate = useNavigate()
   const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const { loading: loadingSignUp, onRequest: onRequestSignUp } = useFetch()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -40,18 +43,21 @@ export function SignUp() {
     },
   })
 
-  const onSubmit = (data) => {
-    if (acceptedTerms) {
-      toast.success("Conta criada com sucesso! Bem-vindo(a)!")
-      navigate("/")
-      console.log(data)
-      return
+  const onSubmit = async (data) => {
+    if (!acceptedTerms) {
+      return toast.warning("Necessário aceitar os termos")
     }
 
-    toast.warning("Necessário aceitar os termos")
+    await onRequestSignUp({
+      request: () => userService.createUserAccount(data),
+      onSuccess: () => navigate("/autenticar/entrar"),
+      successMessage: "Conta criada com sucesso!",
+    })
   }
 
-  const isSignUpPage = location.pathname === "/autenticar/criar-conta"
+  if (loadingSignUp) {
+    return <Loading />
+  }
 
   return (
     <div className="mx-auto grid max-w-sm gap-2">
@@ -165,23 +171,18 @@ export function SignUp() {
           <Button type="submit">Cadastrar</Button>
         </form>
       </Form>
+
       <SocialAuthButtons />
       <TextWithLink
         text={"Já tem conta?"}
         buttonContent={"Faça Login"}
-        navigateTo={
-          isSignUpPage ? "/autenticar/entrar" : "/autenticar/negocios"
-        }
+        navigateTo={"/autenticar/entrar"}
       />
 
       <TextWithLink
-        text={isSignUpPage ? "É uma empresa?" : "É um cliente?"}
-        buttonContent={isSignUpPage ? "Criar conta empresarial" : "Criar conta"}
-        navigateTo={
-          isSignUpPage
-            ? "/autenticar/negocios/criar-conta"
-            : "/autenticar/criar-conta"
-        }
+        text={"É uma empresa?"}
+        buttonContent={"Criar conta empresarial"}
+        navigateTo={"/autenticar/negocios/criar-conta"}
       />
     </div>
   )

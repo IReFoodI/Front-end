@@ -13,7 +13,7 @@ export function StoresGrid({
 }) {
   return (
     <div
-      className={`grid gap-6 ${singleColumn ? "grid-cols-1" : "sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"}`}
+      className={`grid gap-6 ${singleColumn ? "grid-cols-1" : "sm:grid-cols-2 xl:grid-cols-3"}`}
     >
       {stores.length > 0 ? (
         stores.map((store) => (
