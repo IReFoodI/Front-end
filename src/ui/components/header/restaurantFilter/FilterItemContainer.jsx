@@ -1,31 +1,60 @@
 import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
 import { v4 as uuid } from "uuid"
-export function FilterItemContainer({ title, items }) {
-  const [activeItems, setActiveItems] = useState([])
+export function FilterItemContainer({ title, items, param }) {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [activeItems, setActiveItems] = useState(() => {
+    const params = searchParams.get(param)?.split(" ") || []
+    return params.filter(Boolean)
+  })
 
-  function handleClick(index) {
-    if (activeItems.some((val) => val === index)) {
-      setActiveItems((prev) => prev.filter((val) => val !== index))
-      return
-    }
-    setActiveItems((prev) => [...prev, index])
+  function handleClick(title) {
+    setSearchParams((prev) => {
+      const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
+      const existingValues = currentParams.get(param)?.split(" ") || []
+
+      if (existingValues.includes(title)) {
+        // Se o título já estiver ativo, remove
+        const updatedValues = existingValues.filter((val) => val !== title)
+        if (updatedValues.length > 0) {
+          currentParams.set(param, updatedValues.join(" ")) // Atualiza o parâmetro se ainda houver valores
+        } else {
+          currentParams.delete(param) // Remove o parâmetro se não houver valores
+        }
+      } else {
+        // Caso contrário, adiciona
+        existingValues.push(title)
+        currentParams.set(param, existingValues.join(" "))
+      }
+
+      return currentParams // Retorna os parâmetros atualizados
+    })
+
+    // Atualiza o estado local de activeItems
+    setActiveItems((prev) => {
+      if (prev.includes(title)) {
+        return prev.filter((val) => val !== title) // Remove
+      } else {
+        return [...prev, title] // Adiciona
+      }
+    })
   }
 
   return (
     <div className="flex flex-col gap-1 py-2 text-gray-600">
       <h2 className="text-sm font-semibold">{title}</h2>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap items-center justify-start gap-2">
         {items.map((item, index) => {
           return (
             <button
               key={uuid()}
               className={`flex items-center rounded-full p-1 text-xs font-semibold ${
-                activeItems.some((i) => i === index)
+                activeItems?.some((i) => i === item.buttonTitle)
                   ? "bg-orange-100 text-primary"
                   : "bg-gray-200 text-gray-600"
               }`}
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(item.buttonTitle)}
             >
               <span>{item.imageSource}</span>
               <span className="px-1">{item.buttonTitle}</span>
