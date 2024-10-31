@@ -39,7 +39,7 @@ export const StoreAddressSchema = z.object({
   district: z
     .string()
     .min(3, { message: "Bairro deve ter pelo menos 3 caracteres." }),
-  complemento: z.string().optional(),
+  complement: z.string().optional(),
   city: z
     .string()
     .min(3, { message: "Cidade deve ter pelo menos 3 caracteres." }),
