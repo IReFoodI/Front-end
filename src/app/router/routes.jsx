@@ -16,6 +16,7 @@ import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.j
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
+import { OpenBag } from "@/domains/user/components/OpenBag.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
@@ -58,6 +59,7 @@ export const ROUTES = {
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
+  OPEN_BAG: "sacola",
 }
 
 export const router = createBrowserRouter([
@@ -75,6 +77,7 @@ export const router = createBrowserRouter([
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
               { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
+              { path: ROUTES.OPEN_BAG, element: <OpenBag /> },
               {
                 element: <ProfileManagementLayout />,
                 children: [
