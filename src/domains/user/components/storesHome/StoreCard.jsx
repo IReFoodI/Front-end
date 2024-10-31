@@ -1,4 +1,5 @@
-import { IconClockHour4, IconStarFilled } from "@tabler/icons-react"
+import { IconCamera, IconClockHour4, IconStarFilled } from "@tabler/icons-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { cn } from "@/app/utils/cn"
@@ -12,6 +13,8 @@ export function StoreCard({
   onFavoriteToggle,
   ...props
 }) {
+  const [imgError, setImgError] = useState(false)
+
   const {
     hours = [],
     isFavorited,
@@ -32,35 +35,40 @@ export function StoreCard({
   return (
     <Card
       className={cn(
-        "relative grid h-auto min-h-[8.8125rem] w-auto grid-cols-[25%_55%_10%] gap-4 rounded-2xl bg-[hsl(var(--secondary))] p-3 shadow-lg sm:p-4 lg:pl-2",
+        "relative grid h-auto min-h-28 w-auto grid-cols-[25%_55%_10%] gap-4 rounded-2xl bg-[hsl(var(--secondary))] p-3 shadow-lg sm:p-4 lg:pl-2",
         className
       )}
       {...props}
     >
       <CardContent className="relative flex h-full w-full items-center justify-center p-0 sm:p-0">
         <Link to="/">
-          {" "}
-          {/* TODO: Link para o perfil do estabelecimento, precisa ser ajustado quando a página de perfil do estabelecimento estiver pronta */}
           <div className="relative h-auto w-full">
-            <img
-              src={urlBanner}
-              alt={`${name}`}
-              className="h-auto max-h-full w-full rounded-[23px] object-cover"
-            />
+            {!imgError && (
+              <img
+                src={urlBanner}
+                className="h-auto max-h-full w-full rounded-[23px] object-cover"
+                onError={() => setImgError(true)}
+              />
+            )}
+            {imgError && (
+              <div className="flex h-full w-full items-center justify-center rounded-[23px] bg-gray-200">
+                <IconCamera className="text-muted" size={48} />
+              </div>
+            )}
             <div className="-translatef-x-1/2 absolute left-1/4 top-1/2 aspect-square h-[50%] w-[50%] translate-y-1/3 transform">
               <img
                 src={urlLogo}
-                alt={`${fantasy} Logo`}
                 className="h-full w-full rounded-full object-cover"
+                onError={(e) => (e.target.style.display = "none")}
               />
             </div>
           </div>
         </Link>
       </CardContent>
 
-      <CardContent className="flex flex-col gap-1 p-0 sm:p-0">
+      <CardContent className="flex flex-col justify-center p-0 sm:p-0">
         <Link to="/">
-          <CardTitle className="truncate font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
+          <CardTitle className="mb-2 truncate font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-xl">
             {fantasy}
           </CardTitle>
           {discount && (
@@ -71,12 +79,12 @@ export function StoreCard({
             </div>
           )}
 
-          <div className="flex items-center">
-            <IconStarFilled className="h-[16px] w-[16px] text-[hsl(var(--primary))] sm:h-[20px] sm:w-[20px] lg:h-[24px] lg:w-[24px]" />
-            <span className="ml-4 font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
+          <div className="mb-2 flex items-center">
+            <IconStarFilled className="h-[14px] w-[14px] text-[hsl(var(--primary))]" />
+            <span className="ml-2 font-inter font-semibold text-[hsl(var(--foreground))] sm:text-2xl lg:text-sm">
               {averageRating}
             </span>
-            <span className="ml-4 font-inter text-sm font-semibold text-gray-500">
+            <span className="ml-2 font-inter text-sm font-semibold text-gray-500">
               {category}
             </span>
           </div>
@@ -84,7 +92,7 @@ export function StoreCard({
           <div className="flex items-center">
             <IconClockHour4 className="mr-2 text-[hsl(var(--muted-foreground))]" />
             <span className="font-inter font-medium text-[hsl(var(--muted-foreground))] sm:text-2xl lg:text-sm">
-              {formatBusinessHours || "Horário não disponível"}
+              {formatBusinessHours || "--/--"}
             </span>
           </div>
         </Link>

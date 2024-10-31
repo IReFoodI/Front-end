@@ -7,7 +7,6 @@ import { storesCardsServices } from "@/domains/user/services/storesServices"
 export function useStores() {
   const [stores, setStores] = useState([])
   const { onRequest, error } = useFetch()
-  const userId = 1
 
   const fetchFavorites = useCallback(
     async (storesData) => {
@@ -48,15 +47,12 @@ export function useStores() {
     }
 
     fetchStores()
-  }, [onRequest, error])
+  }, [onRequest, error, fetchFavorites])
 
-  const addFavorite = async (userId, restaurantId) => {
+  const addFavorite = async (restaurantId) => {
+    console.log(restaurantId)
     await onRequest({
-      request: async () =>
-        axios.post(`http://localhost:8080/api/favorites`, {
-          userId,
-          restaurantId,
-        }),
+      request: async () => storesCardsServices.addFavorite(restaurantId),
       onSuccess: async () => {
         console.log("Atualizado com sucesso")
         refreshStores()
@@ -78,7 +74,6 @@ export function useStores() {
   }
 
   const toggleFavorite = (restaurantId, favoriteId) => {
-    // Atualização otimista do estado de 'stores'
     const updatedStores = stores.map((store) =>
       store.restaurant.restaurantId === restaurantId
         ? { ...store, isFavorited: !store.isFavorited }
@@ -87,11 +82,10 @@ export function useStores() {
     setStores(updatedStores)
     localStorage.setItem("storesData", JSON.stringify(updatedStores))
 
-    // Chamada de API em segundo plano
     if (favoriteId) {
       deleteFavorite(favoriteId)
     } else {
-      addFavorite(userId, restaurantId)
+      addFavorite(restaurantId)
     }
   }
 
