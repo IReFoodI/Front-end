@@ -13,7 +13,8 @@ import { MenuMobile } from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
-import { OrderReview } from "./orderReview/OrderReview"
+import { Cart } from "./Cart/Cart"
+// import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 
@@ -117,7 +118,7 @@ export function Header() {
               <IconShoppingBag className="w-full text-center" size={30} />
             </SheetTrigger>
             <SheetContent className="max-h-screen overflow-auto">
-              <OrderReview />
+              <Cart />
             </SheetContent>
           </Sheet>
         </section>
