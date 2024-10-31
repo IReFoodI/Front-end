@@ -16,7 +16,7 @@ import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.j
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
-import { OpenBag } from "@/domains/user/components/OpenBag.jsx"
+import { OpenBag } from "@/domains/user/components/openbag/OpenBag.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
