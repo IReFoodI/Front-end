@@ -60,7 +60,6 @@ export function ModalProfilePhoto({
     setImageData({})
   }
   async function teste(response) {
-    console.log("o que vem ", response)
     await onRequest({
       request: () =>
         restaurantService.updateRestaurant({
@@ -73,8 +72,6 @@ export function ModalProfilePhoto({
 
   async function handleUploadImage() {
     if (!imageData.imageFile) return
-
-    console.log("merda", storeInformation)
     await onRequest({
       request: () =>
         restaurantImageService.createRestaurantImage({
@@ -134,9 +131,8 @@ export function ModalProfilePhoto({
             className="rounded-full"
             disabled={loading}
             onClick={() => {
-              console.log("Imagem selecionada:", imageData?.imageFile)
               handleUploadImage()
-              toggleOpenModal() // Fecha o modal após a seleção
+              toggleOpenModal()
             }}
           >
             Confirmar

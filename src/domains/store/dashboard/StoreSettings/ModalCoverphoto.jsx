@@ -71,7 +71,6 @@ export function ModalCoverphoto({
     setImageData({})
   }
   async function teste(response) {
-    console.log("o que vem ", response)
     await onRequest({
       request: () =>
         restaurantService.updateRestaurant({
@@ -84,8 +83,6 @@ export function ModalCoverphoto({
 
   async function handleUploadImage() {
     if (!imageData.imageFile) return
-
-    console.log("merda", storeInformation)
     await onRequest({
       request: () =>
         restaurantImageService.createRestaurantImage({
@@ -149,7 +146,6 @@ export function ModalCoverphoto({
             className="rounded-full"
             disabled={loading}
             onClick={() => {
-              console.log("Imagem selecionada:", imageData?.imageFile)
               handleUploadImage()
               toggleOpenModal()
             }}
