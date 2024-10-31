@@ -1,4 +1,9 @@
+import { useCallback, useEffect } from "react"
+
+import { openBagService } from "@/domains/user/services/openBagService"
+import { userOpenBagStore } from "@/domains/user/stores/userOpenBagStore"
 import background from "@/ui/assets/background.png"
+import { Loading } from "@/ui/components/ui/loading"
 
 import { OrderDetails } from "./OrderDetails"
 
@@ -7,13 +12,39 @@ export function OpenBag() {
     "Rua Visconde de Duprat, 258 - Petrópolis, Porto Alegre - RS, 90690-430"
   const encodedAddress = encodeURIComponent(address)
 
+  const { items, loading, setItems, setLoading } = userOpenBagStore()
+
+  const { openBagItems, totalAmount, setOpenBagItems } = userOpenBagStore()
+
+  // const fetchOpenBagItems = useCallback(async () => {
+  //   setLoading(true)
+  //   const data = await openBagService.listOpenBagItems()
+  //   setItems(data)
+  //   setLoading(false)
+  // }, [setItems, setLoading])
+
+  // useEffect(() => {
+  //   fetchOpenBagItems()
+
+  //   const fetchOpenBagItems = async () => {
+  //     const response = await openBagService.fetchOpenBagItems()
+  //     setOpenBagItems(response.data)
+  //   }
+
+  //   fetchOpenBagItems()
+  // }, [fetchOpenBagItems, setOpenBagItems])
+
+  // if (loading) {
+  //   return <Loading />
+  // }
+
   return (
     <div
       id="page"
       className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center justify-between text-gray-600 antialiased lg:mt-11 lg:h-auto lg:flex-row lg:items-start"
     >
       {/* LEFT - ORDER DETAILS */}
-      <OrderDetails />
+      <OrderDetails items={items} items2={openBagItems} />
       {/* RIGHT - MAPA */}
       <div>
         <div className="relative hidden justify-end text-center lg:flex">
@@ -38,7 +69,9 @@ export function OpenBag() {
         </div>
         {/* TOTAL */}
         <div className="p-4 text-center lg:text-right">
-          <p className="text-lg font-semibold">Total: R$ 160,00</p>
+          <p className="text-lg font-semibold">
+            Total: R$ {totalAmount.toFixed(2)}
+          </p>
         </div>
       </div>
     </div>

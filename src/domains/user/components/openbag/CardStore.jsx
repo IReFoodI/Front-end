@@ -7,12 +7,15 @@ import {
 import { useState } from "react"
 
 import logo from "./logo-loja.png"
-const CardStore = () => {
+const CardStore = ({ store }) => {
   const [isHeartFilled, setIsHeartFilled] = useState(false)
 
   const toggleHeart = () => {
     setIsHeartFilled((prevState) => !prevState)
   }
+
+  //const logoPath = store.imagePath
+
   return (
     <div
       id="card-desktop"
@@ -27,6 +30,7 @@ const CardStore = () => {
         <div className="flex justify-between">
           <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
             Dragão Verde
+            {/* {store.name} */}
           </button>
           <div id="icons" className="flex justify-end gap-2 text-gray-400">
             <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
@@ -47,9 +51,12 @@ const CardStore = () => {
           <span>
             <IconStarFilled size={15} className="text-primary" />
           </span>
-          <span className="text-sm 2xl:text-base">5,0 (10 avaliações)</span>
+          <span className="text-sm 2xl:text-base">
+            {/* {store.rating} */}4.5,0 (10 avaliações)
+          </span>
           <span className="text-sm text-gray-400 2xl:text-base">
             Restaurante
+            {/* {store.type} */}
           </span>
         </div>
       </div>

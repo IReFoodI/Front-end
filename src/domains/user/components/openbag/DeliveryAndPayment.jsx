@@ -1,27 +1,8 @@
 import { useState } from "react"
 const DeliveryAndPayment = () => {
   const [order] = useState({
-    pickupTime: "Hoje, 19:52 - 20:02",
-    orderStatus: "A Loja está separando seu pedido",
-    restaurant: {
-      name: "Dragão Verde",
-      type: "Restaurante",
-      imgUrl: "https://via.placeholder.com/40",
-    },
-    orderNumber: 3399,
-    orderItems: [
-      {
-        name: "Item a venda",
-        description: "Descrição do item a venda...",
-        price: "20.99",
-      },
-    ],
-    subtotal: "20.99",
     delivery: "Retirada na loja",
-    payment: {
-      method: "PIX",
-      status: "aprovado",
-    },
+    payment_method: "Cartão",
   })
   return (
     <div className="mt-2">
@@ -37,11 +18,11 @@ const DeliveryAndPayment = () => {
             </span>
             <div className="flex items-center space-x-1">
               <span className="rounded bg-primary px-2 py-1 text-xs text-white">
-                {order.payment.method}
+                {order.payment_method}
               </span>
-              <span className="bg-primary-foregroun text-xs font-semibold text-primary">
+              {/* <span className="bg-primary-foregroun text-xs font-semibold text-primary">
                 {order.payment.status}
-              </span>
+              </span> */}
             </div>
           </div>
         </div>

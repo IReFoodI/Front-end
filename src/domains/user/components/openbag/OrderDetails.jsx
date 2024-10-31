@@ -6,7 +6,7 @@ import { StoreProductItem } from "@/domains/store/components/StoreProductItem"
 import CardStore from "./CardStore"
 import DeliveryAndPayment from "./DeliveryAndPayment"
 
-export const OrderDetails = () => {
+export const OrderDetails = ({ items, items2 }) => {
   const [showAllItems, setShowAllItems] = useState(false)
 
   const toggleShowAllItems = () => {
@@ -44,8 +44,7 @@ export const OrderDetails = () => {
       price: 40.020202,
       name: "Combo Hamburguer",
       quantity: 10,
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi possimus illum eveniet libero cumque, minima veniam excepturi deserunt totam sed.",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     },
     {
       id: 2,
@@ -130,12 +129,12 @@ export const OrderDetails = () => {
             <div className="text-2xl font-semibold text-secondary-foreground">
               {order.pickupTime}
             </div>
-            <div className="mt-1 flex items-center">
+            {/* <div className="mt-1 flex items-center">
               <IconPaperBag />
               <span className="ml-2 text-sm text-secondary-foreground">
                 {order.orderStatus}
               </span>
-            </div>
+            </div> */}
 
             {/* MAPA MOBILE */}
             <div className="mt-4 text-lg font-semibold text-primary lg:hidden">
@@ -163,6 +162,9 @@ export const OrderDetails = () => {
               {itemsToDisplay.map((product) => (
                 <StoreProductItem {...product} key={product.id} />
               ))}
+              {/* {items.map((item) => (
+                <StoreProductItem key={item.id} product={item} />
+              ))} */}
               {products.length > 2 && (
                 <button
                   onClick={toggleShowAllItems}
