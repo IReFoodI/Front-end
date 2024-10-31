@@ -9,7 +9,7 @@ import {
   IconSalt,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 
 import { useDebounce } from "@/app/hooks/useDebounce"
 import { Slider } from "@/ui/components/ui/slider"
@@ -19,6 +19,9 @@ import { SliderMetric } from "./SliderMetric"
 
 export function RestaurantFilter() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const pathname = location?.pathname
   const [sliderValue, setSlidervalue] = useState(() => {
     const param = searchParams?.get("preco")
     if (param) return [Number(param)]
@@ -45,9 +48,11 @@ export function RestaurantFilter() {
     },
   ]
   useEffect(() => {
+    let currentParams = new URLSearchParams(searchParams)
+
     function handleChange(currentSliderValue) {
       setSearchParams((prev) => {
-        const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
+        currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
         const existingValues = currentParams.get("preco")
         console.log(existingValues)
         if (existingValues) {
@@ -61,10 +66,16 @@ export function RestaurantFilter() {
             currentParams.set("preco", String(currentSliderValue))
           }
         }
-        console.log(currentParams)
 
         return currentParams // Retorna os parâmetros atualizados
       })
+      if (
+        currentParams.get("preco") &&
+        pathname !== "/produtos/pesquisar" &&
+        pathname !== "/produtos/pesquisar/"
+      ) {
+        navigate(`/produtos/pesquisar?${currentParams.toString()}`)
+      }
     }
     handleChange(sliderValueDebounce)
     //eslint-disable-next-line
