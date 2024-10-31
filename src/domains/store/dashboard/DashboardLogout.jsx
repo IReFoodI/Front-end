@@ -1,5 +1,6 @@
 import { IconLogout } from "@tabler/icons-react"
 
+import userStore from "@/domains/user/stores/userStore"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,10 +15,7 @@ import {
 import { Button } from "@/ui/components/ui/button/button"
 
 export function DashboardLogout() {
-  function handleLogout() {
-    //fazer logica de logout
-    console.log("saindo")
-  }
+  const { logout } = userStore()
 
   return (
     <AlertDialog>
@@ -37,7 +35,7 @@ export function DashboardLogout() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Sair</AlertDialogAction>
+          <AlertDialogAction onClick={logout}>Sair</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

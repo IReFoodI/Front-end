@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import userStore from "@/domains/user/stores/userStore"
@@ -7,7 +7,11 @@ import { Loading } from "@/ui/components/ui/loading"
 import { checkTokenExpiration } from "../hooks/useTokenValidation"
 import { localStorageUtil } from "../utils/localStorageUtil"
 
-export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
+export function ProtectedRoute({
+  children,
+  redirect = "/autenticar/entrar",
+  type = "user",
+}) {
   const location = useLocation()
   const navigate = useNavigate()
   const token = localStorageUtil.getLocalStorageToken()
@@ -16,9 +20,18 @@ export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
   const { user, logout, isUserLoading } = userStore()
 
   useEffect(() => {
-    if (!isUserLoading && (!user || !isTokenValid || !token)) {
-      logout()
-      navigate(`${redirect}${pathname && `?redirect=${location.pathname}`}`)
+    if (!isUserLoading) {
+      if (!user || !isTokenValid || !token) {
+        logout()
+        navigate(`${redirect}${pathname && `?redirect=${location.pathname}`}`)
+        return
+      }
+      //todo talvez trocar esse id por outra coisa pra não precisar expor o id
+      if (type === "user" && !user?.userId) {
+        navigate("/autenticar/entrar")
+      } else if (type === "restaurant" && !user?.restaurantId) {
+        navigate("/autenticar/negocios")
+      }
     }
   }, [
     isUserLoading,
@@ -30,6 +43,7 @@ export function ProtectedRoute({ children, redirect = "/autenticar/entrar" }) {
     redirect,
     location.pathname,
     token,
+    type,
   ])
 
   if (isUserLoading) {
