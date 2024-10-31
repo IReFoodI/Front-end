@@ -132,6 +132,7 @@ export function ModalProfilePhoto({
           </Button>
           <Button
             className="rounded-full"
+            disabled={loading}
             onClick={() => {
               console.log("Imagem selecionada:", imageData?.imageFile)
               handleUploadImage()
