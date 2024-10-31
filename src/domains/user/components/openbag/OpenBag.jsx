@@ -10,10 +10,10 @@ export function OpenBag() {
   return (
     <div
       id="page"
-      className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto"
+      className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center justify-between text-gray-600 antialiased lg:mt-11 lg:h-auto lg:flex-row lg:items-start"
     >
       {/* LEFT - ORDER DETAILS */}
-      <OrderDetails></OrderDetails>
+      <OrderDetails />
       {/* RIGHT - MAPA */}
       <div>
         <div className="relative hidden justify-end text-center lg:flex">

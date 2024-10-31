@@ -118,63 +118,61 @@ export const OrderDetails = () => {
     "Rua Visconde de Duprat, 258 - Petrópolis, Porto Alegre - RS, 90690-430"
   const encodedAddress = encodeURIComponent(address)
   return (
-    <section>
-      <div className="flex h-full flex-col lg:flex-row">
-        <div className="flex flex-col justify-between px-10 lg:w-1/2 lg:flex-row lg:ps-5">
-          <div className="flex-1">
-            {/* CARD LOJA */}
-            <CardStore />
+    <section className="flex h-full flex-col lg:flex-row">
+      <div className="flex flex-col justify-between px-10 lg:flex-row lg:ps-5">
+        <div className="flex-1">
+          {/* CARD LOJA */}
+          <CardStore />
 
-            {/* RETIRADA */}
-            <div className="mx-auto rounded-lg p-4 md:max-w-md">
-              <div className="text-lg font-semibold text-primary">Retirada</div>
-              <div className="text-2xl font-semibold text-secondary-foreground">
-                {order.pickupTime}
-              </div>
-              <div className="mt-1 flex items-center">
-                <IconPaperBag />
-                <span className="ml-2 text-sm text-secondary-foreground">
-                  {order.orderStatus}
-                </span>
-              </div>
-
-              {/* MAPA MOBILE */}
-              <div className="mt-4 text-lg font-semibold text-primary lg:hidden">
-                Retirar em:
-              </div>
-              <div
-                id="map"
-                className="top-12 z-20 mx-auto flex items-center justify-center lg:hidden"
-              >
-                <iframe
-                  title="Google Maps"
-                  width="100%"
-                  height="100%"
-                  className="rounded-xl border-0"
-                  src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
-                  allowFullScreen
-                ></iframe>
-              </div>
-
-              {/* FORMA DE ENTREGA E PAGAMENTO PIX */}
-              <DeliveryAndPayment />
-
-              {/* CARD PRODUTO ITEM */}
-              <div className="flex flex-col gap-4">
-                {itemsToDisplay.map((product) => (
-                  <StoreProductItem {...product} key={product.id} />
-                ))}
-                {products.length > 2 && (
-                  <button
-                    onClick={toggleShowAllItems}
-                    className="mt-2 text-primary"
-                  >
-                    {showAllItems ? "Ver menos itens" : "Ver mais itens"}
-                  </button>
-                )}
-              </div>
-              {/* FIM */}
+          {/* RETIRADA */}
+          <div className="mx-auto rounded-lg p-4 md:max-w-md">
+            <div className="text-lg font-semibold text-primary">Retirada</div>
+            <div className="text-2xl font-semibold text-secondary-foreground">
+              {order.pickupTime}
             </div>
+            <div className="mt-1 flex items-center">
+              <IconPaperBag />
+              <span className="ml-2 text-sm text-secondary-foreground">
+                {order.orderStatus}
+              </span>
+            </div>
+
+            {/* MAPA MOBILE */}
+            <div className="mt-4 text-lg font-semibold text-primary lg:hidden">
+              Retirar em:
+            </div>
+            <div
+              id="map"
+              className="top-12 z-20 mx-auto flex items-center justify-center lg:hidden"
+            >
+              <iframe
+                title="Google Maps"
+                width="100%"
+                height="100%"
+                className="rounded-xl border-0"
+                src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+                allowFullScreen
+              ></iframe>
+            </div>
+
+            {/* FORMA DE ENTREGA E PAGAMENTO PIX */}
+            <DeliveryAndPayment />
+
+            {/* CARD PRODUTO ITEM */}
+            <div className="flex flex-col gap-4">
+              {itemsToDisplay.map((product) => (
+                <StoreProductItem {...product} key={product.id} />
+              ))}
+              {products.length > 2 && (
+                <button
+                  onClick={toggleShowAllItems}
+                  className="mt-2 text-primary"
+                >
+                  {showAllItems ? "Ver menos itens" : "Ver mais itens"}
+                </button>
+              )}
+            </div>
+            {/* FIM */}
           </div>
         </div>
       </div>
