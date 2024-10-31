@@ -22,6 +22,10 @@ export function SearchInput() {
       search: searchText ? searchText : "",
     },
   })
+  useEffect(() => {
+    form.setValue("search", searchText || "")
+    //eslint-disable-next-line
+  }, [searchParams])
 
   const onError = (errors) => {
     if (errors.search) {

@@ -8,9 +8,10 @@ import {
   IconChefHat,
   IconSalt,
 } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
+import { useDebounce } from "@/app/hooks/useDebounce"
 import { Slider } from "@/ui/components/ui/slider"
 
 import { FilterItemContainer } from "./FilterItemContainer"
@@ -23,6 +24,7 @@ export function RestaurantFilter() {
     if (param) return [Number(param)]
     return [0]
   })
+  const sliderValueDebounce = useDebounce(sliderValue)
 
   const storeType = [
     {
@@ -42,28 +44,31 @@ export function RestaurantFilter() {
       imageSource: <IconBurger className="size-4" />,
     },
   ]
-
-  function handleChange(currentSliderValue) {
-    setSearchParams((prev) => {
-      const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
-      const existingValues = currentParams.get("preco")
-      console.log(existingValues)
-      if (existingValues) {
-        if (currentSliderValue === 0) {
-          currentParams.delete("preco")
+  useEffect(() => {
+    function handleChange(currentSliderValue) {
+      setSearchParams((prev) => {
+        const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
+        const existingValues = currentParams.get("preco")
+        console.log(existingValues)
+        if (existingValues) {
+          if (currentSliderValue === 0) {
+            currentParams.delete("preco")
+          } else {
+            currentParams.set("preco", String(currentSliderValue))
+          }
         } else {
-          currentParams.set("preco", String(currentSliderValue))
+          if (currentSliderValue > 0) {
+            currentParams.set("preco", String(currentSliderValue))
+          }
         }
-      } else {
-        if (currentSliderValue > 0) {
-          currentParams.set("preco", String(currentSliderValue))
-        }
-      }
-      console.log(currentParams)
+        console.log(currentParams)
 
-      return currentParams // Retorna os parâmetros atualizados
-    })
-  }
+        return currentParams // Retorna os parâmetros atualizados
+      })
+    }
+    handleChange(sliderValueDebounce)
+    //eslint-disable-next-line
+  }, [sliderValueDebounce])
 
   const categories = [
     { buttonTitle: "Salgado", imageSource: <IconSalt className="size-4" /> },
@@ -101,7 +106,6 @@ export function RestaurantFilter() {
           step={10}
           onValueChange={(currentSliderValue) => {
             setSlidervalue(currentSliderValue)
-            handleChange(currentSliderValue)
           }}
         />
         <SliderMetric
