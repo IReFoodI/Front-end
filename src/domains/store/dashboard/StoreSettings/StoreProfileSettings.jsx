@@ -59,7 +59,7 @@ export function StoreProfileSettings() {
       cnpj: storeInformation?.cnpj,
       phone: storeInformation?.phone,
       category: storeInformation?.category,
-      description: storeInformation?.description,
+      description: storeInformation?.description || "",
     },
   })
 
@@ -267,6 +267,7 @@ export function StoreProfileSettings() {
                       placeholder={formPlaceholders.description}
                       className="h-20 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
