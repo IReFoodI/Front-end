@@ -77,22 +77,25 @@ export function MenuItemCard({
         />
       </TableCell>
       <TableCell className="font-medium">{nameProd}</TableCell>
-      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
+      <TableCell className={`pointer-events-none hidden md:table-cell`}>
         <Input
           type="text"
           disabled={!active}
           value={description}
-          onChange={handleChange(setDescription)}
           placeholder="Descrição do produto"
         />
       </TableCell>
-      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
-        <DatePickerSingle value={expirationDate} onChange={setExpirationDate} />
+      <TableCell className={`pointer-events-none hidden md:table-cell`}>
+        <DatePickerSingle
+          className="hidden"
+          value={expirationDate}
+          onChange={setExpirationDate}
+        />
       </TableCell>
-      <TableCell className={disabledClass}>
+      <TableCell className="pointer-events-none">
         <QuantityInput items={initialQuantity || 0} />
       </TableCell>
-      <TableCell className={`hidden md:table-cell ${disabledClass}`}>
+      <TableCell className={`pointer-events-none hidden md:table-cell`}>
         <Input
           type="text"
           value={originalPrice}
@@ -100,7 +103,7 @@ export function MenuItemCard({
           placeholder="Preço Original"
         />
       </TableCell>
-      <TableCell className={disabledClass}>
+      <TableCell className="pointer-events-none">
         <Input
           type="text"
           value={sellPrice}

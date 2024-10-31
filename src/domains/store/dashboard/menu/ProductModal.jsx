@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
@@ -68,7 +69,11 @@ export function ProductModal({
     if (file) {
       const formData = new FormData()
       formData.append("file", file)
-      console.log(file)
+      const maxSize = 5 * 1024 * 1024
+      if (file.size > maxSize) {
+        toast.error("A imagem deve ter no máximo 1MB")
+        return
+      }
       try {
         const uploadResponse = await axios.post(
           "http://localhost:8080/api/firebase/upload",
@@ -112,8 +117,8 @@ export function ProductModal({
       }
       await onRequest({
         request: () => productService.postRestaurantProducts(productData),
-        onSuccess: (data) => {
-          console.log(data)
+        onSuccess: () => {
+          toast.success("Produto criado com sucesso!")
           fetchProducts()
         },
         onError: (error) => console.error(error),
@@ -146,6 +151,8 @@ export function ProductModal({
       if (response.status !== 200) {
         throw new Error("Erro ao atualizar o status do produto.")
       }
+      toast.success("Produto editado com sucesso!")
+
       fetchProducts()
     } catch (error) {
       console.error("Erro ao atualizar o status:", error)

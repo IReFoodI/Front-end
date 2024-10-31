@@ -66,7 +66,7 @@ export function DatePickerSingle({ value, onChange }) {
         <Button
           variant={"outline"}
           className={cn(
-            "justify-start p-2 text-left font-normal",
+            "justify-start rounded-md p-2 text-left font-normal",
             !value && "p-2 text-muted-foreground"
           )}
         >
