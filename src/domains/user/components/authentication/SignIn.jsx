@@ -54,8 +54,11 @@ export function SignIn() {
   }
 
   const onSubmit = async (data) => {
+    const isBusinessPage = location.pathname === "/autenticar/negocios" // Verifica se está na página de negócios
+
     await onRequestLogin({
-      request: () => authService.signInWithEmailAndPassword(data),
+      request: () =>
+        authService.signInWithEmailAndPassword(data, isBusinessPage), // Passa o parâmetro
       onSuccess: handleSuccess,
       successMessage: "Login realizado com sucesso! Bem-vindo(a)!",
       errorMessage: "Credenciais incorretas",

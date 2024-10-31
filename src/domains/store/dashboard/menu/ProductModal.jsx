@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
 import {
   AlertDialogCancel,
@@ -20,19 +21,21 @@ import {
 import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 
+import { productService } from "../../hooks/useProdutcList"
 import { productSchema } from "../../model/ProductTypes"
 
 export function ProductModal({
   selectedProduct,
   setSelectedProduct,
   setIsModalOpen,
-  restaurantId,
+  fetchProducts,
 }) {
   const [urlImgProd, seturlImgProd] = useState(
     selectedProduct?.urlImgProd || ""
   )
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
+  const { data, loading, onRequest, error } = useFetch()
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -68,21 +71,11 @@ export function ProductModal({
       console.log(file)
       try {
         const uploadResponse = await axios.post(
-          "http://localhost:8080/api/product/upload",
+          "http://localhost:8080/api/firebase/upload",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         )
-
-        console.log("Response:", uploadResponse.data)
         seturlImgProd(uploadResponse.data)
-
-        const getImageResponse = await axios.get(
-          `http://localhost:8080/api/product/images/uploads/${file.name}`,
-          { responseType: "blob" } // Define o tipo de resposta como
-        )
-
-        const imgUrl = URL.createObjectURL(getImageResponse.data)
-        seturlImgProd(imgUrl)
       } catch (error) {
         console.error("Erro ao fazer upload da imagem:", error)
       }
@@ -114,21 +107,17 @@ export function ProductModal({
         active,
         urlImgProd,
         additionDate: new Date().toISOString(),
-        restaurantId,
-        categoryProduct: "MISTO",
+        categoryProduct: "DOCE",
+        restaurantId: 0,
       }
-      console.log("Product data:", productData)
-      const response = await axios.post(
-        "http://localhost:8080/api/product",
-        productData,
-        { headers: { "Content-Type": "application/json" } }
-      )
-
-      if (response.status !== 201) {
-        throw new Error("Erro ao criar o produto.")
-      }
-
-      console.log("Produto criado com sucesso:", response.data)
+      await onRequest({
+        request: () => productService.postRestaurantProducts(productData),
+        onSuccess: (data) => {
+          console.log(data)
+          fetchProducts()
+        },
+        onError: (error) => console.error(error),
+      })
       handleCloseModal()
     } catch (error) {
       console.error("Erro ao criar o produto:", error)
@@ -157,6 +146,7 @@ export function ProductModal({
       if (response.status !== 200) {
         throw new Error("Erro ao atualizar o status do produto.")
       }
+      fetchProducts()
     } catch (error) {
       console.error("Erro ao atualizar o status:", error)
       if (error.response) {

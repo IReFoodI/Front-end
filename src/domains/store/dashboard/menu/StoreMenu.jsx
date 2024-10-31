@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -23,7 +24,7 @@ import {
   TableRow,
 } from "@/ui/components/ui/table"
 
-import { useProducts } from "../../hooks/useProdutcList"
+import { productService } from "../../hooks/useProdutcList"
 import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"
@@ -32,7 +33,48 @@ export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const { products, loading, restaurantId, handleStatusChange } = useProducts() // Adicione handleStatusChange aqui
+  const { onRequest } = useFetch()
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  const fetchProducts = async () => {
+    setLoading(true)
+    await onRequest({
+      request: () => productService.getRestaurantProducts(),
+      onSuccess: (data) => {
+        if (data) {
+          setProducts(data)
+        }
+      },
+      errorMessage: "Erro ao carregar produtos.",
+    })
+    setLoading(false)
+  }
+
+  const updateProduct = (id, data) => {
+    onRequest({
+      request: () => productService.updateProduct(id, data),
+      onSuccess: () => {
+        console.log("Produto atualizado com sucesso!")
+      },
+      errorMessage: "Erro ao atualizar o produto.",
+    })
+  }
+
+  const handleStatusChange = (productId, newStatus) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.productId === productId
+          ? { ...product, active: newStatus }
+          : product
+      )
+    )
+    updateProduct(productId, { active: newStatus })
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
 
   return (
     <div className="w-full">
@@ -58,7 +100,7 @@ export function StoreMenu() {
                 setIsModalOpen={setIsModalOpen}
                 setSelectedProduct={setSelectedProduct}
                 selectedProduct={selectedProduct}
-                restaurantId={restaurantId}
+                fetchProducts={fetchProducts}
               />
             </AlertDialogContent>
           </AlertDialog>
@@ -119,6 +161,8 @@ export function StoreMenu() {
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+        fetchProducts={fetchProducts}
       />
     </div>
   )

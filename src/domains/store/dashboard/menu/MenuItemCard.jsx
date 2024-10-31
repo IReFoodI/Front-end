@@ -49,7 +49,6 @@ export function MenuItemCard({
   }
 
   const handleStatusChange = (checked) => {
-    console.log(product.productId)
     setActive(checked)
     onStatusChange(product.productId, checked)
   }
