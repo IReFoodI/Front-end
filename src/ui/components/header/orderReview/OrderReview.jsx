@@ -4,11 +4,16 @@ import { IconEdit } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import { useCartStore } from "@/domains/store/hooks/useCartStore"
 
 import { Button } from "../../ui/button/button"
 import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 
 export function OrderReview() {
+  const cart = useCartStore((state) => state.cart)
+
+  console.log(cart)
+
   return (
     <div className="mt-4 flex flex-col gap-6">
       <SheetHeader className="flex max-h-max-orders-sheet flex-col overflow-auto lg:max-h-max-orders-sheet-lg">
@@ -17,24 +22,26 @@ export function OrderReview() {
         </SheetTitle>
         <SheetDescription></SheetDescription>
         <div className="flex flex-1 flex-col gap-1">
-          <div className="flex items-center justify-between rounded-md bg-secondary p-2 text-sm">
-            <div className="flex flex-col">
-              <p className="text-sm font-bold lg:text-lg">1x Item a venda</p>
-              <span className="text-left text-xs font-semibold lg:text-base">
-                {currencyFormatter(20.99)}
-              </span>
-            </div>
-            <IconTrash stroke={2} className="cursor-pointer" />
-          </div>
-          <div className="flex items-center justify-between rounded-md bg-secondary p-2 text-sm">
-            <div className="flex flex-col">
-              <p className="text-sm font-bold lg:text-lg">1x Item a venda</p>
-              <span className="text-left text-xs font-semibold lg:text-base">
-                {currencyFormatter(20.99)}
-              </span>
-            </div>
-            <IconTrash stroke={2} className="cursor-pointer" />
-          </div>
+          {cart.length > 0 ? (
+            cart.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between rounded-md bg-secondary p-2 text-sm"
+              >
+                <div className="flex flex-col">
+                  <p className="text-sm font-bold lg:text-lg">
+                    ( {item.amountAdded} ) {item.nameProd}
+                  </p>
+                  <span className="text-left text-xs font-semibold lg:text-base">
+                    {currencyFormatter(item.sellPrice)}
+                  </span>
+                </div>
+                <IconTrash stroke={2} className="cursor-pointer" />
+              </div>
+            ))
+          ) : (
+            <p>O carrinho está vazio!</p>
+          )}
         </div>
 
         <Link
