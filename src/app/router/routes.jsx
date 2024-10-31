@@ -16,8 +16,8 @@ import { ChangeData } from "@/domains/user/components/change-data/ChangeData.jsx
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
+import { FinalizeOrderPage } from "@/domains/user/components/finalizeOrderPage/FinalizeOrderPage.jsx"
 import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
-import { OpenBag } from "@/domains/user/components/openbag/OpenBag.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
@@ -53,14 +53,14 @@ export const ROUTES = {
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADDRESS: "ajustes/endereco",
   MENU: "cardapio",
-  ONGOING_ORDER: "pedidos/em-andamento",
+  ONGOING_ORDER: "pedidos",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
   CHANGE_DATA: "alterar-dados",
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
-  ORDER_DETAILS: "pedidos",
-  OPEN_BAG: "sacola",
+  ORDER_DETAILS: "pedidos/em-andamento",
+  FINALIZE_ORDER: "finalizar-pedido",
 }
 
 export const router = createBrowserRouter([
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
               { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
-              { path: ROUTES.OPEN_BAG, element: <OpenBag /> },
+              { path: ROUTES.FINALIZE_ORDER, element: <FinalizeOrderPage /> },
               {
                 element: <ProfileManagementLayout />,
                 children: [

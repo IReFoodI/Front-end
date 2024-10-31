@@ -7,14 +7,12 @@ import {
 import { useState } from "react"
 
 import logo from "./logo-loja.png"
-const CardStore = ({ store }) => {
+const CardStore = () => {
   const [isHeartFilled, setIsHeartFilled] = useState(false)
 
   const toggleHeart = () => {
     setIsHeartFilled((prevState) => !prevState)
   }
-
-  //const logoPath = store.imagePath
 
   return (
     <div

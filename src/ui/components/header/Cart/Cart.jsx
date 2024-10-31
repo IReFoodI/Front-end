@@ -17,7 +17,9 @@ export function Cart() {
         <SheetHeader className="flex flex-col">
           <div className="flex items-center justify-between rounded-md bg-secondary px-2 py-2 text-sm font-bold lg:text-lg">
             <p className="font-semibold">Dragao Verde</p>
-            <p className="font-normal">Ver cardápio</p>
+            <Link to="/">
+              <p className="font-normal">Ver cardápio</p>
+            </Link>
           </div>
         </SheetHeader>
 
@@ -67,9 +69,11 @@ export function Cart() {
             <p>Subtotal</p>
             <span>{currencyFormatter(20.99)}</span>
           </div>
-          <Button className="rounded-full border-gray-400 lg:p-5 lg:text-xl">
-            Pagar agora
-          </Button>
+          <Link to="/finalizar-pedido" className="w-full">
+            <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+              Pagar agora
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
