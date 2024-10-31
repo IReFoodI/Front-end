@@ -17,7 +17,7 @@ import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.j
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
 import { FinalizeOrderPage } from "@/domains/user/components/finalizeOrderPage/FinalizeOrderPage.jsx"
-import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
+import { MyOrdersPage } from "@/domains/user/components/my-orders/MyOrdersPage.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
@@ -53,14 +53,13 @@ export const ROUTES = {
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADDRESS: "ajustes/endereco",
   MENU: "cardapio",
-  ONGOING_ORDER: "pedidos",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
   CHANGE_DATA: "alterar-dados",
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
-  ORDER_DETAILS: "pedidos/em-andamento",
   FINALIZE_ORDER: "finalizar-pedido",
+  MY_ORDERS: "pedidos",
 }
 
 export const router = createBrowserRouter([
@@ -77,7 +76,7 @@ export const router = createBrowserRouter([
               { index: true, element: <Home /> },
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
-              { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
+              { path: ROUTES.MY_ORDERS, element: <MyOrdersPage /> },
               { path: ROUTES.FINALIZE_ORDER, element: <FinalizeOrderPage /> },
               {
                 element: <ProfileManagementLayout />,

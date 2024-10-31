@@ -52,7 +52,7 @@ export function Header() {
                 Início
               </Link>
               <Link
-                to="/sacola"
+                to="/pedidos"
                 className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
