@@ -52,7 +52,7 @@ export function SearchPage() {
   useEffect(() => {
     async function request() {
       await onRequest({
-        request: () => searchProducts(searchText),
+        request: () => searchProducts(searchParams.toString()),
         onSuccess: handleSuccess,
         onError: handleError,
       })
