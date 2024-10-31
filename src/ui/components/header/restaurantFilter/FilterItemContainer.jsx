@@ -1,16 +1,21 @@
 import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { v4 as uuid } from "uuid"
 export function FilterItemContainer({ title, items, param }) {
   const [searchParams, setSearchParams] = useSearchParams()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const pathname = location?.pathname
+  console.log(pathname)
   const [activeItems, setActiveItems] = useState(() => {
     const params = searchParams.get(param)?.split(" ") || []
     return params.filter(Boolean)
   })
 
   function handleClick(title) {
+    let currentParams = new URLSearchParams(searchParams) // Mantém os parâmetros atuais
     setSearchParams((prev) => {
-      const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
+      currentParams = new URLSearchParams(prev)
       const existingValues = currentParams.get(param)?.split(" ") || []
 
       if (existingValues.includes(title)) {
@@ -30,14 +35,20 @@ export function FilterItemContainer({ title, items, param }) {
       return currentParams // Retorna os parâmetros atualizados
     })
 
-    // Atualiza o estado local de activeItems
     setActiveItems((prev) => {
       if (prev.includes(title)) {
-        return prev.filter((val) => val !== title) // Remove
+        return prev.filter((val) => val !== title)
       } else {
-        return [...prev, title] // Adiciona
+        return [...prev, title]
       }
     })
+
+    if (
+      pathname !== "/produtos/pesquisar" &&
+      pathname !== "/produtos/pesquisar/"
+    ) {
+      navigate(`/produtos/pesquisar?${currentParams.toString()}`)
+    }
   }
 
   return (
