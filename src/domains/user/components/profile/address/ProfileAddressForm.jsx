@@ -55,6 +55,7 @@ export function ProfileAddressForm() {
         onError: () => navigate("/endereco"),
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [onRequestSaveAddress, reset]
   )
 
@@ -62,6 +63,7 @@ export function ProfileAddressForm() {
     if (params?.addressId) {
       fetchAddress(params?.addressId)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
 
   useCep(getValues("cep"), setValue, getValues)

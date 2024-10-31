@@ -75,6 +75,7 @@ export function StoreProfileSettings() {
 
   useEffect(() => {
     fetchStoreProfileSettings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onSubmit = async () => {
