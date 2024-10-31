@@ -27,13 +27,13 @@ export function ModalCoverphoto({
   })
   const [dragActive, setDragActive] = useState(false)
   const { loading, onRequest } = useFetch()
-  const maxSize = 2 * 1024 * 1024
+  const maxSize = 5 * 1024 * 1024
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
       if (file.size > maxSize) {
-        toast.info("O arquivo deve ter no máximo 2MB.")
+        toast.info("O arquivo deve ter no máximo 5MB.")
         return
       }
       setImageData({
@@ -56,7 +56,7 @@ export function ModalCoverphoto({
     const file = e.dataTransfer.files[0]
     if (file) {
       if (file.size > maxSize) {
-        toast.info("O arquivo deve ter no máximo 2MB.")
+        toast.info("O arquivo deve ter no máximo 5MB.")
         return
       }
       setImageData({
@@ -134,7 +134,7 @@ export function ModalCoverphoto({
             />
           </div>
           <p className="text-center text-sm text-muted-foreground">
-            O arquivo deve ter no máximo 2MB
+            O arquivo deve ter no máximo 5MB
           </p>
         </div>
         <DialogFooter>
