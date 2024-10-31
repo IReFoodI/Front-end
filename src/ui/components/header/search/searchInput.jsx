@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IconFilter, IconLoader2, IconSearch } from "@tabler/icons-react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 
 import { searchSchema } from "@/domains/user/models/SearchTypes"
@@ -13,10 +14,12 @@ import { RestaurantFilter } from "../restaurantFilter/RestaurantFilter"
 
 export function SearchInput() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const searchText = searchParams.get("produto")
   const form = useForm({
     resolver: zodResolver(searchSchema),
     defaultValues: {
-      search: "",
+      search: searchText ? searchText : "",
     },
   })
 
@@ -27,9 +30,10 @@ export function SearchInput() {
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    const newParams = new URLSearchParams(searchParams) // Preserva os parâmetros existentes
+    newParams.set("produto", data.search) // Define ou atualiza o parâmetro `produto`
 
-    navigate(`/produtos/pesquisar?filtrar=${data?.search}`)
+    navigate(`/produtos/pesquisar?${newParams.toString()}`)
   }
 
   const loading = false
@@ -77,7 +81,7 @@ export function SearchInput() {
         <PopoverContent
           align="end"
           sideOffset={20}
-          className="relative left-2 w-full"
+          className="relative left-2 w-full max-w-72 sm:max-w-sm md:max-w-lg"
         >
           <RestaurantFilter />
         </PopoverContent>
