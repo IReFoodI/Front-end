@@ -1,6 +1,7 @@
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { productService } from "@/domains/store/hooks/useProdutcList"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,8 +12,6 @@ import {
   AlertDialogTitle,
 } from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
-
-import { productService } from "../../hooks/useProdutcList"
 
 export function DeleteProductModal({
   isDeleteModalOpen,
@@ -28,9 +27,9 @@ export function DeleteProductModal({
     setSelectedProduct(null)
   }
 
-  function handleDeleteProduct() {
+  async function handleDeleteProduct() {
     const id = selectedProduct.productId
-    onRequest({
+    await onRequest({
       request: () => productService.deleteProduct(id),
       onSuccess: () => {
         toast?.success("Produto excluído com sucesso!")
@@ -38,6 +37,7 @@ export function DeleteProductModal({
       },
       onError: (error) => console.error(error),
     })
+
     handleCloseDeleteModal()
   }
   return (

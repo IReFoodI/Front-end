@@ -1,5 +1,6 @@
 import { IconDots } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
@@ -31,6 +32,7 @@ export function MenuItemCard({
     quantity: initialQuantity,
     originalPrice: initialOriginalPrice,
     sellPrice: initialSellPrice,
+    categoryProduct: categoryProduct,
   } = product
   const [expirationDate, setExpirationDate] = useState(
     initialExpirationDate ? new Date(initialExpirationDate) : null
@@ -49,6 +51,10 @@ export function MenuItemCard({
   }
 
   const handleStatusChange = (checked) => {
+    if (checked && expirationDate < new Date()) {
+      toast.error(`${nameProd} está vencido!`)
+      return
+    }
     setActive(checked)
     onStatusChange(product.productId, checked)
   }
@@ -62,6 +68,15 @@ export function MenuItemCard({
     setSelectedProduct(product)
     setIsDeleteModalOpen(true)
   }
+
+  useEffect(() => {
+    // Verifica se a data de expiração é menor que a data atual
+    if (expirationDate && expirationDate < new Date()) {
+      setActive(false) // Desabilita o produto
+      onStatusChange(product.productId, false) // Atualiza o status no servidor, se necessário
+      toast.error(`${nameProd} está vencido!`)
+    }
+  }, [expirationDate, product.productId])
 
   const disabledClass = active ? "" : "opacity-50"
 
@@ -77,7 +92,15 @@ export function MenuItemCard({
         />
       </TableCell>
       <TableCell className="font-medium">{nameProd}</TableCell>
-      <TableCell className={`pointer-events-none hidden md:table-cell`}>
+      <TableCell className={`pointer-events-none hidden lg:table-cell`}>
+        <Input
+          type="text"
+          disabled={!active}
+          value={categoryProduct}
+          placeholder="Descrição do produto"
+        />
+      </TableCell>
+      <TableCell className={`pointer-events-none hidden lg:table-cell`}>
         <Input
           type="text"
           disabled={!active}
@@ -95,7 +118,7 @@ export function MenuItemCard({
       <TableCell className="pointer-events-none">
         <QuantityInput items={initialQuantity || 0} />
       </TableCell>
-      <TableCell className={`pointer-events-none hidden md:table-cell`}>
+      <TableCell className={`pointer-events-none hidden w-28 md:table-cell`}>
         <Input
           type="text"
           value={originalPrice}
@@ -103,7 +126,7 @@ export function MenuItemCard({
           placeholder="Preço Original"
         />
       </TableCell>
-      <TableCell className="pointer-events-none">
+      <TableCell className="pointer-events-none w-28">
         <Input
           type="text"
           value={sellPrice}

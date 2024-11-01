@@ -6,6 +6,8 @@ import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
+import { productService } from "@/domains/store/hooks/useProdutcList"
+import { productSchema } from "@/domains/store/models/ProductTypes"
 import {
   AlertDialogCancel,
   AlertDialogFooter,
@@ -22,8 +24,7 @@ import {
 import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 
-import { productService } from "../../hooks/useProdutcList"
-import { productSchema } from "../../model/ProductTypes"
+import { CategorySelect } from "./CategorySelect"
 
 export function ProductModal({
   selectedProduct,
@@ -41,6 +42,7 @@ export function ProductModal({
     resolver: zodResolver(productSchema),
     defaultValues: {
       nameProd: selectedProduct?.nameProd || "",
+      categoryProduct: selectedProduct?.categoryProduct || "",
       descriptionProd: selectedProduct?.descriptionProd || "",
       expirationDate: selectedProduct?.expirationDate
         ? new Date(selectedProduct.expirationDate)
@@ -112,7 +114,6 @@ export function ProductModal({
         active,
         urlImgProd,
         additionDate: new Date().toISOString(),
-        categoryProduct: "DOCE",
         restaurantId: 0,
       }
       await onRequest({
@@ -135,6 +136,7 @@ export function ProductModal({
   }
 
   const handleChange = async (productId, data) => {
+    console.log(data)
     const produtctUpdate = {
       ...data,
       active,
@@ -169,7 +171,7 @@ export function ProductModal({
       <div className="fixed inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 mx-auto rounded-lg bg-white p-6 shadow-lg">
-        <div className="gap-4">
+        <div>
           <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
             {selectedProduct === null ? "Adicionar Produto" : "Editar Produto"}
           </h1>
@@ -216,9 +218,9 @@ export function ProductModal({
                   ? handleChange(selectedProduct.productId, data)
                   : onSubmit(data)
               )}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-4 gap-y-2"
             >
-              <div className="my-2 grid grid-cols-2 gap-4">
+              <div className="my-2 grid grid-cols-2 gap-4 gap-y-2">
                 <FormField
                   control={form.control}
                   name="nameProd"
@@ -234,19 +236,31 @@ export function ProductModal({
                 />
                 <FormField
                   control={form.control}
-                  name="descriptionProd"
+                  name="categoryProduct"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Descrição</FormLabel>
+                      <FormLabel>Categoria</FormLabel>
                       <FormControl>
-                        <Input {...field} maxLength={200} />
+                        <CategorySelect {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-
+              <FormField
+                control={form.control}
+                name="descriptionProd"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Descrição</FormLabel>
+                    <FormControl>
+                      <Input {...field} maxLength={200} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-4">
                 <FormField
                   control={form.control}
@@ -337,7 +351,7 @@ export function ProductModal({
                   <FormLabel className="mr-2">Status</FormLabel>{" "}
                   <FormControl>
                     <Switch
-                      className="!mt-0"
+                      className="!mt-0 mr-4"
                       checked={active}
                       onCheckedChange={handleStatusChange}
                     />

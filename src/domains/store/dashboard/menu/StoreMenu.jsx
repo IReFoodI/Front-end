@@ -44,6 +44,9 @@ export function StoreMenu() {
       onSuccess: (data) => {
         if (data) {
           setProducts(data)
+        } else {
+          data = []
+          setProducts(data)
         }
       },
       errorMessage: "Erro ao carregar produtos.",
@@ -112,7 +115,10 @@ export function StoreMenu() {
               <TableRow>
                 <TableHead className="hidden md:table-cell">Foto</TableHead>
                 <TableHead>Nome</TableHead>
-                <TableHead className="hidden md:table-cell">
+                <TableHead className="hidden w-20 lg:table-cell">
+                  Categoria
+                </TableHead>
+                <TableHead className="hidden lg:table-cell">
                   Descrição
                 </TableHead>
                 <TableHead className="hidden md:table-cell">Validade</TableHead>
