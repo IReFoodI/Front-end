@@ -3,13 +3,14 @@ import { IconShoppingBag } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import { dateFormatterYearMonthDay } from "@/app/utils/dateFormatterYearMonthDay"
 import { Badge } from "@/ui/components/ui/badge"
 import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
 
 export function SearchProductItem({
   product: {
-    productId,
+    // productId,
     nameProduct,
     descriptionProduct,
     urlImgProduct,
@@ -17,11 +18,11 @@ export function SearchProductItem({
     sellPrice,
     expirationDate,
     quantity,
-    categoryProduct,
-    additionDate,
-    active,
+    // categoryProduct,
+    // additionDate,
+    // active,
     restaurantName,
-    category,
+    // category,
   },
 }) {
   const [amountAdded, setAmountAdded] = useState(1)
@@ -49,12 +50,11 @@ export function SearchProductItem({
     // addToCart(productToCart)
     // const cart = useCartStore.getState().cart
     setNewQuantity(newQuantity - amountAdded)
-    // console.log(cart)
   }
 
   return (
     <Card className="flex flex-col items-center justify-start gap-4 bg-gray-100 p-3">
-      <div className="flex items-start gap-6 md:gap-2">
+      <div className="flex w-full flex-1 items-start gap-6 md:gap-6">
         <div className="relative w-24 rounded-lg md:rounded-[1.25rem]">
           <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
             <IconShoppingBag size={13} />
@@ -69,10 +69,19 @@ export function SearchProductItem({
         </div>
         <div className="flex flex-1 flex-col">
           <h3 className="text-lg font-semibold">{nameProduct}</h3>
+
           {/* Talvez colocar um truncate para não passar de um determinado número de linhas na descrição */}
+          <p className="truncate text-xs text-gray-500 lg:text-sm">
+            {restaurantName}
+          </p>
           <p className="text-xs font-medium text-gray-400 lg:text-sm">
             {descriptionProduct}
           </p>
+          <div>
+            <p className="text-sm text-gray-500">
+              Válido até: {dateFormatterYearMonthDay(new Date(expirationDate))}
+            </p>
+          </div>
           <div className="flex justify-between">
             <div className="flex flex-col justify-center">
               <p className="text-xs font-semibold text-gray-400 line-through lg:text-sm">
