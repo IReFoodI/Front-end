@@ -7,6 +7,7 @@ import { Badge } from "@/ui/components/ui/badge"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { searchProducts } from "../../services/searchProductsService"
+import { SearchProductList } from "./SearchProductList"
 
 export function SearchPage() {
   const [products, setProducts] = useState([])
@@ -69,6 +70,22 @@ export function SearchPage() {
   return (
     <div className="flex flex-col gap-3">
       <section className="flex flex-wrap items-center justify-center gap-2">
+        {searchText && (
+          <Badge className={"px-2 py-1 text-sm"} key={"produto"}>
+            {searchText}
+            <button
+              onClick={() => {
+                setSearchParams((prev) => {
+                  const currentParams = new URLSearchParams(prev)
+                  currentParams.delete("produto")
+                  return currentParams
+                })
+              }}
+            >
+              <IconX size={16} />
+            </button>
+          </Badge>
+        )}
         {filterType?.split(" ").map((role) => {
           return (
             <Badge className={"flex gap-1 px-2 py-1 text-sm"} key={role}>
@@ -112,7 +129,7 @@ export function SearchPage() {
 
       <section>
         {products?.length > 0 ? (
-          <div>produtos</div>
+          <SearchProductList products={products} />
         ) : (
           <div>
             <p>Não foi possível encontrar nenhum produto.</p>
