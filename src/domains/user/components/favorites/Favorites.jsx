@@ -12,7 +12,7 @@ export function Favorites() {
         Favoritos
       </h1>
       <div className="flex h-full pt-24">
-        <div className="mx-auto lg:mx-20">
+        <div className="mx-auto custom:mx-12 md:mx-24 lg:mx-0 xl:mx-20">
           {loading ? (
             <p>Loading...</p>
           ) : (
