@@ -6,7 +6,6 @@ export function FilterItemContainer({ title, items, param }) {
   const location = useLocation()
   const navigate = useNavigate()
   const pathname = location?.pathname
-  console.log(pathname)
   const [activeItems, setActiveItems] = useState(() => {
     const params = searchParams.get(param)?.split(" ") || []
     return params.filter(Boolean)
