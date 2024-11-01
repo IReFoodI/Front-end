@@ -51,7 +51,7 @@ export const OrderDetails = () => {
         <h2 className="text-lg font-semibold text-primary lg:text-xl">
           Retirada
         </h2>
-        <div className="flex items-center gap-3 text-2xl font-semibold text-secondary-foreground">
+        <div className="flex items-center gap-3 text-2xl font-semibold text-gray-600">
           <IconClock stroke={2} />
           {order.pickupTime}
         </div>

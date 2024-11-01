@@ -26,7 +26,36 @@ async function clearCart(cartId) {
   await axios.delete(`${BASE_URL}/${cartId}/clear`)
 }
 
+/**
+ * Fetch restaurant details by product ID
+ *
+ * @param {number} productId - The ID of the product.
+ * @returns {Promise<string>} - Returns the name of the restaurant.
+ */
+async function fetchRestaurantNameByProductId(productId) {
+  const axios = createAxiosInstance(true)
+  const response = await axios.get(`/api/product/${productId}/restaurant`)
+  return response.data
+}
+
+/**
+ * Remove an item from the cart
+ *
+ * @param {number} cartId - The ID of the cart.
+ * @param {number} productId - The ID of the product.
+ * @returns {Promise<void>}
+ */
+async function removeItemFromCart(cartId, productId) {
+  const axios = createAxiosInstance(true)
+  console.log(cartId, productId)
+  await axios.delete(
+    `${BASE_URL}/cart/item?cartId=${cartId}&productId=${productId}`
+  )
+}
+
 export const cartService = {
   fetchCart,
   clearCart,
+  fetchRestaurantNameByProductId,
+  removeItemFromCart,
 }
