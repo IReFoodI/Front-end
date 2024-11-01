@@ -54,16 +54,15 @@ export function RestaurantFilter() {
       setSearchParams((prev) => {
         currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais
         const existingValues = currentParams.get("preco")
-        console.log(existingValues)
         if (existingValues) {
-          if (currentSliderValue === 0) {
+          if (currentSliderValue[0] === 0) {
             currentParams.delete("preco")
           } else {
-            currentParams.set("preco", String(currentSliderValue))
+            currentParams.set("preco", String(currentSliderValue[0]))
           }
         } else {
-          if (currentSliderValue > 0) {
-            currentParams.set("preco", String(currentSliderValue))
+          if (currentSliderValue[0] > 0) {
+            currentParams.set("preco", String(currentSliderValue[0]))
           }
         }
 
