@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import { cartService } from "./cartService"
+import { cartService } from "../service/cartService"
 
 const useCartStore = create((set) => ({
   cartItems: [],

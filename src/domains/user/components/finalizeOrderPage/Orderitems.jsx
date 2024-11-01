@@ -3,7 +3,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
-import useCartStore from "@/ui/components/header/Cart/useCartStore"
+
+import useCartStore from "../../../../app/store/useCartStore"
 
 const Orderitems = () => {
   const [showAllItems, setShowAllItems] = useState(false)

@@ -7,6 +7,8 @@ import {
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import useCartStore from "../../../app/store/useCartStore"
+import userStore from "../../../domains/user/stores/userStore"
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
@@ -14,7 +16,6 @@ import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { Cart } from "./Cart/Cart"
-import useCartStore from "./Cart/useCartStore"
 // import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
@@ -22,13 +23,14 @@ import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
+  const { user } = userStore()
 
   const { fetchCart } = useCartStore()
 
   useEffect(() => {
-    const userId = 1
+    const userId = user?.id
     fetchCart(userId)
-  }, [fetchCart])
+  }, [fetchCart, user?.id])
 
   const cartItems = useCartStore((state) => state.cartItems)
 

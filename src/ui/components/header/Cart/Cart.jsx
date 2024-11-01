@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
+import useCartStore from "../../../../app/store/useCartStore"
 import { Button } from "../../ui/button/button"
 import { SheetHeader, SheetTitle } from "../../ui/sheet"
-import useCartStore from "./useCartStore"
 
 export function Cart() {
   const { cartItems, subtotal, clearCart, restaurantName, removeItemFromCart } =
