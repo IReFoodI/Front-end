@@ -23,7 +23,7 @@ const useCartStore = create((set) => ({
         const productId = cartItems[0].productId
         restaurantName =
           await cartService.fetchRestaurantNameByProductId(productId)
-        cartId = cartItems[0].cartId // Defina o cartId baseado no primeiro item
+        cartId = cartItems[0].cartId
       }
 
       set({ cartItems, subtotal, restaurantName, cartId })
@@ -34,7 +34,7 @@ const useCartStore = create((set) => ({
 
   clearCart: async () => {
     try {
-      const { cartId } = useCartStore.getState() // Obtém o cartId do estado atual
+      const { cartId } = useCartStore.getState()
       if (!cartId) {
         console.error("Cart ID is missing")
         return
@@ -52,15 +52,24 @@ const useCartStore = create((set) => ({
       console.error("Cart ID is missing")
       return
     }
+
     try {
       await cartService.removeItemFromCart(cartId, productId)
-      const updatedItems = cartItems.filter(
-        (item) => item.productId !== productId
-      )
+
+      const updatedItems = cartItems
+        .map((item) => {
+          if (item.productId === productId) {
+            return { ...item, quantity: item.quantity - 1 }
+          }
+          return item
+        })
+        .filter((item) => item.quantity > 0)
+
       const newSubtotal = updatedItems.reduce(
         (acc, item) => acc + item.unitValue * item.quantity,
         0
       )
+
       set({ cartItems: updatedItems, subtotal: newSubtotal })
     } catch (error) {
       console.error("Failed to remove item from cart:", error)

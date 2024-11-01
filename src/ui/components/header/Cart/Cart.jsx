@@ -1,5 +1,4 @@
 import { IconTrash } from "@tabler/icons-react"
-import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
@@ -9,19 +8,8 @@ import { SheetHeader, SheetTitle } from "../../ui/sheet"
 import useCartStore from "./useCartStore"
 
 export function Cart() {
-  const {
-    cartItems,
-    subtotal,
-    fetchCart,
-    clearCart,
-    restaurantName,
-    removeItemFromCart,
-  } = useCartStore()
-
-  useEffect(() => {
-    const userId = 2
-    fetchCart(userId)
-  }, [fetchCart])
+  const { cartItems, subtotal, clearCart, restaurantName, removeItemFromCart } =
+    useCartStore()
 
   return (
     <div className="mt-4 flex flex-col gap-6 text-gray-600">

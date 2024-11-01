@@ -4,7 +4,7 @@ import {
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import logo from "../../assets/Logo.svg"
@@ -14,6 +14,7 @@ import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { Cart } from "./Cart/Cart"
+import useCartStore from "./Cart/useCartStore"
 // import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
@@ -21,11 +22,20 @@ import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
-  const [orderQuantity, setOrderQuantity] = useState(0)
 
-  if (orderQuantity > 9) {
-    setOrderQuantity(9 + "+")
-  }
+  const { fetchCart } = useCartStore()
+
+  useEffect(() => {
+    const userId = 1
+    fetchCart(userId)
+  }, [fetchCart])
+
+  const cartItems = useCartStore((state) => state.cartItems)
+
+  const orderQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
 
   function handleClick(open) {
     setIsActive(open)
@@ -113,7 +123,7 @@ export function Header() {
               className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
             >
               <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-                {orderQuantity}
+                {orderQuantity > 9 ? "9+" : orderQuantity}
               </span>
               <IconShoppingBag className="w-full text-center" size={30} />
             </SheetTrigger>
