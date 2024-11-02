@@ -118,15 +118,22 @@ export function SearchPage() {
         )}
       </section>
       {searchText !== null && (
-        <h2>Buscando produtos por &quot;{searchText}&quot;</h2>
+        <h2>
+          Buscando produtos por{" "}
+          <span className="font-semibold">&quot;{searchText}&quot;</span>
+        </h2>
       )}
 
       <section>
         {products?.length > 0 ? (
           <SearchProductList products={products} />
         ) : (
-          <div>
-            <p>Não foi possível encontrar nenhum produto.</p>
+          <div className="flex flex-col">
+            <p>
+              Infelizmente não foi possível encontrar nenhum produto buscando
+              por esses filtros. <br />
+              Tente buscar por outros filtros.
+            </p>
           </div>
         )}
       </section>
