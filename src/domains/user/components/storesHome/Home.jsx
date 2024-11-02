@@ -14,11 +14,7 @@ export function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <StoresGrid
-          stores={stores}
-          toggleFavorite={toggleFavorite}
-          showBanner={true}
-        />
+        <StoresGrid stores={stores} toggleFavorite={toggleFavorite} />
       )}
     </>
   )
