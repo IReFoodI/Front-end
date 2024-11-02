@@ -1,33 +1,105 @@
-import { useEffect, useState } from "react"
+import axios from "axios"
+import { useCallback, useEffect, useState } from "react"
 
-import { storesData as initialStoresData } from "../models/storesData"
+import { useFetch } from "@/app/hooks/useFetch"
+import { storesCardsServices } from "@/domains/user/services/storesServices"
 
 export function useStores() {
-  const [stores, setstores] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [stores, setStores] = useState([])
+  const { onRequest, error } = useFetch()
+
+  const fetchFavorites = useCallback(
+    async (storesData) => {
+      await onRequest({
+        request: async () => storesCardsServices.getFavoritesByUser(),
+        onSuccess: (favRes) => {
+          const updatedStores = storesData.map((store) => {
+            const favorite = favRes.find(
+              (fav) => fav.restaurantId === store.restaurant.restaurantId
+            )
+            return {
+              ...store,
+              isFavorited: !!favorite,
+              favoriteId: favorite ? favorite.favoriteId : null,
+            }
+          })
+          setStores(updatedStores)
+          localStorage.setItem("storesData", JSON.stringify(updatedStores))
+        },
+        onError: () =>
+          console.error("Erro ao buscar dados dos favoritos:", error),
+      })
+    },
+    [onRequest, error]
+  )
 
   useEffect(() => {
-    const storedStores = localStorage.getItem("storesData")
-
-    if (storedStores) {
-      setstores(JSON.parse(storedStores))
-      setLoading(false)
-    } else {
-      setTimeout(() => {
-        setstores(initialStoresData)
-        localStorage.setItem("storesData", JSON.stringify(initialStoresData))
-        setLoading(false)
-      }, 100)
+    const fetchStores = async () => {
+      await onRequest({
+        request: async () => storesCardsServices.getStoresToday(),
+        onSuccess: async (storesRes) => {
+          const storesData = storesRes
+          setStores(storesData)
+          await fetchFavorites(storesData)
+        },
+        onError: () => console.error("Erro ao buscar dados:", error),
+      })
     }
-  }, [])
 
-  const toggleFavorite = (id) => {
-    const updatedStores = stores.map((store) =>
-      store.id === id ? { ...store, isFavorited: !store.isFavorited } : store
-    )
-    setstores(updatedStores)
-    localStorage.setItem("storesData", JSON.stringify(updatedStores))
+    fetchStores()
+  }, [onRequest, error, fetchFavorites])
+
+  const addFavorite = async (restaurantId) => {
+    console.log(restaurantId)
+    await onRequest({
+      request: async () => storesCardsServices.addFavorite(restaurantId),
+      onSuccess: async () => {
+        console.log("Atualizado com sucesso")
+        refreshStores()
+      },
+      onError: () => console.error("Erro ao atualizar favorito:", error),
+    })
   }
 
-  return { stores, loading, toggleFavorite }
+  const deleteFavorite = async (favoriteId) => {
+    await onRequest({
+      request: async () =>
+        axios.delete(`http://localhost:8080/api/favorites/${favoriteId}`),
+      onSuccess: async () => {
+        console.log("Atualizado com sucesso")
+        refreshStores()
+      },
+      onError: () => console.error("Erro ao atualizar favorito:", error),
+    })
+  }
+
+  const toggleFavorite = (restaurantId, favoriteId) => {
+    const updatedStores = stores.map((store) =>
+      store.restaurant.restaurantId === restaurantId
+        ? { ...store, isFavorited: !store.isFavorited }
+        : store
+    )
+    setStores(updatedStores)
+    localStorage.setItem("storesData", JSON.stringify(updatedStores))
+
+    if (favoriteId) {
+      deleteFavorite(favoriteId)
+    } else {
+      addFavorite(restaurantId)
+    }
+  }
+
+  const refreshStores = async () => {
+    await onRequest({
+      request: async () =>
+        axios.get("http://localhost:8080/api/restaurant/today"),
+      onSuccess: async (storesRes) => {
+        const storesData = storesRes
+        await fetchFavorites(storesData)
+      },
+      onError: () => console.error("Erro ao atualizar dados:", error),
+    })
+  }
+
+  return { stores, toggleFavorite, error }
 }

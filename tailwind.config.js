@@ -89,6 +89,9 @@ export default {
         "max-orders-sheet": "calc(100vh - 26rem)",
         "max-orders-sheet-lg": "calc(100vh - 27rem)",
       },
+      screens: {
+        custom: "450px",
+      },
       height: {
         "screen/2": "50vh",
       },
