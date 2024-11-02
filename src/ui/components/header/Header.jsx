@@ -30,7 +30,6 @@ export function Header() {
     const userId = user?.id
     clearCart()
     fetchCart(userId)
-    console.log("user id =" + userId)
   }, [fetchCart, user.id, clearCart])
 
   const cartItems = useCartStore((state) => state.cartItems)

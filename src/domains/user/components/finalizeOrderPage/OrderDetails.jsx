@@ -34,9 +34,6 @@ export const OrderDetails = () => {
         }
       })
     }
-    console.log("novo login order details")
-    console.log("first product => ", firstProduct)
-    console.log("cart items => ", cartItems)
   }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress, cartItems])
 
   useEffect(() => {
