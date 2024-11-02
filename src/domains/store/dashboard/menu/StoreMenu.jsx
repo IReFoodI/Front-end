@@ -4,6 +4,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -99,6 +100,10 @@ export function StoreMenu() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Produto</AlertDialogTitle>
               </AlertDialogHeader>
+              <AlertDialogDescription>
+                Here you can view detailed information about the selected
+                product and manage your choices.
+              </AlertDialogDescription>
               <ProductModal
                 setIsModalOpen={setIsModalOpen}
                 setSelectedProduct={setSelectedProduct}

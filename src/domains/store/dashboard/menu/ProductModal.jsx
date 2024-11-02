@@ -37,7 +37,9 @@ export function ProductModal({
   )
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
-  const { data, loading, onRequest, error } = useFetch()
+  const { onRequest } = useFetch()
+  const [loading, setLoading] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -66,26 +68,44 @@ export function ProductModal({
 
   const handleStatusChange = (checked) => setActive(checked)
 
+  const uploadImage = async (file) => {
+    const maxSize = 5 * 1024 * 1024
+    if (file.size > maxSize) {
+      toast.error("A imagem deve ter no máximo 1MB")
+      return
+    }
+
+    const formData = new FormData()
+    formData.append("file", file)
+
+    setLoading(true)
+    try {
+      const uploadResponse = await axios.post(
+        "http://localhost:8080/api/firebase/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            )
+            setLoading(percentCompleted)
+          },
+        }
+      )
+      seturlImgProd(uploadResponse.data)
+    } catch (error) {
+      console.error("Erro ao fazer upload da imagem:", error)
+      toast.error("Erro ao fazer upload da imagem")
+    } finally {
+      setLoading(false) // Finaliza o carregamento
+    }
+  }
+
   const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
-      const formData = new FormData()
-      formData.append("file", file)
-      const maxSize = 5 * 1024 * 1024
-      if (file.size > maxSize) {
-        toast.error("A imagem deve ter no máximo 1MB")
-        return
-      }
-      try {
-        const uploadResponse = await axios.post(
-          "http://localhost:8080/api/firebase/upload",
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        )
-        seturlImgProd(uploadResponse.data)
-      } catch (error) {
-        console.error("Erro ao fazer upload da imagem:", error)
-      }
+      await uploadImage(file)
     }
   }
 
@@ -96,14 +116,13 @@ export function ProductModal({
 
   const handleDragLeave = () => setDragActive(false)
 
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault()
     setDragActive(false)
+
     const file = e.dataTransfer.files[0]
     if (file) {
-      const reader = new FileReader()
-      reader.onload = () => seturlImgProd(reader.result)
-      reader.readAsDataURL(file)
+      await uploadImage(file)
     }
   }
 
@@ -184,16 +203,16 @@ export function ProductModal({
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
-              {urlImgProd ? (
+              {loading ? (
+                <p>Carregando imagem...</p>
+              ) : urlImgProd ? (
                 <img
                   src={urlImgProd}
-                  alt="Preview"
-                  className="h-full w-full object-cover"
+                  alt="Uploaded"
+                  className="h-auto w-full"
                 />
               ) : (
-                <p className="text-center">
-                  Arraste uma imagem ou clique para selecionar
-                </p>
+                <p>Arraste uma imagem aqui ou clique para selecionar</p>
               )}
               <input
                 type="file"

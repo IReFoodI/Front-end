@@ -1,4 +1,5 @@
 import { IconDots } from "@tabler/icons-react"
+import { IconPhotoOff } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -83,20 +84,25 @@ export function MenuItemCard({
   return (
     <TableRow className={disabledClass}>
       <TableCell className="hidden sm:table-cell">
-        <img
-          alt={nameProd || "Product image"}
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={urlImgProd}
-          width="64"
-        />
+        {urlImgProd ? (
+          <img
+            alt={nameProd || "Product image"}
+            className="aspect-square rounded-md object-cover"
+            height="64"
+            src={urlImgProd}
+            width="64"
+          />
+        ) : (
+          <IconPhotoOff size={26} className="text-gray-500" />
+        )}
       </TableCell>
       <TableCell className="font-medium">{nameProd}</TableCell>
       <TableCell className={`pointer-events-none hidden lg:table-cell`}>
         <Input
           type="text"
           disabled={!active}
-          value={categoryProduct}
+          defaultValue={product.categoryProduct}
+          readOnly
           placeholder="Descrição do produto"
         />
       </TableCell>
@@ -104,7 +110,8 @@ export function MenuItemCard({
         <Input
           type="text"
           disabled={!active}
-          value={description}
+          defaultValue={product.description}
+          readOnly
           placeholder="Descrição do produto"
         />
       </TableCell>
@@ -122,6 +129,7 @@ export function MenuItemCard({
         <Input
           type="text"
           value={originalPrice}
+          readOnly
           onChange={handleChange(setOriginalPrice)}
           placeholder="Preço Original"
         />
@@ -130,7 +138,7 @@ export function MenuItemCard({
         <Input
           type="text"
           value={sellPrice}
-          onChange={handleChange(setSellPrice)}
+          readOnly
           placeholder="Preço de Venda"
         />
       </TableCell>
