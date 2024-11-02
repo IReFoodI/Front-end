@@ -1,7 +1,8 @@
 import { IconCreditCard } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 
+import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Dialog,
@@ -32,9 +33,28 @@ const cardData = [
 ]
 export function CardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null)
+  const { cards, fetchCards, removeCard, isLoading, error } = userCardStore()
+
+  useEffect(() => {
+    fetchCards()
+  }, [fetchCards])
 
   const toggleOpenModal = () => {
     setIsModalOpen(!isModalOpen)
+  }
+
+  const handleDeleteCard = (index) => {
+    setSelectedCardIndex(index)
+    toggleOpenModal()
+  }
+
+  const confirmDeleteCard = () => {
+    if (selectedCardIndex !== null) {
+      removeCard(selectedCardIndex)
+      setSelectedCardIndex(null)
+      toggleOpenModal()
+    }
   }
 
   return (
@@ -45,14 +65,14 @@ export function CardPage() {
 
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col">
-          {cardData.length > 0 ? (
+          {cards.length > 0 ? (
             <div className="mx-auto flex w-full flex-col items-center justify-center gap-4">
               <div className="mx-auto mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {cardData.map((data, index) => (
+                {cards.map((data, index) => (
                   <SmallCard
                     key={index}
                     data={data}
-                    toggleOpenModal={toggleOpenModal}
+                    toggleOpenModal={() => handleDeleteCard(index)}
                   />
                 ))}
               </div>
@@ -104,9 +124,7 @@ export function CardPage() {
             <Button
               className="rounded-full"
               variant="destructive"
-              onClick={() => {
-                // ação de excluir aqui
-              }}
+              onClick={confirmDeleteCard}
             >
               Confirmar
             </Button>

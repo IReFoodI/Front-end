@@ -2,12 +2,14 @@ import { IconClock } from "@tabler/icons-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
+import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
 import CardStore from "./CardStore"
 import DeliveryAndPayment from "./DeliveryAndPayment"
 
 export const OrderDetails = () => {
+  const { cards } = userCardStore()
   const [order] = useState({
     pickupTime: "Hoje, 19:52 - 20:02",
     orderStatus: "A Loja está separando seu pedido",
@@ -82,13 +84,24 @@ export const OrderDetails = () => {
         <DeliveryAndPayment />
       </div>
       {/* BUTTON */}
-      <Link to="/pedidos" className="w-full">
+      {cards.length > 0 ? (
+        <Link to="/pedidos" className="w-full">
+          <div className="mx-auto hidden w-full max-w-[400px] lg:block">
+            <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+              Finalizar
+            </Button>
+          </div>
+        </Link>
+      ) : (
         <div className="mx-auto hidden w-full max-w-[400px] lg:block">
-          <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+          <Button
+            className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
+            disabled
+          >
             Finalizar
           </Button>
         </div>
-      </Link>
+      )}
     </div>
   )
 }

@@ -1,10 +1,53 @@
 import { Dialog } from "@radix-ui/react-dialog"
 import { RadiobuttonIcon } from "@radix-ui/react-icons"
 import { IconEdit, IconPlus, IconTrash } from "@tabler/icons-react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import userCardStore from "@/app/store/userCardStore"
+import { Button } from "@/ui/components/ui/button/button"
+import {
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+} from "@/ui/components/ui/dialog"
 import { SheetHeader, SheetTitle } from "@/ui/components/ui/sheet"
 const DeliveryAndPayment = () => {
+  const { cards, fetchCards, removeCard, isLoading, error } = userCardStore()
+  const [selectedCard, setSelectedCard] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [cardToDelete, setCardToDelete] = useState(null)
+
+  useEffect(() => {
+    fetchCards()
+  }, [fetchCards])
+
+  useEffect(() => {
+    if (cards.length > 0) {
+      setSelectedCard(cards[0].cardId)
+    }
+  }, [cards])
+
+  const handleCardSelect = (cardId) => {
+    setSelectedCard(cardId)
+    console.log(selectedCard)
+  }
+
+  const handleCardDelete = async () => {
+    if (cardToDelete) {
+      await removeCard(cardToDelete)
+      setIsModalOpen(false)
+      setCardToDelete(null)
+      fetchCards()
+    }
+  }
+
+  const handleOpenModal = (cardId) => {
+    setCardToDelete(cardId)
+    setIsModalOpen(true)
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <Dialog>
@@ -24,24 +67,68 @@ const DeliveryAndPayment = () => {
           <SheetTitle className="w-full text-left font-semibold text-primary lg:text-xl">
             Forma de Pagamento
           </SheetTitle>
-          <div className="items-left flex flex-col justify-between gap-4 rounded-md bg-primary p-2 text-sm text-white lg:text-xl">
-            <div className="flex items-center justify-between">
-              <p>xxxx xxxx xxxx 0000</p>
-              <div className="flex gap-2">
-                <IconEdit stroke={2} className="cursor-pointer" />
-                <IconTrash stroke={2} className="cursor-pointer" />
-              </div>
-            </div>
-            <p className="text-left text-xs lg:text-lg">Nome do Titular</p>
-          </div>
+          {isLoading && <p>Carregando cartões...</p>}
+          {error && <p className="text-red-500">{error}</p>}
+          {cards.length === 0
+            ? !isLoading && <p>Você não possui cartões cadastrados.</p>
+            : cards.map((card) => (
+                <div
+                  key={card.cardId}
+                  className={`items-left flex cursor-pointer flex-col justify-between gap-4 rounded-md p-2 text-sm lg:text-xl ${
+                    selectedCard === card.cardId
+                      ? "bg-primary text-white"
+                      : "bg-gray-300 text-white"
+                  }`}
+                  onClick={() => handleCardSelect(card.cardId)}
+                >
+                  <div className="flex items-center justify-between">
+                    <p>{card.number}</p>
+                    <div className="flex gap-2">
+                      <Link to="/cartoes">
+                        <IconEdit className="cursor-pointer" />
+                      </Link>
+                      <IconTrash onClick={() => handleOpenModal(card.cardId)} />
+                    </div>
+                  </div>
+                  <p className="text-left text-xs lg:text-lg">
+                    {card.holderName}
+                  </p>
+                </div>
+              ))}
           <Link
-            to="/"
+            to="/cartoes"
             className="mt-2 flex items-center justify-start gap-2 rounded-md bg-secondary p-2 text-sm font-semibold lg:text-base"
           >
-            <IconPlus stroke={2} />
+            <IconPlus />
             <p>Adicionar novo cartão</p>
           </Link>
         </SheetHeader>
+      </Dialog>
+
+      <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+        <DialogContent>
+          <DialogTitle>Deseja realmente excluir este cartão?</DialogTitle>
+          <DialogDescription>
+            Esta ação não pode ser desfeita. Isso excluirá permanentemente os
+            dados do cartão.
+          </DialogDescription>
+          <DialogFooter>
+            <Button
+              className="rounded-full"
+              variant="ghost"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancelar
+            </Button>
+            <Button
+              className="rounded-full"
+              variant="destructive"
+              onClick={handleCardDelete}
+            >
+              Confirmar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
       </Dialog>
     </div>
   )

@@ -13,7 +13,7 @@ import {
 import { AddEditCard } from "./AddEditCard"
 
 export function SmallCard({ toggleOpenModal, data }) {
-  const { name, number, validity } = data
+  const { holderName, number, validity } = data
   const [isModalVisible, setIsModalVisible] = useState(false)
   const replacedNumber = number
     .slice()
@@ -61,7 +61,7 @@ export function SmallCard({ toggleOpenModal, data }) {
       </div>
 
       <div className="flex justify-between">
-        <span>{name}</span>
+        <span>{holderName}</span>
         <span>Validade: {validity}</span>
       </div>
     </div>

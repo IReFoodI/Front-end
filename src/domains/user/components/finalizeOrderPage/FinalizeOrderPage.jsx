@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom"
 
+import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
 import { OrderDetails } from "./OrderDetails"
 import Orderitems from "./Orderitems"
 
 export function FinalizeOrderPage() {
+  const { cards } = userCardStore()
   return (
     <div
       id="page"
@@ -23,13 +25,24 @@ export function FinalizeOrderPage() {
         <div className="min-w-[45%]">
           <Orderitems />
         </div>
-        <Link to="/pedidos" className="w-full">
+        {cards.length > 0 ? (
+          <Link to="/pedidos" className="w-full">
+            <div className="mx-auto my-11 w-full max-w-[400px] px-5 lg:hidden">
+              <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+                Finalizar
+              </Button>
+            </div>
+          </Link>
+        ) : (
           <div className="mx-auto my-11 w-full max-w-[400px] px-5 lg:hidden">
-            <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+            <Button
+              className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
+              disabled
+            >
               Finalizar
             </Button>
           </div>
-        </Link>
+        )}
       </div>
     </div>
   )
