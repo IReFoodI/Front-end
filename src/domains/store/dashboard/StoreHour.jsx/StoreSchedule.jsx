@@ -29,7 +29,8 @@ export function StoreSchedule() {
   const token = localStorageUtil.getLocalStorageToken()
   const decoded = decodeJwt(token)
   const restaurantId = decoded.userId
-  useEffect(() => {
+
+  const fetchHoursData = () => {
     onRequest({
       request: () => fetchRestaurantHours(restaurantId),
       onSuccess: (data) => {
@@ -51,6 +52,10 @@ export function StoreSchedule() {
       },
       errorMessage: "Erro ao carregar horários.",
     })
+  }
+
+  useEffect(() => {
+    fetchHoursData()
   }, [restaurantId, onRequest])
 
   const handleScheduleChange = useCallback(
@@ -87,21 +92,39 @@ export function StoreSchedule() {
   const postSchedule = (data) => {
     onRequest({
       request: () => addRestaurantHours(data),
-      onSuccess: () => {
-        toast.success("Horário salvo com sucesso com sucesso!")
-      },
+      onSuccess: () => {},
       errorMessage: "Erro ao salvar hor YYS.",
     })
   }
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log({ schedule })
     const data = transformScheduleData(schedule)
-    data.map((item) => {
-      if (item.enabled === false) {
-        return "Sem horário"
+    try {
+      const results = await Promise.allSettled(
+        data.map(async (item) => {
+          return postSchedule(item)
+        })
+      )
+
+      const allSuccessful = results.every(
+        (result) => result.status === "fulfilled"
+      )
+
+      if (allSuccessful) {
+        setHasError(false)
+        toast.success("Horário salvo com sucesso!")
+        fetchHoursData()
+      } else {
+        const failedItems = results.filter(
+          (result) => result.status === "rejected"
+        )
+        console.error("Failed items:", failedItems)
+        toast.error("Alguns horários não foram salvos.")
+        fetchHoursData()
       }
-      postSchedule(item)
-    })
+    } catch (error) {
+      handleError(error)
+    }
   }
 
   const handleError = (error) => {
