@@ -57,10 +57,10 @@ export function StoreAddressEdit() {
             reset({ ...data[0] })
             setAddressId(data[0].addressId)
           } else {
-            toast.success("Sem endereço cadastrado")
+            toast.info("Sem endereço cadastrado")
           }
         },
-        onError: "Sem endereço cadastrado",
+        onError: "Erro ao buscar endereço cadastrado",
       })
     }
     fetchAddress()
