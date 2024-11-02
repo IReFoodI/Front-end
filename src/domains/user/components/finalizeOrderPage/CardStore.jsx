@@ -36,12 +36,12 @@ const CardStore = ({ restaurantInfo }) => {
       <button
         id="logo"
         className="h-28 w-28 transform rounded-full bg-cover bg-center transition-transform duration-300 hover:scale-105"
-        style={{ backgroundImage: `url(${restaurantInfo.urlLogo})` }}
+        style={{ backgroundImage: `url(${restaurantInfo?.urlLogo})` }}
       />
       <div id="info" className="ms-[-10px] flex-1 py-3 pe-3">
         <div className="flex justify-between">
           <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
-            {restaurantInfo.fantasy}
+            {restaurantInfo?.fantasy}
           </button>
           <div id="icons" className="flex justify-end gap-2 text-gray-400">
             <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
@@ -63,11 +63,11 @@ const CardStore = ({ restaurantInfo }) => {
             <IconStarFilled size={15} className="text-primary" />
           </span>
           <span className="text-sm 2xl:text-base">
-            {restaurantInfo.averageRating} ({restaurantInfo.totalEvaluations}{" "}
+            {restaurantInfo?.averageRating} ({restaurantInfo?.totalEvaluations}{" "}
             avaliações)
           </span>
           <span className="text-sm text-gray-400 2xl:text-base">
-            {restaurantInfo.category}
+            {restaurantInfo?.category}
           </span>
         </div>
       </div>

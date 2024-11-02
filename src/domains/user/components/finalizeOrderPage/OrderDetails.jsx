@@ -1,5 +1,5 @@
 import { IconClock } from "@tabler/icons-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import restaurantStore from "@/app/store/restaurantStore"
@@ -11,17 +11,47 @@ import DeliveryAndPayment from "./DeliveryAndPayment"
 
 export const OrderDetails = () => {
   const { cards } = userCardStore()
-  const { restaurantInfo, fetchRestaurantInfo } = restaurantStore()
-
-  const pickupTime = "Hoje, 19:52 - 20:02"
-  const address =
-    "Rua Visconde de Duprat, 258 - Petrópolis, Porto Alegre - RS, 90690-430"
-
-  const encodedAddress = encodeURIComponent(address)
+  const [pickupTime, setPickupTime] = useState("")
+  const {
+    fetchRestaurantInfo,
+    restaurantInfo,
+    fetchRestaurantHours,
+    restaurantHours,
+    fetchAddress,
+    restaurantAddress,
+  } = restaurantStore()
 
   useEffect(() => {
     fetchRestaurantInfo(9)
-  }, [fetchRestaurantInfo])
+    fetchRestaurantHours(1)
+    fetchAddress(1)
+  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress])
+
+  useEffect(() => {
+    if (restaurantHours && restaurantInfo) {
+      const today = new Date()
+      const dayOfWeek = today
+        .toLocaleDateString("en-US", { weekday: "long" })
+        .toUpperCase()
+      const hours = restaurantHours
+
+      const todayHours = hours.find((hour) => hour.dayOfWeek === dayOfWeek)
+
+      if (todayHours) {
+        setPickupTime(
+          `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
+        )
+      } else {
+        setPickupTime("Restaurante fechado hoje")
+      }
+    }
+  }, [restaurantHours, restaurantInfo])
+
+  const restaurantAddressStandard =
+    restaurantAddress?.find((address) => address.isStandard) || {}
+  const encodedAddress = encodeURIComponent(
+    `${restaurantAddressStandard.street || ""}, ${restaurantAddressStandard.number || ""}, ${restaurantAddressStandard.city || ""}`
+  )
 
   return (
     <div
