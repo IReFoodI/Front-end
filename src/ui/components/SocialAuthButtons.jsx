@@ -14,8 +14,6 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
-      console.log(credetialResponse)
-
       try {
         const userInfoResponse = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",

@@ -3,7 +3,6 @@ const BASE_URL = "api/product/search"
 const axios = createAxiosInstance(true)
 
 async function searchProducts(searchParams) {
-  console.log(searchParams)
   let transformed = searchParams?.replace(
     /(tipo=)([^&]*)|(categoria=)([^&]*)/g,
     (match, tipo, tipoValue, categoria, categoriaValue) => {

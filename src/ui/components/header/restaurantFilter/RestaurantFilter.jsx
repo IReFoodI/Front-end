@@ -6,6 +6,7 @@ import {
   IconBurger,
   IconCandy,
   IconChefHat,
+  IconDumpling,
   IconSalt,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
@@ -83,6 +84,7 @@ export function RestaurantFilter() {
   const categories = [
     { buttonTitle: "Salgado", imageSource: <IconSalt className="size-4" /> },
     { buttonTitle: "Doce", imageSource: <IconCandy className="size-4" /> },
+    { buttonTitle: "Misto", imageSource: <IconDumpling className="size-4" /> },
   ]
 
   return (

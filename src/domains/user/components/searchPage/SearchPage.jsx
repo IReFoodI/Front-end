@@ -20,18 +20,12 @@ export function SearchPage() {
   const filterRole = searchParams.get("categoria")
   const filterPrice = searchParams.get("preco")
 
-  console.log(searchText)
-  console.log(filterRole)
-  console.log(filterType)
-
   function handleSuccess(data) {
     setProducts(data)
   }
   function handleError() {
     console.log("erro")
   }
-  console.log("text", searchText)
-  console.log("size", searchParams.size)
   function handleRemoveFilter(param, role) {
     setSearchParams((prev) => {
       const currentParams = new URLSearchParams(prev) // Mantém os parâmetros atuais

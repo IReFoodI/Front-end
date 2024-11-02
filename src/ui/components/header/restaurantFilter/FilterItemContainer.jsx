@@ -55,7 +55,7 @@ export function FilterItemContainer({ title, items, param }) {
       <h2 className="text-sm font-semibold">{title}</h2>
 
       <div className="flex flex-wrap items-center justify-start gap-2">
-        {items.map((item, index) => {
+        {items.map((item) => {
           return (
             <button
               key={uuid()}
