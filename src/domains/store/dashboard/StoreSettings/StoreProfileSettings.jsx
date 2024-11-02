@@ -80,7 +80,12 @@ export function StoreProfileSettings() {
 
   const onSubmit = async () => {
     await onRequest({
-      request: () => restaurantService.updateRestaurant(form.getValues()),
+      request: () =>
+        restaurantService.updateRestaurant({
+          ...form.getValues(),
+          phone: form.getValues().phone.replace(/[^\d]/g, ""),
+          cnpj: form.getValues().cnpj.replace(/[^\d]/g, ""),
+        }),
       onSuccess: () => setIsModalSaveChangesProfileOpen(false),
       onError: () => setIsModalSaveChangesProfileOpen(false),
       successMessage: "Dados atualizado",
