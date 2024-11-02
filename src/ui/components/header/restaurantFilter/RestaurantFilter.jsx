@@ -43,10 +43,11 @@ export function RestaurantFilter() {
       buttonTitle: "Supermercado",
       imageSource: <IconBuildingStore className="size-4" />,
     },
-    {
-      buttonTitle: "Lancheria",
-      imageSource: <IconBurger className="size-4" />,
-    },
+    //todo adicionar a categoria nova aqui depois, lancheria não existe
+    // {
+    //   buttonTitle: "Lancheria",
+    //   imageSource: <IconBurger className="size-4" />,
+    // },
   ]
   useEffect(() => {
     let currentParams = new URLSearchParams(searchParams)
