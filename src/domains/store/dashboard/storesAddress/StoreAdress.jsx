@@ -83,8 +83,6 @@ export function StoreAddressEdit() {
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
   const onSubmit = async (data) => {
-    console.log("Dados submetidos:", data) // Log para ver os dados enviados
-    console.log("ID do endereço:", addressId)
     await onRequest({
       request: () =>
         !addressId
