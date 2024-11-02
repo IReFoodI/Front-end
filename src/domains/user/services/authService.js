@@ -10,7 +10,15 @@ const BASE_URL = "/auth"
  */
 async function signInWithEmailAndPassword(data) {
   const axios = createAxiosInstance()
-  return await axios.post(`${BASE_URL}/login`, data)
+  return await axios.post(`${BASE_URL}/user/login`, data)
 }
 
-export const authService = { signInWithEmailAndPassword }
+async function signInWithEmailAndPasswordRestaurant(data) {
+  const axios = createAxiosInstance()
+  return await axios.post(`${BASE_URL}/restaurant/login`, data)
+}
+
+export const authService = {
+  signInWithEmailAndPassword,
+  signInWithEmailAndPasswordRestaurant,
+}

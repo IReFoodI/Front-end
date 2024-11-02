@@ -1,34 +1,6 @@
 import { z } from "zod"
 
-export const states = [
-  "AC",
-  "AL",
-  "AP",
-  "AM",
-  "BA",
-  "CE",
-  "DF",
-  "ES",
-  "GO",
-  "MA",
-  "MT",
-  "MS",
-  "MG",
-  "PA",
-  "PB",
-  "PR",
-  "PE",
-  "PI",
-  "RJ",
-  "RN",
-  "RS",
-  "RO",
-  "RR",
-  "SC",
-  "SP",
-  "SE",
-  "TO",
-]
+import { states } from "@/domains/store/models/StoreAddressType"
 
 export const changeUserAddressTypes = z.object({
   cep: z.string().min(8, { message: "Insira um CEP válido com 8 caracteres." }),
@@ -44,7 +16,7 @@ export const changeUserAddressTypes = z.object({
     .string()
     .min(3, { message: "Bairro deve ter pelo menos 3 caracteres." })
     .max(30, { message: "O bairro deve ter no máximo 30 caracteres." }),
-  complemento: z
+  complement: z
     .string()
     .max(10, { message: "O complemento deve ter no máximo 10 caracteres." })
     .optional(),
