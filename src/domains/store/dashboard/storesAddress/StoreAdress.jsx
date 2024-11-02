@@ -16,6 +16,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
@@ -123,7 +124,7 @@ export function StoreAddressEdit() {
             <FormProvider {...formMethods}>
               <form
                 onSubmit={formMethods.handleSubmit(onSubmit)}
-                className="relative space-y-4 text-center"
+                className="relative space-y-4 text-start"
               >
                 <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
                   <FormField
@@ -131,6 +132,7 @@ export function StoreAddressEdit() {
                     name="cep"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Cep</FormLabel>
                         <FormControl>
                           <CepPatternFormat {...field} />
                         </FormControl>
@@ -144,12 +146,15 @@ export function StoreAddressEdit() {
                     name="state"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>UF</FormLabel>
                         <FormControl>
                           <select
+                            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-3"
                           >
-                            <option value="">UF</option>
+                            <option value="" disabled className="">
+                              UF
+                            </option>
                             {states.map((state) => (
                               <option key={state} value={state}>
                                 {state}
@@ -166,11 +171,12 @@ export function StoreAddressEdit() {
                     name="district"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Bairro</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Bairro"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -184,12 +190,9 @@ export function StoreAddressEdit() {
                     name="street"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Rua</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Rua"
-                            {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
-                          />
+                          <Input placeholder="Rua" {...field} className="p-4" />
                         </FormControl>
                         <FormMessage className="text-left" />
                       </FormItem>
@@ -200,11 +203,12 @@ export function StoreAddressEdit() {
                     name="complement"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Complemento</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Complemento"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -216,12 +220,13 @@ export function StoreAddressEdit() {
                     name="number"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Nº</FormLabel>
                         <FormControl>
                           <Input
                             type="text"
                             placeholder="Número"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -234,11 +239,12 @@ export function StoreAddressEdit() {
                     name="city"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Cidade</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Cidade"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
