@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import restaurantStore from "@/app/store/restaurantStore"
+import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
@@ -11,6 +12,7 @@ import DeliveryAndPayment from "./DeliveryAndPayment"
 
 export const OrderDetails = () => {
   const { cards } = userCardStore()
+  const { cartItems } = useCartStore()
   const [pickupTime, setPickupTime] = useState("")
   const {
     fetchRestaurantInfo,
@@ -22,10 +24,20 @@ export const OrderDetails = () => {
   } = restaurantStore()
 
   useEffect(() => {
-    fetchRestaurantInfo(9)
-    fetchRestaurantHours(1)
-    fetchAddress(1)
-  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress])
+    const firstProduct = cartItems[0]
+
+    if (firstProduct) {
+      fetchRestaurantInfo(firstProduct.productId).then((restaurantId) => {
+        if (restaurantId) {
+          fetchRestaurantHours(restaurantId)
+          fetchAddress(restaurantId)
+        }
+      })
+    }
+    console.log("novo login order details")
+    console.log("first product => ", firstProduct)
+    console.log("cart items => ", cartItems)
+  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress, cartItems])
 
   useEffect(() => {
     if (restaurantHours && restaurantInfo) {

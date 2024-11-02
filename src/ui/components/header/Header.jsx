@@ -24,13 +24,14 @@ export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
   const { user } = userStore()
-
-  const { fetchCart } = useCartStore()
+  const { fetchCart, clearCart } = useCartStore()
 
   useEffect(() => {
     const userId = user?.id
+    clearCart()
     fetchCart(userId)
-  }, [fetchCart, user?.id])
+    console.log("user id =" + userId)
+  }, [fetchCart, user.id, clearCart])
 
   const cartItems = useCartStore((state) => state.cartItems)
 
