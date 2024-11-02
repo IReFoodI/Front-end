@@ -48,6 +48,10 @@ const DeliveryAndPayment = () => {
     setIsModalOpen(true)
   }
 
+  const formatCardNumber = (number) => {
+    return number.replace(/(\d{4})(?=\d)/g, "$1 ")
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <Dialog>
@@ -82,7 +86,7 @@ const DeliveryAndPayment = () => {
                   onClick={() => handleCardSelect(card.cardId)}
                 >
                   <div className="flex items-center justify-between">
-                    <p>{card.number}</p>
+                    <p>{formatCardNumber(card.number)}</p>
                     <div className="flex gap-2">
                       <Link to="/cartoes">
                         <IconEdit className="cursor-pointer" />

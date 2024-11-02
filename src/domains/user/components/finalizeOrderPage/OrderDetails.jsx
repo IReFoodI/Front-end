@@ -1,7 +1,8 @@
 import { IconClock } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
+import restaurantStore from "@/app/store/restaurantStore"
 import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
@@ -10,33 +11,18 @@ import DeliveryAndPayment from "./DeliveryAndPayment"
 
 export const OrderDetails = () => {
   const { cards } = userCardStore()
-  const [order] = useState({
-    pickupTime: "Hoje, 19:52 - 20:02",
-    orderStatus: "A Loja está separando seu pedido",
-    restaurant: {
-      name: "Dragão Verde",
-      type: "Restaurante",
-      imgUrl: "https://via.placeholder.com/40",
-    },
-    orderNumber: 3399,
-    orderItems: [
-      {
-        name: "Item a venda",
-        description: "Descrição do item a venda...",
-        price: "20.99",
-      },
-    ],
-    subtotal: "20.99",
-    delivery: "Retirada na loja",
-    payment: {
-      method: "PIX",
-      status: "aprovado",
-    },
-  })
+  const { restaurantInfo, fetchRestaurantInfo } = restaurantStore()
 
+  const pickupTime = "Hoje, 19:52 - 20:02"
   const address =
     "Rua Visconde de Duprat, 258 - Petrópolis, Porto Alegre - RS, 90690-430"
+
   const encodedAddress = encodeURIComponent(address)
+
+  useEffect(() => {
+    fetchRestaurantInfo(9)
+  }, [fetchRestaurantInfo])
+
   return (
     <div
       id="OrderDetails"
@@ -44,18 +30,17 @@ export const OrderDetails = () => {
     >
       {/* CARD LOJA */}
       <div>
-        <CardStore />
+        <CardStore restaurantInfo={restaurantInfo} />
       </div>
 
       {/* RETIRADA */}
-
       <div>
         <h2 className="text-lg font-semibold text-primary lg:text-xl">
           Retirada
         </h2>
         <div className="flex items-center gap-3 text-2xl font-semibold text-gray-600">
           <IconClock stroke={2} />
-          {order.pickupTime}
+          {pickupTime}
         </div>
       </div>
 
@@ -83,7 +68,7 @@ export const OrderDetails = () => {
       <div className="mx-auto w-full max-w-[400px]">
         <DeliveryAndPayment />
       </div>
-      {/* BUTTON */}
+      {/* BUTTON FINALIZAR */}
       {cards.length > 0 ? (
         <Link to="/pedidos" className="w-full">
           <div className="mx-auto hidden w-full max-w-[400px] lg:block">
