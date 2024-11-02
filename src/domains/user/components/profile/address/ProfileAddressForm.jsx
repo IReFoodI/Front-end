@@ -4,9 +4,11 @@ import { FormProvider, useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import { states } from "@/domains/store/models/StoreAddressType"
 import { useCep } from "@/domains/user/hooks/useCep"
-import { changeUserAddressTypes } from "@/domains/user/models/ChangeUserAddressTypes"
+import {
+  changeUserAddressTypes,
+  states,
+} from "@/domains/user/models/ChangeUserAddressTypes"
 import { addressService } from "@/domains/user/services/addressService"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
@@ -91,7 +93,7 @@ export function ProfileAddressForm() {
               ...data,
               addressType: "USER",
               addressId: params?.addressId,
-            }), // todo: ficará assim até ajustarem a lógica para a empresa
+            }),
       onSuccess: () => navigate("/endereco"),
       successMessage: `${!params?.addressId ? "Endereço criado com sucesso!" : "Endereço alterado com sucesso!"}`,
     })
