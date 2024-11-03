@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { productService } from "@/domains/store/services/useProdutcList"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -25,7 +26,6 @@ import {
   TableRow,
 } from "@/ui/components/ui/table"
 
-import { productService } from "../../hooks/useProdutcList"
 import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"

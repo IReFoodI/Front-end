@@ -63,8 +63,6 @@ export function SignIn() {
   }
 
   const onSubmit = async (data) => {
-    const isBusinessPage = location.pathname === "/autenticar/negocios" // Verifica se está na página de negócios
-
     await onRequestLogin({
       request: () => {
         if (

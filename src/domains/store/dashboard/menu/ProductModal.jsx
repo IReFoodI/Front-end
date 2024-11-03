@@ -6,8 +6,8 @@ import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
-import { productService } from "@/domains/store/hooks/useProdutcList"
 import { productSchema } from "@/domains/store/models/ProductTypes"
+import { productService } from "@/domains/store/services/useProdutcList"
 import {
   AlertDialogCancel,
   AlertDialogFooter,

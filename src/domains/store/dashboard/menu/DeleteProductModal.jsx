@@ -1,7 +1,7 @@
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import { productService } from "@/domains/store/hooks/useProdutcList"
+import { productService } from "@/domains/store/services/useProdutcList"
 import {
   AlertDialog,
   AlertDialogCancel,
