@@ -1,13 +1,11 @@
-import { decodeJwt } from "jose"
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import {
   addRestaurantHours,
   fetchRestaurantHours,
-} from "@/domains/store/hooks/fetchRestaurantHours"
+} from "@/domains/store/services/restaurantHoursService"
 
 import { ScheduleRow } from "./StoreScheduleRow"
 
@@ -26,13 +24,9 @@ export function StoreSchedule() {
   const [hasError, setHasError] = useState(false)
   const { loading, error, onRequest } = useFetch()
 
-  const token = localStorageUtil.getLocalStorageToken()
-  const decoded = decodeJwt(token)
-  const restaurantId = decoded.userId
-
   const fetchHoursData = () => {
     onRequest({
-      request: () => fetchRestaurantHours(restaurantId),
+      request: () => fetchRestaurantHours(),
       onSuccess: (data) => {
         const initialSchedule = daysOfWeek.map((day) => {
           const hoursForDay =
@@ -44,7 +38,7 @@ export function StoreSchedule() {
             startMinute: hoursForDay.openingTime?.split(":")[1] || "",
             endHour: hoursForDay.closingTime?.split(":")[0] || "",
             endMinute: hoursForDay.closingTime?.split(":")[1] || "",
-            restaurantId: restaurantId,
+            restaurantId: hoursForDay.restaurantId,
             id: hoursForDay.id,
           }
         })
@@ -56,7 +50,7 @@ export function StoreSchedule() {
 
   useEffect(() => {
     fetchHoursData()
-  }, [restaurantId, onRequest])
+  }, [onRequest])
 
   const handleScheduleChange = useCallback(
     (index, field, value) => {
