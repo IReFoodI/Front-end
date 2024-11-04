@@ -17,10 +17,10 @@ const restaurantService = {
   },
 
   async fetchRestaurantHoursById(restaurantId) {
-    const axiosInstance = createAxiosInstance(true)
+    const axiosInstance = createAxiosInstance(false)
     try {
       const response = await axiosInstance.get(
-        `/api/restaurant-hours/restaurant/${restaurantId}`
+        `/api/restaurant-hours/restaurant-id/${restaurantId}`
       )
       return response.data
     } catch (error) {

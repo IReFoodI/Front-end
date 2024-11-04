@@ -31,7 +31,6 @@ const DeliveryAndPayment = () => {
 
   const handleCardSelect = (cardId) => {
     setSelectedCard(cardId)
-    console.log(selectedCard)
   }
 
   const handleCardDelete = async () => {

@@ -24,37 +24,38 @@ export const OrderDetails = () => {
   } = restaurantStore()
 
   useEffect(() => {
-    const firstProduct = cartItems[0]
+    const fetchData = async () => {
+      const firstProduct = cartItems[0]
 
-    if (firstProduct) {
-      fetchRestaurantInfo(firstProduct.productId).then((restaurantId) => {
-        if (restaurantId) {
-          fetchRestaurantHours(restaurantId)
-          fetchAddress(restaurantId)
+      if (firstProduct) {
+        fetchRestaurantInfo(firstProduct.productId)
+      }
+      if (restaurantInfo) {
+        fetchRestaurantHours(restaurantInfo.restaurantId)
+        fetchAddress(restaurantInfo.restaurantId)
+      }
+      if (restaurantHours) {
+        const today = new Date()
+        const dayOfWeek = today
+          .toLocaleDateString("en-US", { weekday: "long" })
+          .toUpperCase()
+        const hours = restaurantHours
+
+        const todayHours = hours.find((hour) => hour.dayOfWeek === dayOfWeek)
+
+        if (todayHours) {
+          setPickupTime(
+            `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
+          )
+        } else {
+          setPickupTime("Restaurante fechado hoje")
         }
-      })
-    }
-  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress, cartItems])
-
-  useEffect(() => {
-    if (restaurantHours && restaurantInfo) {
-      const today = new Date()
-      const dayOfWeek = today
-        .toLocaleDateString("en-US", { weekday: "long" })
-        .toUpperCase()
-      const hours = restaurantHours
-
-      const todayHours = hours.find((hour) => hour.dayOfWeek === dayOfWeek)
-
-      if (todayHours) {
-        setPickupTime(
-          `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
-        )
-      } else {
-        setPickupTime("Restaurante fechado hoje")
       }
     }
-  }, [restaurantHours, restaurantInfo])
+
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress, cartItems])
 
   const restaurantAddressStandard =
     restaurantAddress?.find((address) => address.isStandard) || {}
@@ -78,7 +79,7 @@ export const OrderDetails = () => {
           Retirada
         </h2>
         <div className="flex items-center gap-3 text-2xl font-semibold text-gray-600">
-          <IconClock stroke={2} />
+          <IconClock />
           {pickupTime}
         </div>
       </div>
