@@ -5,12 +5,12 @@ const FAVORITES_URL = "/api/favorites"
 
 async function getStores() {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${HOME_URL}`)
+  return await axios.get(`${HOME_URL}/restaurants`)
 }
 
-async function getStoresToday() {
+async function getStoresToday(page) {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${HOME_URL}/today`)
+  return await axios.get(`${HOME_URL}/today?page=${page}&size=15"`)
 }
 
 async function getFavoritesByUser() {
