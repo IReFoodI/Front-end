@@ -6,6 +6,7 @@ import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
 import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetails.jsx"
+import { StoreSchedule } from "@/domains/store/dashboard/StoreHour.jsx/StoreSchedule.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
 import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
@@ -56,6 +57,8 @@ export const ROUTES = {
   ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
+  PROFILESETTINGS: "ajustes/perfil",
+  SCHEDULESETTINGS: "ajustes/horario",
   CHANGE_DATA: "alterar-dados",
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
@@ -122,6 +125,7 @@ export const router = createBrowserRouter([
               },
               { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
               { path: ROUTES.DASHBOARD_CONFIG, element: <ConfigurationPage /> },
+              { path: ROUTES.SCHEDULESETTINGS, element: <StoreSchedule /> },
             ],
           },
         ],
