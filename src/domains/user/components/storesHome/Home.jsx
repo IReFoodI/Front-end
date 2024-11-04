@@ -1,13 +1,20 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { useStores } from "@/domains/user/components/storesHome/StoresData"
+import { Loading } from "@/ui/components/ui/loading"
 
 import { BannerCarousel } from "./BannerCarousel"
 import { StoresGrid } from "./StoresGrid"
 
 export function Home() {
   const { stores, loading, toggleFavorite, loadMoreStores } = useStores()
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const sentinelRef = useRef(null)
+  useEffect(() => {
+    if (!loading && stores.length > 0) {
+      setHasLoadedOnce(true)
+    }
+  }, [loading, stores])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -16,7 +23,7 @@ export function Home() {
           loadMoreStores()
         }
       },
-      { threshold: 0.1 } // Trigger when 10% of sentinel is visible
+      { threshold: 0.1 }
     )
 
     if (sentinelRef.current) {
@@ -29,6 +36,9 @@ export function Home() {
       }
     }
   }, [loadMoreStores, loading])
+  
+  console.log(stores.length)
+  console.log(hasLoadedOnce)
 
   return (
     <div
@@ -37,12 +47,21 @@ export function Home() {
       <div className="my-6">
         <BannerCarousel />
       </div>
-      {loading && <p>Loading...</p>}
-      {!loading && stores.length === 0 && <p>No stores found.</p>}
-      {/* Render StoresGrid */}
-      <StoresGrid stores={stores} toggleFavorite={toggleFavorite} />
 
-      {/* Sentinel element at the end of the page */}
+      {/* Mostrar Loading enquanto carregando */}
+      {loading && !hasLoadedOnce ? (
+        <Loading />
+      ) : stores.length === 0 && hasLoadedOnce ? (
+        <p className="col-span-full text-center">Nenhuma loja disponível.</p>
+      ) : (
+        <StoresGrid
+          stores={stores}
+          toggleFavorite={toggleFavorite}
+          hasLoadedOnce={hasLoadedOnce}
+        />
+      )}
+
+      {/* Sentinel para carregamento infinito */}
       <div ref={sentinelRef} className="py-2"></div>
     </div>
   )
