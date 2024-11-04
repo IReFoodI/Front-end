@@ -31,7 +31,7 @@ const useCartStore = create((set) => ({
 
       set({ cartItems, subtotal, restaurantName, cartId })
     } catch (error) {
-      console.log("Failed to fetch cart items:", error)
+      console.log(error.message)
     }
   },
 
