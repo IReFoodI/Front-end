@@ -10,6 +10,9 @@ const BASE_URL = "/api/cart"
  * @returns {Promise<Array>} - Returns the cart items.
  */
 async function fetchCart(userId) {
+  if (!userId) {
+    throw new Error("User ID is required to fetch the cart")
+  }
   const axios = createAxiosInstance(true)
   const response = await axios.get(`${BASE_URL}/user/${userId}`)
   return response.data
@@ -47,7 +50,6 @@ async function fetchRestaurantNameByProductId(productId) {
  */
 async function removeItemFromCart(cartId, productId) {
   const axios = createAxiosInstance(true)
-  console.log(cartId, productId)
   await axios.delete(
     `${BASE_URL}/cart/item?cartId=${cartId}&productId=${productId}`
   )

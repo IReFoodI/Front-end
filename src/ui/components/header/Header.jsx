@@ -1,3 +1,4 @@
+import { DialogTitle } from "@radix-ui/react-dialog"
 import {
   IconFilter,
   IconSearch,
@@ -14,7 +15,12 @@ import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTrigger,
+} from "../ui/sheet"
 import { Cart } from "./Cart/Cart"
 // import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
@@ -130,6 +136,10 @@ export function Header() {
               <IconShoppingBag className="w-full text-center" size={30} />
             </SheetTrigger>
             <SheetContent className="max-h-screen overflow-auto">
+              <DialogTitle className="text-lg font-semibold">
+                Carrinho
+              </DialogTitle>
+              <SheetDescription />
               <Cart />
             </SheetContent>
           </Sheet>

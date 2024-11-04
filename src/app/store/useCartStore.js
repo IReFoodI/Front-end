@@ -9,6 +9,9 @@ const useCartStore = create((set) => ({
   restaurantName: null,
 
   fetchCart: async (userId) => {
+    if (!userId) {
+      return
+    }
     try {
       const cartItems = await cartService.fetchCart(userId)
       const subtotal = cartItems.reduce(
@@ -28,7 +31,7 @@ const useCartStore = create((set) => ({
 
       set({ cartItems, subtotal, restaurantName, cartId })
     } catch (error) {
-      console.error("Failed to fetch cart items:", error)
+      console.log("Failed to fetch cart items:", error)
     }
   },
 
@@ -36,7 +39,6 @@ const useCartStore = create((set) => ({
     try {
       const { cartId } = useCartStore.getState()
       if (!cartId) {
-        console.error("Cart ID is missing")
         return
       }
       await cartService.clearCart(cartId)

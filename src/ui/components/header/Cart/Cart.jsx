@@ -24,6 +24,7 @@ export function Cart() {
               <SheetTitle className="w-full text-left font-semibold text-primary lg:text-xl">
                 Seu pedido em
               </SheetTitle>
+
               <button onClick={clearCart}>Limpar</button>
             </div>
 
