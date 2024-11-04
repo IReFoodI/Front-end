@@ -1,41 +1,45 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
+import { toast } from "sonner"
 
-import { fetchAddressData } from "@/domains/store/hooks/useAddress"
+import { useFetch } from "@/app/hooks/useFetch"
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
   changeUserAddressTypes,
   states,
 } from "@/domains/user/models/ChangeUserAddressTypes"
+import { addressService } from "@/domains/user/services/addressService"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 
 const FormSchema = changeUserAddressTypes
 
 export function StoreAddressEdit() {
-  const [error, setError] = useState(null)
+  const [addressId, setAddressId] = useState("")
+  const { loading: loadingSaveAddress, onRequest } = useFetch()
+  const [encodedAddress, setEncodedAddress] = useState("")
 
-  const initialData = useMemo(
-    () => ({
-      zipCode: "",
-      street: "",
-      number: "",
-      district: "",
-      complement: "",
-      city: "",
-      state: "",
-      isDefault: false,
-    }),
-    []
-  )
+  const initialData = {
+    cep: "",
+    street: "",
+    number: "",
+    district: "",
+    complement: "",
+    city: "",
+    state: "",
+    isDefault: false,
+    type: "RESTAURANT",
+  }
 
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
@@ -43,19 +47,29 @@ export function StoreAddressEdit() {
   })
 
   const { getValues, setValue, reset, watch } = formMethods
-  const [encodedAddress, setEncodedAddress] = useState("")
 
   useEffect(() => {
-    async function fetchData() {
-      await fetchAddressData(reset, setError)
+    function fetchAddress() {
+      onRequest({
+        request: () => addressService.listAddresses(),
+        onSuccess: (data) => {
+          if (data && data.length > 0) {
+            reset({ ...data[0] })
+            setAddressId(data[0].addressId)
+          } else {
+            toast.info("Sem endereço cadastrado")
+          }
+        },
+        onError: "Erro ao buscar endereço cadastrado",
+      })
     }
-    fetchData()
-  }, [reset])
+    fetchAddress()
+  }, [reset, onRequest])
 
-  useCep(getValues("zipCode"), setValue, getValues)
+  useCep(getValues("cep"), setValue, getValues)
 
   const watchedFields = watch([
-    "zipCode",
+    "cep",
     "street",
     "number",
     "district",
@@ -64,14 +78,36 @@ export function StoreAddressEdit() {
   ])
 
   useEffect(() => {
-    const [zipCode, street, number, district, city, state] = watchedFields
-
-    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${zipCode}`
+    const [cep, street, number, district, city, state] = watchedFields
+    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${cep}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
+  const onSubmit = async (data) => {
+    await onRequest({
+      request: () =>
+        !addressId
+          ? addressService.createAddress({ ...data, addressType: "RESTAURANT" })
+          : addressService.updateAddress({
+              ...data,
+              addressType: "RESTAURANT",
+              addressId,
+            }),
+      onSuccess: () => {
+        toast.success(
+          !addressId
+            ? "Endereço criado com sucesso!"
+            : "Endereço alterado com sucesso!"
+        )
+      },
+      onError: (error) => {
+        console.error("Erro ao salvar endereço:", error)
+        toast.error("Não foi possível salvar o endereço.")
+      },
+    })
+  }
 
-  function onSubmit(data) {
-    console.log("Dados enviados:", data)
+  if (loadingSaveAddress) {
+    return <Loading />
   }
 
   return (
@@ -79,22 +115,22 @@ export function StoreAddressEdit() {
       <main className="mx-auto flex w-fit max-w-[1216px] flex-col items-center justify-start gap-6 text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Endereço</h1>
-          <p>Ajuste as informações do endereços</p>
+          <p>Ajuste as informações do endereço</p>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
         <div className="flex justify-center">
           <div className="relative bg-white">
             <FormProvider {...formMethods}>
               <form
                 onSubmit={formMethods.handleSubmit(onSubmit)}
-                className="relative space-y-4 text-center"
+                className="relative space-y-4 text-start"
               >
                 <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
                   <FormField
                     control={formMethods.control}
-                    name="zipCode"
+                    name="cep"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Cep</FormLabel>
                         <FormControl>
                           <CepPatternFormat {...field} />
                         </FormControl>
@@ -108,12 +144,15 @@ export function StoreAddressEdit() {
                     name="state"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>UF</FormLabel>
                         <FormControl>
                           <select
+                            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-3"
                           >
-                            <option value="">UF</option>
+                            <option value="" disabled className="">
+                              UF
+                            </option>
                             {states.map((state) => (
                               <option key={state} value={state}>
                                 {state}
@@ -130,11 +169,12 @@ export function StoreAddressEdit() {
                     name="district"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Bairro</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Bairro"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -148,12 +188,9 @@ export function StoreAddressEdit() {
                     name="street"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Rua</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Rua"
-                            {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
-                          />
+                          <Input placeholder="Rua" {...field} className="p-4" />
                         </FormControl>
                         <FormMessage className="text-left" />
                       </FormItem>
@@ -164,11 +201,12 @@ export function StoreAddressEdit() {
                     name="complement"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Complemento</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Complemento"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -180,28 +218,31 @@ export function StoreAddressEdit() {
                     name="number"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Nº</FormLabel>
                         <FormControl>
                           <Input
                             type="text"
                             placeholder="Número"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={formMethods.control}
                     name="city"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Cidade</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Cidade"
                             {...field}
-                            className="h-12 w-full rounded-md border-2 border-input p-4"
+                            className="p-4"
                           />
                         </FormControl>
                         <FormMessage className="text-left" />
@@ -224,11 +265,7 @@ export function StoreAddressEdit() {
                   />
                 </div>
                 <div className="md:text-right">
-                  <Button type="submit">
-                    {location.state
-                      ? "Salvar Alterações"
-                      : "Adicionar Endereço"}
-                  </Button>
+                  <Button type="submit">Salvar Alterações</Button>
                 </div>
               </form>
             </FormProvider>

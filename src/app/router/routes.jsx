@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 
+import { StoreSignUp } from "@/domains/store/components/authentication/StoreSignUp.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
@@ -21,6 +22,7 @@ import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverP
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { AddressPage } from "@/domains/user/components/profile/address/AddressPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
+import { SearchPage } from "@/domains/user/components/searchPage/SearchPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -58,6 +60,7 @@ export const ROUTES = {
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
+  SEARCH_PRODUCTS: "produtos/pesquisar",
 }
 
 export const router = createBrowserRouter([
@@ -73,6 +76,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <Home /> },
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
+              { path: ROUTES.SEARCH_PRODUCTS, element: <SearchPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
               { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
               {
@@ -176,7 +180,7 @@ export const router = createBrowserRouter([
                 path: ROUTES.CREATE_ACCOUNT_BUSINESS,
                 element: (
                   <PublicRoute>
-                    <SignUp />
+                    <StoreSignUp />
                   </PublicRoute>
                 ),
               },

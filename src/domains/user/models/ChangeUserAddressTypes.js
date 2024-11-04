@@ -44,9 +44,9 @@ export const changeUserAddressTypes = z.object({
     .string()
     .min(3, { message: "Bairro deve ter pelo menos 3 caracteres." })
     .max(30, { message: "O bairro deve ter no máximo 30 caracteres." }),
-  complemento: z
+  complement: z
     .string()
-    .max(10, { message: "O complemento deve ter no máximo 10 caracteres." })
+    .max(50, { message: "O complemento deve ter no máximo 50 caracteres." })
     .optional(),
   type: z
     .string()

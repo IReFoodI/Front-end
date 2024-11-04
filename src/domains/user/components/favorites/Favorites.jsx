@@ -1,4 +1,4 @@
-import { useStores } from "@/domains/user/hooks/useStores"
+import { useStores } from "@/domains/user/components/storesHome/StoresData"
 
 import { StoresGrid } from "../storesHome/StoresGrid"
 
@@ -12,14 +12,13 @@ export function Favorites() {
         Favoritos
       </h1>
       <div className="flex h-full pt-24">
-        <div className="mx-auto lg:mx-0">
+        <div className="mx-auto custom:mx-12 md:mx-24 lg:mx-0 xl:mx-20">
           {loading ? (
             <p>Loading...</p>
           ) : (
             <StoresGrid
               stores={favoriteStores}
               toggleFavorite={toggleFavorite}
-              showBanner={false}
               singleColumn={true}
               type="favorites"
             />
