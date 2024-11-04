@@ -92,6 +92,9 @@ export default {
       screens: {
         custom: "450px",
       },
+      height: {
+        "screen/2": "50vh",
+      },
     },
   },
   plugins: [tailwindAnimate],
