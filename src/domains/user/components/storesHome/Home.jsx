@@ -1,4 +1,4 @@
-import { useStores } from "@/domains/user/hooks/useStores"
+import { useStores } from "@/domains/user/components/storesHome/StoresData"
 
 import { BannerCarousel } from "./BannerCarousel"
 import { StoresGrid } from "./StoresGrid"
