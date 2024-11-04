@@ -36,7 +36,7 @@ const Orderitems = () => {
                     <p>{item.descriptionProduct}</p>
                   </div>
                   <span className="text-left text-xs font-semibold lg:text-base">
-                    {currencyFormatter(item.unitValue)}
+                    {currencyFormatter(item.quantity * item.unitValue)}
                   </span>
                 </div>
                 <div>
@@ -65,7 +65,9 @@ const Orderitems = () => {
       </Link>
       {/* TOTAL */}
       <div className="p-4 text-center lg:text-right">
-        <p className="text-lg font-semibold">Total: R$ {subtotal}</p>
+        <p className="text-lg font-semibold">
+          Total: R$ {currencyFormatter(subtotal)}
+        </p>
       </div>
     </aside>
   )

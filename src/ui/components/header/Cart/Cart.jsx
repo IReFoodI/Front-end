@@ -48,7 +48,7 @@ export function Cart() {
                       {item.quantity}x {item.nameProduct}
                     </p>
                     <span className="text-left text-xs font-semibold lg:text-base">
-                      {currencyFormatter(item.unitValue)}
+                      {currencyFormatter(item.quantity * item.unitValue)}
                     </span>
                   </div>
                   <IconTrash
