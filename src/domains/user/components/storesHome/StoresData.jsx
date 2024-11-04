@@ -12,6 +12,7 @@ export function useStores() {
 
   const fetchFavorites = useCallback(
     async (storesData) => {
+      console.log("fav,", storesData)
       await onRequest({
         request: async () => storesCardsServices.getFavoritesByUser(),
         onSuccess: (favRes) => {
@@ -25,14 +26,27 @@ export function useStores() {
               favoriteId: favorite ? favorite.favoriteId : null,
             }
           })
+
           setStores((prevStores) => {
-            const existingIds = new Set(
+            const prevStoreIds = new Set(
               prevStores.map((store) => store.restaurant.restaurantId)
             )
-            const newStores = updatedStores.filter(
-              (store) => !existingIds.has(store.restaurant.restaurantId)
-            )
-            return [...prevStores, ...newStores]
+            const mergedStores = [
+              ...prevStores,
+              ...updatedStores.filter(
+                (store) => !prevStoreIds.has(store.restaurant.restaurantId)
+              ),
+            ]
+            return mergedStores.map((store) => {
+              const favorite = favRes.find(
+                (fav) => fav.restaurantId === store.restaurant.restaurantId
+              )
+              return {
+                ...store,
+                isFavorited: !!favorite,
+                favoriteId: favorite ? favorite.favoriteId : null,
+              }
+            })
           })
         },
         onError: () =>
@@ -44,8 +58,7 @@ export function useStores() {
 
   const fetchStores = useCallback(
     async (pageNumber) => {
-      setLoading(true) // Define loading como true antes de buscar os dados
-      console.log("fetchStores", pageNumber)
+      setLoading(true)
       await onRequest({
         request: async () => storesCardsServices.getStoresToday(pageNumber),
         onSuccess: async (storesRes) => {
@@ -56,11 +69,16 @@ export function useStores() {
               const existingIds = new Set(
                 prevStores.map((store) => store.restaurant.restaurantId)
               )
+
+              // Filter out stores with IDs already in prevStores
               const newStores = storesData.filter(
                 (store) => !existingIds.has(store.restaurant.restaurantId)
               )
+
+              // Return a new array with previous stores and any new stores
               return [...prevStores, ...newStores]
             })
+
             await fetchFavorites(storesData)
           } else {
             console.error("No data found in the response")
@@ -131,5 +149,5 @@ export function useStores() {
     })
   }
 
-  return { stores, toggleFavorite, error, loadMoreStores, loading } // Retorne loading também
+  return { stores, toggleFavorite, error, loadMoreStores, loading }
 }
