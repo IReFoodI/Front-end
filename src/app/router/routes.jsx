@@ -23,6 +23,7 @@ import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverP
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { AddressPage } from "@/domains/user/components/profile/address/AddressPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
+import { MydataPage } from "@/domains/user/components/profile/MyDataPage.jsx"
 import { SearchPage } from "@/domains/user/components/searchPage/SearchPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
@@ -51,6 +52,7 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
+  USER_DATA: "meus-dados",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADDRESS: "ajustes/endereco",
   MENU: "cardapio",
@@ -87,6 +89,7 @@ export const router = createBrowserRouter([
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  { path: ROUTES.USER_DATA, element: <MydataPage /> },
                   {
                     path: ROUTES.ADDRESS_EDIT,
                     element: <ProfileAddressForm />,

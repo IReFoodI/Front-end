@@ -1,40 +1,53 @@
 import { IconCreditCard } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogTitle,
-} from "@/ui/components/ui/dialog"
+import { Loading } from "@/ui/components/ui/loading"
 
+import { getAllCreditCard } from "../../services/credit-card-service"
+import cardStore from "../../stores/cardStore"
+import { DeleteCardDialog } from "./Delete-card-dialog"
 import { SmallCard } from "./SmallCard"
 
-const cardData = [
-  {
-    name: "Dalia Bezerra",
-    number: "0000000000001234",
-    validity: "06/25",
-  },
-  {
-    name: "Hortência Flores",
-    number: "1233 1233 1212 0000",
-    validity: "11/35",
-  },
-  {
-    name: "Isaac Flores",
-    number: "1111 2222 3333 1554",
-    validity: "09/38",
-  },
-]
 export function CardPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const { cardData, setCardData, isCardLoading, loadedCards } = cardStore()
+  const cardToDelete = useRef(null)
 
-  const toggleOpenModal = () => {
-    setIsModalOpen(!isModalOpen)
+  const { loading, onRequest } = useFetch()
+
+  function handleSuccess(data) {
+    setCardData(data)
+    loadedCards()
+  }
+  function handleError() {
+    loadedCards()
+  }
+
+  useEffect(() => {
+    async function request() {
+      await onRequest({
+        request: getAllCreditCard,
+        onSuccess: handleSuccess,
+        onError: handleError,
+      })
+    }
+    request()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  function closeDeleteCardModal() {
+    setIsDeleteModalOpen(false)
+  }
+
+  function openDeleteCardModal() {
+    setIsDeleteModalOpen(true)
+  }
+
+  if (loading || isCardLoading) {
+    return <Loading />
   }
 
   return (
@@ -45,14 +58,15 @@ export function CardPage() {
 
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col">
-          {cardData.length > 0 ? (
+          {cardData?.length > 0 ? (
             <div className="mx-auto flex w-full flex-col items-center justify-center gap-4">
               <div className="mx-auto mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {cardData.map((data, index) => (
                   <SmallCard
                     key={index}
                     data={data}
-                    toggleOpenModal={toggleOpenModal}
+                    openDeleteCardModal={openDeleteCardModal}
+                    cardToDelete={cardToDelete}
                   />
                 ))}
               </div>
@@ -76,7 +90,7 @@ export function CardPage() {
                   Vamos adicionar seu primeiro cartão para fazer um novo pedido!
                 </p>
                 <NavLink to={"/cartoes/adicionar"}>
-                  <Button className="w-full max-w-[19rem] rounded-full px-4 pt-11 text-base font-semibold transition-colors duration-300 ease-in-out">
+                  <Button className="w-full max-w-[19rem] rounded-full px-4 py-6 text-base font-semibold transition-colors duration-300 ease-in-out">
                     Adicionar novo cartão
                   </Button>
                 </NavLink>
@@ -86,33 +100,13 @@ export function CardPage() {
         </div>
       </div>
 
-      <Dialog open={isModalOpen} onOpenChange={toggleOpenModal}>
-        <DialogContent>
-          <DialogTitle>Deseja realmente excluir este cartão?</DialogTitle>
-          <DialogDescription>
-            Esta ação não pode ser desfeita. Isso excluirá permanentemente os
-            dados do cartão.
-          </DialogDescription>
-          <DialogFooter>
-            <Button
-              className="rounded-full"
-              variant="ghost"
-              onClick={toggleOpenModal}
-            >
-              Cancelar
-            </Button>
-            <Button
-              className="rounded-full"
-              variant="destructive"
-              onClick={() => {
-                // ação de excluir aqui
-              }}
-            >
-              Confirmar
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeleteCardDialog
+        cardToDelete={cardToDelete}
+        isDeleteModalOpen={isDeleteModalOpen}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        openDeleteCardModal={openDeleteCardModal}
+        closeDeleteCardModal={closeDeleteCardModal}
+      />
     </div>
   )
 }
