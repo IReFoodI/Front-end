@@ -1,5 +1,5 @@
 import { IconX } from "@tabler/icons-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -13,6 +13,9 @@ export function SearchPage() {
   const [products, setProducts] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const [alreadyRenderFirstPage, setAlreadyRenderFirstPage] = useState(false)
+  const finalRef = useRef(null)
+
   const { loading, onRequest } = useFetch()
 
   const searchText = searchParams.get("produto")
@@ -22,6 +25,7 @@ export function SearchPage() {
 
   function handleSuccess(data) {
     setProducts(data)
+    setAlreadyRenderFirstPage(true)
   }
   function handleError() {
     console.log("erro")
@@ -48,7 +52,7 @@ export function SearchPage() {
   useEffect(() => {
     async function request() {
       await onRequest({
-        request: () => searchProducts(searchParams.toString()),
+        request: () => searchProducts(searchParams.toString(), 0),
         onSuccess: handleSuccess,
         onError: handleError,
       })
@@ -56,10 +60,6 @@ export function SearchPage() {
     request()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
-
-  if (loading) {
-    return <Loading />
-  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -117,26 +117,38 @@ export function SearchPage() {
           </Badge>
         )}
       </section>
-      {searchText !== null && (
-        <h2>
-          Buscando produtos por{" "}
-          <span className="font-semibold">&quot;{searchText}&quot;</span>
-        </h2>
-      )}
 
-      <section>
-        {products?.length > 0 ? (
-          <SearchProductList products={products} />
-        ) : (
-          <div className="flex flex-col">
-            <p>
-              Infelizmente não foi possível encontrar nenhum produto buscando
-              por esses filtros. <br />
-              Tente buscar por outros filtros.
-            </p>
-          </div>
-        )}
-      </section>
+      <h2>
+        {/* Buscando produtos por{" "}
+          <span className="font-semibold">&quot;{searchText}&quot;</span> */}
+        Foram encontrados{" "}
+        <span className="font-medium"> {products?.totalElements}</span>{" "}
+        produtos.
+      </h2>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <section>
+          {products?.content?.length > 0 ? (
+            <SearchProductList
+              products={products?.content}
+              finalRef={finalRef}
+              setProducts={setProducts}
+              totalPages={products?.totalPages}
+              alreadyRenderFirstPage={alreadyRenderFirstPage}
+            />
+          ) : (
+            <div className="flex flex-col">
+              <p>
+                Infelizmente não foi possível encontrar nenhum produto buscando
+                por esses filtros. <br />
+                Tente buscar por outros filtros.
+              </p>
+            </div>
+          )}
+        </section>
+      )}
     </div>
   )
 }
