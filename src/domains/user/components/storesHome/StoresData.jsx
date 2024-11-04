@@ -62,7 +62,7 @@ export function useStores() {
         request: async () => storesCardsServices.getStoresToday(pageNumber),
         onSuccess: async (storesRes) => {
           setTotalPages(storesRes.page.totalPages)
-          const storesData = storesRes._embedded.hashMapList || []
+          const storesData = storesRes._embedded?.hashMapList
           if (storesData) {
             setStores((prevStores) => {
               const existingIds = new Set(

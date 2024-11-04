@@ -15,7 +15,7 @@ export function Favorites() {
   const sentinelRef = useRef(null)
 
   useEffect(() => {
-    if (!loading && stores.length > 0) {
+    if (!loading) {
       setHasLoadedOnce(true)
     }
   }, [loading])

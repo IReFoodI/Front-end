@@ -11,7 +11,7 @@ export function Home() {
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const sentinelRef = useRef(null)
   useEffect(() => {
-    if (!loading && stores.length > 0) {
+    if (!loading) {
       setHasLoadedOnce(true)
     }
   }, [loading, stores])
@@ -36,9 +36,6 @@ export function Home() {
       }
     }
   }, [loadMoreStores, loading])
-  
-  console.log(stores.length)
-  console.log(hasLoadedOnce)
 
   return (
     <div
