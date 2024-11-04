@@ -1,10 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
+import { toast } from "sonner"
 
-import { fetchAddressData } from "@/domains/store/hooks/useAddress"
+import { useFetch } from "@/app/hooks/useFetch"
 import { useCep } from "@/domains/user/hooks/useCep"
-import { changeUserAddressTypes } from "@/domains/user/models/ChangeUserAddressTypes"
+import {
+  changeUserAddressTypes,
+  states,
+} from "@/domains/user/models/ChangeUserAddressTypes"
+import { addressService } from "@/domains/user/services/addressService"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
@@ -15,27 +20,26 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
-
-import { states } from "../../models/StoreAddressType"
+import { Loading } from "@/ui/components/ui/loading"
 
 const FormSchema = changeUserAddressTypes
 
 export function StoreAddressEdit() {
-  const [error, setError] = useState(null)
+  const [addressId, setAddressId] = useState("")
+  const { loading: loadingSaveAddress, onRequest } = useFetch()
+  const [encodedAddress, setEncodedAddress] = useState("")
 
-  const initialData = useMemo(
-    () => ({
-      zipCode: "",
-      street: "",
-      number: "",
-      district: "",
-      complement: "",
-      city: "",
-      state: "",
-      isDefault: false,
-    }),
-    []
-  )
+  const initialData = {
+    cep: "",
+    street: "",
+    number: "",
+    district: "",
+    complement: "",
+    city: "",
+    state: "",
+    isDefault: false,
+    type: "RESTAURANT",
+  }
 
   const formMethods = useForm({
     resolver: zodResolver(FormSchema),
@@ -43,19 +47,29 @@ export function StoreAddressEdit() {
   })
 
   const { getValues, setValue, reset, watch } = formMethods
-  const [encodedAddress, setEncodedAddress] = useState("")
 
   useEffect(() => {
-    async function fetchData() {
-      await fetchAddressData(reset, setError)
+    function fetchAddress() {
+      onRequest({
+        request: () => addressService.listAddresses(),
+        onSuccess: (data) => {
+          if (data && data.length > 0) {
+            reset({ ...data[0] })
+            setAddressId(data[0].addressId)
+          } else {
+            toast.info("Sem endereço cadastrado")
+          }
+        },
+        onError: "Erro ao buscar endereço cadastrado",
+      })
     }
-    fetchData()
-  }, [reset])
+    fetchAddress()
+  }, [reset, onRequest])
 
-  useCep(getValues("zipCode"), setValue, getValues)
+  useCep(getValues("cep"), setValue, getValues)
 
   const watchedFields = watch([
-    "zipCode",
+    "cep",
     "street",
     "number",
     "district",
@@ -64,14 +78,36 @@ export function StoreAddressEdit() {
   ])
 
   useEffect(() => {
-    const [zipCode, street, number, district, city, state] = watchedFields
-
-    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${zipCode}`
+    const [cep, street, number, district, city, state] = watchedFields
+    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${cep}`
     setEncodedAddress(encodeURIComponent(fullAddress))
   }, [watchedFields])
+  const onSubmit = async (data) => {
+    await onRequest({
+      request: () =>
+        !addressId
+          ? addressService.createAddress({ ...data, addressType: "RESTAURANT" })
+          : addressService.updateAddress({
+              ...data,
+              addressType: "RESTAURANT",
+              addressId,
+            }),
+      onSuccess: () => {
+        toast.success(
+          !addressId
+            ? "Endereço criado com sucesso!"
+            : "Endereço alterado com sucesso!"
+        )
+      },
+      onError: (error) => {
+        console.error("Erro ao salvar endereço:", error)
+        toast.error("Não foi possível salvar o endereço.")
+      },
+    })
+  }
 
-  function onSubmit(data) {
-    console.log("Dados enviados:", data)
+  if (loadingSaveAddress) {
+    return <Loading />
   }
 
   return (
@@ -79,9 +115,8 @@ export function StoreAddressEdit() {
       <main className="mx-auto flex w-fit max-w-[1216px] flex-col items-center justify-start gap-6 text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col">
           <h1 className="mb-4 text-3xl font-semibold sm:mb-0">Endereço</h1>
-          <p>Ajuste as informações do endereços</p>
+          <p>Ajuste as informações do endereço</p>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
         <div className="flex justify-center">
           <div className="relative bg-white">
             <FormProvider {...formMethods}>
@@ -92,7 +127,7 @@ export function StoreAddressEdit() {
                 <div className="grid grid-cols-1 gap-4 rounded-lg md:grid-cols-[1fr_0.5fr_1.6fr]">
                   <FormField
                     control={formMethods.control}
-                    name="zipCode"
+                    name="cep"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Cep</FormLabel>
@@ -196,6 +231,7 @@ export function StoreAddressEdit() {
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={formMethods.control}
                     name="city"
@@ -229,11 +265,7 @@ export function StoreAddressEdit() {
                   />
                 </div>
                 <div className="md:text-right">
-                  <Button type="submit">
-                    {location.state
-                      ? "Salvar Alterações"
-                      : "Adicionar Endereço"}
-                  </Button>
+                  <Button type="submit">Salvar Alterações</Button>
                 </div>
               </form>
             </FormProvider>

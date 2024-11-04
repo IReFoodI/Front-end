@@ -35,7 +35,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@react-oauth/google": "^0.12.1",
-    "@tabler/icons-react": "^3.12.0",
+    "@tabler/icons-react": "^3.17.0",
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

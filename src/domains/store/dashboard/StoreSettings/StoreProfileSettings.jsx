@@ -59,7 +59,7 @@ export function StoreProfileSettings() {
       cnpj: storeInformation?.cnpj,
       phone: storeInformation?.phone,
       category: storeInformation?.category,
-      description: storeInformation?.description,
+      description: storeInformation?.description || "",
     },
   })
 
@@ -75,11 +75,17 @@ export function StoreProfileSettings() {
 
   useEffect(() => {
     fetchStoreProfileSettings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onSubmit = async () => {
     await onRequest({
-      request: () => restaurantService.updateRestaurant(form.getValues()),
+      request: () =>
+        restaurantService.updateRestaurant({
+          ...form.getValues(),
+          phone: form.getValues().phone.replace(/[^\d]/g, ""),
+          cnpj: form.getValues().cnpj.replace(/[^\d]/g, ""),
+        }),
       onSuccess: () => setIsModalSaveChangesProfileOpen(false),
       onError: () => setIsModalSaveChangesProfileOpen(false),
       successMessage: "Dados atualizado",
@@ -266,6 +272,7 @@ export function StoreProfileSettings() {
                       placeholder={formPlaceholders.description}
                       className="h-20 resize-none rounded-md border border-gray-400 p-2 outline-orange-500"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
