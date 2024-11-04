@@ -1,6 +1,7 @@
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { imageService } from "@/app/service/imageService"
 import { productService } from "@/domains/store/services/useProdutcList"
 import {
   AlertDialog,
@@ -29,11 +30,20 @@ export function DeleteProductModal({
 
   async function handleDeleteProduct() {
     const id = selectedProduct.productId
+    console.log(selectedProduct)
+    const urlImgProd = selectedProduct.urlImgProd
     await onRequest({
       request: () => productService.deleteProduct(id),
       onSuccess: () => {
         toast?.success("Produto excluído com sucesso!")
-        fetchProducts()
+        onRequest({
+          request: () => imageService.deleteImage(urlImgProd),
+          onSuccess: () => {
+            toast?.success("Produto excluído com sucesso!")
+            fetchProducts()
+          },
+          onError: (error) => console.error(error),
+        })
       },
       onError: (error) => console.error(error),
     })

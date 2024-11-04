@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { imageService } from "@/app/service/imageService"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
 import { productSchema } from "@/domains/store/models/ProductTypes"
 import { productService } from "@/domains/store/services/useProdutcList"
@@ -35,6 +36,7 @@ export function ProductModal({
   const [urlImgProd, seturlImgProd] = useState(
     selectedProduct?.urlImgProd || ""
   )
+  const [imageName, setImageName] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
   const { onRequest } = useFetch()
@@ -80,25 +82,22 @@ export function ProductModal({
 
     setLoading(true)
     try {
-      const uploadResponse = await axios.post(
-        "http://localhost:8080/api/firebase/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            )
-            setLoading(percentCompleted)
-          },
-        }
-      )
-      seturlImgProd(uploadResponse.data)
+      await onRequest({
+        request: () =>
+          imageService.uploadImage({
+            imageFile: file,
+          }),
+        onSuccess: (data) => {
+          seturlImgProd(data)
+          setImageName(data.split("/").pop().split("?")[0])
+        },
+        errorMessage: "Erro ao fazer upload da imagem.",
+      })
     } catch (error) {
       console.error("Erro ao fazer upload da imagem:", error)
       toast.error("Erro ao fazer upload da imagem")
     } finally {
-      setLoading(false) // Finaliza o carregamento
+      setLoading(false)
     }
   }
 
@@ -146,6 +145,26 @@ export function ProductModal({
       handleCloseModal()
     } catch (error) {
       console.error("Erro ao criar o produto:", error)
+      if (error.response) {
+        console.error("Response data:", error.response.data)
+        console.error("Response status:", error.response.status)
+      }
+    }
+    handleCloseModal()
+  }
+
+  const handleCancel = async () => {
+    try {
+      await onRequest({
+        request: () => imageService.deleteImage(urlImgProd),
+        onSuccess: () => {
+          toast.success("Imagem excluída com sucesso!")
+          fetchProducts()
+        },
+        onError: (error) => console.error(error),
+      })
+    } catch (error) {
+      console.error("Erro ao excluir a imagem:", error)
       if (error.response) {
         console.error("Response data:", error.response.data)
         console.error("Response status:", error.response.status)
@@ -204,7 +223,7 @@ export function ProductModal({
               onDrop={handleDrop}
             >
               {loading ? (
-                <p>Carregando imagem...</p>
+                <p className="text-center">Carregando imagem...</p>
               ) : urlImgProd ? (
                 <img
                   src={urlImgProd}
@@ -212,7 +231,9 @@ export function ProductModal({
                   className="h-auto w-full"
                 />
               ) : (
-                <p>Arraste uma imagem aqui ou clique para selecionar</p>
+                <p className="text-center">
+                  Arraste uma imagem aqui ou clique para selecionar
+                </p>
               )}
               <input
                 type="file"
@@ -378,10 +399,7 @@ export function ProductModal({
                   <FormMessage />
                 </FormItem>
                 <AlertDialogFooter className="flex flex-row items-center justify-center gap-4">
-                  <AlertDialogCancel
-                    className="mt-0"
-                    onClick={handleCloseModal}
-                  >
+                  <AlertDialogCancel className="mt-0" onClick={handleCancel}>
                     Cancelar
                   </AlertDialogCancel>
                   <Button type="submit" className="!ml-0 !mr-0 md:px-6">
