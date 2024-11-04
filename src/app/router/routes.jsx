@@ -61,8 +61,8 @@ export const ROUTES = {
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
   ORDER_DETAILS: "pedidos",
-  USER_STORE_PROFILE: "loja",
-  USER_STORE_PROFILE_INFO: "loja/informacoes",
+  USER_STORE_PROFILE: "loja/:storeId",
+  USER_STORE_PROFILE_INFO: "loja/informacoes/:storeId",
 }
 
 export const router = createBrowserRouter([

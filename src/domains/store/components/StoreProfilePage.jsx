@@ -3,10 +3,12 @@ import {
   IconClock,
   IconHeart,
   IconInfoCircle,
-  IconMapPin,
   IconStarFilled,
 } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
+
+import banner from "@/domains/store/components/banner.png"
+import logo from "@/domains/store/components/logo.png"
 
 import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
@@ -14,11 +16,11 @@ import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
-  const { restaurant, restaurantHoursToday } = useRestaurant()
-  const { address } = useAddressUserStoreProfile()
+  const { restaurant, restaurantHoursToday } = useRestaurant(1) //id do restaurante
+  const { address } = useAddressUserStoreProfile(1)
 
-  const urlBanner = "http://localhost:8080/images/banner.png"
-  const urlLogo = "http://localhost:8080/images/logo.png"
+  const imgBanner = banner
+  const imgLogo = logo
 
   const { fantasy, category, averageRating, totalEvaluations } = restaurant
   const { district, city, state, number, street } = address
@@ -31,14 +33,14 @@ export function UserStoreProfilePage() {
       <div
         id="capa"
         className="relative h-[200px] w-full bg-cover bg-center px-5 xl:hidden xl:rounded-[14px]"
-        style={{ backgroundImage: `url(${urlBanner})` }}
+        style={{ backgroundImage: `url(${imgBanner})` }}
       >
         <div className="relative top-9 cursor-pointer transition duration-300 hover:text-primary">
           <IconArrowLeft />
         </div>
         <button
           className="relative top-32 h-24 w-24 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${urlLogo})` }}
+          style={{ backgroundImage: `url(${imgLogo})` }}
         />
       </div>
       <div className="px-5 pb-5 xl:px-0">

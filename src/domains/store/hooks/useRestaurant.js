@@ -3,17 +3,24 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 
-export function useRestaurant() {
+const BASE_URL_RESTAURANT = "/api/restaurant"
+const BASE_URL_RESTAURANTS = "/api/restaurants"
+const BASE_URL_RESTAURANT_HOURS = "/api/restaurant-hours"
+
+export function useRestaurant(id) {
   const [restaurant, setRestaurant] = useState([])
+  const [restaurantId, setRestaurantId] = useState(null)
   const [restaurantHours, setRestaurantHours] = useState([])
   const [restaurantHoursToday, setRestaurantHoursToday] = useState([])
   const { loading, onRequest, error } = useFetch()
 
   useEffect(() => {
+    setRestaurantId(id)
+
     const fetchRestaurant = async () => {
       await onRequest({
         request: async () =>
-          axios.get("http://localhost:8080/api/restaurants/1"),
+          axios.get(`${BASE_URL_RESTAURANTS}/${restaurantId}`),
         onSuccess: async (restaurantRes) => {
           console.log("Restaurant:", restaurantRes)
           setRestaurant(restaurantRes)
@@ -22,14 +29,10 @@ export function useRestaurant() {
       })
     }
 
-    fetchRestaurant()
-  }, [onRequest, error])
-
-  useEffect(() => {
     const fetchRestaurantHours = async () => {
       await onRequest({
         request: async () =>
-          axios.get("http://localhost:8080/api/restaurant-hours/restaurant/1"),
+          axios.get(`${BASE_URL_RESTAURANT_HOURS}/restaurant/${restaurantId}`),
         onSuccess: async (restaurantHoursRes) => {
           console.log("Restaurant Hours:", restaurantHoursRes)
           setRestaurantHours(restaurantHoursRes)
@@ -38,14 +41,9 @@ export function useRestaurant() {
       })
     }
 
-    fetchRestaurantHours()
-  }, [onRequest, error])
-
-  useEffect(() => {
     const fetchRestaurantHoursToday = async () => {
       await onRequest({
-        request: async () =>
-          axios.get("http://localhost:8080/api/restaurant-hours/today"),
+        request: async () => axios.get(`${BASE_URL_RESTAURANT_HOURS}/today`),
         onSuccess: async (restaurantHoursTodayRes) => {
           console.log("Restaurant Hours:", restaurantHoursTodayRes)
           setRestaurantHoursToday(restaurantHoursTodayRes)
@@ -55,12 +53,14 @@ export function useRestaurant() {
     }
 
     fetchRestaurantHoursToday()
+    fetchRestaurantHours()
+    fetchRestaurant()
   }, [onRequest, error])
 
   const handleStatusChange = async (restaurantId, newStatus) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/restaurant/${restaurantId}`,
+        `${BASE_URL_RESTAURANT}/${restaurantId}`,
         { active: newStatus },
         { headers: { "Content-Type": "application/json" } }
       )

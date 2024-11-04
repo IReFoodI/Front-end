@@ -3,17 +3,22 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 
-export function useProducts() {
+const BASE_URL_PRODUCT_RESTAURANT = "/api/product/restaurant"
+const BASE_URL_PRODUCT = "/api/product"
+
+export function useProducts(id) {
   const [products, setProducts] = useState([])
   const [restaurantId, setRestaurantId] = useState(null)
 
   const { loading, onRequest, error } = useFetch()
 
   useEffect(() => {
+    setRestaurantId(id)
+
     const fetchProducts = async () => {
       await onRequest({
         request: async () =>
-          axios.get("http://localhost:8080/api/product/restaurant/1"),
+          axios.get(`${BASE_URL_PRODUCT_RESTAURANT}/${restaurantId}`),
         onSuccess: async (productsRes) => {
           console.log("Products:", productsRes)
           setProducts(productsRes)
@@ -28,7 +33,7 @@ export function useProducts() {
   const handleStatusChange = async (productId, newStatus) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/product/${productId}`,
+        `${BASE_URL_PRODUCT}/${productId}`,
         { active: newStatus },
         { headers: { "Content-Type": "application/json" } }
       )

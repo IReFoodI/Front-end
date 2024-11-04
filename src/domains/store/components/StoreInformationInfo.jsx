@@ -12,8 +12,8 @@ import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
 
 export function StoreInformationInfo() {
-  const { restaurant, restaurantHours, restaurantHoursToday } = useRestaurant()
-  const { address, isLoading } = useAddressUserStoreProfile()
+  const { restaurant, restaurantHours, restaurantHoursToday } = useRestaurant(1)
+  const { address, isLoading } = useAddressUserStoreProfile(1)
 
   console.log("Dados do restaurante: ", restaurant)
   console.log("Dados do endereço:", address)

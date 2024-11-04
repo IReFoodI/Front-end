@@ -8,6 +8,9 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
+import banner from "@/domains/store/components/banner.png"
+import logo from "@/domains/store/components/logo.png"
+
 import { useRestaurant } from "../hooks/useRestaurant"
 
 export function StoreProfilePageTopDesktop() {
@@ -17,10 +20,10 @@ export function StoreProfilePageTopDesktop() {
     setIsHeartFilled((prevState) => !prevState)
   }
 
-  const urlBanner = "http://localhost:8080/images/banner.png"
-  const urlLogo = "http://localhost:8080/images/logo.png"
+  const imgBanner = banner
+  const imgLogo = logo
 
-  const { restaurant, restaurantHoursToday } = useRestaurant()
+  const { restaurant, restaurantHoursToday } = useRestaurant(1) //id do restaurante
 
   const { fantasy, category, averageRating, totalEvaluations } = restaurant
 
@@ -29,7 +32,7 @@ export function StoreProfilePageTopDesktop() {
       <div
         id="capa"
         className="relative hidden h-[200px] w-full bg-cover bg-center px-5 xl:flex xl:rounded-[14px]"
-        style={{ backgroundImage: `url(${urlBanner})` }}
+        style={{ backgroundImage: `url(${imgBanner})` }}
       ></div>
       <div
         id="icons-desktop"
@@ -58,7 +61,7 @@ export function StoreProfilePageTopDesktop() {
         <button
           id="logo"
           className="relative bottom-1 right-9 h-36 w-36 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${urlLogo})` }}
+          style={{ backgroundImage: `url(${imgLogo})` }}
         />
         <div id="info" className="ms-[-10px] flex-1 py-3 pe-3">
           <div className="flex justify-between">
