@@ -7,33 +7,23 @@ import {
   DialogTitle,
 } from "@/ui/components/ui/dialog"
 
-export function ModalConfirmDefaultAddress({
-  toggleOpenModal,
-  addressId,
-  isModalOpen,
-  onAddressSelect,
-}) {
+export function ModalSaveChanges({ toggleOpenModal, isModalOpen, onConfirm }) {
   return (
     <Dialog open={isModalOpen} onOpenChange={toggleOpenModal}>
       <DialogContent>
-        <DialogTitle>Deseja tornar esse endereço padrão?</DialogTitle>
+        <DialogTitle>Deseja salvar as alterações?</DialogTitle>
         <DialogDescription>
-          Esta ação tonará o endereço selecionado padrão.
+          Confirme para salvar as alterações realizadas.
         </DialogDescription>
         <DialogFooter>
           <Button
             className="rounded-full"
             variant="secondary"
-            onClick={() => toggleOpenModal()}
+            onClick={toggleOpenModal}
           >
             Cancelar
           </Button>
-          <Button
-            className="rounded-full"
-            onClick={() => {
-              onAddressSelect(addressId)
-            }}
-          >
+          <Button className="rounded-full" onClick={onConfirm}>
             Confirmar
           </Button>
         </DialogFooter>

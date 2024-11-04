@@ -10,7 +10,7 @@ import { RadioGroup } from "@/ui/components/ui/radio-group"
 
 import { AddressCard } from "./AddressCard"
 import { AddressDeleteModal } from "./AddressDeleteModal "
-import { ModalConfirmDefaultAddress } from "./modalConfirmDefaultAddress"
+import { ModalConfirmDefaultAddress } from "./ModalConfirmDefaultAddress"
 
 export function AddressPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
