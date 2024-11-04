@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react"
+
+import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { groupItems } from "@/app/utils/OrderUtils"
+import { restaurantService } from "@/domains/store/services/restaurantService"
 import {
   Table,
   TableBody,
@@ -11,7 +15,27 @@ import {
 } from "@/ui/components/ui/table"
 
 export function OrderItemsTable({ orderItems, totalValue }) {
-  const items = groupItems(orderItems)
+  const [productNames, setProductNames] = useState({})
+  const { onRequest } = useFetch()
+
+  useEffect(() => {
+    const fetchProductsById = async () => {
+      let names = {}
+
+      orderItems?.map(async (item) => {
+        const productId = item.productId
+        await onRequest({
+          request: () => restaurantService.getProductById(productId),
+          onSuccess: (data) => {
+            names[productId] = data.nameProd
+          },
+        })
+      })
+      setProductNames(names)
+    }
+
+    fetchProductsById()
+  }, [orderItems, onRequest])
 
   return (
     <Table className="rounded-xl bg-gray-200">
@@ -26,15 +50,17 @@ export function OrderItemsTable({ orderItems, totalValue }) {
       </TableHeader>
 
       <TableBody>
-        {items?.map((item) => (
+        {orderItems?.map((item) => (
           <TableRow
-            key={item.itemId}
+            key={item.productId}
             className="text-base font-semibold text-gray-500"
           >
             <TableCell colSpan={1}>{item.quantity}</TableCell>
-            <TableCell colSpan={1}>{item.itemName}</TableCell>
+            <TableCell colSpan={1}>
+              {productNames[item.productId] || "Carregando..."}
+            </TableCell>
             <TableCell colSpan={3} className="text-right">
-              {currencyFormatter(item.price)}
+              {currencyFormatter(item.subtotal)}
             </TableCell>
           </TableRow>
         ))}

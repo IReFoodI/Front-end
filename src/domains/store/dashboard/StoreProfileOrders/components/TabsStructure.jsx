@@ -14,6 +14,7 @@ export function TabsStructure({
   scheduledOrders,
   setOrder,
   orderRef,
+  setUser,
 }) {
   const [isTabActive, setIsTabActive] = useState({
     pending: true,
@@ -57,6 +58,7 @@ export function TabsStructure({
           isDoneOrCanceled={false}
           setOrder={setOrder}
           orderRef={orderRef}
+          setUser={setUser}
         />
       </TabsContent>
       <TabsContent
@@ -68,6 +70,7 @@ export function TabsStructure({
           isDoneOrCanceled={false}
           setOrder={setOrder}
           orderRef={orderRef}
+          setUser={setUser}
         />
       </TabsContent>
     </Tabs>
