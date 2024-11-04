@@ -9,13 +9,14 @@ export function getStatus(order) {
   let iconInOrder
   let nameInStatusOrder
 
-  if (order.status == "pending") {
+  if (order.orderStatus == "ENVIADO") {
+    // colocar PENDENTE
     iconInOrder = <IconAlertOctagon className="text-yellow-500" size={16} />
     nameInStatusOrder = "Pendente"
-  } else if (order.status == "accepted") {
+  } else if (order.orderStatus == "EMPRODUCAO") {
     nameInStatusOrder = "Aceito"
     iconInOrder = <IconHeart className="text-green-500" size={16} />
-  } else if (order.status == "done") {
+  } else if (order.orderStatus == "ENTREGUE") {
     nameInStatusOrder = "Concluído"
     iconInOrder = <IconCircleCheck className="text-blue-500" size={16} />
   } else {
@@ -33,11 +34,11 @@ export function groupItems(items) {
   let groupedItems = {}
 
   items.forEach((item) => {
-    if (groupedItems[item.itemId]) {
-      groupedItems[item.itemId].quantity += 1
-      groupedItems[item.itemId].price += item.price
+    if (groupedItems[item.productId]) {
+      groupedItems[item.productId].quantity += 1
+      groupedItems[item.productId].price += item.unitValue
     } else {
-      groupedItems[item.itemId] = { ...item, quantity: 1 }
+      groupedItems[item.productId] = { ...item, quantity: 1 }
     }
   })
 

@@ -24,4 +24,9 @@ async function getUser() {
   return response
 }
 
-export const userService = { createUserAccount, getUser }
+async function getUserById(userId) {
+  const axios = createAxiosInstance(true)
+  return axios.get(`api/user/${userId}`)
+}
+
+export const userService = { createUserAccount, getUser, getUserById }

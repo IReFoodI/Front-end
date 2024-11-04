@@ -6,16 +6,50 @@ import {
 } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { dateFormatter } from "@/app/utils/dateFormatter"
 import { getStatus } from "@/app/utils/OrderUtils"
+import { userService } from "@/domains/user/services/userService"
 import { Button } from "@/ui/components/ui/button/button"
+import { Loading } from "@/ui/components/ui/loading"
 
+import { restaurantService } from "../../services/restaurantService"
 import { StoreProfileOrders } from "../StoreProfileOrders/StoreProfileOrders"
 import { OrderItemsTable } from "./components/OrderItemsTable"
 
 export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
+  const [user, setUser] = useState()
+  const [orderItems, setOrderItems] = useState([])
+  const [totalValue, setTotalValue] = useState(0)
   const targetOrderRef = useRef(null)
+
+  const { onRequest } = useFetch()
+
+  const fetchOrderItems = async () => {
+    await onRequest({
+      request: () => restaurantService.getOrderItems(),
+      onSuccess: (data) => {
+        const orderItemsPerOrder = data.filter(
+          (orderItem) => orderItem.orderId == currentOrder.orderId
+        )
+        setOrderItems(orderItemsPerOrder)
+        setTotalValue(
+          orderItemsPerOrder.reduce(
+            (acc, currValue) => acc + currValue.subtotal,
+            0
+          )
+        )
+      },
+    })
+  }
+
+  useEffect(() => {
+    if (currentOrder) {
+      fetchOrderItems()
+    }
+  }, [currentOrder])
 
   useEffect(() => {
     if (currentOrder !== undefined) {
@@ -23,11 +57,15 @@ export function OrderDetails() {
     }
   }, [currentOrder])
 
+  if (!orderItems) {
+    return <Loading />
+  }
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
       <StoreProfileOrders
         setOrder={setCurrentOrder}
         orderRef={targetOrderRef}
+        setUser={setUser}
       />
 
       {currentOrder !== undefined ? (
@@ -39,7 +77,7 @@ export function OrderDetails() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 lg:gap-1">
                 <p className="text-lg font-semibold lg:text-xl">
-                  Pedido #{currentOrder.orderNumber}
+                  Pedido #{currentOrder.orderId}
                 </p>
                 <div className="flex items-center gap-3 rounded-md p-2">
                   <div className="flex items-center gap-1">
@@ -52,9 +90,7 @@ export function OrderDetails() {
               </div>
 
               <div className="flex items-center gap-4 font-semibold">
-                <h1 className="text-2xl lg:text-4xl">
-                  {currentOrder.client.clientName}
-                </h1>
+                <h1 className="text-2xl lg:text-4xl">{user.name}</h1>
                 <Button className="gap-1 rounded-2xl text-xs">
                   <IconPhone size={24} />
                   Entrar em contato
@@ -69,12 +105,7 @@ export function OrderDetails() {
                   <div className="flex gap-1 text-sm">
                     <p className="font-bold">Agendado:</p>
                     <p className="flex">
-                      {
-                        (currentOrder.timeOfDelivery.day + " + ",
-                        currentOrder.timeOfDelivery.initialTime +
-                          " - " +
-                          currentOrder.timeOfDelivery.finalTime)
-                      }
+                      {dateFormatter(new Date(currentOrder.dateModified))}
                     </p>
                   </div>
                 </div>
@@ -82,7 +113,8 @@ export function OrderDetails() {
                 <div className="flex items-center gap-2 rounded border-2 border-gray-300 bg-gray-200 p-1">
                   <IconTruck className="text-orange-500" />
                   <p className="text-sm font-bold">
-                    {currentOrder.typeOfReceiving}
+                    {/* não há propriedade do tipo de recebimento do pedido no objeto retornado ao requerir os pedidos */}
+                    Retirada
                   </p>
                 </div>
 
@@ -90,18 +122,20 @@ export function OrderDetails() {
                   <IconCurrencyDollar className="text-orange-500" />
                   <div className="flex gap-1">
                     <p className="font-bold">Pagamento:</p>
-                    <p className="font-normal">{currentOrder.payment}</p>
+                    {/* não há propriedade pagamento no objeto retornado ao requerir os pedidos */}
+                    <p className="font-normal">PIX</p>
                   </div>
                   <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
-                    {currentOrder.paymentStatus}
+                    {/* não há propriedade status de pagamento no objeto retornado ao requerir os pedidos */}
+                    Concluído
                   </p>
                 </div>
               </div>
 
               <div>
                 <OrderItemsTable
-                  orderItems={currentOrder.items}
-                  totalValue={currentOrder.totalValue}
+                  orderItems={orderItems}
+                  totalValue={totalValue}
                 />
               </div>
             </div>
