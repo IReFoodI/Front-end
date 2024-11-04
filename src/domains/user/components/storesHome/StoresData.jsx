@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -63,8 +62,7 @@ export function useStores() {
 
   const deleteFavorite = async (favoriteId) => {
     await onRequest({
-      request: async () =>
-        axios.delete(`http://localhost:8080/api/favorites/${favoriteId}`),
+      request: async () => storesCardsServices.deleteFavorite(favoriteId),
       onSuccess: async () => {
         console.log("Atualizado com sucesso")
         refreshStores()
@@ -91,8 +89,7 @@ export function useStores() {
 
   const refreshStores = async () => {
     await onRequest({
-      request: async () =>
-        axios.get("http://localhost:8080/api/restaurant/today"),
+      request: async () => storesCardsServices.getStoresToday(),
       onSuccess: async (storesRes) => {
         const storesData = storesRes
         await fetchFavorites(storesData)
