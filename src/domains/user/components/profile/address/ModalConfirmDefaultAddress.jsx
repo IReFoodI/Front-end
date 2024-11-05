@@ -31,7 +31,6 @@ export function ModalConfirmDefaultAddress({
           <Button
             className="rounded-full"
             onClick={() => {
-              console.log("id modal", addressId)
               onAddressSelect(addressId)
             }}
           >

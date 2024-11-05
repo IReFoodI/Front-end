@@ -1,7 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -12,24 +15,61 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 
 import { changeEmailTypes } from "../../models/dashboard/ChangeEmailTypes"
+import { restaurantService } from "../../services/restaurantService"
 
 export function ChangeEmailForm() {
-  const currentEmail = "johndoe@example.com"
+  const { loading, onRequest } = useFetch()
+
+  function handleSuccess(data) {
+    form.setValue("oldEmail", data)
+  }
+
+  function handleError(error) {
+    toast.error("Ocorreu um erro ao tentar buscar o e-mail atual.")
+    console.log(error)
+  }
+  function handleSubmitError(error) {
+    console.log(error)
+  }
+  function handleSubmitSuccess(data) {
+    toast.success("Troca de e-mail efetuada com sucesso!")
+    form.setValue("oldEmail", data.email)
+    form.resetField("email")
+    form.resetField("confirmEmail")
+    localStorageUtil.setLocalStorageToken(data.jwt)
+  }
+
+  useEffect(() => {
+    //fazer requisição para pegar email atual
+    async function request() {
+      await onRequest({
+        request: restaurantService.getRestaurantEmail,
+        onSuccess: handleSuccess,
+        onError: handleError,
+      })
+    }
+    request()
+    //eslint-disable-next-line
+  }, [])
 
   const form = useForm({
     resolver: zodResolver(changeEmailTypes),
     defaultValues: {
-      oldEmail: currentEmail,
+      oldEmail: "",
       email: "",
       confirmEmail: "",
     },
   })
 
-  const onSubmit = (data) => {
-    toast.success("Troca de e-mail efetuada com sucesso!")
-    console.log(data)
+  const onSubmit = async (data) => {
+    await onRequest({
+      request: () => restaurantService.updateRestaurantEmail(data),
+      onSuccess: handleSubmitSuccess,
+      onError: handleSubmitError,
+    })
   }
 
   return (
@@ -49,15 +89,24 @@ export function ChangeEmailForm() {
                 <p className="items-start text-sm text-zinc-800">
                   E-mail atual:{" "}
                 </p>
-                <FormControl>
-                  <input
-                    type="email"
-                    placeholder="E-mail Atual"
-                    className={"bg-transparent text-sm text-primary"}
-                    disabled
-                    {...field}
+                {loading ? (
+                  <Loading
+                    iconClassname={"size-5 lg:size-5"}
+                    classname={"flex justify-start"}
                   />
-                </FormControl>
+                ) : (
+                  <FormControl>
+                    <input
+                      type="email"
+                      placeholder="E-mail Atual"
+                      className={
+                        "flex flex-1 bg-transparent text-sm text-primary"
+                      }
+                      disabled
+                      {...field}
+                    />
+                  </FormControl>
+                )}
               </div>
               <FormMessage className={"text-xs"} />
             </FormItem>

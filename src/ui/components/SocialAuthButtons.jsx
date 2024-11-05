@@ -52,8 +52,6 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
             navigate("/")
           }
         }
-
-        console.log(response)
       } catch (error) {
         console.error("Erro durante o login com Google:", error)
         toast.error("Ocorreu um erro durante o login. Tente novamente.")
@@ -61,7 +59,6 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
     },
 
     onError: (error) => {
-      console.log("error")
       console.log(error)
     },
   })
