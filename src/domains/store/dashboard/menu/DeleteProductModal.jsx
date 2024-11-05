@@ -36,11 +36,11 @@ export function DeleteProductModal({
       request: () => productService.deleteProduct(id),
       onSuccess: () => {
         toast?.success("Produto excluído com sucesso!")
+        fetchProducts()
         onRequest({
           request: () => imageService.deleteImage(urlImgProd),
           onSuccess: () => {
             toast?.success("Produto excluído com sucesso!")
-            fetchProducts()
           },
           onError: (error) => console.error(error),
         })

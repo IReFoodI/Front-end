@@ -104,6 +104,23 @@ export function ProductModal({
     }
   }
 
+  const handleImageDelete = async () => {
+    try {
+      await onRequest({
+        request: () => imageService.deleteImage(temporaryUrlImgProd),
+        onSuccess: () => {
+          seturlImgProd("")
+          setTemporaryUrlImgProd("")
+          setImageName("")
+        },
+        onError: (error) => console.error(error),
+      })
+    } catch (error) {
+      console.error("Erro ao excluir a imagem:", error)
+      toast.error("Erro ao excluir a imagem")
+    }
+  }
+
   const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -247,10 +264,12 @@ export function ProductModal({
             <Button
               type="button"
               onClick={() =>
-                document.querySelector('input[type="file"]')?.click()
+                urlImgProd
+                  ? handleImageDelete()
+                  : document.querySelector('input[type="file"]')?.click()
               }
             >
-              Adicionar imagem
+              {urlImgProd ? "Excluir imagem" : "Adicionar imagem"}
             </Button>
           </div>
           <Form {...form}>
