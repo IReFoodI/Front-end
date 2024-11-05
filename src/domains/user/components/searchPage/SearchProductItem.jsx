@@ -8,6 +8,8 @@ import { Badge } from "@/ui/components/ui/badge"
 import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
 
+import Default_Product_Image from "../../../../ui/assets/Default_Product_Image.png"
+
 export function SearchProductItem({
   product: {
     // productId,
@@ -55,17 +57,19 @@ export function SearchProductItem({
   return (
     <Card className="flex flex-col items-center justify-start gap-4 bg-gray-100 p-3">
       <div className="flex w-full flex-1 items-start gap-6 md:gap-6">
-        <div className="relative w-24 rounded-lg md:rounded-[1.25rem]">
+        <div className="relative h-full w-24 rounded-lg md:rounded-[1.25rem]">
           <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
             <IconShoppingBag size={13} />
             <p className="text-[0.625rem] md:text-[0.8rem]">{newQuantity}</p>
             <p className="text-[0.625rem] md:text-[0.8rem]">disponíveis</p>
           </Badge>
-          <img
-            src={urlImgProduct}
-            alt={nameProduct}
-            className="h-24 w-24 bg-cover bg-center"
-          />
+          <div className="flex h-full items-center justify-center">
+            <img
+              src={urlImgProduct ? Default_Product_Image : urlImgProduct}
+              alt={nameProduct}
+              className="h-24 w-24 bg-cover bg-center"
+            />
+          </div>
         </div>
         <div className="flex flex-1 flex-col">
           <h3 className="text-lg font-semibold">{nameProduct}</h3>
