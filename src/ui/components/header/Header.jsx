@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import useCartStore from "../../../app/store/useCartStore"
+import { userService } from "../../../domains/user/services/userService"
 import userStore from "../../../domains/user/stores/userStore"
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
@@ -29,16 +30,28 @@ import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
 export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
-  const { user } = userStore()
+  const { userId, setUserId } = userStore()
   const { fetchCart, clearCart } = useCartStore()
 
   useEffect(() => {
-    const userId = user?.id
+    const fetchUser = async () => {
+      try {
+        const response = await userService.getUser()
+        setUserId(response.data.id)
+      } catch (error) {
+        console.error("Erro ao buscar o usuário:", error)
+      }
+    }
+
+    fetchUser()
+  }, [setUserId])
+
+  useEffect(() => {
     clearCart()
     fetchCart(userId)
-  }, [fetchCart, user.id, clearCart])
+  }, [fetchCart, userId, clearCart])
 
-  const cartItems = useCartStore((state) => state.cartItems)
+  let cartItems = useCartStore((state) => state.cartItems)
 
   const orderQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,

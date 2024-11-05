@@ -31,7 +31,11 @@ const useCartStore = create((set) => ({
 
       set({ cartItems, subtotal, restaurantName, cartId })
     } catch (error) {
-      console.log(error.message)
+      if (error.status === 404) {
+        console.log("Carrinho vazio")
+      } else {
+        console.log(error.message)
+      }
     }
   },
 
