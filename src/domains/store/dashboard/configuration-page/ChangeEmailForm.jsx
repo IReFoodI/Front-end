@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -31,14 +32,14 @@ export function ChangeEmailForm() {
     console.log(error)
   }
   function handleSubmitError(error) {
-    toast.error("Ocorreu um erro ao tentar atualizar o e-mail.")
     console.log(error)
   }
   function handleSubmitSuccess(data) {
     toast.success("Troca de e-mail efetuada com sucesso!")
-    form.setValue("oldEmail", data)
+    form.setValue("oldEmail", data.email)
     form.resetField("email")
     form.resetField("confirmEmail")
+    localStorageUtil.setLocalStorageToken(data.jwt)
   }
 
   useEffect(() => {
