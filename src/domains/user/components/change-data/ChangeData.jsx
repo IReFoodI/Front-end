@@ -39,7 +39,7 @@ export function ChangeData() {
   function onSubmit(data) {
     console.log(data) // enviar para o back
     toast.success("Informações alteradas com sucesso")
-    navigate("/my-profile") //todo: ajustar rota
+    navigate("/meus-dados")
   }
 
   return (
