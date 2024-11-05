@@ -101,7 +101,7 @@ export function MenuItemCard({
         <Input
           type="text"
           disabled={!active}
-          defaultValue={product.categoryProduct}
+          defaultValue={categoryProduct}
           readOnly
           placeholder="Descrição do produto"
         />
@@ -110,8 +110,8 @@ export function MenuItemCard({
         <Input
           type="text"
           disabled={!active}
-          defaultValue={product.description}
-          readOnly
+          defaultValue={description}
+          onChange={setDescription}
           placeholder="Descrição do produto"
         />
       </TableCell>
@@ -138,7 +138,7 @@ export function MenuItemCard({
         <Input
           type="text"
           value={sellPrice}
-          readOnly
+          onChange={handleChange(setOriginalPrice)}
           placeholder="Preço de Venda"
         />
       </TableCell>

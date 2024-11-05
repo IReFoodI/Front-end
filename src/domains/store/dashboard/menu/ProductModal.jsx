@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
+import { set } from "date-fns"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -36,6 +37,7 @@ export function ProductModal({
   const [urlImgProd, seturlImgProd] = useState(
     selectedProduct?.urlImgProd || ""
   )
+  const [temporaryUrlImgProd, setTemporaryUrlImgProd] = useState("")
   const [imageName, setImageName] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
@@ -89,6 +91,7 @@ export function ProductModal({
           }),
         onSuccess: (data) => {
           seturlImgProd(data)
+          setTemporaryUrlImgProd(data)
           setImageName(data.split("/").pop().split("?")[0])
         },
         errorMessage: "Erro ao fazer upload da imagem.",
@@ -156,9 +159,8 @@ export function ProductModal({
   const handleCancel = async () => {
     try {
       await onRequest({
-        request: () => imageService.deleteImage(urlImgProd),
+        request: () => imageService.deleteImage(temporaryUrlImgProd),
         onSuccess: () => {
-          toast.success("Imagem excluída com sucesso!")
           fetchProducts()
         },
         onError: (error) => console.error(error),
@@ -227,7 +229,7 @@ export function ProductModal({
               ) : urlImgProd ? (
                 <img
                   src={urlImgProd}
-                  alt="Uploaded"
+                  alt={imageName}
                   className="h-auto w-full"
                 />
               ) : (
@@ -402,8 +404,12 @@ export function ProductModal({
                   <AlertDialogCancel className="mt-0" onClick={handleCancel}>
                     Cancelar
                   </AlertDialogCancel>
-                  <Button type="submit" className="!ml-0 !mr-0 md:px-6">
-                    Confirmar
+                  <Button
+                    type="submit"
+                    className="!ml-0 !mr-0 md:px-6"
+                    disabled={loading}
+                  >
+                    {loading ? "Carregando..." : "Confirmar"}
                   </Button>
                 </AlertDialogFooter>
               </div>
