@@ -3,7 +3,9 @@ import {
   IconCaretUpFilled,
   IconMapPin,
 } from "@tabler/icons-react"
+import { add } from "date-fns"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 import { cnpjFormatter } from "@/app/utils/cnpjFormatter"
 import { Loading } from "@/ui/components/ui/loading"
@@ -12,22 +14,56 @@ import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
 
 export function StoreInformationInfo() {
-  const { restaurant, restaurantHours, restaurantHoursToday } = useRestaurant(1)
-  const { address, isLoading } = useAddressUserStoreProfile(1)
+  const { restaurant, restaurantHours, restaurantHoursToday } = useRestaurant()
+  const { address, isLoading } = useAddressUserStoreProfile()
 
-  console.log("Dados do restaurante: ", restaurant)
-  console.log("Dados do endereço:", address)
+  const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
+  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] =
+    useState([])
+  const [restaurantHourToday, setRestaurantHourToday] = useState([])
+  const [restaurantHour, setRestaurantHour] = useState([])
 
-  const [restaurantHourToday, setRestaurantHourToday] = useState({})
+  const { storeId } = useParams()
+
   useEffect(() => {
-    restaurantHoursToday.forEach((res) => {
-      res.restaurantId === 1 && setRestaurantHourToday(res)
+    restaurant.forEach((res) => {
+      if (res.restaurantId == storeId) {
+        setRestaurantWithStoreId(res)
+      }
     })
-  }, [restaurantHoursToday])
+  }, [restaurant, storeId])
+
+  useEffect(() => {
+    address.forEach((add) => {
+      if (
+        add.addressType === "RESTAURANT" ||
+        (add.restaurantId === storeId &&
+          add.addressId === add.associatedOrderId)
+      ) {
+        setAddressRestaurantWithStoreId(add)
+      }
+    })
+  }, [address, storeId])
+
+  useEffect(() => {
+    restaurantHoursToday.forEach((resHourToday) => {
+      if (resHourToday.restaurantId == storeId) {
+        setRestaurantHourToday(resHourToday)
+      }
+    })
+  }, [restaurantHoursToday, storeId])
+
+  useEffect(() => {
+    restaurantHours.forEach((resHours) => {
+      if (resHours.restaurantId == storeId) {
+        setRestaurantHour((prevResHours) => [...prevResHours, resHours])
+      }
+    })
+  }, [restaurantHours, storeId])
 
   const [isShowing, setIsShowing] = useState(false)
 
-  const addressCompleteStore = `${address.street}, ${address.number} - ${address.district}, ${address.city} - ${address.state}, ${address.cep}`
+  const addressCompleteStore = `${addressRestaurantWithStoreId.street}, ${addressRestaurantWithStoreId.number} - ${addressRestaurantWithStoreId.district}, ${addressRestaurantWithStoreId.city} - ${addressRestaurantWithStoreId.state}, ${addressRestaurantWithStoreId.cep}`
 
   const encodedAddress = encodeURIComponent(addressCompleteStore)
 
@@ -58,10 +94,12 @@ export function StoreInformationInfo() {
     <div id="info" className="flex flex-col gap-8 text-gray-500 antialiased">
       {!isLoading && (
         <>
-          {restaurant.restaurantDescription !== null ? (
+          {restaurantWithStoreId.restaurantDescription !== null ? (
             <div id="description">
               <h2 className="font-bold">Descrição da Loja</h2>
-              <p className="py-2 text-sm">{restaurant.restaurantDescription}</p>
+              <p className="py-2 text-sm">
+                {restaurantWithStoreId.restaurantDescription}
+              </p>
             </div>
           ) : (
             ""
@@ -82,7 +120,7 @@ export function StoreInformationInfo() {
                 )}
               </button>
               <div className="flex justify-between pt-2 text-sm">
-                {restaurantHourToday.restaurantId === 1 && (
+                {restaurantHourToday.restaurantId == storeId && (
                   <span>{restaurantHourToday.dayOfWeek}</span>
                 )}
                 <span>
@@ -93,7 +131,7 @@ export function StoreInformationInfo() {
               <div
                 className={`overflow-hidden pb-2 text-sm transition-all duration-1000 ${isShowing ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
               >
-                {restaurantHours.map((day, index) =>
+                {restaurantHour.map((day, index) =>
                   index !== todayIndex ? (
                     <div key={index} className="flex justify-between">
                       <span>{day.dayOfWeek}</span>
@@ -128,9 +166,7 @@ export function StoreInformationInfo() {
 
           <div id="other-info">
             <h2 className="font-bold">Outras Informações</h2>
-            <p className="py-2 text-sm">
-              CNPJ: {cnpjFormatter(restaurant.cnpj)}
-            </p>
+            <p className="py-2 text-sm">CNPJ: {restaurantWithStoreId.cnpj}</p>
           </div>
         </>
       )}

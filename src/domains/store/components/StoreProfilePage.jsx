@@ -5,10 +5,8 @@ import {
   IconInfoCircle,
   IconStarFilled,
 } from "@tabler/icons-react"
-import { Link } from "react-router-dom"
-
-import banner from "@/domains/store/components/banner.png"
-import logo from "@/domains/store/components/logo.png"
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 
 import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
@@ -16,14 +14,53 @@ import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
-  const { restaurant, restaurantHoursToday } = useRestaurant(1) //id do restaurante
-  const { address } = useAddressUserStoreProfile(1)
+  const { restaurant, restaurantHoursToday } = useRestaurant() //id do restaurante
+  const { address } = useAddressUserStoreProfile()
 
-  const imgBanner = banner
-  const imgLogo = logo
+  const { storeId } = useParams()
 
-  const { fantasy, category, averageRating, totalEvaluations } = restaurant
-  const { district, city, state, number, street } = address
+  const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
+  const [restaurantAddressWithStoreId, setRestaurantAddressWithStoreId] =
+    useState([])
+
+  useEffect(() => {
+    restaurant.forEach((res) => {
+      if (res.restaurantId == storeId) {
+        setRestaurantWithStoreId(res)
+      }
+    })
+  }, [restaurant, storeId])
+
+  useEffect(() => {
+    address.forEach((add) => {
+      if (
+        add.addressType === "RESTAURANT" ||
+        (add.restaurantId === storeId &&
+          add.addressId === add.associatedOrderId)
+      ) {
+        setRestaurantAddressWithStoreId(add)
+      }
+    })
+  }, [address, storeId])
+
+  console.log(`Todos os Restaurantes: `, restaurant)
+  console.log(`Restaurante com id ${storeId}: `, restaurantWithStoreId)
+
+  console.log(`Todos os Endereços: `, address)
+  console.log(
+    `Endereço do Restaurante com id ${storeId}: `,
+    restaurantAddressWithStoreId
+  )
+
+  const {
+    fantasy,
+    category,
+    averageRating,
+    totalEvaluations,
+    urlBanner,
+    urlLogo,
+  } = restaurantWithStoreId
+  const { district, city, state, number, street } = restaurantAddressWithStoreId
 
   return (
     <div
@@ -33,14 +70,14 @@ export function UserStoreProfilePage() {
       <div
         id="capa"
         className="relative h-[200px] w-full bg-cover bg-center px-5 xl:hidden xl:rounded-[14px]"
-        style={{ backgroundImage: `url(${imgBanner})` }}
+        style={{ backgroundImage: `url(${urlBanner})` }}
       >
         <div className="relative top-9 cursor-pointer transition duration-300 hover:text-primary">
           <IconArrowLeft />
         </div>
         <button
           className="relative top-32 h-24 w-24 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${imgLogo})` }}
+          style={{ backgroundImage: `url(${urlLogo})` }}
         />
       </div>
       <div className="px-5 pb-5 xl:px-0">
@@ -48,10 +85,7 @@ export function UserStoreProfilePage() {
           id="icons-mobile"
           className="flex justify-end gap-2 py-3 text-gray-400 xl:hidden"
         >
-          <Link
-            to="/loja/informacoes"
-            onClick={() => console.log("Link clicado")}
-          >
+          <Link to={`/loja/informacoes/${storeId}`}>
             <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
           </Link>
           <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-600" />
@@ -79,7 +113,7 @@ export function UserStoreProfilePage() {
                 <span className="transition duration-300 hover:text-primary">
                   {restaurantHoursToday.map(
                     (res) =>
-                      res.restaurantId === 1 && (
+                      res.restaurantId == storeId && (
                         <span key={res.id}>
                           {res.openingTime} às {res.closingTime}
                         </span>

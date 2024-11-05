@@ -3,24 +3,16 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 
-const BASE_URL_PRODUCT_RESTAURANT = "/api/product/restaurant"
-const BASE_URL_PRODUCT = "/api/product"
-
-export function useProducts(id) {
+export function useProducts() {
   const [products, setProducts] = useState([])
-  const [restaurantId, setRestaurantId] = useState(null)
 
   const { loading, onRequest, error } = useFetch()
 
   useEffect(() => {
-    setRestaurantId(id)
-
     const fetchProducts = async () => {
       await onRequest({
-        request: async () =>
-          axios.get(`${BASE_URL_PRODUCT_RESTAURANT}/${restaurantId}`),
+        request: async () => axios.get(`http://localhost:8080/api/product`),
         onSuccess: async (productsRes) => {
-          console.log("Products:", productsRes)
           setProducts(productsRes)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
@@ -33,7 +25,7 @@ export function useProducts(id) {
   const handleStatusChange = async (productId, newStatus) => {
     try {
       const response = await axios.patch(
-        `${BASE_URL_PRODUCT}/${productId}`,
+        `http://localhost:8080/api/product/${productId}`,
         { active: newStatus },
         { headers: { "Content-Type": "application/json" } }
       )
@@ -50,7 +42,7 @@ export function useProducts(id) {
     }
   }
 
-  return { products, loading, restaurantId, handleStatusChange }
+  return { products, loading, handleStatusChange }
 }
 
 // Função para decodificar o token JWT

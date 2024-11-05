@@ -8,14 +8,13 @@ import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
 
 import { useCartStore } from "../hooks/useCartStore"
-import image from "./foto-produto.png"
 
 export function StoreProductItem({
   originalPrice,
   sellPrice,
   nameProd,
   quantity,
-  imageUrl = image,
+  urlImgProd,
   descriptionProd,
 }) {
   const addToCart = useCartStore((state) => state.addToCart)
@@ -64,7 +63,7 @@ export function StoreProductItem({
             <p className="text-[0.625rem] md:text-[0.8rem]">disponíveis</p>
           </Badge>
           <img
-            src={imageUrl}
+            src={urlImgProd}
             alt={nameProd}
             className="h-24 w-24 bg-cover bg-center"
           />

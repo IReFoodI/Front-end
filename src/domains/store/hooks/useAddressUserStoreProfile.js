@@ -3,23 +3,17 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 
-const BASE_URL_ADDRESS = "/api/address"
-
-export function useAddressUserStoreProfile(id) {
+export function useAddressUserStoreProfile() {
   const [address, setAddress] = useState([])
-  const [addressId, setAddressId] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const { onRequest, error } = useFetch()
 
   useEffect(() => {
-    setAddressId(id)
-
     const fetchAddressUserStoreProfileData = async () => {
       await onRequest({
-        request: async () => axios.get(`${BASE_URL_ADDRESS}/${addressId}`),
+        request: async () => axios.get(`http://localhost:8080/api/address`),
         onSuccess: async (addressRes) => {
-          console.log("Address:", addressRes)
           setAddress(addressRes)
           setIsLoading(false)
         },
@@ -33,7 +27,7 @@ export function useAddressUserStoreProfile(id) {
   const handleStatusChange = async (addressId, newStatus) => {
     try {
       const response = await axios.patch(
-        `${BASE_URL_ADDRESS}/${addressId}`,
+        `http://localhost:8080/api/address/restaurant/${addressId}`,
         { active: newStatus },
         { headers: { "Content-Type": "application/json" } }
       )
