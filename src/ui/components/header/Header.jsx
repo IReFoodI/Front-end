@@ -1,10 +1,5 @@
 import { DialogTitle } from "@radix-ui/react-dialog"
-import {
-  IconFilter,
-  IconSearch,
-  IconShoppingBag,
-  IconUser,
-} from "@tabler/icons-react"
+import { IconShoppingBag, IconUser } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 

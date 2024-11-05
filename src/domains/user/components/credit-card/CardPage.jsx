@@ -50,19 +50,6 @@ export function CardPage() {
     return <Loading />
   }
 
-  const handleDeleteCard = (index) => {
-    setSelectedCardIndex(index)
-    toggleOpenModal()
-  }
-
-  const confirmDeleteCard = () => {
-    if (selectedCardIndex !== null) {
-      removeCard(selectedCardIndex)
-      setSelectedCardIndex(null)
-      toggleOpenModal()
-    }
-  }
-
   return (
     <div className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center gap-6 text-gray-600 antialiased lg:h-auto">
       <h1 className="w-full pb-6 text-center text-2xl font-semibold">
@@ -74,7 +61,7 @@ export function CardPage() {
           {cardData?.length > 0 ? (
             <div className="mx-auto flex w-full flex-col items-center justify-center gap-4">
               <div className="mx-auto mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {cards.map((data, index) => (
+                {cardData.map((data, index) => (
                   <SmallCard
                     key={index}
                     data={data}

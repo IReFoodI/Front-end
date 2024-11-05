@@ -66,7 +66,7 @@ export function SmallCard({ openDeleteCardModal, data, cardToDelete }) {
       </div>
 
       <div className="flex justify-between">
-        <span>{holderName}</span>
+        <span>{name}</span>
         <span>Validade: {validity}</span>
       </div>
     </div>
