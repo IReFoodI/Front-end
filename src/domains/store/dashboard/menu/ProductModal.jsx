@@ -35,11 +35,11 @@ export function ProductModal({
   const [urlImgProd, seturlImgProd] = useState(
     selectedProduct?.urlImgProd || ""
   )
-  const [temporaryUrlImgProd, setTemporaryUrlImgProd] = useState("")
   const [imageName, setImageName] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
   const { onRequest } = useFetch()
+  const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const form = useForm({
@@ -71,45 +71,45 @@ export function ProductModal({
   const handleStatusChange = (checked) => setActive(checked)
 
   const uploadImage = async (file) => {
-    const maxSize = 5 * 1024 * 1024
+    setLoading(true)
+    const maxSize = 5 * 1024 * 1024 // 5MB
     if (file.size > maxSize) {
-      toast.error("A imagem deve ter no máximo 1MB")
+      toast.error("A imagem deve ter no máximo 5MB")
       return
     }
 
-    const formData = new FormData()
-    formData.append("file", file)
-
-    setLoading(true)
-    try {
-      await onRequest({
-        request: () =>
-          imageService.uploadImage({
-            imageFile: file,
-          }),
-        onSuccess: (data) => {
-          seturlImgProd(data)
-          setTemporaryUrlImgProd(data)
-          setImageName(data.split("/").pop().split("?")[0])
-        },
-        errorMessage: "Erro ao fazer upload da imagem.",
-      })
-    } catch (error) {
-      console.error("Erro ao fazer upload da imagem:", error)
-      toast.error("Erro ao fazer upload da imagem")
-    } finally {
-      setLoading(false)
+    const reader = new FileReader()
+    reader.onload = () => {
+      const localUrl = reader.result
+      setFile(file)
+      seturlImgProd(localUrl)
+      setImageName(file.name)
     }
-  }
+    reader.readAsDataURL(file)
 
-  const handleImageDelete = async () => {
+    setLoading(false)
+  }
+  const uploadOnFirebase = async (file) => {
+    let imageUrl = ""
+    await onRequest({
+      request: () =>
+        imageService.uploadImage({
+          imageFile: file,
+        }),
+      onSuccess: (data) => {
+        seturlImgProd(data)
+        imageUrl = data
+      },
+      errorMessage: "Erro ao fazer upload da imagem.",
+    })
+    return imageUrl
+  }
+  const handleImageDelete = async (urlImgProd) => {
     try {
       await onRequest({
-        request: () => imageService.deleteImage(temporaryUrlImgProd),
+        request: () => imageService.deleteImage(urlImgProd),
         onSuccess: () => {
           seturlImgProd("")
-          setTemporaryUrlImgProd("")
-          setImageName("")
         },
         onError: (error) => console.error(error),
       })
@@ -144,78 +144,59 @@ export function ProductModal({
   }
 
   const onSubmit = async (data) => {
-    try {
-      const productData = {
-        ...data,
-        active,
-        urlImgProd,
-        additionDate: new Date().toISOString(),
-        restaurantId: 0,
-      }
-      await onRequest({
-        request: () => productService.postRestaurantProducts(productData),
-        onSuccess: () => {
-          toast.success("Produto criado com sucesso!")
-          fetchProducts()
-        },
-        onError: (error) => console.error(error),
-      })
-      handleCloseModal()
-    } catch (error) {
-      console.error("Erro ao criar o produto:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
+    let imageUrl = urlImgProd
+    if (file) {
+      imageUrl = await uploadOnFirebase(file)
     }
+    const productData = {
+      ...data,
+      active,
+      urlImgProd: imageUrl,
+      additionDate: new Date().toISOString(),
+      restaurantId: 0,
+    }
+    await onRequest({
+      request: () => productService.postRestaurantProducts(productData),
+      onSuccess: async () => {
+        toast.success("Produto criado com sucesso!")
+      },
+      onError: (error) => {
+        console.error(error)
+        toast.error("Erro ao criar o produto")
+        imageService.deleteImage(urlImgProd)
+      },
+    })
     handleCloseModal()
   }
 
   const handleCancel = async () => {
-    if (temporaryUrlImgProd.length === 0) {
-      handleCloseModal()
-      return
-    }
-    try {
-      await onRequest({
-        request: () => imageService.deleteImage(temporaryUrlImgProd),
-        onSuccess: () => {},
-        onError: (error) => console.error(error),
-      })
-    } catch (error) {
-      console.error("Erro ao excluir a imagem:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
-    }
     handleCloseModal()
   }
 
   const handleChange = async (productId, data) => {
-    console.log(data)
+    let imageUrl = urlImgProd
+    if (file) {
+      imageUrl = await uploadOnFirebase(file)
+    }
     const produtctUpdate = {
       ...data,
       active,
-      urlImgProd,
+      urlImgProd: imageUrl,
       additionDate: new Date().toISOString(),
     }
-    try {
-      await onRequest({
-        request: () => productService.updateProduct(productId, produtctUpdate),
-        onSuccess: () => {
-          toast.success("Produto atualizado com sucesso!")
-          fetchProducts()
-        },
-        onError: (error) => console.error(error),
-      })
-    } catch (error) {
-      console.error("Erro ao atualizar o status:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
-    }
+    await onRequest({
+      request: () => productService.updateProduct(productId, produtctUpdate),
+      onSuccess: () => {
+        toast.success("Produto atualizado com sucesso!")
+        fetchProducts()
+      },
+      onError: (error) => {
+        console.error(error)
+        toast.error("Erro ao criar o produto")
+        imageService.deleteImage(urlImgProd)
+      },
+    })
+
     handleCloseModal()
   }
 

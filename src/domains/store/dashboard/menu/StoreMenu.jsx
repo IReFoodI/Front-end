@@ -56,9 +56,7 @@ export function StoreMenu() {
   const updateProduct = (id, data) => {
     onRequest({
       request: () => productService.updateProduct(id, data),
-      onSuccess: () => {
-        console.log("Produto atualizado com sucesso!")
-      },
+      onSuccess: () => {},
       errorMessage: "Erro ao atualizar o produto.",
     })
   }
