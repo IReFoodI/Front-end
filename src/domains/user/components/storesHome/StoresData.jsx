@@ -12,8 +12,8 @@ export function useStores() {
       await onRequest({
         request: async () => storesCardsServices.getFavoritesByUser(),
         onSuccess: (favRes) => {
-          const updatedStores = storesData.map((store) => {
-            const favorite = favRes.find(
+          const updatedStores = storesData?.map((store) => {
+            const favorite = favRes?.find(
               (fav) => fav.restaurantId === store.restaurant.restaurantId
             )
             return {
@@ -46,7 +46,8 @@ export function useStores() {
     }
 
     fetchStores()
-  }, [onRequest, error, fetchFavorites])
+    //eslint-disable-next-line
+  }, [])
 
   const addFavorite = async (restaurantId) => {
     console.log(restaurantId)
