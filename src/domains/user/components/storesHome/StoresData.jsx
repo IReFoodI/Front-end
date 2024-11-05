@@ -88,6 +88,7 @@ export function useStores() {
 
   useEffect(() => {
     fetchStores(page)
+    //eslint-disable-next-line
   }, [page])
 
   const loadMoreStores = () => {

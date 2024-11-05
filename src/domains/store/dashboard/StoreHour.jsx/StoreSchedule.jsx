@@ -50,6 +50,7 @@ export function StoreSchedule() {
 
   useEffect(() => {
     fetchHoursData()
+    //eslint-disable-next-line
   }, [onRequest])
 
   const handleScheduleChange = useCallback(

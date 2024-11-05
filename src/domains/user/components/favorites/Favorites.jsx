@@ -34,14 +34,9 @@ export function Favorites() {
       observer.observe(sentinelRef.current)
     }
 
-    return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current)
-      }
-    }
+    return () => observer.disconnect()
   }, [loading, loadMoreStores])
-  console.log(favoriteStores.length)
-  console.log(hasLoadedOnce)
+
   return (
     <div
       className={`transition-opacity duration-300 ${loading ? "opacity-50" : "opacity-100"}`}

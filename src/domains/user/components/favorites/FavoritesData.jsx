@@ -92,6 +92,7 @@ export function useFavorites() {
 
   useEffect(() => {
     fetchStores(page)
+    //eslint-disable-next-line
   }, [page])
 
   const loadMoreStores = () => {

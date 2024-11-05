@@ -30,11 +30,7 @@ export function Home() {
       observer.observe(sentinelRef.current)
     }
 
-    return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current)
-      }
-    }
+    return () => observer.disconnect()
   }, [loadMoreStores, loading])
 
   return (
