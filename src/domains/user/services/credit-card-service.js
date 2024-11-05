@@ -22,9 +22,32 @@ async function deleteCreditCard(id) {
   return await axios.delete(`${BASE_URL}/${id}`)
 }
 
+async function fetchUserCards() {
+  const axiosInstance = createAxiosInstance(true)
+  try {
+    const response = await axiosInstance.get(BASE_URL)
+    return response.data
+  } catch (error) {
+    console.error("Erro ao buscar cartões:", error)
+    throw error
+  }
+}
+
+async function deleteCard(cardId) {
+  const axiosInstance = createAxiosInstance(true)
+  try {
+    await axiosInstance.delete(`${BASE_URL}/${cardId}`)
+  } catch (error) {
+    console.error("Erro ao deletar cartão:", error)
+    throw error
+  }
+}
+
 export {
   createCreditCard,
+  deleteCard,
   deleteCreditCard,
+  fetchUserCards,
   getAllCreditCard,
   getCreditCardById,
   updateCreditCard,

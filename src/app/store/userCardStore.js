@@ -1,6 +1,9 @@
 import { create } from "zustand"
 
-import cardService from "@/app/service/cardService"
+import {
+  deleteCard,
+  fetchUserCards,
+} from "@/domains/user/services/credit-card-service"
 
 const userCardStore = create((set) => ({
   cards: [],
@@ -10,7 +13,7 @@ const userCardStore = create((set) => ({
   fetchCards: async () => {
     set({ isLoading: true, error: null })
     try {
-      const cards = await cardService.fetchUserCards()
+      const cards = await fetchUserCards()
       set({ cards })
     } catch (error) {
       set({ error: "Não foi possível carregar os cartões." + error })
@@ -22,7 +25,7 @@ const userCardStore = create((set) => ({
   removeCard: async (cardId) => {
     set({ isLoading: true, error: null })
     try {
-      await cardService.deleteCard(cardId)
+      await deleteCard(cardId)
       set((state) => ({
         cards: state.cards.filter((card) => card.cardId !== cardId),
       }))
