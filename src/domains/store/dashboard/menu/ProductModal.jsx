@@ -1,6 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import axios from "axios"
-import { set } from "date-fns"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -174,12 +172,14 @@ export function ProductModal({
   }
 
   const handleCancel = async () => {
+    if (temporaryUrlImgProd.length === 0) {
+      handleCloseModal()
+      return
+    }
     try {
       await onRequest({
         request: () => imageService.deleteImage(temporaryUrlImgProd),
-        onSuccess: () => {
-          fetchProducts()
-        },
+        onSuccess: () => {},
         onError: (error) => console.error(error),
       })
     } catch (error) {
@@ -201,18 +201,14 @@ export function ProductModal({
       additionDate: new Date().toISOString(),
     }
     try {
-      const response = await axios.patch(
-        `http://localhost:8080/api/product/${productId}`,
-        produtctUpdate,
-        { headers: { "Content-Type": "application/json" } }
-      )
-
-      if (response.status !== 200) {
-        throw new Error("Erro ao atualizar o status do produto.")
-      }
-      toast.success("Produto editado com sucesso!")
-
-      fetchProducts()
+      await onRequest({
+        request: () => productService.updateProduct(productId, produtctUpdate),
+        onSuccess: () => {
+          toast.success("Produto atualizado com sucesso!")
+          fetchProducts()
+        },
+        onError: (error) => console.error(error),
+      })
     } catch (error) {
       console.error("Erro ao atualizar o status:", error)
       if (error.response) {

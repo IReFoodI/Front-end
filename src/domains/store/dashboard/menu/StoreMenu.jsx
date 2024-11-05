@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { productService } from "@/domains/store/services/useProdutcList"
@@ -37,18 +37,16 @@ export function StoreMenu() {
   const { onRequest } = useFetch()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const productsPerPage = 10
 
   const fetchProducts = async () => {
     setLoading(true)
+
     await onRequest({
       request: () => productService.getRestaurantProducts(),
       onSuccess: (data) => {
-        if (data) {
-          setProducts(data)
-        } else {
-          data = []
-          setProducts(data)
-        }
+        setProducts(data || [])
       },
       errorMessage: "Erro ao carregar produtos.",
     })
@@ -80,6 +78,17 @@ export function StoreMenu() {
     fetchProducts()
   }, [])
 
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  )
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+  }
+
   return (
     <div className="w-full">
       <Card className="border-none shadow-none">
@@ -101,8 +110,8 @@ export function StoreMenu() {
                 <AlertDialogTitle>Produto</AlertDialogTitle>
               </AlertDialogHeader>
               <AlertDialogDescription>
-                Here you can view detailed information about the selected
-                product and manage your choices.
+                Aqui você pode ver informações detalhadas sobre o produto
+                selecionado e gerenciar suas escolhas.
               </AlertDialogDescription>
               <ProductModal
                 setIsModalOpen={setIsModalOpen}
@@ -145,7 +154,7 @@ export function StoreMenu() {
                   </td>
                 </TableRow>
               ) : (
-                products.map((product) => (
+                currentProducts.map((product) => (
                   <MenuItemCard
                     key={product.productId}
                     product={product}
@@ -158,12 +167,33 @@ export function StoreMenu() {
               )}
             </TableBody>
           </Table>
+
+          <div className="mt-4 flex justify-between">
+            <Button
+              size="sm"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Página Anterior
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={indexOfLastProduct >= products.length}
+            >
+              Próxima Página
+            </Button>
+          </div>
         </CardContent>
 
         <CardFooter>
           <div className="text-xs">
-            Exibindo <strong>1-{Math.min(products.length, 10)}</strong> de{" "}
-            <strong>{products.length}</strong> produtos
+            Exibindo{" "}
+            <strong>
+              {indexOfFirstProduct + 1}-
+              {Math.min(indexOfLastProduct, products.length)}
+            </strong>{" "}
+            de <strong>{products.length}</strong> produtos
           </div>
         </CardFooter>
       </Card>

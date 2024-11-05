@@ -15,8 +15,6 @@ import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 import { TableCell, TableRow } from "@/ui/components/ui/table"
 
-import { QuantityInput } from "./QuantityInput"
-
 export function MenuItemCard({
   product,
   setIsModalOpen,
@@ -71,13 +69,12 @@ export function MenuItemCard({
   }
 
   useEffect(() => {
-    // Verifica se a data de expiração é menor que a data atual
     if (expirationDate && expirationDate < new Date()) {
-      setActive(false) // Desabilita o produto
-      onStatusChange(product.productId, false) // Atualiza o status no servidor, se necessário
+      setActive(false)
+      onStatusChange(product.productId, false)
       toast.error(`${nameProd} está vencido!`)
     }
-  }, [expirationDate, product.productId])
+  }, [])
 
   const disabledClass = active ? "" : "opacity-50"
 
@@ -93,20 +90,24 @@ export function MenuItemCard({
             width="64"
           />
         ) : (
-          <IconPhotoOff size={26} className="text-gray-500" />
+          <IconPhotoOff
+            size={64}
+            className="object-cover text-muted-foreground"
+          />
         )}
       </TableCell>
       <TableCell className="font-medium">{nameProd}</TableCell>
-      <TableCell className={`pointer-events-none hidden lg:table-cell`}>
+      <TableCell className={`pointer-events-none hidden w-32 lg:table-cell`}>
         <Input
           type="text"
           disabled={!active}
           defaultValue={categoryProduct}
           readOnly
-          placeholder="Descrição do produto"
+          placeholder="Categoria"
+          className="text-center"
         />
       </TableCell>
-      <TableCell className={`pointer-events-none hidden lg:table-cell`}>
+      <TableCell className={`pointer-events-none hidden w-72 lg:table-cell`}>
         <Input
           type="text"
           disabled={!active}
@@ -122,8 +123,14 @@ export function MenuItemCard({
           onChange={setExpirationDate}
         />
       </TableCell>
-      <TableCell className="pointer-events-none">
-        <QuantityInput items={initialQuantity || 0} />
+      <TableCell className="pointer-events-none w-28">
+        <Input
+          type="text"
+          value={initialQuantity}
+          readOnly
+          placeholder="Quantidade"
+          className="text-center"
+        />
       </TableCell>
       <TableCell className={`pointer-events-none hidden w-28 md:table-cell`}>
         <Input
@@ -138,8 +145,9 @@ export function MenuItemCard({
         <Input
           type="text"
           value={sellPrice}
-          onChange={handleChange(setOriginalPrice)}
+          onChange={handleChange(setSellPrice)}
           placeholder="Preço de Venda"
+          className="w-20"
         />
       </TableCell>
       <TableCell className="hidden md:table-cell">
