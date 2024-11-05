@@ -65,7 +65,7 @@ export function SearchProductItem({
           </Badge>
           <div className="flex h-full items-center justify-center">
             <img
-              src={urlImgProduct ? Default_Product_Image : urlImgProduct}
+              src={urlImgProduct ? urlImgProduct : Default_Product_Image}
               alt={nameProduct}
               className="h-24 w-24 bg-cover bg-center"
             />
