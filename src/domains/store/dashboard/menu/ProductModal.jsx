@@ -62,7 +62,6 @@ export function ProductModal({
         : "0",
     },
   })
-
   function handleCloseModal() {
     setIsModalOpen(false)
     setSelectedProduct(null)
@@ -77,7 +76,6 @@ export function ProductModal({
       toast.error("A imagem deve ter no máximo 5MB")
       return
     }
-
     const reader = new FileReader()
     reader.onload = () => {
       const localUrl = reader.result
@@ -104,7 +102,7 @@ export function ProductModal({
     })
     return imageUrl
   }
-  const handleImageDelete = async (urlImgProd) => {
+  const handleImageDelete = async () => {
     try {
       await onRequest({
         request: () => imageService.deleteImage(urlImgProd),
@@ -172,7 +170,6 @@ export function ProductModal({
   const handleCancel = async () => {
     handleCloseModal()
   }
-
   const handleChange = async (productId, data) => {
     let imageUrl = urlImgProd
     if (file) {
