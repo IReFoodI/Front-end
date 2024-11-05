@@ -1,3 +1,4 @@
+import { IconMoodSad } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
 
 import { useStores } from "@/domains/user/components/storesHome/StoresData"
@@ -8,11 +9,17 @@ import { StoresGrid } from "./StoresGrid"
 
 export function Home() {
   const { stores, loading, toggleFavorite, loadMoreStores } = useStores()
+  const [mostrarDiv, setMostrarDiv] = useState(false)
+
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const sentinelRef = useRef(null)
   useEffect(() => {
     if (!loading) {
       setHasLoadedOnce(true)
+      const timer = setTimeout(() => {
+        setMostrarDiv(true)
+      }, 500)
+      return () => clearTimeout(timer)
     }
   }, [loading, stores])
 
@@ -26,13 +33,14 @@ export function Home() {
       { threshold: 0.1 }
     )
 
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current)
+    const currentSentinel = sentinelRef.current
+    if (currentSentinel) {
+      observer.observe(currentSentinel)
     }
 
     return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current)
+      if (currentSentinel) {
+        observer.unobserve(currentSentinel)
       }
     }
   }, [loadMoreStores, loading])
@@ -49,7 +57,16 @@ export function Home() {
       {loading && !hasLoadedOnce ? (
         <Loading />
       ) : stores.length === 0 && hasLoadedOnce ? (
-        <p className="col-span-full text-center">Nenhuma loja disponível.</p>
+        <div className="flex h-full w-full items-center justify-center">
+          {mostrarDiv && (
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <IconMoodSad className="h-12 w-12 text-muted-foreground" />
+              <h1 className="text-lg font-bold text-muted-foreground">
+                Infelizmente não encontramos nenhuma loja aberta na sua região
+              </h1>
+            </div>
+          )}
+        </div>
       ) : (
         <StoresGrid
           stores={stores}

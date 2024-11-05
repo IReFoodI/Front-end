@@ -50,7 +50,7 @@ export function StoreSchedule() {
 
   useEffect(() => {
     fetchHoursData()
-  }, [onRequest])
+  }, [onRequest, fetchHoursData])
 
   const handleScheduleChange = useCallback(
     (index, field, value) => {

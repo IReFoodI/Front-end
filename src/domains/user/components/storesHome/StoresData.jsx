@@ -88,7 +88,7 @@ export function useStores() {
 
   useEffect(() => {
     fetchStores(page)
-  }, [page])
+  }, [page, fetchStores])
 
   const loadMoreStores = () => {
     if (!loading && page < totalPages - 1) {

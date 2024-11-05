@@ -61,6 +61,7 @@ export function useFavorites() {
       await onRequest({
         request: async () => storesCardsServices.getStores(pageNumber),
         onSuccess: async (storesRes) => {
+          console.log(storesRes)
           setTotalPages(storesRes.page.totalPages)
           const storesData = storesRes._embedded?.hashMapList
           if (storesData) {
@@ -69,12 +70,10 @@ export function useFavorites() {
                 prevStores.map((store) => store.restaurant.restaurantId)
               )
 
-              // Filter out stores with IDs already in prevStores
               const newStores = storesData.filter(
                 (store) => !existingIds.has(store.restaurant.restaurantId)
               )
 
-              // Return a new array with previous stores and any new stores
               return [...prevStores, ...newStores]
             })
 
@@ -92,7 +91,7 @@ export function useFavorites() {
 
   useEffect(() => {
     fetchStores(page)
-  }, [page])
+  }, [page, fetchStores])
 
   const loadMoreStores = () => {
     if (!loading && page < totalPages - 1) {

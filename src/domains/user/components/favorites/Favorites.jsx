@@ -12,13 +12,20 @@ export function Favorites() {
   const { stores, loading, toggleFavorite, loadMoreStores } = useFavorites()
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const favoriteStores = stores.filter((store) => store.isFavorited)
+  const [mostrarDiv, setMostrarDiv] = useState(false)
+
   const sentinelRef = useRef(null)
 
   useEffect(() => {
     if (!loading) {
       setHasLoadedOnce(true)
+
+      const timer = setTimeout(() => {
+        setMostrarDiv(true)
+      }, 500)
+      return () => clearTimeout(timer)
     }
-  }, [loading])
+  }, [loading, stores])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,18 +37,18 @@ export function Favorites() {
       { threshold: 0.1 }
     )
 
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current)
+    const currentSentinel = sentinelRef.current
+    if (currentSentinel) {
+      observer.observe(currentSentinel)
     }
 
     return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current)
+      if (currentSentinel) {
+        observer.unobserve(currentSentinel)
       }
     }
-  }, [loading, loadMoreStores])
-  console.log(favoriteStores.length)
-  console.log(hasLoadedOnce)
+  }, [loadMoreStores, loading])
+
   return (
     <div
       className={`transition-opacity duration-300 ${loading ? "opacity-50" : "opacity-100"}`}
@@ -56,23 +63,25 @@ export function Favorites() {
         </div>
       ) : favoriteStores.length === 0 && hasLoadedOnce ? (
         <div className="flex h-screen/2 items-center justify-center">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <IconHeart className="h-12 w-12 text-gray-400" />
-            <h1 className="text-lg font-bold text-secondary-foreground">
-              Você ainda não favoritou nenhuma empresa!
-            </h1>
-            <p className="w-2/3 text-muted-foreground">
-              Explore as lojas e tire a barriga da miséria hoje mesmo!
-            </p>
-            <Button
-              to="/"
-              className="rounded-md bg-primary px-6 py-4 text-primary-foreground shadow hover:bg-primary/90"
-            >
-              <Link to="/" className="w-full">
-                Explorar agora!
-              </Link>
-            </Button>
-          </div>
+          {mostrarDiv && (
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <IconHeart className="h-12 w-12 text-gray-400" />
+              <h1 className="text-lg font-bold text-secondary-foreground">
+                Você ainda não favoritou nenhuma empresa!
+              </h1>
+              <p className="w-2/3 text-muted-foreground">
+                Explore as lojas e tire a barriga da miséria hoje mesmo!
+              </p>
+              <Button
+                to="/"
+                className="rounded-md bg-primary px-6 py-4 text-primary-foreground shadow hover:bg-primary/90"
+              >
+                <Link to="/" className="w-full">
+                  Explorar agora!
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex h-full pt-24">
@@ -81,7 +90,6 @@ export function Favorites() {
               stores={favoriteStores}
               toggleFavorite={toggleFavorite}
               singleColumn={true}
-              type="favorites"
               hasLoadedOnce={hasLoadedOnce}
             />
             <div ref={sentinelRef} className="h-8"></div>

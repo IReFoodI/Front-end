@@ -1,17 +1,6 @@
-import { IconHeart } from "@tabler/icons-react"
-import { Link } from "react-router-dom"
-
-import { Button } from "@/ui/components/ui/button/button"
-
 import { StoreCard } from "./StoreCard"
 
-export function StoresGrid({
-  stores,
-  toggleFavorite,
-  singleColumn,
-  type = "home",
-  hasLoadedOnce,
-}) {
+export function StoresGrid({ stores, toggleFavorite, singleColumn }) {
   return (
     <div
       className={`grid gap-6 ${
