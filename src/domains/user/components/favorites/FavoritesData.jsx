@@ -61,7 +61,6 @@ export function useFavorites() {
       await onRequest({
         request: async () => storesCardsServices.getStores(pageNumber),
         onSuccess: async (storesRes) => {
-          console.log(storesRes)
           setTotalPages(storesRes.page.totalPages)
           const storesData = storesRes._embedded?.hashMapList
           if (storesData) {
