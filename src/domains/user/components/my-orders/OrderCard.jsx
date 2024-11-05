@@ -1,3 +1,4 @@
+import { IconPaperBag } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
@@ -33,20 +34,7 @@ export function OrderCard({
         {pickupTime}
       </div>
       <div className="mt-1 flex items-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className="h-5 w-5 text-gray-600"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 7V3m0 0a2 2 0 114 0v4m-4 4h4m-4 0a2 2 0 104 0h-4z"
-          />
-        </svg>
+        <IconPaperBag />
         <span className="ml-2 text-sm text-secondary-foreground">
           {orderStatus}
         </span>
