@@ -106,6 +106,7 @@ export function SignIn() {
                     type="email"
                     placeholder="Email"
                     className={"!mt-1"}
+                    autoComplete="username"
                     {...field}
                   />
                 </FormControl>
