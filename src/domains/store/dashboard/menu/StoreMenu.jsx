@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/ui/components/ui/table"
 
-import { productList as initialProductList } from "../../model/productList"
+import { productList as initialProductList } from "../../models/productList"
 import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"

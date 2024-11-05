@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { PatternFormat } from "react-number-format"
+import { useNavigate } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { AlertDialogFooter } from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -12,34 +14,72 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 
 import { creditCardSchema } from "../../models/CreditCardTypes"
+import {
+  createCreditCard,
+  updateCreditCard,
+} from "../../services/credit-card-service"
+import cardStore from "../../stores/cardStore"
 import { CardExpiryFormat } from "./CardExpiryFormat"
 
 export function AddEditCard({ type = "add", card, closeModal }) {
+  const navigate = useNavigate()
+  const { addCard, updateCard } = cardStore()
   const form = useForm({
     resolver: zodResolver(creditCardSchema),
     defaultValues: {
       number: card?.number ? card.number : "",
-      name: card?.name ? card.name : "",
+      holderName: card?.holderName ? card.holderName : "",
       cpf: card?.cpf ? card.cpf : "",
       validity: card?.validity ? card.validity : "",
       cvv: card?.cvv ? card.cvv : "",
     },
   })
+  const { loading, onRequest } = useFetch()
 
   const { watch } = form
-  const [number, name, validity] = watch(["number", "name", "validity"])
+  const [number, holderName, validity] = watch([
+    "number",
+    "holderName",
+    "validity",
+  ])
 
-  const onSubmit = (data) => {
-    try {
-      console.log(data)
-      {
-        type === "edit" && closeModal()
-      }
-    } catch (error) {
-      console.log(error)
+  function redirect() {
+    navigate("/cartoes")
+  }
+
+  function handleEditSuccess(data) {
+    closeModal()
+    updateCard(data)
+  }
+
+  function handleAddSuccess(data) {
+    redirect()
+    addCard(data)
+  }
+
+  const onSubmit = async (formData) => {
+    if (type === "edit") {
+      await onRequest({
+        request: () => updateCreditCard({ ...formData, cardId: card?.cardId }),
+        onSuccess: handleEditSuccess,
+        successMessage: "Cartão editado com sucesso!",
+        errorMessage: "Ocorreu um erro ao tentar editar o cartão.",
+      })
+    } else if (type === "add") {
+      await onRequest({
+        request: () => createCreditCard(formData),
+        onSuccess: handleAddSuccess,
+        successMessage: "Cartão cadastrado com sucesso!",
+        errorMessage: "Ocorreu um erro ao tentar cadastrar o cartão.",
+      })
     }
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
@@ -57,7 +97,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
           </p>
           <div className="flex w-full items-center justify-between gap-2 text-sm">
             <p className="max-w-64 truncate">
-              {name === "" ? "Nome do Titular" : name}
+              {holderName === "" ? "Nome do Titular" : holderName}
             </p>
             <p className="min-w-14 items-center justify-center">
               {validity === "" ? "Validade" : validity}
@@ -99,7 +139,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
 
             <FormField
               control={form.control}
-              name="name"
+              name="holderName"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -186,6 +226,7 @@ export function AddEditCard({ type = "add", card, closeModal }) {
             {type === "edit" ? (
               <AlertDialogFooter className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4">
                 <Button
+                  type="button"
                   onClick={closeModal}
                   variant="secondary"
                   className="w-full md:px-6"

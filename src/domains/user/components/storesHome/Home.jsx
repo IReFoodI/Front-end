@@ -1,4 +1,4 @@
-import { useStores } from "@/domains/user/hooks/useStores"
+import { useStores } from "@/domains/user/components/storesHome/StoresData"
 
 import { BannerCarousel } from "./BannerCarousel"
 import { StoresGrid } from "./StoresGrid"
@@ -14,11 +14,7 @@ export function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <StoresGrid
-          stores={stores}
-          toggleFavorite={toggleFavorite}
-          showBanner={true}
-        />
+        <StoresGrid stores={stores} toggleFavorite={toggleFavorite} />
       )}
     </>
   )

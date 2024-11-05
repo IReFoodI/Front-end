@@ -12,8 +12,8 @@ import {
 
 import { AddEditCard } from "./AddEditCard"
 
-export function SmallCard({ toggleOpenModal, data }) {
-  const { holderName, number, validity } = data
+export function SmallCard({ openDeleteCardModal, data, cardToDelete }) {
+  const { cardId, name, number, validity } = data
   const [isModalVisible, setIsModalVisible] = useState(false)
   const replacedNumber = number
     .slice()
@@ -27,6 +27,11 @@ export function SmallCard({ toggleOpenModal, data }) {
 
   function openModal() {
     setIsModalVisible(true)
+  }
+
+  function handleDelete() {
+    cardToDelete.current = cardId
+    openDeleteCardModal()
   }
 
   return (
@@ -51,7 +56,7 @@ export function SmallCard({ toggleOpenModal, data }) {
             </AlertDialogContent>
           </AlertDialog>
           {/* </button> */}
-          <button onClick={toggleOpenModal}>
+          <button onClick={handleDelete}>
             <IconTrash
               size={25}
               className="transition duration-300 hover:text-orange-500"

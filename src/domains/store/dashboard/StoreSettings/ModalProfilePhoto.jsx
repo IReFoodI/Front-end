@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
@@ -25,10 +26,15 @@ export function ModalProfilePhoto({
   })
   const [dragActive, setDragActive] = useState(false)
   const { loading, onRequest } = useFetch()
+  const maxSize = 2 * 1024 * 1024
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      if (file.size > maxSize) {
+        toast.info("O arquivo deve ter no máximo 2MB.")
+        return
+      }
       setImageData({
         imageFile: file,
         previewUrl: URL.createObjectURL(file),
@@ -48,6 +54,10 @@ export function ModalProfilePhoto({
     setDragActive(false)
     const file = e.dataTransfer.files[0]
     if (file) {
+      if (file.size > maxSize) {
+        toast.info("O arquivo deve ter no máximo 2MB.")
+        return
+      }
       setImageData({
         imageFile: file,
         previewUrl: URL.createObjectURL(file),
@@ -60,7 +70,6 @@ export function ModalProfilePhoto({
     setImageData({})
   }
   async function teste(response) {
-    console.log("o que vem ", response)
     await onRequest({
       request: () =>
         restaurantService.updateRestaurant({
@@ -73,8 +82,6 @@ export function ModalProfilePhoto({
 
   async function handleUploadImage() {
     if (!imageData.imageFile) return
-
-    console.log("merda", storeInformation)
     await onRequest({
       request: () =>
         restaurantImageService.createRestaurantImage({
@@ -93,26 +100,28 @@ export function ModalProfilePhoto({
           Arraste uma imagem ou clique na área para selecionar um arquivo.
         </DialogDescription>
 
-        <div
-          className={`my-2 aspect-square w-full max-w-xs cursor-pointer border-2 ${
-            dragActive ? "border-blue-500" : "border-dashed"
-          } mx-auto flex items-center justify-center rounded-md`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onClick={() => document.getElementById("fileInput").click()}
-        >
-          {imageData?.previewUrl ? (
-            <img
-              src={imageData.previewUrl}
-              alt="Preview"
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <p className="text-center">
-              Arraste uma imagem ou clique para selecionar
-            </p>
-          )}
+        <div>
+          <div
+            className={`my-2 aspect-square w-full max-w-xs cursor-pointer border-2 ${
+              dragActive ? "border-blue-500" : "border-dashed"
+            } mx-auto flex items-center justify-center rounded-md`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById("fileInput").click()}
+          >
+            {imageData?.previewUrl ? (
+              <img
+                src={imageData.previewUrl}
+                alt="Preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <p className="text-center">
+                Arraste uma imagem ou clique para selecionar
+              </p>
+            )}
+          </div>
           <input
             id="fileInput"
             type="file"
@@ -120,6 +129,9 @@ export function ModalProfilePhoto({
             className="hidden"
             onChange={handleImageChange}
           />
+          <p className="text-center text-sm text-muted-foreground">
+            O arquivo deve ter no máximo 2MB
+          </p>
         </div>
 
         <DialogFooter>
@@ -132,10 +144,10 @@ export function ModalProfilePhoto({
           </Button>
           <Button
             className="rounded-full"
+            disabled={loading}
             onClick={() => {
-              console.log("Imagem selecionada:", imageData?.imageFile)
               handleUploadImage()
-              toggleOpenModal() // Fecha o modal após a seleção
+              toggleOpenModal()
             }}
           >
             Confirmar
