@@ -3,7 +3,6 @@ import { PopoverClose } from "@radix-ui/react-popover"
 import {
   IconBaguette,
   IconBuildingStore,
-  IconBurger,
   IconCandy,
   IconChefHat,
   IconDumpling,

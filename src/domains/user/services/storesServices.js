@@ -3,14 +3,14 @@ import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 const HOME_URL = "/api/restaurant"
 const FAVORITES_URL = "/api/favorites"
 
-async function getStores() {
+async function getStores(page) {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${HOME_URL}`)
+  return await axios.get(`${HOME_URL}/restaurants?page=${page}&size=15`)
 }
 
-async function getStoresToday() {
+async function getStoresToday(page) {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${HOME_URL}/today`)
+  return await axios.get(`${HOME_URL}/today?page=${page}&size=15`)
 }
 
 async function getFavoritesByUser() {
