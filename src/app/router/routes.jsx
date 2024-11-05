@@ -6,6 +6,7 @@ import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/
 import { FinancePage } from "@/domains/store/dashboard/FinancePage.jsx"
 import { StoreMenu } from "@/domains/store/dashboard/menu/StoreMenu.jsx"
 import { OrderDetails } from "@/domains/store/dashboard/OrderDetails/OrderDetails.jsx"
+import { StoreSchedule } from "@/domains/store/dashboard/StoreHour.jsx/StoreSchedule.jsx"
 import { StoreProfilePage } from "@/domains/store/dashboard/StoreProfilePage.jsx"
 import { StoreAddressEdit } from "@/domains/store/dashboard/storesAddress/StoreAdress.jsx"
 import { StoreProfileSettings } from "@/domains/store/dashboard/StoreSettings/StoreProfileSettings.jsx"
@@ -16,12 +17,15 @@ import { ChangeData } from "@/domains/user/components/change-data/ChangeData.jsx
 import { AddEditCard } from "@/domains/user/components/credit-card/AddEditCard.jsx"
 import { CardPage } from "@/domains/user/components/credit-card/CardPage.jsx"
 import { Favorites } from "@/domains/user/components/favorites/Favorites.jsx"
-import { OngoingOrder } from "@/domains/user/components/ongoingOrder/OngoingOrder.jsx"
+import { FinalizeOrderPage } from "@/domains/user/components/finalizeOrderPage/FinalizeOrderPage.jsx"
+import { MyOrdersPage } from "@/domains/user/components/my-orders/MyOrdersPage.jsx"
 import { ChangePassword } from "@/domains/user/components/password/ChangePassword.jsx"
 import { RecoverPasswordPage } from "@/domains/user/components/password/RecoverPasswordPage.jsx"
 import { ResetPasswordPage } from "@/domains/user/components/password/ResetPasswordPage.jsx"
 import { AddressPage } from "@/domains/user/components/profile/address/AddressPage.jsx"
 import { ProfileAddressForm } from "@/domains/user/components/profile/address/ProfileAddressForm.jsx"
+import { MydataPage } from "@/domains/user/components/profile/MyDataPage.jsx"
+import { SearchPage } from "@/domains/user/components/searchPage/SearchPage.jsx"
 import { Home } from "@/domains/user/components/storesHome/Home.jsx"
 import { PageNotFound } from "@/ui/components/PageNotFound.jsx"
 import { AuthenticationLayout } from "@/ui/layouts/AuthenticationLayout.jsx"
@@ -49,16 +53,20 @@ export const ROUTES = {
   CREATE_ACCOUNT: "criar-conta",
   CREATE_ACCOUNT_BUSINESS: "criar-conta",
   USER_CREDIT_CARD: "cartoes",
+  USER_DATA: "meus-dados",
   USER_ADD_CREDIT_CARD: "cartoes/adicionar",
   STORE_ADDRESS: "ajustes/endereco",
   MENU: "cardapio",
-  ONGOING_ORDER: "pedidos/em-andamento",
   RECOVER_PASSWORD: "recuperar-senha",
   RESET_PASSWORD: "redefinir-senha/:token",
+  PROFILESETTINGS: "ajustes/perfil",
+  SCHEDULESETTINGS: "ajustes/horario",
   CHANGE_DATA: "alterar-dados",
   DASHBOARD_CONFIG: "ajustes/configuracoes",
   PROFILE_SETTINGS: "ajustes/perfil",
-  ORDER_DETAILS: "pedidos",
+  FINALIZE_ORDER: "finalizar-pedido",
+  MY_ORDERS: "pedidos",
+  SEARCH_PRODUCTS: "produtos/pesquisar",
 }
 
 export const router = createBrowserRouter([
@@ -74,13 +82,16 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <Home /> },
               { path: ROUTES.USER_CREDIT_CARD, element: <CardPage /> },
+              { path: ROUTES.SEARCH_PRODUCTS, element: <SearchPage /> },
               { path: ROUTES.USER_ADD_CREDIT_CARD, element: <AddEditCard /> },
-              { path: ROUTES.ONGOING_ORDER, element: <OngoingOrder /> },
+              { path: ROUTES.MY_ORDERS, element: <MyOrdersPage /> },
+              { path: ROUTES.FINALIZE_ORDER, element: <FinalizeOrderPage /> },
               {
                 element: <ProfileManagementLayout />,
                 children: [
                   { path: ROUTES.CHANGE_PASSWORD, element: <ChangePassword /> },
                   { path: ROUTES.ADDRESS, element: <AddressPage /> },
+                  { path: ROUTES.USER_DATA, element: <MydataPage /> },
                   {
                     path: ROUTES.ADDRESS_EDIT,
                     element: <ProfileAddressForm />,
@@ -119,6 +130,7 @@ export const router = createBrowserRouter([
               },
               { path: ROUTES.ORDER_DETAILS, element: <OrderDetails /> },
               { path: ROUTES.DASHBOARD_CONFIG, element: <ConfigurationPage /> },
+              { path: ROUTES.SCHEDULESETTINGS, element: <StoreSchedule /> },
             ],
           },
         ],

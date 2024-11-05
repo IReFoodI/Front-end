@@ -26,7 +26,7 @@ export function StoresGrid({
           />
         ))
       ) : type === "favorites" ? (
-        <div className="h-screen/2 flex items-center justify-center">
+        <div className="flex h-screen/2 items-center justify-center">
           <div className="flex flex-col items-center space-y-4 text-center">
             <IconHeart className="h-12 w-12 text-gray-400" />
             <h1 className="text-lg font-bold text-secondary-foreground">
