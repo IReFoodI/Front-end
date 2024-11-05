@@ -24,38 +24,40 @@ export const OrderDetails = () => {
   } = restaurantStore()
 
   useEffect(() => {
-    const fetchData = async () => {
+    const initializeData = async () => {
       const firstProduct = cartItems[0]
-
-      if (firstProduct) {
-        fetchRestaurantInfo(firstProduct.productId)
-      }
-      if (restaurantInfo) {
-        fetchRestaurantHours(restaurantInfo.restaurantId)
-        fetchAddress(restaurantInfo.restaurantId)
-      }
-      if (restaurantHours) {
-        const today = new Date()
-        const dayOfWeek = today
-          .toLocaleDateString("en-US", { weekday: "long" })
-          .toUpperCase()
-        const hours = restaurantHours
-
-        const todayHours = hours.find((hour) => hour.dayOfWeek === dayOfWeek)
-
-        if (todayHours) {
-          setPickupTime(
-            `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
-          )
-        } else {
-          setPickupTime("Restaurante fechado hoje")
-        }
+      if (firstProduct?.productId) {
+        await fetchRestaurantInfo(firstProduct.productId)
       }
     }
 
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchRestaurantInfo, fetchRestaurantHours, fetchAddress, cartItems])
+    initializeData()
+  }, [fetchRestaurantInfo, cartItems])
+
+  useEffect(() => {
+    if (restaurantInfo) {
+      fetchRestaurantHours(restaurantInfo.restaurantId)
+      fetchAddress(restaurantInfo.restaurantId)
+    }
+  }, [restaurantInfo, fetchRestaurantHours, fetchAddress])
+
+  useEffect(() => {
+    if (restaurantHours) {
+      const today = new Date()
+      const dayOfWeek = today
+        .toLocaleDateString("en-US", { weekday: "long" })
+        .toUpperCase()
+      const todayHours = restaurantHours.find(
+        (hour) => hour.dayOfWeek === dayOfWeek
+      )
+
+      setPickupTime(
+        todayHours
+          ? `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
+          : "Restaurante fechado hoje"
+      )
+    }
+  }, [restaurantHours])
 
   const restaurantAddressStandard =
     restaurantAddress?.find((address) => address.isStandard) || {}
