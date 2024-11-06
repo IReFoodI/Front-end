@@ -87,7 +87,6 @@ export function ProductModal({
       setPreview(localUrl)
     }
     reader.readAsDataURL(file)
-
     setLoading(false)
   }
   const uploadOnFirebase = async (file) => {
