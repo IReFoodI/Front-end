@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { IconXboxXFilled } from "@tabler/icons-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -157,6 +158,7 @@ export function ProductModal({
       request: () => productService.postRestaurantProducts(productData),
       onSuccess: async () => {
         toast.success("Produto criado com sucesso!")
+        fetchProducts()
       },
       onError: (error) => {
         console.error(error)
@@ -208,7 +210,7 @@ export function ProductModal({
           </h1>
           <div className="flex w-full flex-col items-center">
             <div
-              className={`my-2 aspect-square w-1/3 border-2 ${
+              className={`relative my-2 aspect-square w-1/3 border-2 ${
                 dragActive ? "border-blue-500" : "border-dashed"
               } flex items-center justify-center rounded-md`}
               onDragOver={handleDragOver}
@@ -218,11 +220,19 @@ export function ProductModal({
               {loading ? (
                 <p className="text-center">Carregando imagem...</p>
               ) : urlImgProd ? (
-                <img
-                  src={urlImgProd}
-                  alt={imageName}
-                  className="h-auto w-full"
-                />
+                <>
+                  <button
+                    className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs text-red-500"
+                    onClick={handleImageDelete}
+                  >
+                    <IconXboxXFilled />
+                  </button>
+                  <img
+                    src={urlImgProd}
+                    alt={imageName}
+                    className="h-auto w-full rounded-md"
+                  />
+                </>
               ) : (
                 <p className="text-center">
                   Arraste uma imagem aqui ou clique para selecionar
@@ -238,12 +248,10 @@ export function ProductModal({
             <Button
               type="button"
               onClick={() =>
-                urlImgProd
-                  ? handleImageDelete()
-                  : document.querySelector('input[type="file"]')?.click()
+                document.querySelector('input[type="file"]')?.click()
               }
             >
-              {urlImgProd ? "Excluir imagem" : "Adicionar imagem"}
+              Adicionar imagem
             </Button>
           </div>
           <Form {...form}>

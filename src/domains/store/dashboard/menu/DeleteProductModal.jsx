@@ -39,9 +39,7 @@ export function DeleteProductModal({
         fetchProducts()
         onRequest({
           request: () => imageService.deleteImage(urlImgProd),
-          onSuccess: () => {
-            toast?.success("Produto excluído com sucesso!")
-          },
+          onSuccess: () => {},
           onError: (error) => console.error(error),
         })
       },
