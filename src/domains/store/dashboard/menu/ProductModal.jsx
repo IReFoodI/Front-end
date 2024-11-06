@@ -42,6 +42,7 @@ export function ProductModal({
   const { onRequest } = useFetch()
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [preview, setPreview] = useState(null)
 
   const form = useForm({
     resolver: zodResolver(productSchema),
@@ -70,7 +71,7 @@ export function ProductModal({
 
   const handleStatusChange = (checked) => setActive(checked)
 
-  const uploadImage = async (file) => {
+  const uploadImage = (file) => {
     setLoading(true)
     const maxSize = 5 * 1024 * 1024 // 5MB
     if (file.size > maxSize) {
@@ -83,6 +84,7 @@ export function ProductModal({
       setFile(file)
       seturlImgProd(localUrl)
       setImageName(file.name)
+      setPreview(localUrl)
     }
     reader.readAsDataURL(file)
 
@@ -104,6 +106,12 @@ export function ProductModal({
     return imageUrl
   }
   const handleImageDelete = async () => {
+    if (preview) {
+      seturlImgProd("")
+      setPreview(null)
+      setImageName("")
+      return
+    }
     try {
       await onRequest({
         request: () => imageService.deleteImage(urlImgProd),
@@ -118,10 +126,10 @@ export function ProductModal({
     }
   }
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
-      await uploadImage(file)
+      uploadImage(file)
     }
   }
 
