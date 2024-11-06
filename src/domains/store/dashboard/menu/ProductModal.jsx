@@ -110,6 +110,7 @@ export function ProductModal({
       seturlImgProd("")
       setPreview(null)
       setImageName("")
+      setFile(null)
       return
     }
     try {
