@@ -50,7 +50,6 @@ export function StoreProductItem({
     addToCart(productToCart)
     const cart = useCartStore.getState().cart
     setNewQuantity(newQuantity - amountAdded)
-    console.log(cart)
   }
 
   return (

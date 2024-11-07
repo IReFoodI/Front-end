@@ -1,10 +1,11 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { restaurantService } from "@/domains/store/services/restaurantService"
+import { fetchAllRestaurantHours, fetchAllRestaurantHoursToday } from "../services/restaurantHoursService"
 
 export function useRestaurant() {
-  const [restaurant, setRestaurant] = useState([])
+  const [restaurants, setRestaurants] = useState([])
   const [restaurantHours, setRestaurantHours] = useState([])
   const [restaurantHoursToday, setRestaurantHoursToday] = useState([])
   const { loading, onRequest, error } = useFetch()
@@ -12,10 +13,9 @@ export function useRestaurant() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       await onRequest({
-        request: async () =>
-          axios.get(`http://localhost:8080/api/restaurant/restaurants`),
+        request: restaurantService.getRestaurants,
         onSuccess: async (restaurantRes) => {
-          setRestaurant(restaurantRes)
+          setRestaurants(restaurantRes)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
@@ -23,8 +23,7 @@ export function useRestaurant() {
 
     const fetchRestaurantHours = async () => {
       await onRequest({
-        request: async () =>
-          axios.get(`http://localhost:8080/api/restaurant-hours`),
+        request: fetchAllRestaurantHours,
         onSuccess: async (restaurantHoursRes) => {
           setRestaurantHours(restaurantHoursRes)
         },
@@ -34,8 +33,7 @@ export function useRestaurant() {
 
     const fetchRestaurantHoursToday = async () => {
       await onRequest({
-        request: async () =>
-          axios.get("http://localhost:8080/api/restaurant-hours/today"),
+        request: fetchAllRestaurantHoursToday,
         onSuccess: async (restaurantHoursTodayRes) => {
           setRestaurantHoursToday(restaurantHoursTodayRes)
         },
@@ -48,32 +46,11 @@ export function useRestaurant() {
     fetchRestaurants()
   }, [onRequest, error])
 
-  const handleStatusChange = async (restaurantId, newStatus) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:8080/api/restaurant/${restaurantId}`,
-        { active: newStatus },
-        { headers: { "Content-Type": "application/json" } }
-      )
-
-      if (response.status !== 200) {
-        throw new Error("Erro ao atualizar o status do restaurante.")
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar o status:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
-    }
-  }
-
   return {
-    restaurant,
+    restaurants,
     restaurantHours,
     restaurantHoursToday,
     loading,
-    handleStatusChange,
   }
 }
 

@@ -14,24 +14,23 @@ import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
 
 export function StoreInformationInfo() {
-  const { restaurant, restaurantHours, restaurantHoursToday } = useRestaurant()
+  const { restaurants, restaurantHours, restaurantHoursToday } = useRestaurant()
   const { address, isLoading } = useAddressUserStoreProfile()
 
   const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
-  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] =
-    useState([])
+  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] = useState([])
   const [restaurantHourToday, setRestaurantHourToday] = useState([])
   const [restaurantHour, setRestaurantHour] = useState([])
 
   const { storeId } = useParams()
 
   useEffect(() => {
-    restaurant.forEach((res) => {
+    restaurants.forEach((res) => {
       if (res.restaurantId == storeId) {
         setRestaurantWithStoreId(res)
       }
     })
-  }, [restaurant, storeId])
+  }, [restaurants, storeId])
 
   useEffect(() => {
     address.forEach((add) => {
@@ -74,7 +73,6 @@ export function StoreInformationInfo() {
   const todayIndex = new Date().getDay() - 1
   const now = new Date()
   const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`
-  console.log("Dia de Hoje: " + todayIndex)
 
   const isOpen = () => {
     if (

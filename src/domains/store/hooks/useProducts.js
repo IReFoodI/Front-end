@@ -1,7 +1,7 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { fetchAllProducts } from "@/domains/store/services/productService"
 
 export function useProducts() {
   const [products, setProducts] = useState([])
@@ -11,7 +11,7 @@ export function useProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       await onRequest({
-        request: async () => axios.get(`http://localhost:8080/api/product`),
+        request: fetchAllProducts,
         onSuccess: async (productsRes) => {
           setProducts(productsRes)
         },
@@ -22,27 +22,7 @@ export function useProducts() {
     fetchProducts()
   }, [onRequest, error])
 
-  const handleStatusChange = async (productId, newStatus) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:8080/api/product/${productId}`,
-        { active: newStatus },
-        { headers: { "Content-Type": "application/json" } }
-      )
-
-      if (response.status !== 200) {
-        throw new Error("Erro ao atualizar o status do produto.")
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar o status:", error)
-      if (error.response) {
-        console.error("Response data:", error.response.data)
-        console.error("Response status:", error.response.status)
-      }
-    }
-  }
-
-  return { products, loading, handleStatusChange }
+  return { products, loading }
 }
 
 // Função para decodificar o token JWT

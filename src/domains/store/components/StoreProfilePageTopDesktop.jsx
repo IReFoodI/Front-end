@@ -19,17 +19,17 @@ export function StoreProfilePageTopDesktop() {
 
   const { storeId } = useParams()
 
-  const { restaurant, restaurantHoursToday } = useRestaurant() //id do restaurante
+  const { restaurants, restaurantHoursToday } = useRestaurant()
 
   const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
 
   useEffect(() => {
-    restaurant.forEach((res) => {
+    restaurants.forEach((res) => {
       if (res.restaurantId == storeId) {
         setRestaurantWithStoreId(res)
       }
     })
-  }, [restaurant, storeId])
+  }, [restaurants, storeId])
 
   const {
     fantasy,

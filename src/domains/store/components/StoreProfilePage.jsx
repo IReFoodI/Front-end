@@ -14,7 +14,7 @@ import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
-  const { restaurant, restaurantHoursToday } = useRestaurant() //id do restaurante
+  const { restaurants, restaurantHoursToday } = useRestaurant()
   const { address } = useAddressUserStoreProfile()
 
   const { storeId } = useParams()
@@ -24,12 +24,12 @@ export function UserStoreProfilePage() {
     useState([])
 
   useEffect(() => {
-    restaurant.forEach((res) => {
+    restaurants.forEach((res) => {
       if (res.restaurantId == storeId) {
         setRestaurantWithStoreId(res)
       }
     })
-  }, [restaurant, storeId])
+  }, [restaurants, storeId])
 
   useEffect(() => {
     address.forEach((add) => {
@@ -42,15 +42,6 @@ export function UserStoreProfilePage() {
       }
     })
   }, [address, storeId])
-
-  console.log(`Todos os Restaurantes: `, restaurant)
-  console.log(`Restaurante com id ${storeId}: `, restaurantWithStoreId)
-
-  console.log(`Todos os Endereços: `, address)
-  console.log(
-    `Endereço do Restaurante com id ${storeId}: `,
-    restaurantAddressWithStoreId
-  )
 
   const {
     fantasy,

@@ -7,6 +7,16 @@ export async function fetchRestaurantHours() {
   return await axios.get(`${BASE_URL}/restaurant`)
 }
 
+export async function fetchAllRestaurantHours() {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}`)
+}
+
+export async function fetchAllRestaurantHoursToday() {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/today`)
+}
+
 export async function addRestaurantHours(data) {
   if (data.id) {
     if (data.enabled) {
