@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -14,8 +15,10 @@ import {
 import { PasswordInput } from "@/ui/components/ui/passwordInput"
 
 import { changePasswordTypes } from "../../models/dashboard/ChangePasswordTypes"
+import { restaurantService } from "../../services/restaurantService"
 
 export function ChangePasswordForm() {
+  const { loading, onRequest } = useFetch()
   const form = useForm({
     resolver: zodResolver(changePasswordTypes),
     defaultValues: {
@@ -24,10 +27,20 @@ export function ChangePasswordForm() {
       confirmPassword: "",
     },
   })
-
-  const onSubmit = (data) => {
+  function handleSubmitError(error) {
+    console.log(error)
+  }
+  function handleSubmitSuccess() {
     toast.success("Troca de senha efetuada com sucesso!")
-    console.log(data)
+    form.reset()
+  }
+
+  const onSubmit = async (data) => {
+    await onRequest({
+      request: () => restaurantService.updateRestaurantPassword(data),
+      onSuccess: handleSubmitSuccess,
+      onError: handleSubmitError,
+    })
   }
 
   return (

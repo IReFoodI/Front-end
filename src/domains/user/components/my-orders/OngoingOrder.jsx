@@ -34,10 +34,10 @@ export function OngoingOrder() {
   const encodedAddress = encodeURIComponent(address)
 
   return (
-    <div
-      id="page"
-      className="mx-auto flex h-full w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto"
-    >
+    <>
+      <h2 className="my-8 w-full text-left font-semibold text-orange-500 lg:px-32 lg:text-start">
+        Pedido em andamento
+      </h2>
       <div className="flex h-full flex-col md:flex-row">
         <div className="flex flex-col justify-between px-10 lg:w-1/2 lg:ps-5">
           <div className="flex-1">
@@ -58,14 +58,14 @@ export function OngoingOrder() {
         </div>
         <div className="relative flex justify-end text-center">
           <img
-            className="z-10 hidden max-h-[700px] w-[80%] md:relative md:block"
+            className="z-2 hidden max-h-[700px] w-[80%] md:relative md:block"
             src={background}
             alt=""
           />
 
           <div
             id="map"
-            className="top-12 z-20 mx-auto hidden w-[80%] items-center justify-center md:absolute md:left-0 md:flex md:h-[80%]"
+            className="z-2 top-12 mx-auto hidden w-[80%] items-center justify-center md:absolute md:left-0 md:flex md:h-[80%]"
           >
             <iframe
               title="Google Maps"
@@ -78,6 +78,6 @@ export function OngoingOrder() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
