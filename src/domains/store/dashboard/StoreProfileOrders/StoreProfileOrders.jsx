@@ -10,10 +10,11 @@ import { TabsStructure } from "./components/TabsStructure"
 export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
   const [orders, setOrders] = useState()
 
-  const { loading, onRequest } = useFetch()
+  const { onRequest } = useFetch()
   const fetchStoreOrders = async () => {
     await onRequest({
-      request: () => restaurantService.getRestaurantHistoricalOrders(1),
+      // Pegar id pelo token salvo
+      request: () => restaurantService.getRestaurantOrders(1),
       onSuccess: (data) => {
         setOrders(data)
       },
@@ -35,8 +36,8 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
     <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/3">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
-          pendingOrders={filterOrders("ENVIADO")} //colocar pendente
-          scheduledOrders={filterOrders("EMPRODUCAO")}
+          pendingOrders={filterOrders("EMPRODUCAO")} //colocar pendente
+          scheduledOrders={filterOrders("APROVADO")}
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
@@ -44,8 +45,8 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
       </div>
       <div className="flex flex-col">
         <AccordionsStructure
-          doneOrders={filterOrders("ENTREGUE")}
-          canceledOrders={filterOrders("CANCELED")}
+          doneOrders={filterOrders("CONCLUIDO")}
+          canceledOrders={filterOrders("CANCELADO")}
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}

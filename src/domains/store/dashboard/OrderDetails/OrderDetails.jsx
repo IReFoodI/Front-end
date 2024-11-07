@@ -27,29 +27,37 @@ export function OrderDetails() {
 
   const { onRequest } = useFetch()
 
-  const fetchOrderItems = async () => {
-    await onRequest({
-      request: () => restaurantService.getOrderItems(),
-      onSuccess: (data) => {
-        const orderItemsPerOrder = data.filter(
-          (orderItem) => orderItem.orderId == currentOrder.orderId
-        )
-        setOrderItems(orderItemsPerOrder)
-        setTotalValue(
-          orderItemsPerOrder.reduce(
-            (acc, currValue) => acc + currValue.subtotal,
-            0
-          )
-        )
-      },
-    })
+  function capitalize(text) {
+    return String(text).charAt(0).toUpperCase() + text.slice(1).toLowerCase()
   }
 
   useEffect(() => {
+    const fetchOrderItems = async () => {
+      const fetchedItems = []
+
+      currentOrder?.orderItems?.map(async (item) => {
+        const productId = item.productId
+
+        await onRequest({
+          request: () => restaurantService.getProductById(productId),
+          onSuccess: (data) => {
+            fetchedItems.push({
+              ...data,
+              itemQuantity: item.quantity,
+              itemSubtotal: item.subtotal,
+            })
+          },
+        })
+      })
+
+      setOrderItems(fetchedItems)
+    }
+
     if (currentOrder) {
       fetchOrderItems()
+      setTotalValue(currentOrder.totalValue)
     }
-  }, [currentOrder])
+  }, [currentOrder, onRequest, setOrderItems])
 
   useEffect(() => {
     if (currentOrder !== undefined) {
@@ -105,7 +113,7 @@ export function OrderDetails() {
                   <div className="flex gap-1 text-sm">
                     <p className="font-bold">Agendado:</p>
                     <p className="flex">
-                      {dateFormatter(new Date(currentOrder.dateModified))}
+                      {dateFormatter(new Date(currentOrder.orderDate))}
                     </p>
                   </div>
                 </div>
@@ -113,8 +121,7 @@ export function OrderDetails() {
                 <div className="flex items-center gap-2 rounded border-2 border-gray-300 bg-gray-200 p-1">
                   <IconTruck className="text-orange-500" />
                   <p className="text-sm font-bold">
-                    {/* não há propriedade do tipo de recebimento do pedido no objeto retornado ao requerir os pedidos */}
-                    Retirada
+                    {capitalize(currentOrder.deliveryType)}
                   </p>
                 </div>
 

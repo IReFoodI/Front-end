@@ -15,28 +15,6 @@ import {
 } from "@/ui/components/ui/table"
 
 export function OrderItemsTable({ orderItems, totalValue }) {
-  const [productNames, setProductNames] = useState({})
-  const { onRequest } = useFetch()
-
-  useEffect(() => {
-    const fetchProductsById = async () => {
-      let names = {}
-
-      orderItems?.map(async (item) => {
-        const productId = item.productId
-        await onRequest({
-          request: () => restaurantService.getProductById(productId),
-          onSuccess: (data) => {
-            names[productId] = data.nameProd
-          },
-        })
-      })
-      setProductNames(names)
-    }
-
-    fetchProductsById()
-  }, [orderItems, onRequest])
-
   return (
     <Table className="rounded-xl bg-gray-200">
       <TableHeader className="text-sm">
@@ -55,12 +33,10 @@ export function OrderItemsTable({ orderItems, totalValue }) {
             key={item.productId}
             className="text-base font-semibold text-gray-500"
           >
-            <TableCell colSpan={1}>{item.quantity}</TableCell>
-            <TableCell colSpan={1}>
-              {productNames[item.productId] || "Carregando..."}
-            </TableCell>
+            <TableCell colSpan={1}>{item.itemQuantity}</TableCell>
+            <TableCell colSpan={1}>{item.nameProd}</TableCell>
             <TableCell colSpan={3} className="text-right">
-              {currencyFormatter(item.subtotal)}
+              {currencyFormatter(item.itemSubtotal)}
             </TableCell>
           </TableRow>
         ))}
