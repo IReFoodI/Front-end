@@ -2,7 +2,11 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { restaurantService } from "@/domains/store/services/restaurantService"
-import { fetchAllRestaurantHours, fetchAllRestaurantHoursToday } from "../services/restaurantHoursService"
+
+import {
+  fetchAllRestaurantHours,
+  fetchAllRestaurantHoursToday,
+} from "../services/restaurantHoursService"
 
 export function useRestaurant() {
   const [restaurants, setRestaurants] = useState([])

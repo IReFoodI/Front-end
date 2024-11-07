@@ -18,7 +18,8 @@ export function StoreInformationInfo() {
   const { address, isLoading } = useAddressUserStoreProfile()
 
   const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
-  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] = useState([])
+  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] =
+    useState([])
   const [restaurantHourToday, setRestaurantHourToday] = useState([])
   const [restaurantHour, setRestaurantHour] = useState([])
 

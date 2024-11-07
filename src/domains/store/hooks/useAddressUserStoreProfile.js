@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
+
 import { fetchAllAddress } from "../services/addressService"
 
 export function useAddressUserStoreProfile() {
@@ -16,7 +17,9 @@ export function useAddressUserStoreProfile() {
         onSuccess: async (addressRes) => {
           setAddress(addressRes)
           setIsLoading(false)
-          console.log(`Todos os endereços de Usuários e Restaurantes: ${address}`)
+          console.log(
+            `Todos os endereços de Usuários e Restaurantes: ${address}`
+          )
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
