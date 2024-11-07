@@ -14,8 +14,16 @@ import {
 } from "@/ui/components/ui/dialog"
 import { SheetHeader, SheetTitle } from "@/ui/components/ui/sheet"
 const DeliveryAndPayment = () => {
-  const { cards, fetchCards, removeCard, isLoading, error } = userCardStore()
-  const [selectedCard, setSelectedCard] = useState(null)
+  const {
+    cards,
+    fetchCards,
+    removeCard,
+    isLoading,
+    error,
+    selectedCard,
+    setSelectedCard,
+  } = userCardStore()
+  // const [selectedCard, setSelectedCard] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [cardToDelete, setCardToDelete] = useState(null)
 
@@ -27,7 +35,7 @@ const DeliveryAndPayment = () => {
     if (cards.length > 0) {
       setSelectedCard(cards[0].cardId)
     }
-  }, [cards])
+  }, [cards, setSelectedCard])
 
   const handleCardSelect = (cardId) => {
     setSelectedCard(cardId)

@@ -1,68 +1,35 @@
 import { IconShoppingBag } from "@tabler/icons-react"
+import { useEffect } from "react"
 
 // import { Button } from "./Button"
 import { Button } from "@/ui/components/ui/button/button"
 
+import useOrderStore from "../../../../app/store/userOrderStore"
 import { CardItem } from "../CardItem"
 
 const OrderHistory = () => {
-  const cardData = [
-    {
-      date: "Ter 06 agosto 2024",
-      name: "Dragão Verde",
-      type: "Restaurante",
-      orderNumber: 3399,
-      items: 1,
-      itemName: "Item a venda",
-      price: 40.0,
-      rating: 4,
-      imgUrl: "https://placehold.co/100x100",
-    },
-    {
-      date: "Qua 07 agosto 2024",
-      name: "Leão Dourado",
-      type: "Pizzaria",
-      orderNumber: 4455,
-      items: 2,
-      itemName: "Pizza grande",
-      price: 80.0,
-      rating: 5,
-      imgUrl: "https://placehold.co/100x100",
-    },
-    {
-      date: "Qui 08 agosto 2024",
-      name: "Lótus Azul",
-      type: "Café",
-      orderNumber: 1122,
-      items: 3,
-      itemName: "Café especial",
-      price: 15.0,
-      rating: 3,
-      imgUrl: "https://placehold.co/100x100",
-    },
-    {
-      date: "Qui 08 agosto 2024",
-      name: "Lótus Azul",
-      type: "Café",
-      orderNumber: 1122,
-      items: 3,
-      itemName: "Café especial",
-      price: 15.0,
-      rating: 0,
-      imgUrl: "https://placehold.co/100x100",
-    },
-  ]
+  const { orderHistory, fetchOrders } = useOrderStore()
+  const userId = 1
+
+  useEffect(() => {
+    fetchOrders(userId)
+  }, [userId, fetchOrders])
+
+  // useEffect(() => {
+  //   console.log(orderHistory)
+  // })
+
   return (
     <div className="flex w-full flex-col items-start px-8">
       <div className="flex w-full flex-col">
-        {cardData.length > 0 ? (
+        {orderHistory.length > 0 ? (
           <>
             <h2 className="my-8 text-center font-semibold text-orange-500 lg:px-24 lg:text-start">
               Histórico
             </h2>
             <div className="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {cardData.map((data, index) => (
-                <CardItem key={index} data={data} />
+              {orderHistory.map((order, index) => (
+                <CardItem key={index} data={order} />
               ))}
             </div>
           </>
