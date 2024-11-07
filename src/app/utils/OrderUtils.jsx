@@ -9,14 +9,13 @@ export function getStatus(order) {
   let iconInOrder
   let nameInStatusOrder
 
-  if (order.orderStatus == "ENVIADO") {
-    // colocar PENDENTE
+  if (order.orderStatus == "EMPRODUCAO") {
     iconInOrder = <IconAlertOctagon className="text-yellow-500" size={16} />
     nameInStatusOrder = "Pendente"
-  } else if (order.orderStatus == "EMPRODUCAO") {
+  } else if (order.orderStatus == "APROVADO") {
     nameInStatusOrder = "Aceito"
     iconInOrder = <IconHeart className="text-green-500" size={16} />
-  } else if (order.orderStatus == "ENTREGUE") {
+  } else if (order.orderStatus == "CONCLUIDO") {
     nameInStatusOrder = "Concluído"
     iconInOrder = <IconCircleCheck className="text-blue-500" size={16} />
   } else {

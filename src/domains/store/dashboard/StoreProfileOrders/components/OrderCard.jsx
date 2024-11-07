@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
-import { getStatus, groupItems } from "@/app/utils/OrderUtils"
+import { getStatus } from "@/app/utils/OrderUtils"
 import { restaurantService } from "@/domains/store/services/restaurantService"
 import { userService } from "@/domains/user/services/userService"
 import { Button } from "@/ui/components/ui/button/button"
@@ -18,10 +18,9 @@ export function OrderCard({
   setUser,
 }) {
   const [orderItems, setOrderItems] = useState([])
-  const [productNames, setProductNames] = useState({})
   const [user, setUserData] = useState()
   const status = getStatus(order)
-  const [totalValue, setTotalValue] = useState(0)
+  const [totalValue] = useState(order.totalValue)
 
   function onStatusButtonClick() {
     setOrder(order)
@@ -39,47 +38,34 @@ export function OrderCard({
     })
   }
 
-  const fetchOrderItems = async () => {
-    await onRequest({
-      request: () => restaurantService.getOrderItems(),
-      onSuccess: (data) => {
-        const orderItemsPerOrder = data.filter(
-          (orderItem) => orderItem.orderId == order.orderId
-        )
-        setOrderItems(orderItemsPerOrder)
-        setTotalValue(
-          orderItemsPerOrder.reduce(
-            (acc, currValue) => acc + currValue.subtotal,
-            0
-          )
-        )
-      },
-    })
-  }
-
   useEffect(() => {
-    fetchOrderItems()
     fetchUserData()
   }, [])
 
   useEffect(() => {
     const fetchProductsById = async () => {
-      let names = {}
+      const fetchedItems = []
 
-      orderItems?.map(async (item) => {
+      order?.orderItems?.map(async (item) => {
         const productId = item.productId
+
         await onRequest({
           request: () => restaurantService.getProductById(productId),
           onSuccess: (data) => {
-            names[productId] = data.nameProd
+            fetchedItems.push({
+              ...data,
+              itemQuantity: item.quantity,
+              itemSubtotal: item.subtotal,
+            })
           },
         })
       })
-      setProductNames(names)
+
+      setOrderItems(fetchedItems)
     }
 
     fetchProductsById()
-  }, [orderItems, onRequest])
+  }, [])
 
   if (!orderItems || !user) {
     return <Loading />
@@ -114,11 +100,10 @@ export function OrderCard({
             className={`flex w-full justify-between py-2 font-semibold ${isDoneOrCanceled ? "text-gray-500" : "text-gray-600"}`}
           >
             <div className="flex items-center justify-between gap-4 text-base">
-              <span>{item.quantity}x</span>
-              {/* itens do pedido não possuem nome */}
-              <p>{productNames[item.productId] || "Carregando..."}</p>
+              <span>{item.itemQuantity}x</span>
+              <p>{item.nameProd}</p>
             </div>
-            <p className="text-base">{currencyFormatter(item.subtotal)}</p>
+            <p className="text-base">{currencyFormatter(item.itemSubtotal)}</p>
           </div>
           <Separator />
         </div>
@@ -128,7 +113,7 @@ export function OrderCard({
         <p className="font-bold">{currencyFormatter(totalValue)}</p>
       </div>
       {/* Substituir por PENDENTE */}
-      {order.orderStatus == "ENVIADO" && (
+      {order.orderStatus == "PENDENTE" && (
         <div className="flex w-full justify-around gap-1 pt-4">
           <Button className="w-1/2">Aceitar Pedido</Button>
           <Button className="w-1/2 bg-gray-400 hover:bg-gray-500">
