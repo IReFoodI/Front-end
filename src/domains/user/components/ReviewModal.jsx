@@ -54,8 +54,6 @@ export function ReviewModal({ reviewStars }) {
       return
     }
 
-    console.log(restaurantInfo)
-
     const reviewData = {
       ratingNote: stars,
       ratingDate: new Date().toISOString(),
@@ -63,8 +61,6 @@ export function ReviewModal({ reviewStars }) {
       userId,
       restaurantId: restaurantInfo.restaurantId,
     }
-
-    console.log(reviewData)
 
     try {
       const response = await reviewService.createReview(reviewData)
