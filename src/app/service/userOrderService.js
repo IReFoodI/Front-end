@@ -4,6 +4,9 @@ const orderService = {
   async fetchOrders(userId) {
     const axiosInstance = createAxiosInstance(true)
     try {
+      if (!userId) {
+        return
+      }
       const response = await axiosInstance.get(`/api/order/user/${userId}`)
       return response.data
     } catch (error) {
