@@ -87,9 +87,10 @@ export function OrderCard({
                 className="flex cursor-pointer items-center justify-between"
                 onClick={() => toggleItemDescription(index)}
               >
-                <div className="text-gray-700">{item.name}</div>
+                <div className="text-gray-700">{item.quantity}x</div>
+                <div className="text-gray-700">{item.productName}</div>
                 <div className="text-gray-700">
-                  {currencyFormatter(item.price)}
+                  {currencyFormatter(item.unitValue * item.quantity)}
                 </div>
               </div>
               <div

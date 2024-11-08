@@ -37,7 +37,7 @@ export function CardItem({ data }) {
 
   // Formatar os itens do pedido
   const formattedOrderItems = data.orderItems.map((item) => ({
-    name: "Supondo Nome", //item.productName,
+    name: item.productName,
     quantity: item.quantity,
   }))
 
@@ -80,12 +80,6 @@ export function CardItem({ data }) {
         </div>
       </div>
       <div className="border-b bg-gray-100 p-2 text-center">
-        {/* <Button
-          variant="ghost"
-          className="flex h-5 w-full items-center justify-center text-primary hover:text-primary"
-        >
-          Ajuda
-        </Button> */}
         <p className="text-xl text-primary">
           Total R$ {data.totalValue.toFixed(2)}
         </p>
