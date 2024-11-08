@@ -66,6 +66,7 @@ export const finalizeOrder = async ({ navigate }) => {
       console.log(transactionResponse.data)
 
       if (transactionResponse.status === 201) {
+        await useCartStore.getState().clearCart()
         navigate("/pedidos")
       } else {
         throw new Error("Erro ao criar a transação!")
