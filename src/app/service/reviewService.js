@@ -11,6 +11,17 @@ const reviewService = {
       throw error
     }
   },
+
+  async getReviewByOrderId(orderId) {
+    const axiosInstance = createAxiosInstance(true)
+    try {
+      const response = await axiosInstance.get(`/api/review/order/${orderId}`)
+      return response.data
+    } catch (error) {
+      console.error("Erro ao buscar a avaliação pelo orderId:", error)
+      throw error
+    }
+  },
 }
 
 export default reviewService

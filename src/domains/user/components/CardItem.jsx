@@ -3,7 +3,9 @@ import {
   IconCheck,
   IconStarFilled,
 } from "@tabler/icons-react"
+import { useEffect, useState } from "react"
 
+import reviewService from "@/app/service/reviewService"
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -26,6 +28,26 @@ function renderStars(rating) {
 }
 export function CardItem({ data }) {
   const orderDate = new Date(data.orderDate)
+  const [review, setReview] = useState(null)
+
+  useEffect(() => {
+    async function fetchReview() {
+      try {
+        const response = await reviewService.getReviewByOrderId(data.orderId)
+        setReview(response)
+      } catch (error) {
+        console.error("Erro ao buscar a avaliação:", error)
+      }
+    }
+    fetchReview()
+  }, [data.orderId])
+
+  useEffect(() => {
+    if (review) {
+      return
+    }
+  }, [review])
+
   const formattedDate = orderDate.toLocaleDateString("pt-BR", {
     weekday: "short",
     day: "2-digit",
@@ -84,10 +106,10 @@ export function CardItem({ data }) {
           Total R$ {data.totalValue.toFixed(2)}
         </p>
       </div>
-      {data.rating ? (
+      {review && review.ratingNote ? (
         <div className="flex w-full items-center justify-between rounded-b-lg bg-gray-100 p-2 px-4">
           <p className="">Pedido avaliado</p>
-          <span className="flex gap-2">{renderStars(data.rating)}</span>
+          <span className="flex gap-2">{renderStars(review.ratingNote)}</span>
         </div>
       ) : (
         <AlertDialog>
