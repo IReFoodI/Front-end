@@ -5,11 +5,12 @@ import { useEffect } from "react"
 import { Button } from "@/ui/components/ui/button/button"
 
 import useOrderStore from "../../../../app/store/userOrderStore"
+import userStore from "../../stores/userStore"
 import { CardItem } from "../CardItem"
 
 const OrderHistory = () => {
   const { orderHistory, fetchOrders } = useOrderStore()
-  const userId = 1
+  const { userId } = userStore()
 
   useEffect(() => {
     fetchOrders(userId)

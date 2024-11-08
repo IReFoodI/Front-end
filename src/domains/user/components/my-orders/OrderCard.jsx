@@ -117,41 +117,6 @@ export function OrderCard({
             </div>
           ))}
 
-          {/* {orderItems?.map((item, index) => (
-            <div className="mt-4" key={index}>
-              <div
-                className="flex cursor-pointer items-center justify-between"
-                onClick={() => toggleItemDescription(index)}
-              >
-                <div className="text-gray-700">{item.name}</div>
-                <div className="text-gray-700">
-                  {currencyFormatter(item.price)}
-                </div>
-              </div>
-              <div
-                className={`mt-1 text-sm text-gray-400 ${expandedItems[index] ? "" : "line-clamp-1"}`}
-              >
-                {item.description}
-              </div>
-              {!expandedItems[index] && item.description.length > 50 && (
-                <button
-                  onClick={() => toggleItemDescription(index)}
-                  className="mt-1 text-xs text-primary"
-                >
-                  Ver mais
-                </button>
-              )}
-              {expandedItems[index] && (
-                <button
-                  onClick={() => toggleItemDescription(index)}
-                  className="mt-1 text-xs text-primary"
-                >
-                  Ver menos
-                </button>
-              )}
-            </div>
-          ))} */}
-
           <div className="mt-4 flex justify-between rounded-lg bg-background p-2">
             <div className="font-semibold">Subtotal</div>
             <div className="font-semibold">{currencyFormatter(subtotal)}</div>
