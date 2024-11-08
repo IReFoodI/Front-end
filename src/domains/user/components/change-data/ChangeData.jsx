@@ -1,8 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { toast } from "sonner"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
+import { ModalSaveChanges } from "@/domains/store/dashboard/StoreSettings/ModalSaveChanges"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Form,
@@ -13,33 +16,67 @@ import {
   FormMessage,
 } from "@/ui/components/ui/form/form"
 import { Input } from "@/ui/components/ui/input"
+import { Loading } from "@/ui/components/ui/loading"
 import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 
 import { formSchema } from "../../models/MyProfileDataTypes"
+import { userService } from "../../services/userService"
+import userStore from "../../stores/userStore"
 import { ModalCancel } from "./ModalCancel"
-
-//todo objeto temporário
-const profileData = {
-  name: "Samilis",
-  email: "samilisbritto@gmail.com",
-  phone: "91993559449",
-}
 
 export function ChangeData() {
   const navigate = useNavigate()
+  const { setUser } = userStore()
+  const [isModalSaveChangesOpen, setIsModalSaveChangesOpen] = useState(false)
+  const { loading, onRequest } = useFetch()
+
+  const toggleOpenModalSaveChanges = () =>
+    setIsModalSaveChangesOpen((prev) => !prev)
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: profileData.name,
-      phone: profileData.phone,
-      email: profileData.email,
+      name: "",
+      phone: "",
+      email: "",
     },
   })
 
-  function onSubmit(data) {
-    console.log(data) // enviar para o back
-    toast.success("Informações alteradas com sucesso")
-    navigate("/meus-dados")
+  const fetchStoreProfileSettings = async () => {
+    await onRequest({
+      request: () => userService.getUserInformation(),
+      onSuccess: (data) => {
+        setUser(data)
+        form.reset(data)
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchStoreProfileSettings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const onSubmit = async () => {
+    await onRequest({
+      request: () =>
+        userService.updateUser({
+          ...form.getValues(),
+          password: "deafult",
+          phone: form.getValues().phone.replace(/[^\d]/g, ""),
+        }),
+      onSuccess: (data) => {
+        setUser(data.user)
+        localStorageUtil.setLocalStorageToken(data.jwt)
+        setIsModalSaveChangesOpen(false)
+        navigate("/meus-dados")
+      },
+      successMessage: "Dados atualizado",
+    })
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
@@ -51,7 +88,9 @@ export function ChangeData() {
       <div className="w-full justify-between pt-24">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(() => {
+              toggleOpenModalSaveChanges()
+            })}
             className="grid gap-2 text-left"
           >
             <FormField
@@ -107,13 +146,18 @@ export function ChangeData() {
                 </FormItem>
               )}
             />
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-5">
-              <ModalCancel />
-              <Button type="submit">Salvar</Button>
+            <div className="mt-9 flex flex-col justify-end gap-2 sm:flex-row">
+              <ModalCancel className={"order-2"} />
+              <Button className={"order-1"}>Salvar alterações</Button>
             </div>
           </form>
         </Form>
       </div>
+      <ModalSaveChanges
+        toggleOpenModal={toggleOpenModalSaveChanges}
+        isModalOpen={isModalSaveChangesOpen}
+        onConfirm={onSubmit}
+      />
     </>
   )
 }
