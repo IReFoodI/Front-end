@@ -35,6 +35,20 @@ const orderService = {
       throw error
     }
   },
+
+  async createTransaction(transactionData) {
+    const axiosInstance = createAxiosInstance(false)
+    try {
+      const response = await axiosInstance.post(
+        "/api/transaction",
+        transactionData
+      )
+      return response
+    } catch (error) {
+      console.error("Erro ao criar transação:", error)
+      throw error
+    }
+  },
 }
 
 export default orderService

@@ -45,10 +45,31 @@ export const finalizeOrder = async ({ navigate }) => {
   }
 
   try {
-    const response = await userOrderService.createOrder(orderData)
+    const orderResponse = await userOrderService.createOrder(orderData)
 
-    if (response.status === 201) {
-      navigate("/pedidos")
+    if (orderResponse.status === 201) {
+      const orderId = orderResponse.data.orderId
+
+      const transactionData = {
+        transactionDate: new Date().toISOString(),
+        transactionValue: subtotal,
+        transactionStatus: "APROVADA",
+        cardId: selectedCard,
+        orderId: orderId,
+      }
+
+      console.log(transactionData)
+
+      const transactionResponse =
+        await userOrderService.createTransaction(transactionData)
+
+      console.log(transactionResponse.data)
+
+      if (transactionResponse.status === 201) {
+        navigate("/pedidos")
+      } else {
+        throw new Error("Erro ao criar a transação!")
+      }
     } else {
       throw new Error("Erro ao criar o pedido!")
     }
