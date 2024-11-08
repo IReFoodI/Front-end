@@ -3,15 +3,12 @@ import {
   IconCheck,
   IconStarFilled,
 } from "@tabler/icons-react"
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
 
 import {
   AlertDialog,
   AlertDialogTrigger,
 } from "@/ui/components/ui/alert-dialog"
 
-// import { Button } from "@/ui/components/ui/button/button"
 import { ReviewModal } from "./ReviewModal"
 
 function renderStars(rating) {
@@ -28,9 +25,6 @@ function renderStars(rating) {
   return stars
 }
 export function CardItem({ data }) {
-  // const formattedDate = format(new Date(data.orderDate), "III dd MMM yyyy", {
-  //   locale: ptBR,
-  // })
   const orderDate = new Date(data.orderDate)
   const formattedDate = orderDate.toLocaleDateString("pt-BR", {
     weekday: "short",
