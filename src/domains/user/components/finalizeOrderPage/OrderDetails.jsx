@@ -1,12 +1,13 @@
 import { IconClock } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import restaurantStore from "@/app/store/restaurantStore"
 import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
+import { finalizeOrder } from "../../../../app/utils/finalizeOrder"
 import CardStore from "./CardStore"
 import DeliveryAndPayment from "./DeliveryAndPayment"
 
@@ -22,6 +23,7 @@ export const OrderDetails = () => {
     fetchAddress,
     restaurantAddress,
   } = restaurantStore()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const initializeData = async () => {
@@ -64,6 +66,8 @@ export const OrderDetails = () => {
   const encodedAddress = encodeURIComponent(
     `${restaurantAddressStandard.street || ""}, ${restaurantAddressStandard.number || ""}, ${restaurantAddressStandard.city || ""}`
   )
+
+  const handleFinalizeOrder = () => finalizeOrder({ navigate })
 
   return (
     <div
@@ -111,24 +115,15 @@ export const OrderDetails = () => {
         <DeliveryAndPayment />
       </div>
       {/* BUTTON FINALIZAR */}
-      {cards.length > 0 ? (
-        <Link to="/pedidos" className="w-full">
-          <div className="mx-auto hidden w-full max-w-[400px] lg:block">
-            <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
-              Finalizar
-            </Button>
-          </div>
-        </Link>
-      ) : (
-        <div className="mx-auto hidden w-full max-w-[400px] lg:block">
-          <Button
-            className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
-            disabled
-          >
-            Finalizar
-          </Button>
-        </div>
-      )}
+      <div className="mx-auto hidden w-full max-w-[400px] lg:block">
+        <Button
+          className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
+          disabled={cards.length === 0}
+          onClick={handleFinalizeOrder}
+        >
+          Finalizar
+        </Button>
+      </div>
     </div>
   )
 }

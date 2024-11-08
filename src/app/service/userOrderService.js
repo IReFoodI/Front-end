@@ -24,6 +24,17 @@ const orderService = {
       throw error
     }
   },
+
+  async createOrder(orderData) {
+    const axiosInstance = createAxiosInstance(true)
+    try {
+      const response = await axiosInstance.post("/api/order", orderData)
+      return response
+    } catch (error) {
+      console.error("Erro ao criar pedido:", error)
+      throw error
+    }
+  },
 }
 
 export default orderService
