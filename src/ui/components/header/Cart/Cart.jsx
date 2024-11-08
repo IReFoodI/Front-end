@@ -5,7 +5,7 @@ import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
 import useCartStore from "../../../../app/store/useCartStore"
 import { Button } from "../../ui/button/button"
-import { SheetHeader, SheetTitle } from "../../ui/sheet"
+import { SheetClose, SheetHeader, SheetTitle } from "../../ui/sheet"
 
 export function Cart() {
   const { cartItems, subtotal, clearCart, restaurantName, removeItemFromCart } =
@@ -73,11 +73,13 @@ export function Cart() {
                 <p>Subtotal</p>
                 <span>{currencyFormatter(subtotal)}</span>
               </div>
-              <Link to="/finalizar-pedido" className="w-full">
-                <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
-                  Pagar agora
-                </Button>
-              </Link>
+              <SheetClose asChild>
+                <Link to="/finalizar-pedido" className="w-full">
+                  <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+                    Pagar agora
+                  </Button>
+                </Link>
+              </SheetClose>
             </div>
           </div>
         </>
