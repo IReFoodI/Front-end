@@ -29,4 +29,14 @@ async function getUserById(userId) {
   return axios.get(`api/user/${userId}`)
 }
 
-export const userService = { createUserAccount, getUser, getUserById }
+async function getTransactionById(transactionId) {
+  const axios = createAxiosInstance(true)
+  return axios.get(`http://localhost:8080/api/transaction/${transactionId}`)
+}
+
+export const userService = {
+  createUserAccount,
+  getUser,
+  getUserById,
+  getTransactionById,
+}

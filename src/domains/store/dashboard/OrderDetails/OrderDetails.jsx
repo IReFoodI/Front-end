@@ -23,6 +23,7 @@ export function OrderDetails() {
   const [user, setUser] = useState()
   const [orderItems, setOrderItems] = useState([])
   const [totalValue, setTotalValue] = useState(0)
+  const [transaction, setTransaction] = useState()
   const targetOrderRef = useRef(null)
 
   const { onRequest } = useFetch()
@@ -53,8 +54,21 @@ export function OrderDetails() {
       setOrderItems(fetchedItems)
     }
 
+    const fetchTransaction = async () => {
+      await onRequest({
+        request: () =>
+          userService.getTransactionById(currentOrder.transactionId),
+        onSuccess: (data) => {
+          setTransaction(data)
+        },
+      })
+    }
+
     if (currentOrder) {
       fetchOrderItems()
+      if (currentOrder.transaction) {
+        fetchTransaction()
+      }
       setTotalValue(currentOrder.totalValue)
     }
   }, [currentOrder, onRequest, setOrderItems])
@@ -125,18 +139,18 @@ export function OrderDetails() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 rounded border-2 border-gray-300 bg-gray-200 p-1 text-sm lg:gap-2">
-                  <IconCurrencyDollar className="text-orange-500" />
-                  <div className="flex gap-1">
-                    <p className="font-bold">Pagamento:</p>
-                    {/* não há propriedade pagamento no objeto retornado ao requerir os pedidos */}
-                    <p className="font-normal">PIX</p>
+                {transaction && (
+                  <div className="flex items-center gap-3 rounded border-2 border-gray-300 bg-gray-200 p-1 text-sm lg:gap-2">
+                    <IconCurrencyDollar className="text-orange-500" />
+                    <div className="flex gap-1">
+                      <p className="font-bold">Pagamento:</p>
+                      <p className="font-normal">Cartão</p>
+                    </div>
+                    <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
+                      {capitalize(transaction.transactionStatus)}
+                    </p>
                   </div>
-                  <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
-                    {/* não há propriedade status de pagamento no objeto retornado ao requerir os pedidos */}
-                    Concluído
-                  </p>
-                </div>
+                )}
               </div>
 
               <div>
