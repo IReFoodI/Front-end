@@ -1,4 +1,3 @@
-import { decodeJwt } from "jose"
 import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
