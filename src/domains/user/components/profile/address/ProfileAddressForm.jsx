@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useEffect, useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { useCep } from "@/domains/user/hooks/useCep"
@@ -27,6 +27,9 @@ const FormSchema = changeUserAddressTypes
 export function ProfileAddressForm() {
   const params = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirectPath = searchParams.get("redirect")
+  const [encodedAddress, setEncodedAddress] = useState("")
   const { loading: loadingSaveAddress, onRequest: onRequestSaveAddress } =
     useFetch()
 
@@ -45,7 +48,6 @@ export function ProfileAddressForm() {
   })
 
   const { getValues, setValue, reset, watch } = formMethods
-  const [encodedAddress, setEncodedAddress] = useState("")
 
   const fetchAddress = useCallback(
     async (data) => {
@@ -54,12 +56,20 @@ export function ProfileAddressForm() {
         onSuccess: (data) => {
           reset({ ...data })
         },
-        onError: () => navigate("/endereco"),
+        onError: () => redirect(),
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [onRequestSaveAddress, reset]
   )
+
+  function redirect() {
+    if (redirectPath) {
+      navigate(redirectPath)
+    } else {
+      navigate("/endereco")
+    }
+  }
 
   useEffect(() => {
     if (params?.addressId) {
@@ -96,7 +106,7 @@ export function ProfileAddressForm() {
               addressType: "USER",
               addressId: params?.addressId,
             }),
-      onSuccess: () => navigate("/endereco"),
+      onSuccess: () => redirect(),
       successMessage: `${!params?.addressId ? "Endereço criado com sucesso!" : "Endereço alterado com sucesso!"}`,
     })
   }
@@ -282,15 +292,16 @@ export function ProfileAddressForm() {
             </div>
             <div className="mt-9 flex flex-col justify-end gap-2 sm:flex-row">
               {params?.addressId && (
-                <Link className="order-2 sm:order-1" to={"/endereco"}>
-                  <Button
-                    disabled={loadingSaveAddress}
-                    variant="secondary"
-                    className="w-full rounded-full border-2 py-5 text-base font-semibold transition-colors duration-300 ease-in-out sm:w-auto"
-                  >
-                    Cancelar Alterações
-                  </Button>
-                </Link>
+                // <Link className="order-2 sm:order-1" to={"/endereco"}>
+                <Button
+                  disabled={loadingSaveAddress}
+                  variant="secondary"
+                  className="w-full rounded-full border-2 py-5 text-base font-semibold transition-colors duration-300 ease-in-out sm:w-auto"
+                  onClick={redirect}
+                >
+                  Cancelar Alterações
+                </Button>
+                // </Link>
               )}
 
               <Button
