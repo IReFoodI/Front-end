@@ -4,7 +4,7 @@ export function ContainerStatus({ containerIcon, content, title }) {
   return (
     <Link
       to="/"
-      className="flex w-full flex-col items-center justify-center rounded-xl bg-gray-50 p-2 text-center hover:bg-[#ffeae4]"
+      className="flex w-full flex-col items-center justify-center rounded-xl bg-secondary p-2 text-center hover:bg-[#ffeae4]"
     >
       {containerIcon}
       <p className="text-base font-semibold text-primary">{content}</p>

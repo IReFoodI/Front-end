@@ -9,7 +9,7 @@ export function ProfileManagementLayout() {
       className="mx-auto grid max-h-full w-full max-w-screen-lg flex-grow text-gray-600 antialiased lg:grid-cols-2 lg:gap-x-8"
     >
       <Outlet />
-      <div className="mt-24 hidden lg:flex">
+      <div className="mt-[5vh] hidden lg:flex">
         <img
           className="max-w-[70vh] md:fixed"
           src={ilustra}
