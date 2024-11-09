@@ -7,9 +7,9 @@ export async function fetchRestaurantHours() {
   return await axios.get(`${BASE_URL}/restaurant`)
 }
 
-export async function fetchAllRestaurantHours() {
+export async function getRestaurantHoursById(id) {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${BASE_URL}`)
+  return await axios.get(`${BASE_URL}/restaurant-id/${id}`)
 }
 
 export async function fetchAllRestaurantHoursToday() {

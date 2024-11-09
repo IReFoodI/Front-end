@@ -1,35 +1,38 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { restaurantService } from "@/domains/store/services/restaurantService"
 
 import {
-  fetchAllRestaurantHours,
   fetchAllRestaurantHoursToday,
+  getRestaurantHoursById,
 } from "../services/restaurantHoursService"
 
 export function useRestaurant() {
-  const [restaurants, setRestaurants] = useState([])
-  const [restaurantHours, setRestaurantHours] = useState([])
+  const { storeId } = useParams()
+
+  const [restaurantById, setRestaurantById] = useState([])
+  const [restaurantHoursById, setRestaurantHoursById] = useState([])
   const [restaurantHoursToday, setRestaurantHoursToday] = useState([])
   const { loading, onRequest, error } = useFetch()
 
   useEffect(() => {
-    const fetchRestaurants = async () => {
+    const fetchRestaurantById = async () => {
       await onRequest({
-        request: restaurantService.getRestaurants,
-        onSuccess: async (restaurantRes) => {
-          setRestaurants(restaurantRes)
+        request: () => restaurantService.getRestaurantById(storeId),
+        onSuccess: async (restaurantByIdRes) => {
+          setRestaurantById(restaurantByIdRes)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
     }
 
-    const fetchRestaurantHours = async () => {
+    const fetchRestaurantHoursById = async () => {
       await onRequest({
-        request: fetchAllRestaurantHours,
-        onSuccess: async (restaurantHoursRes) => {
-          setRestaurantHours(restaurantHoursRes)
+        request: () => getRestaurantHoursById(storeId),
+        onSuccess: async (restaurantHoursByIdRes) => {
+          setRestaurantHoursById(restaurantHoursByIdRes)
         },
         onError: () => console.error("Erro ao buscar dados:", error),
       })
@@ -46,13 +49,13 @@ export function useRestaurant() {
     }
 
     fetchRestaurantHoursToday()
-    fetchRestaurantHours()
-    fetchRestaurants()
+    fetchRestaurantHoursById()
+    fetchRestaurantById()
   }, [onRequest, error])
 
   return {
-    restaurants,
-    restaurantHours,
+    restaurantById,
+    restaurantHoursById,
     restaurantHoursToday,
     loading,
   }

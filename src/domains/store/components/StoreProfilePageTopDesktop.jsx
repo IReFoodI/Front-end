@@ -5,7 +5,7 @@ import {
   IconInfoCircle,
   IconStarFilled,
 } from "@tabler/icons-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 
 import { useRestaurant } from "../hooks/useRestaurant"
@@ -19,17 +19,7 @@ export function StoreProfilePageTopDesktop() {
 
   const { storeId } = useParams()
 
-  const { restaurants, restaurantHoursToday } = useRestaurant()
-
-  const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
-
-  useEffect(() => {
-    restaurants.forEach((res) => {
-      if (res.restaurantId == storeId) {
-        setRestaurantWithStoreId(res)
-      }
-    })
-  }, [restaurants, storeId])
+  const { restaurantById, restaurantHoursToday } = useRestaurant()
 
   const {
     fantasy,
@@ -38,7 +28,7 @@ export function StoreProfilePageTopDesktop() {
     totalEvaluations,
     urlBanner,
     urlLogo,
-  } = restaurantWithStoreId
+  } = restaurantById
 
   return (
     <div className="text-gray-500 antialiased">
@@ -56,7 +46,7 @@ export function StoreProfilePageTopDesktop() {
             <IconClock size={15} />
           </span>
           <span className="text-gray-400 transition duration-300 hover:text-primary">
-            {restaurantHoursToday.map(
+            {restaurantHoursToday?.map(
               (res) =>
                 res.restaurantId == storeId && (
                   <span key={res.id}>

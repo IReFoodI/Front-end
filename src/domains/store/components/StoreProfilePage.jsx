@@ -14,34 +14,26 @@ import { StoreProductList } from "./StoreProductList"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
-  const { restaurants, restaurantHoursToday } = useRestaurant()
-  const { address } = useAddressUserStoreProfile()
+  const { restaurantById, restaurantHoursToday } = useRestaurant()
+  const { addressById } = useAddressUserStoreProfile()
 
   const { storeId } = useParams()
 
-  const [restaurantWithStoreId, setRestaurantWithStoreId] = useState([])
   const [restaurantAddressWithStoreId, setRestaurantAddressWithStoreId] =
     useState([])
 
   useEffect(() => {
-    restaurants.forEach((res) => {
-      if (res.restaurantId == storeId) {
-        setRestaurantWithStoreId(res)
-      }
-    })
-  }, [restaurants, storeId])
-
-  useEffect(() => {
-    address.forEach((add) => {
-      if (
+    const restaurantAddress = addressById?.find(
+      (add) =>
         add.addressType === "RESTAURANT" ||
         (add.restaurantId === storeId &&
           add.addressId === add.associatedOrderId)
-      ) {
-        setRestaurantAddressWithStoreId(add)
-      }
-    })
-  }, [address, storeId])
+    )
+
+    if (restaurantAddress) {
+      setRestaurantAddressWithStoreId(restaurantAddress)
+    }
+  }, [addressById, storeId])
 
   const {
     fantasy,
@@ -50,7 +42,8 @@ export function UserStoreProfilePage() {
     totalEvaluations,
     urlBanner,
     urlLogo,
-  } = restaurantWithStoreId
+  } = restaurantById
+
   const { district, city, state, number, street } = restaurantAddressWithStoreId
 
   return (
@@ -102,7 +95,7 @@ export function UserStoreProfilePage() {
                   <IconClock size={15} className="text-gray-500" />
                 </span>
                 <span className="transition duration-300 hover:text-primary">
-                  {restaurantHoursToday.map(
+                  {restaurantHoursToday?.map(
                     (res) =>
                       res.restaurantId == storeId && (
                         <span key={res.id}>

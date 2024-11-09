@@ -6,3 +6,8 @@ export async function fetchAllProducts() {
   const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}`)
 }
+
+export async function getAllProductsRestaurantById(id) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}`)
+}

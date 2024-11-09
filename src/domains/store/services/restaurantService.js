@@ -6,13 +6,9 @@ async function createRestaurant(data) {
   const axios = createAxiosInstance(true)
   return await axios.post(BASE_URL, data)
 }
-async function getRestaurant() {
+async function getRestaurantById(id) {
   const axios = createAxiosInstance(true)
-  return await axios.get(BASE_URL)
-}
-async function getRestaurants() {
-  const axios = createAxiosInstance(true)
-  return await axios.get(`${BASE_URL}/restaurants`)
+  return await axios.get(`${BASE_URL}/${id}`)
 }
 async function getRestaurantEmail() {
   const axios = createAxiosInstance(true)
@@ -33,8 +29,7 @@ async function updateRestaurantPassword(data) {
 
 export const restaurantService = {
   createRestaurant,
-  getRestaurant,
-  getRestaurants,
+  getRestaurantById,
   updateRestaurant,
   getRestaurantEmail,
   updateRestaurantEmail,
