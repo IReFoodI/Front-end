@@ -25,7 +25,7 @@ export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
   const { userId, setUserId } = userStore()
-  const { fetchCart, clearCart } = useCartStore()
+  const { fetchCart, clearLocalStorageCart } = useCartStore()
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,9 +41,9 @@ export function Header() {
   }, [setUserId])
 
   useEffect(() => {
-    clearCart()
+    clearLocalStorageCart()
     fetchCart(userId)
-  }, [fetchCart, userId, clearCart])
+  }, [fetchCart, userId, clearLocalStorageCart])
 
   let cartItems = useCartStore((state) => state.cartItems)
 
