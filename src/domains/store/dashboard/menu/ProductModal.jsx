@@ -19,7 +19,7 @@ import {
 import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 
-import { productSchema } from "../../model/ProductTypes"
+import { productSchema } from "../../models/ProductTypes"
 
 export function ProductModal({
   selectedProduct,

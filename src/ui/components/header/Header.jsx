@@ -1,30 +1,56 @@
-import {
-  IconFilter,
-  IconSearch,
-  IconShoppingBag,
-  IconUser,
-} from "@tabler/icons-react"
-import { useState } from "react"
+import { DialogTitle } from "@radix-ui/react-dialog"
+import { IconShoppingBag, IconUser } from "@tabler/icons-react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import useCartStore from "../../../app/store/useCartStore"
+import { userService } from "../../../domains/user/services/userService"
+import userStore from "../../../domains/user/stores/userStore"
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
-import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
-import { OrderReview } from "./orderReview/OrderReview"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTrigger,
+} from "../ui/sheet"
+import { Cart } from "./Cart/Cart"
+// import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
-import { RestaurantFilter } from "./restaurantFilter/RestaurantFilter"
+import { SearchInput } from "./search/searchInput"
 
 export function Header() {
   const [isActive, setIsActive] = useState(false)
   const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
-  const [orderQuantity, setOrderQuantity] = useState(0)
+  const { userId, setUserId } = userStore()
+  const { fetchCart, clearLocalStorageCart } = useCartStore()
 
-  if (orderQuantity > 9) {
-    setOrderQuantity(9 + "+")
-  }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await userService.getUser()
+        setUserId(response.data.id)
+      } catch (error) {
+        console.error("Erro ao buscar o usuário:", error)
+      }
+    }
+
+    fetchUser()
+  }, [setUserId])
+
+  useEffect(() => {
+    clearLocalStorageCart()
+    fetchCart(userId)
+  }, [fetchCart, userId, clearLocalStorageCart])
+
+  let cartItems = useCartStore((state) => state.cartItems)
+
+  const orderQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
 
   function handleClick(open) {
     setIsActive(open)
@@ -51,7 +77,7 @@ export function Header() {
                 Início
               </Link>
               <Link
-                to="/"
+                to="/pedidos"
                 className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
                 onClick={handleClick}
               >
@@ -62,30 +88,7 @@ export function Header() {
         </section>
         {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
-          <div className="relative order-2 m-auto flex w-full items-center justify-center md:order-1 xl:w-[50%]">
-            <IconSearch
-              className="absolute left-0 ml-2 text-primary"
-              size={20}
-            />
-            <Input
-              type="text"
-              placeholder="Busque por estabelecimentos"
-              className="bg-background pl-8"
-            />
-
-            <Popover className="relative" placement="center">
-              <PopoverTrigger className="absolute right-0 mr-2 text-gray-500">
-                <IconFilter size={20} />
-              </PopoverTrigger>
-              <PopoverContent
-                align="end"
-                sideOffset={20}
-                className="relative left-2 w-full"
-              >
-                <RestaurantFilter />
-              </PopoverContent>
-            </Popover>
-          </div>
+          <SearchInput />
           <AddressModal />
         </section>
         <section className="order-1 flex w-full items-center justify-between gap-2 md:order-last md:w-fit">
@@ -112,12 +115,16 @@ export function Header() {
               className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
             >
               <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
-                {orderQuantity}
+                {orderQuantity > 9 ? "9+" : orderQuantity}
               </span>
               <IconShoppingBag className="w-full text-center" size={30} />
             </SheetTrigger>
             <SheetContent className="max-h-screen overflow-auto">
-              <OrderReview />
+              <DialogTitle className="text-lg font-semibold">
+                Carrinho
+              </DialogTitle>
+              <SheetDescription />
+              <Cart />
             </SheetContent>
           </Sheet>
         </section>

@@ -10,6 +10,10 @@ async function getRestaurant() {
   const axios = createAxiosInstance(true)
   return await axios.get(BASE_URL)
 }
+async function getRestaurantEmail() {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/email`)
+}
 async function updateRestaurant(data) {
   const axios = createAxiosInstance(true)
   return await axios.put(BASE_URL, data)

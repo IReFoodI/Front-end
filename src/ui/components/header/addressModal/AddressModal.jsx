@@ -26,6 +26,7 @@ export function AddressModal() {
 
   useEffect(() => {
     fetchAddressDefault()
+    //eslint-disable-next-line
   }, [])
 
   return (

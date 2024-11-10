@@ -4,11 +4,17 @@ import { localStorageUtil } from "../../../app/utils/localStorageUtil"
 
 const userStore = create()((set) => ({
   user: null,
+  userId: null,
   isUserLoading: true,
 
   setUser: (data) => {
     set(() => ({
       user: data,
+    }))
+  },
+  setUserId: (data) => {
+    set(() => ({
+      userId: data,
     }))
   },
   logout: () => {

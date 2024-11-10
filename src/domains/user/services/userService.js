@@ -18,9 +18,8 @@ async function createUserAccount(data) {
 }
 
 async function getUser() {
-  //todo falta ver a rota pra pegar as informações do usuario
   const axios = createAxiosInstance(true)
-  const response = await axios.get(`${BASE_URL}`)
+  const response = await axios.get(`auth/user/info`)
   return response
 }
 

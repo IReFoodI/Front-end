@@ -1,3 +1,5 @@
+import { cn } from "@/app/utils/cn"
+
 export function SliderMetric({ initialValue, currentValue, finalValue, step }) {
   const values = [
     initialValue,
@@ -6,40 +8,45 @@ export function SliderMetric({ initialValue, currentValue, finalValue, step }) {
     initialValue + step * 3,
     initialValue + step * 4,
   ]
-  //
+
   return (
     <div className="flex justify-between text-sm">
       {values.map((value, index) => (
-        <div className="flex" key={index}>
+        <div className="flex flex-1" key={index}>
           <div
-            className={`flex flex-col items-center justify-center ${currentValue == value ? `text-primary` : `text-gray-300`} mx-1`}
+            className={`flex flex-col items-center justify-center ${currentValue[0] === value ? `text-primary` : `text-gray-300`} mx-1`}
           >
             <span
-              className={`h-3 border ${currentValue == value ? `border-primary` : `border-gray-300`}`}
+              className={cn(
+                `h-3 border`,
+                currentValue[0] === value ? `border-primary` : `border-gray-300`
+              )}
             ></span>
             <div
               className={`${
-                currentValue == value ? `text-primary` : `text-gray-300`
+                currentValue[0] === value ? `text-primary` : `text-gray-300`
               }`}
             >
               {value}
             </div>
           </div>
-          <span
-            className={`mx-3 h-2 border ${currentValue == value + 10 ? `border-primary` : `border-gray-100`} `}
-          ></span>
+          <div className="flex flex-1 items-start justify-center">
+            <span
+              className={`flex h-2 border ${currentValue[0] === value + 10 ? `border-primary` : `border-gray-100`} `}
+            ></span>
+          </div>
         </div>
       ))}
 
       <div
-        className={`flex flex-col items-center justify-center ${currentValue == finalValue ? `text-primary` : `text-gray-400`}`}
+        className={`flex flex-col items-center justify-center ${currentValue[0] == finalValue ? `border-primary` : `border-gray-400`}`}
       >
         <span
-          className={`h-3 border ${currentValue == finalValue ? `border-primary` : `border-gray-300`}`}
+          className={`h-3 border ${currentValue[0] === finalValue ? `border-primary` : `border-gray-300`}`}
         ></span>
         <div
           className={
-            currentValue == finalValue ? `text-primary` : `text-gray-300`
+            currentValue[0] === finalValue ? `text-primary` : `text-gray-300`
           }
         >
           {finalValue}+
