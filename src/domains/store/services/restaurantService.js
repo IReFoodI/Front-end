@@ -30,6 +30,7 @@ async function getProductById(productId) {
 export const restaurantService = {
   createRestaurant,
   getRestaurant,
+  getRestaurantEmail,
   updateRestaurant,
   getRestaurantOrders,
   getProductById,

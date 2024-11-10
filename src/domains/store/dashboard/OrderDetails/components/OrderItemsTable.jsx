@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react"
-
-import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
-import { groupItems } from "@/app/utils/OrderUtils"
-import { restaurantService } from "@/domains/store/services/restaurantService"
 import {
   Table,
   TableBody,
