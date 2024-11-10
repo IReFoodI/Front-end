@@ -45,11 +45,17 @@ const useCartStore = create((set) => ({
       if (!cartId) {
         return
       }
+      console.log("Limpando carrinho no db")
       await cartService.clearCart(cartId)
       set({ cartItems: [], subtotal: 0, cartId: null })
     } catch (error) {
       console.error("Failed to clear cart:", error)
     }
+  },
+
+  clearLocalStorageCart: () => {
+    console.log("Limpando carrinho local")
+    set({ cartItems: [], subtotal: 0, cartId: null })
   },
 
   removeItemFromCart: async (productId) => {
