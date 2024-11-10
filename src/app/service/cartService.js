@@ -15,7 +15,7 @@ async function fetchCart(userId) {
   }
   const axios = createAxiosInstance(true)
   const response = await axios.get(`${BASE_URL}/user/${userId}`)
-  return response.data
+  return response
 }
 
 /**
@@ -38,7 +38,7 @@ async function clearCart(cartId) {
 async function fetchRestaurantNameByProductId(productId) {
   const axios = createAxiosInstance(true)
   const response = await axios.get(`/api/product/${productId}/restaurant`)
-  return response.data
+  return response
 }
 
 /**

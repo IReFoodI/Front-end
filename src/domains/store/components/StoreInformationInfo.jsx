@@ -4,85 +4,76 @@ import {
   IconMapPin,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
 
-import { cnpjFormatter } from "@/app/utils/cnpjFormatter"
 import { Loading } from "@/ui/components/ui/loading"
 
-import { useAddressUserStoreProfile } from "../hooks/useAddressUserStoreProfile"
 import { useRestaurant } from "../hooks/useRestaurant"
+import { StoreHourDayOfWeek } from "./StoreHourDayOffWeek"
+
+export const DAY_OF_WEEK_TODAY = {
+  MONDAY: "Segunda-feira",
+  TUESDAY: "Terça-feira",
+  WEDNESDAY: "Quarta-feira",
+  THURSDAY: "Quinta-feira",
+  FRIDAY: "Sexta-feira",
+  SATURDAY: "Sábado",
+  SUNDAY: "Domingo",
+}
 
 export function StoreInformationInfo() {
-  const { restaurantById, restaurantHoursById, restaurantHoursToday } =
-    useRestaurant()
-  const { addressById, isLoading } = useAddressUserStoreProfile()
+  const {
+    loadingRestaurant,
+    restaurantData,
+    loadingRestaurantAddress,
+    restaurantAddressesData,
+    restaurantHoursTodayData,
+    restaurantAllHoursData,
+  } = useRestaurant()
 
-  const [addressRestaurantWithStoreId, setAddressRestaurantWithStoreId] =
-    useState([])
-  const [restaurantHourToday, setRestaurantHourToday] = useState([])
-
-  const { storeId } = useParams()
-
-  useEffect(() => {
-    const restaurantAddress = addressById?.find(
-      (add) =>
-        add.addressType === "RESTAURANT" ||
-        (add.restaurantId === storeId &&
-          add.addressId === add.associatedOrderId)
-    )
-
-    if (restaurantAddress) {
-      setAddressRestaurantWithStoreId(restaurantAddress)
-    }
-  }, [addressById, storeId])
-
-  useEffect(() => {
-    const resHoursToday = restaurantHoursToday?.find(
-      (resHourToday) => resHourToday.restaurantId == storeId
-    )
-
-    if (resHoursToday) {
-      setRestaurantHourToday(resHoursToday)
-    }
-  }, [restaurantHoursToday, storeId])
-
+  const [encodedAddress, setEncodeAddress] = useState("")
+  const [addressCompleteStore, setAddressCompleteStore] = useState("")
   const [isShowing, setIsShowing] = useState(false)
-
-  const addressCompleteStore = `${addressRestaurantWithStoreId.street}, ${addressRestaurantWithStoreId.number} - ${addressRestaurantWithStoreId.district}, ${addressRestaurantWithStoreId.city} - ${addressRestaurantWithStoreId.state}, ${addressRestaurantWithStoreId.cep}`
-
-  const encodedAddress = encodeURIComponent(addressCompleteStore)
+  const [isOpen, setIsOpen] = useState(false)
+  const todayIndex = new Date().getDay() - 1
 
   const toggleAccordion = () => {
     setIsShowing(!isShowing)
   }
 
-  const todayIndex = new Date().getDay() - 1
-  const now = new Date()
-  const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`
+  useEffect(() => {
+    const now = new Date()
+    const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`
+    setIsOpen(
+      !(
+        currentTime < restaurantHoursTodayData?.openingTime ||
+        currentTime > restaurantHoursTodayData?.closingTime
+      )
+    )
+  }, [restaurantHoursTodayData])
 
-  const isOpen = () => {
-    if (
-      currentTime < restaurantHourToday?.openingTime ||
-      currentTime > restaurantHourToday?.closingTime
-    ) {
-      return false
+  useEffect(() => {
+    if (restaurantAddressesData) {
+      const [addressRestaurantWithStoreId] = restaurantAddressesData
+      setAddressCompleteStore(
+        `${addressRestaurantWithStoreId.street}, ${addressRestaurantWithStoreId.number} - ${addressRestaurantWithStoreId.district}, ${addressRestaurantWithStoreId.city} - ${addressRestaurantWithStoreId.state}, ${addressRestaurantWithStoreId.cep}`
+      )
+      setEncodeAddress(encodeURIComponent(addressCompleteStore))
     }
-    return true
-  }
+  }, [addressCompleteStore, restaurantAddressesData])
 
-  if (isLoading) {
+  if (loadingRestaurant) {
     return <Loading />
   }
 
   return (
     <div id="info" className="flex flex-col gap-8 text-gray-500 antialiased">
-      {!isLoading && (
+      {!loadingRestaurant && (
         <>
-          {restaurantById.restaurantDescription !== null ? (
+          {restaurantData?.description !== null ? (
             <div id="description">
               <h2 className="font-bold">Descrição da Loja</h2>
               <p className="py-2 text-sm">
-                {restaurantById.restaurantDescription}
+                {restaurantData?.description ?? "Loja não possui descrição."}
               </p>
             </div>
           ) : (
@@ -94,8 +85,8 @@ export function StoreInformationInfo() {
                 onClick={toggleAccordion}
                 className="flex w-full items-center justify-between rounded-full bg-gray-100 px-2 text-left font-bold"
               >
-                <span className={isOpen() ? "text-green-500" : "text-red-500"}>
-                  {isOpen() ? "Open" : "Close"}
+                <span className={isOpen ? "text-green-500" : "text-red-500"}>
+                  {isOpen ? "Aberto" : "Fechado"}
                 </span>
                 {isShowing ? (
                   <IconCaretUpFilled size={24} />
@@ -103,24 +94,20 @@ export function StoreInformationInfo() {
                   <IconCaretDownFilled size={24} />
                 )}
               </button>
-              <div className="flex justify-between pt-2 text-sm">
-                {restaurantHourToday.restaurantId == storeId && (
-                  <span>{restaurantHourToday.dayOfWeek}</span>
-                )}
-                <span>
-                  {restaurantHourToday.openingTime} -{" "}
-                  {restaurantHourToday.closingTime}
-                </span>
+              <div className="flex justify-between pt-2 text-sm font-medium">
+                <StoreHourDayOfWeek
+                  restaurantHoursTodayData={restaurantAllHoursData}
+                />
               </div>
               <div
                 className={`overflow-hidden pb-2 text-sm transition-all duration-1000 ${isShowing ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
               >
-                {restaurantHoursById?.map((day, index) =>
+                {restaurantAllHoursData?.map((day, index) =>
                   index !== todayIndex ? (
                     <div key={index} className="flex justify-between">
-                      <span>{day.dayOfWeek}</span>
+                      <span>{DAY_OF_WEEK_TODAY[day.dayOfWeek]}</span>
                       <span>
-                        {day.openingTime} - {day.closingTime}
+                        {day.openingTime}h - {day.closingTime}h
                       </span>
                     </div>
                   ) : null
@@ -137,20 +124,24 @@ export function StoreInformationInfo() {
               <p className="py-2 text-sm">{addressCompleteStore}</p>
             </div>
             <div className="flex h-[200px] items-center justify-center bg-gray-100">
-              <iframe
-                title="Google Maps"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
-                allowFullScreen
-              ></iframe>
+              {loadingRestaurantAddress ? (
+                <Loading />
+              ) : (
+                <iframe
+                  title="Google Maps"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+                  allowFullScreen
+                ></iframe>
+              )}
             </div>
           </div>
 
           <div id="other-info">
             <h2 className="font-bold">Outras Informações</h2>
-            <p className="py-2 text-sm">CNPJ: {restaurantById.cnpj}</p>
+            <p className="py-2 text-sm">CNPJ: {restaurantData?.cnpj}</p>
           </div>
         </>
       )}

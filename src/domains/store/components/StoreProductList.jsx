@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import restaurantService from "@/app/service/restaurantService"
+import { Loading } from "@/ui/components/ui/loading"
 import {
   Select,
   SelectContent,
@@ -9,24 +12,22 @@ import {
   SelectValue,
 } from "@/ui/components/ui/select"
 
-import { useProducts } from "../hooks/useProducts"
 import { StoreProductItem } from "./StoreProductItem"
 
-//Depois vai receber o products como parâmetro ou fazer a requisição aqui mesmo
 export function StoreProductList() {
-  const { products } = useProducts()
-
+  const { storeId } = useParams()
+  const { data: products, onRequest, error, loading } = useFetch()
   const [productsWithStoreId, setProductsWithStoreId] = useState([])
 
-  const { storeId } = useParams()
-
   useEffect(() => {
-    products.forEach((prod) => {
-      if (prod.restaurantId == storeId) {
-        setProductsWithStoreId((prevProd) => [...prevProd, prod])
-      }
-    })
-  }, [products, storeId])
+    if (storeId)
+      onRequest({
+        request: () =>
+          restaurantService.fetchRestaurantProductsByRestaurantId(storeId),
+      })
+  }, [storeId])
+
+  if (loading) return <Loading />
 
   return (
     <section className="mt-5 flex flex-col gap-5 xl:mt-0">
@@ -49,8 +50,8 @@ export function StoreProductList() {
         </Select>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {productsWithStoreId?.map((product) => (
-          <StoreProductItem {...product} key={product.productId} />
+        {products?.map((product, index) => (
+          <StoreProductItem {...product} key={product.productId + index} />
         ))}
       </div>
     </section>

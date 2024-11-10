@@ -3,6 +3,7 @@ import { IconShoppingBag } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import imageBroke from "@/ui/assets/image-broke.png"
 import { Badge } from "@/ui/components/ui/badge"
 import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
@@ -54,7 +55,7 @@ export function StoreProductItem({
 
   return (
     <Card className="flex flex-col items-center justify-start gap-4 bg-gray-100 p-3">
-      <div className="flex items-start gap-6 md:gap-2">
+      <div className="flex w-full items-start gap-6 md:gap-2">
         <div className="relative w-24 rounded-lg md:rounded-[1.25rem]">
           <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
             <IconShoppingBag size={13} />
@@ -65,6 +66,10 @@ export function StoreProductItem({
             src={urlImgProd}
             alt={nameProd}
             className="h-24 w-24 bg-cover bg-center"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = imageBroke
+            }}
           />
         </div>
         <div className="flex flex-1 flex-col">

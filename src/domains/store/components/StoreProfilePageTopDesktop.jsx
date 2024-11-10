@@ -8,34 +8,24 @@ import {
 import { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 
-import { useRestaurant } from "../hooks/useRestaurant"
+import { StoreHourDayOfWeek } from "./StoreHourDayOffWeek"
 
-export function StoreProfilePageTopDesktop() {
+export function StoreProfilePageTopDesktop({
+  restaurantData,
+  restaurantAllHoursData,
+}) {
+  const { storeId } = useParams()
   const [isHeartFilled, setIsHeartFilled] = useState(false)
-
   const toggleHeart = () => {
     setIsHeartFilled((prevState) => !prevState)
   }
-
-  const { storeId } = useParams()
-
-  const { restaurantById, restaurantHoursToday } = useRestaurant()
-
-  const {
-    fantasy,
-    category,
-    averageRating,
-    totalEvaluations,
-    urlBanner,
-    urlLogo,
-  } = restaurantById
 
   return (
     <div className="text-gray-500 antialiased">
       <div
         id="capa"
         className="relative hidden h-[200px] w-full bg-cover bg-center px-5 xl:flex xl:rounded-[14px]"
-        style={{ backgroundImage: `url(${urlBanner})` }}
+        style={{ backgroundImage: `url(${restaurantData?.urlBanner})` }}
       ></div>
       <div
         id="icons-desktop"
@@ -46,14 +36,9 @@ export function StoreProfilePageTopDesktop() {
             <IconClock size={15} />
           </span>
           <span className="text-gray-400 transition duration-300 hover:text-primary">
-            {restaurantHoursToday?.map(
-              (res) =>
-                res.restaurantId == storeId && (
-                  <span key={res.id}>
-                    {res.openingTime} às {res.closingTime}
-                  </span>
-                )
-            )}
+            <StoreHourDayOfWeek
+              restaurantHoursTodayData={restaurantAllHoursData}
+            />
           </span>
         </button>
       </div>
@@ -64,12 +49,12 @@ export function StoreProfilePageTopDesktop() {
         <button
           id="logo"
           className="relative bottom-1 right-9 h-36 w-36 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${urlLogo})` }}
+          style={{ backgroundImage: `url(${restaurantData?.urlLogo})` }}
         />
         <div id="info" className="ms-[-10px] flex-1 py-3 pe-3">
           <div className="flex justify-between">
             <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
-              {fantasy}
+              {restaurantData?.fantasy}
             </button>
             <div id="icons" className="flex justify-end gap-2 text-gray-400">
               <Link to={`/loja/informacoes/${storeId}`}>
@@ -93,9 +78,10 @@ export function StoreProfilePageTopDesktop() {
               <IconStarFilled size={15} className="text-primary" />
             </span>
             <span>
-              {averageRating} ( {totalEvaluations} avaliações )
+              {restaurantData?.averageRating} ({" "}
+              {restaurantData?.totalEvaluations} avaliações )
             </span>
-            <span className="text-gray-400">{category}</span>
+            <span className="text-gray-400">{restaurantData?.category}</span>
           </div>
         </div>
       </div>

@@ -93,8 +93,6 @@ export function StoreSignUp() {
     },
   ]
 
-  console.log(form.formState.errors)
-
   return (
     <div className="grid gap-2 sm:px-8">
       <h1 className="text-2xl font-semibold text-foreground md:text-3xl">

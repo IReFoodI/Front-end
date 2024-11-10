@@ -22,6 +22,10 @@ export function useAddressUserStoreProfile() {
       await onRequest({
         request: fetchAllAddress,
         onSuccess: async (addressRes) => {
+          console.log(
+            "useAddressUserStoreProfile::::::fetchAddressUserStoreProfileData",
+            addressRes
+          )
           setAddress(addressRes)
           setIsLoading(false)
         },
@@ -33,6 +37,10 @@ export function useAddressUserStoreProfile() {
       await onRequest({
         request: () => fetchRestaurantAddressById(storeId),
         onSuccess: async (addressByIdRes) => {
+          console.log(
+            "useAddressUserStoreProfile:::::::::::fetchResAddressById",
+            addressByIdRes
+          )
           setAddresById(addressByIdRes)
           setIsLoading(false)
         },
@@ -48,11 +56,11 @@ export function useAddressUserStoreProfile() {
 }
 
 // Função para decodificar o token JWT
-function parseJwt(token) {
-  try {
-    return JSON.parse(atob(token.split(".")[1]))
-  } catch (e) {
-    console.error("Token inválido", e)
-    return null
-  }
-}
+// function parseJwt(token) {
+//   try {
+//     return JSON.parse(atob(token.split(".")[1]))
+//   } catch (e) {
+//     console.error("Token inválido", e)
+//     return null
+//   }
+// }
