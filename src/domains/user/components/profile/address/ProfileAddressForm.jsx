@@ -292,7 +292,6 @@ export function ProfileAddressForm() {
             </div>
             <div className="mt-9 flex flex-col justify-end gap-2 sm:flex-row">
               {params?.addressId && (
-                // <Link className="order-2 sm:order-1" to={"/endereco"}>
                 <Button
                   disabled={loadingSaveAddress}
                   variant="secondary"
@@ -301,7 +300,6 @@ export function ProfileAddressForm() {
                 >
                   Cancelar Alterações
                 </Button>
-                // </Link>
               )}
 
               <Button

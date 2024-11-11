@@ -50,11 +50,9 @@ export function useStores() {
   }, [])
 
   const addFavorite = async (restaurantId) => {
-    console.log(restaurantId)
     await onRequest({
       request: async () => storesCardsServices.addFavorite(restaurantId),
       onSuccess: async () => {
-        console.log("Atualizado com sucesso")
         refreshStores()
       },
       onError: () => console.error("Erro ao atualizar favorito:", error),
@@ -65,7 +63,6 @@ export function useStores() {
     await onRequest({
       request: async () => storesCardsServices.deleteFavorite(favoriteId),
       onSuccess: async () => {
-        console.log("Atualizado com sucesso")
         refreshStores()
       },
       onError: () => console.error("Erro ao atualizar favorito:", error),

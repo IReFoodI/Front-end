@@ -49,7 +49,6 @@ export function SignIn() {
   }
 
   function handleSuccess(data) {
-    console.log("sucesso", data)
     if (
       pathname == "/autenticar/negocios" ||
       pathname == "/autenticar/negocios"
