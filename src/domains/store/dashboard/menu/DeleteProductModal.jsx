@@ -1,5 +1,3 @@
-import { toast } from "sonner"
-
 import { useFetch } from "@/app/hooks/useFetch"
 import { imageService } from "@/app/service/imageService"
 import { productService } from "@/domains/store/services/useProdutcList"
@@ -21,7 +19,7 @@ export function DeleteProductModal({
   setSelectedProduct,
   fetchProducts,
 }) {
-  const { onRequest } = useFetch()
+  const { onRequest, loading } = useFetch()
 
   function handleCloseDeleteModal() {
     setIsDeleteModalOpen(false)
@@ -30,23 +28,19 @@ export function DeleteProductModal({
 
   async function handleDeleteProduct() {
     const id = selectedProduct.productId
-    console.log(selectedProduct)
     const urlImgProd = selectedProduct.urlImgProd
     await onRequest({
       request: () => productService.deleteProduct(id),
       onSuccess: () => {
-        toast?.success("Produto excluído com sucesso!")
+        setIsDeleteModalOpen(false)
         fetchProducts()
         onRequest({
           request: () => imageService.deleteImage(urlImgProd),
-          onSuccess: () => {},
-          onError: (error) => console.error(error),
         })
       },
-      onError: (error) => console.error(error),
+      onError: setIsDeleteModalOpen(false),
+      successMessage: "Produto excluído com sucesso!",
     })
-
-    handleCloseDeleteModal()
   }
   return (
     <AlertDialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
@@ -56,16 +50,18 @@ export function DeleteProductModal({
       </AlertDialogHeader>
       <AlertDialogContent>
         <h2 className="font-medi text-lg">
-          Deseja deletar o produto {selectedProduct?.name}?
+          Deseja deletar o produto{" "}
+          <span className="font-medium">{selectedProduct?.nameProd}</span>?
         </h2>
-        <AlertDialogFooter className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4">
-          <AlertDialogCancel onClick={handleCloseDeleteModal}>
+        <AlertDialogFooter className="flex gap-2">
+          <AlertDialogCancel className="!mt-0" onClick={handleCloseDeleteModal}>
             Cancelar
           </AlertDialogCancel>
           <Button
+            disabled={loading}
             type="submit"
             onClick={handleDeleteProduct}
-            className="!ml-0 !mr-0 md:px-6"
+            className="!ml-0 !mr-0"
           >
             Deletar
           </Button>

@@ -50,6 +50,7 @@ export function StoreSchedule() {
 
   useEffect(() => {
     fetchHoursData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onRequest])
 
   const handleScheduleChange = useCallback(

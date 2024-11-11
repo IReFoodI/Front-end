@@ -2,9 +2,9 @@ import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 
 const BASE_URL = "/api/product"
 
-async function getRestaurantProducts() {
+async function getRestaurantProducts(page) {
   const axios = createAxiosInstance(true)
-  return await axios.get(`${BASE_URL}/restaurant`)
+  return await axios.get(`${BASE_URL}/products?page=${page}`)
 }
 
 async function postRestaurantProducts(data) {

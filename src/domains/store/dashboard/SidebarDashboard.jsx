@@ -22,7 +22,7 @@ export function SidebarDashboard() {
             <p className="text-xs md:text-sm">Pedidos</p>
           </NavLink>
           <NavLink
-            to={"/dashboard/cardapio"}
+            to={"/dashboard/cardapio?page=0"}
             className={`flex w-16 select-none flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary md:w-20 [&.active]:bg-primary`}
             variant="ghost"
           >

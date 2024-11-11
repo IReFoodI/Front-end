@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { productService } from "@/domains/store/services/useProdutcList"
@@ -34,57 +35,63 @@ export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const { onRequest } = useFetch()
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const productsPerPage = 10
+  const [localProducts, setLocalProducts] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const fetchProducts = async () => {
-    setLoading(true)
+  const { data, onRequest, loading } = useFetch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const currentPageFromUrl =
+    parseInt(new URLSearchParams(location.search).get("page")) || 0
 
+  const fetchProducts = useCallback(async () => {
     await onRequest({
-      request: () => productService.getRestaurantProducts(),
-      onSuccess: (data) => {
-        setProducts(data || [])
+      request: () => productService.getRestaurantProducts(currentPage),
+      onError: (erro) => {
+        if (erro.response.data.status === 400) navigate(`?page=${0}`)
       },
-      errorMessage: "Erro ao carregar produtos.",
     })
-    setLoading(false)
-  }
-
-  const updateProduct = (id, data) => {
-    onRequest({
-      request: () => productService.updateProduct(id, data),
-      onSuccess: () => {},
-      errorMessage: "Erro ao atualizar o produto.",
-    })
-  }
-
-  const handleStatusChange = (productId, newStatus) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.productId === productId
-          ? { ...product, active: newStatus }
-          : product
-      )
-    )
-    updateProduct(productId, { active: newStatus })
-  }
+  }, [onRequest, currentPage])
 
   useEffect(() => {
-    fetchProducts()
-  }, [])
+    if (data?._embedded?.productDTOList) {
+      setLocalProducts(data._embedded.productDTOList)
+    }
+  }, [data])
 
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
+  const updateProduct = useCallback(
+    (id, data) => {
+      onRequest({
+        request: () => productService.updateProduct(id, data),
+        onSuccess: fetchProducts,
+        errorMessage: "Erro ao atualizar o produto.",
+      })
+    },
+    [onRequest, fetchProducts]
   )
+
+  const handleStatusChange = useCallback(
+    (productId, newStatus) => {
+      updateProduct(productId, { active: newStatus })
+      setLocalProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.productId === productId
+            ? { ...product, active: newStatus }
+            : product
+        )
+      )
+    },
+    [updateProduct]
+  )
+
+  useEffect(() => {
+    setCurrentPage(currentPageFromUrl)
+    fetchProducts()
+  }, [fetchProducts, currentPageFromUrl])
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
+    navigate(`?page=${newPage}`)
   }
 
   return (
@@ -92,7 +99,6 @@ export function StoreMenu() {
       <Card className="border-none shadow-none">
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
-
           <AlertDialog open={isModalOpen}>
             <AlertDialogTrigger asChild>
               <Button
@@ -145,24 +151,16 @@ export function StoreMenu() {
             </TableHeader>
 
             <TableBody>
-              {loading ? (
-                <TableRow>
-                  <td colSpan="8" className="text-center">
-                    Carregando produtos...
-                  </td>
-                </TableRow>
-              ) : (
-                currentProducts.map((product) => (
-                  <MenuItemCard
-                    key={product.productId}
-                    product={product}
-                    setIsModalOpen={setIsModalOpen}
-                    setIsDeleteModalOpen={setIsDeleteModalOpen}
-                    setSelectedProduct={setSelectedProduct}
-                    onStatusChange={handleStatusChange}
-                  />
-                ))
-              )}
+              {localProducts.map((product) => (
+                <MenuItemCard
+                  key={product.productId}
+                  product={product}
+                  setIsModalOpen={setIsModalOpen}
+                  setIsDeleteModalOpen={setIsDeleteModalOpen}
+                  setSelectedProduct={setSelectedProduct}
+                  onStatusChange={handleStatusChange}
+                />
+              ))}
             </TableBody>
           </Table>
 
@@ -170,14 +168,14 @@ export function StoreMenu() {
             <Button
               size="sm"
               onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
+              disabled={currentPage === 0}
             >
               Página Anterior
             </Button>
             <Button
               size="sm"
               onClick={() => handlePageChange(currentPage + 1)}
-              disabled={indexOfLastProduct >= products.length}
+              disabled={currentPage === data?.page?.totalPages - 1}
             >
               Próxima Página
             </Button>
@@ -186,12 +184,8 @@ export function StoreMenu() {
 
         <CardFooter>
           <div className="text-xs">
-            Exibindo{" "}
-            <strong>
-              {indexOfFirstProduct + 1}-
-              {Math.min(indexOfLastProduct, products.length)}
-            </strong>{" "}
-            de <strong>{products.length}</strong> produtos
+            Exibindo <strong>{currentPage + 1}</strong> de{" "}
+            <strong>{data?.page?.totalPages}</strong> produtos
           </div>
         </CardFooter>
       </Card>

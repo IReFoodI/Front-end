@@ -9,6 +9,7 @@ import { imageService } from "@/app/service/imageService"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
 import { productSchema } from "@/domains/store/models/ProductTypes"
 import { productService } from "@/domains/store/services/useProdutcList"
+import imageBroke from "@/ui/assets/image-broke.png"
 import {
   AlertDialogCancel,
   AlertDialogFooter,
@@ -239,6 +240,10 @@ export function ProductModal({
                     src={urlImgProd}
                     alt={imageName}
                     className="h-auto w-full rounded-md"
+                    onError={(e) => {
+                      e.target.onerror = null
+                      e.target.src = imageBroke
+                    }}
                   />
                 </>
               ) : (

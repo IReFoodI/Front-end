@@ -1,10 +1,11 @@
 import { IconDots } from "@tabler/icons-react"
 import { IconPhotoOff } from "@tabler/icons-react"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
+import imageBroke from "@/ui/assets/image-broke.png"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,7 @@ import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 import { TableCell, TableRow } from "@/ui/components/ui/table"
 
-export function MenuItemCard({
+export const MenuItemCard = memo(function MenuItemCard({
   product,
   setIsModalOpen,
   setIsDeleteModalOpen,
@@ -74,13 +75,13 @@ export function MenuItemCard({
       onStatusChange(product.productId, false)
       toast.error(`${nameProd} está vencido!`)
     }
-  }, [])
+  }, [expirationDate, nameProd, onStatusChange, product.productId])
 
   const disabledClass = active ? "" : "opacity-50"
 
   return (
     <TableRow className={disabledClass}>
-      <TableCell className="hidden sm:table-cell">
+      <TableCell className="hidden h-16 w-16 sm:table-cell">
         {urlImgProd ? (
           <img
             alt={nameProd || "Product image"}
@@ -88,12 +89,15 @@ export function MenuItemCard({
             height="64"
             src={urlImgProd}
             width="64"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = imageBroke
+            }}
           />
         ) : (
-          <IconPhotoOff
-            size={64}
-            className="object-cover text-muted-foreground"
-          />
+          <div className="flex h-16 w-16 items-center justify-center rounded bg-primary/20">
+            <IconPhotoOff size={34} className="object-cover text-primary" />
+          </div>
         )}
       </TableCell>
       <TableCell className="font-medium">{nameProd}</TableCell>
@@ -168,4 +172,4 @@ export function MenuItemCard({
       </TableCell>
     </TableRow>
   )
-}
+})
