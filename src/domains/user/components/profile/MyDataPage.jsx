@@ -43,6 +43,7 @@ export function MydataPage() {
     fetchAddressDefault()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   if (loading) {
     return <Loading />
   }
@@ -60,6 +61,7 @@ export function MydataPage() {
             <AddressCard
               address={defaultAddress}
               isSelected={defaultAddress?.isStantard}
+              toggleOpenModalDefault={() => {}}
             />
           </RadioGroup>
         </ul>
