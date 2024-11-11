@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useFetch } from "@/app/hooks/useFetch"
 import { storesCardsServices } from "@/domains/user/services/storesServices"
 
-export function useStores() {
+export function useFavorites() {
   const [stores, setStores] = useState([])
   const { onRequest, error } = useFetch()
   const [page, setPage] = useState(0)
@@ -15,8 +15,8 @@ export function useStores() {
       await onRequest({
         request: async () => storesCardsServices.getFavoritesByUser(),
         onSuccess: (favRes) => {
-          const updatedStores = storesData?.map((store) => {
-            const favorite = favRes?.find(
+          const updatedStores = storesData.map((store) => {
+            const favorite = favRes.find(
               (fav) => fav.restaurantId === store.restaurant.restaurantId
             )
             return {
@@ -59,7 +59,7 @@ export function useStores() {
     async (pageNumber) => {
       setLoading(true)
       await onRequest({
-        request: async () => storesCardsServices.getStoresToday(pageNumber),
+        request: async () => storesCardsServices.getStores(pageNumber),
         onSuccess: async (storesRes) => {
           setTotalPages(storesRes.page.totalPages)
           const storesData = storesRes._embedded?.hashMapList
@@ -68,9 +68,11 @@ export function useStores() {
               const existingIds = new Set(
                 prevStores.map((store) => store.restaurant.restaurantId)
               )
+
               const newStores = storesData.filter(
                 (store) => !existingIds.has(store.restaurant.restaurantId)
               )
+
               return [...prevStores, ...newStores]
             })
 
@@ -134,8 +136,7 @@ export function useStores() {
 
   const favoriteRefresh = async () => {
     await onRequest({
-      request: async (pageNumber) =>
-        storesCardsServices.getStoresToday(pageNumber),
+      request: async (pageNumber) => storesCardsServices.getStores(pageNumber),
       onSuccess: async (storesRes) => {
         const storesData = storesRes._embedded.hashMapList
         await fetchFavorites(storesData)
