@@ -24,7 +24,7 @@ export function DeleteAccountModal({ toggleOpenModal, isModalOpen }) {
     return await onRequest({
       request: () => userService.deleteAccount(),
       onSuccess: () => {
-        localStorageUtil.setLocalStorageToken("")
+        localStorageUtil.removeLocalStorageToken()
         navigate("/autenticar/entrar")
       },
     })
