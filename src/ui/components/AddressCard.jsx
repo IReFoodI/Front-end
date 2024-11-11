@@ -46,13 +46,13 @@ export function AddressCard({
     >
       <div
         onClick={() => toggleOpenModalDefault(true, addressId)}
-        className={`flex h-full cursor-pointer items-center space-x-2 p-1 ${isStandard && "cursor-default"}`}
+        className={`flex h-full cursor-pointer items-center space-x-2 p-1 ${isStandard && "pointer-events-none"}`}
       >
         <RadioGroupItem
           name="address-default"
           id={`address-${addressId}`}
           value={addressId}
-          className={`${isStandard && "cursor-default"}`}
+          className={`${isStandard && "pointer-events-none"}`}
           checked={isStandard}
         />
         <Label htmlFor={`address-${addressId}`}></Label>
