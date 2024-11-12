@@ -22,10 +22,6 @@ export function useAddressUserStoreProfile() {
       await onRequest({
         request: fetchAllAddress,
         onSuccess: async (addressRes) => {
-          console.log(
-            "useAddressUserStoreProfile::::::fetchAddressUserStoreProfileData",
-            addressRes
-          )
           setAddress(addressRes)
           setIsLoading(false)
         },
@@ -54,13 +50,3 @@ export function useAddressUserStoreProfile() {
 
   return { address, addressById, isLoading }
 }
-
-// Função para decodificar o token JWT
-// function parseJwt(token) {
-//   try {
-//     return JSON.parse(atob(token.split(".")[1]))
-//   } catch (e) {
-//     console.error("Token inválido", e)
-//     return null
-//   }
-// }
