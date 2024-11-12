@@ -39,7 +39,7 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
         localStorage.setItem("userRefoods", JSON.stringify(userDTO))
 
-        setUser(response.data)
+        setUser({ ...response.data, userId: response.data.id })
         setUserId(response.data.id)
 
         toast.success("Login efetuado com sucesso!")
