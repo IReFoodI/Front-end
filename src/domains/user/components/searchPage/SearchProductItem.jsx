@@ -8,7 +8,7 @@ import { Badge } from "@/ui/components/ui/badge"
 import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
 
-import Default_Product_Image from "../../../../ui/assets/Default_Product_Image.png"
+import Default_Product_Image from "../../../../ui/assets/image-broke.png"
 
 export function SearchProductItem({
   product: {
