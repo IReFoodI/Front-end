@@ -126,11 +126,14 @@ export function ProfileSheet() {
       </div>
 
       <div className="mb-2 flex flex-col gap-4">
-        <div className="jus flex flex-col gap-2">
-          <TermsOfUse className={"text-start"}>Termos e condições</TermsOfUse>
-          <Link to="/" className="text-sm font-semibold text-primary underline">
-            Ajuda
-          </Link>
+        <div className="flex flex-col gap-2">
+          <TermsOfUse
+            className={
+              "border-none text-start outline-none focus:border-none focus:outline-none"
+            }
+          >
+            Termos e condições
+          </TermsOfUse>
         </div>
         <Button
           onClick={logout}
