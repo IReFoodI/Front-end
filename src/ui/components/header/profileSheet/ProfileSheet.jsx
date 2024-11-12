@@ -9,18 +9,15 @@ import {
 } from "@tabler/icons-react"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
 import userStore from "@/domains/user/stores/userStore"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
-import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet({ closeModal }) {
-  const { value } = useMediaQuery("(max-width: 768px)")
   const { user } = userStore()
   const { logout } = userStore()
   const navigate = useNavigate()
@@ -62,8 +59,8 @@ export function ProfileSheet({ closeModal }) {
   return (
     <div className="flex h-full flex-col justify-between">
       <nav className="flex flex-col gap-3">
-        <div className="mt-4 flex justify-between gap-2">
-          <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
+        <div className="flex justify-between gap-2">
+          <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400 md:max-h-20">
             <ProfileImagePlaceholder className="z-2 m-1 w-14" />
             <h1 className="m-1 text-lg font-semibold leading-5 text-white">
               Olá, {user?.name}!
@@ -87,7 +84,7 @@ export function ProfileSheet({ closeModal }) {
           <div className="m-2 flex w-full justify-between gap-2">
             <ContainerStatus
               containerIcon={
-                <IconShoppingBag size={30} className="text-primary" />
+                <IconShoppingBag size={26} className="text-primary" />
               }
               content="1"
               title="pedidos feitos"
@@ -95,7 +92,7 @@ export function ProfileSheet({ closeModal }) {
 
             <ContainerStatus
               containerIcon={
-                <IconMoneybag size={30} className="text-primary" />
+                <IconMoneybag size={26} className="text-primary" />
               }
               content="R$ 10,00"
               title="economizados"
@@ -121,7 +118,7 @@ export function ProfileSheet({ closeModal }) {
         <div className="flex flex-col gap-2">
           <TermsOfUse
             className={
-              "border-none text-start outline-none focus:border-none focus:outline-none"
+              "border-none text-start text-sm outline-none focus:border-none focus:outline-none"
             }
           >
             Termos e condições
