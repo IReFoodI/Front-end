@@ -105,7 +105,10 @@ export function Header() {
               </div>
             </PopoverTrigger>
 
-            <PopoverContent sideOffset={20}>
+            <PopoverContent
+              sideOffset={20}
+              className="max-h-max-profile-sheet overflow-auto"
+            >
               <ProfileSheet />
             </PopoverContent>
           </Popover>
