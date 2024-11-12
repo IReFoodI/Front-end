@@ -58,24 +58,12 @@ export function ProfileSheet() {
     <div className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-3">
         <div className="mt-4 flex justify-between gap-2">
-          {value ? (
-            <SheetHeader className="w-full">
-              <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
-                <ProfileImagePlaceholder className="z-2 m-1 w-14" />
-                <SheetTitle className="m-1 text-lg font-semibold leading-5 text-white">
-                  Olá, {user?.nome}!
-                </SheetTitle>
-                <SheetDescription></SheetDescription>
-              </div>
-            </SheetHeader>
-          ) : (
-            <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
-              <ProfileImagePlaceholder className="z-2 m-1 w-14" />
-              <h1 className="m-1 text-lg font-semibold leading-5 text-white">
-                Olá, {user?.nome}!
-              </h1>
-            </div>
-          )}
+          <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
+            <ProfileImagePlaceholder className="z-2 m-1 w-14" />
+            <h1 className="m-1 text-lg font-semibold leading-5 text-white">
+              Olá, {user?.name}!
+            </h1>
+          </div>
         </div>
 
         <div className="flex w-full flex-col items-center justify-center">
@@ -126,11 +114,14 @@ export function ProfileSheet() {
       </div>
 
       <div className="mb-2 flex flex-col gap-4">
-        <div className="jus flex flex-col gap-2">
-          <TermsOfUse className={"text-start"}>Termos e condições</TermsOfUse>
-          <Link to="/" className="text-sm font-semibold text-primary underline">
-            Ajuda
-          </Link>
+        <div className="flex flex-col gap-2">
+          <TermsOfUse
+            className={
+              "border-none text-start outline-none focus:border-none focus:outline-none"
+            }
+          >
+            Termos e condições
+          </TermsOfUse>
         </div>
         <Button
           onClick={logout}

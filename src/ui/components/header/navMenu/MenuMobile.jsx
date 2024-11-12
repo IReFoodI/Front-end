@@ -1,6 +1,13 @@
 import { IconMenu2 } from "@tabler/icons-react"
 
-import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../../ui/sheet"
 import { ProfileSheet } from "../profileSheet/ProfileSheet"
 
 export function MenuMobile() {
@@ -11,7 +18,15 @@ export function MenuMobile() {
           <IconMenu2 className="m-auto text-primary" size={24} />
         </div>
       </SheetTrigger>
-      <SheetContent side={"left"} className="bg-[#F8F9FE]">
+      <SheetHeader>
+        <SheetTitle />
+
+        <SheetDescription />
+      </SheetHeader>
+      <SheetContent
+        side={"left"}
+        className="max-h-[100vh] overflow-auto bg-[#F8F9FE]"
+      >
         <ProfileSheet />
       </SheetContent>
     </Sheet>

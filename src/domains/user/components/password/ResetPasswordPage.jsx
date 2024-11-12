@@ -56,10 +56,9 @@ export function ResetPasswordPage() {
     },
   })
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     toast.success("Senha redefinida com sucesso!")
     navigate("/entrar")
-    console.log(data)
     return
   }
 

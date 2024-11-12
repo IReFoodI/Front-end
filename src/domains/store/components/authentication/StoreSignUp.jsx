@@ -87,10 +87,6 @@ export function StoreSignUp() {
       id: "SUPERMERCADO",
       category: "SUPERMERCADO",
     },
-    {
-      id: "LANCHERIA",
-      category: "LANCHERIA",
-    },
   ]
 
   return (
