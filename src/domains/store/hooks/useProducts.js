@@ -6,7 +6,6 @@ import { fetchAllProducts } from "@/domains/store/services/productService"
 export function useProducts() {
   const { data: products, loading, onRequest, error } = useFetch()
   useEffect(() => {
-    console.log("useProducts:::::fetchProducts")
     const fetchProducts = async () => {
       await onRequest({
         request: fetchAllProducts,
