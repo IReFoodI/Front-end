@@ -125,7 +125,10 @@ export function Header() {
               </div>
             </PopoverTrigger>
 
-            <PopoverContent sideOffset={20} className={"md:w-80"}>
+            <PopoverContent
+              sideOffset={20}
+              className="max-h-max-profile-sheet overflow-auto md:w-80"
+            >
               <ProfileSheet
                 closeModal={() => handleProfilePopoverOpen(false)}
               />
