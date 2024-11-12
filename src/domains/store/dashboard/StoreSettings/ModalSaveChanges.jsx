@@ -15,7 +15,7 @@ export function ModalSaveChanges({ toggleOpenModal, isModalOpen, onConfirm }) {
         <DialogDescription>
           Confirme para salvar as alterações realizadas.
         </DialogDescription>
-        <DialogFooter>
+        <DialogFooter className={"flex gap-2 md:gap-0"}>
           <Button
             className="rounded-full"
             variant="secondary"

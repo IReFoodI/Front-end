@@ -11,6 +11,7 @@ export function AddressCard({
   toggleOpenModalDelete,
   toggleOpenModalDefault,
 }) {
+  const pathname = location?.pathname
   const formatCep = (Cep) => {
     return Cep?.replace(/(\d{5})(\d{3})/, "$1-$2")
   }
@@ -30,11 +31,14 @@ export function AddressCard({
   } = address
 
   const handleEdit = () => {
-    navigate(`/endereco/editar/${addressId}`, { state: { address } })
+    navigate(
+      `/endereco/editar/${addressId}${pathname && `?redirect=${location.pathname}`}`,
+      { state: { address } }
+    )
   }
 
   return (
-    <motion.div
+    <motion.li
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
@@ -42,13 +46,13 @@ export function AddressCard({
     >
       <div
         onClick={() => toggleOpenModalDefault(true, addressId)}
-        className={`flex h-full cursor-pointer items-center space-x-2 p-1 ${isStandard && "cursor-default"}`}
+        className={`flex h-full cursor-pointer items-center space-x-2 p-1 ${isStandard && "pointer-events-none"}`}
       >
         <RadioGroupItem
           name="address-default"
           id={`address-${addressId}`}
           value={addressId}
-          className={`${isStandard && "cursor-default"}`}
+          className={`${isStandard && "pointer-events-none"}`}
           checked={isStandard}
         />
         <Label htmlFor={`address-${addressId}`}></Label>
@@ -91,6 +95,6 @@ export function AddressCard({
           )}
         </div>
       </div>
-    </motion.div>
+    </motion.li>
   )
 }

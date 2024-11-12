@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -12,7 +12,6 @@ import {
 } from "@/ui/components/ui/dialog"
 
 export function ModalCancel() {
-  const navigate = useNavigate()
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,12 +27,8 @@ export function ModalCancel() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate("/my-profile")} //todo: Ajustar rota
-          >
-            Não salvar
+          <Button type="button" variant="outline">
+            <Link to={"/meus-dados"}>Cancelar</Link>
           </Button>
         </DialogFooter>
       </DialogContent>

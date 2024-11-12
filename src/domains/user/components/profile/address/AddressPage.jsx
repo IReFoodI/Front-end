@@ -8,7 +8,7 @@ import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
 
-import { AddressCard } from "./AddressCard"
+import { AddressCard } from "../../../../../ui/components/AddressCard"
 import { AddressDeleteModal } from "./AddressDeleteModal "
 import { ModalConfirmDefaultAddress } from "./ModalConfirmDefaultAddress"
 
@@ -72,10 +72,12 @@ export function AddressPage() {
             <div className="flex-1">
               <h3 className="w-full px-5 text-left font-semibold">Padrão</h3>
               {defaultAddress ? (
-                <AddressCard
-                  address={defaultAddress}
-                  isSelected={defaultAddress.isStantard}
-                />
+                <ul>
+                  <AddressCard
+                    address={defaultAddress}
+                    isSelected={defaultAddress.isStantard}
+                  />
+                </ul>
               ) : (
                 <div className="my-3 rounded-lg bg-secondary p-2 text-center">
                   <p className="text-base font-semibold text-primary md:text-xl">
@@ -87,7 +89,7 @@ export function AddressPage() {
                 </div>
               )}
               {otherAddresses?.length > 0 && (
-                <>
+                <ul>
                   <h3 className="w-full px-5 text-left font-semibold">
                     Outros
                   </h3>
@@ -100,7 +102,7 @@ export function AddressPage() {
                       toggleOpenModalDefault={toggleOpenModalDefault}
                     />
                   ))}
-                </>
+                </ul>
               )}
             </div>
           </div>
