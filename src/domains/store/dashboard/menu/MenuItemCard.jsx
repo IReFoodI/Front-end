@@ -1,8 +1,11 @@
 import { IconDots } from "@tabler/icons-react"
-import { useState } from "react"
+import { IconPhotoOff } from "@tabler/icons-react"
+import { memo, useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
+import imageBroke from "@/ui/assets/image-broke.png"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,133 +16,155 @@ import { Input } from "@/ui/components/ui/input"
 import { Switch } from "@/ui/components/ui/switch"
 import { TableCell, TableRow } from "@/ui/components/ui/table"
 
-import { QuantityInput } from "./QuantityInput"
-
-export function MenuItemCard({
+export const MenuItemCard = memo(function MenuItemCard({
   product,
-  onClick,
   setIsModalOpen,
   setIsDeleteModalOpen,
   setSelectedProduct,
   onStatusChange,
 }) {
   const {
-    name = "",
-    image = "",
-    description: initialDescription,
-    status: initialStatus,
+    nameProd = "",
+    urlImgProd = "",
+    descriptionProd: initialDescription,
+    active: initialStatus,
     expirationDate: initialExpirationDate,
     quantity: initialQuantity,
     originalPrice: initialOriginalPrice,
     sellPrice: initialSellPrice,
+    categoryProduct: categoryProduct,
   } = product
-
   const [expirationDate, setExpirationDate] = useState(
     initialExpirationDate ? new Date(initialExpirationDate) : null
   )
   const [description, setDescription] = useState(initialDescription || "")
-  const [quantity] = useState(initialQuantity || 0)
   const [originalPrice, setOriginalPrice] = useState(
     currencyFormatter(initialOriginalPrice || 0)
   )
   const [sellPrice, setSellPrice] = useState(
     currencyFormatter(initialSellPrice || 0)
   )
-  const [status, setStatus] = useState(!!initialStatus)
+  const [active, setActive] = useState(!!initialStatus)
 
   const handleChange = (setter) => (e) => {
     setter(e.target.value)
   }
 
   const handleStatusChange = (checked) => {
-    setStatus(checked)
-    onStatusChange(product.id, checked)
+    if (checked && expirationDate < new Date()) {
+      toast.error(`${nameProd} está vencido!`)
+      return
+    }
+    setActive(checked)
+    onStatusChange(product.productId, checked)
   }
 
-  function handleOpenModal() {
+  const openEditModal = () => {
+    setSelectedProduct(product)
     setIsModalOpen(true)
   }
 
-  const disabledClass = status ? "" : "opacity-50"
+  const openDeleteModal = () => {
+    setSelectedProduct(product)
+    setIsDeleteModalOpen(true)
+  }
+
+  useEffect(() => {
+    if (expirationDate && expirationDate < new Date()) {
+      setActive(false)
+      onStatusChange(product.productId, false)
+      toast.error(`${nameProd} está vencido!`)
+    }
+  }, [expirationDate, nameProd, onStatusChange, product.productId])
+
+  const disabledClass = active ? "" : "opacity-50"
 
   return (
     <TableRow className={disabledClass}>
-      <TableCell className="hidden sm:table-cell">
-        <img
-          alt={name || "Product image"}
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={image}
-          width="64"
-        />
+      <TableCell className="hidden h-16 w-16 sm:table-cell">
+        {urlImgProd ? (
+          <img
+            alt={nameProd || "Product image"}
+            className="aspect-square rounded-md object-cover"
+            height="64"
+            src={urlImgProd}
+            width="64"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = imageBroke
+            }}
+          />
+        ) : (
+          <div className="flex h-16 w-16 items-center justify-center rounded bg-primary/20">
+            <IconPhotoOff size={34} className="object-cover text-primary" />
+          </div>
+        )}
       </TableCell>
-      <TableCell onClick={onClick} className="font-medium">
-        {name}
-      </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
+      <TableCell className="font-medium">{nameProd}</TableCell>
+      <TableCell className={`pointer-events-none hidden w-32 lg:table-cell`}>
         <Input
           type="text"
-          disabled={!status}
-          value={description}
-          onChange={handleChange(setDescription)}
+          disabled={!active}
+          defaultValue={categoryProduct}
+          readOnly
+          placeholder="Categoria"
+          className="text-center"
+        />
+      </TableCell>
+      <TableCell className={`pointer-events-none hidden w-72 lg:table-cell`}>
+        <Input
+          type="text"
+          disabled={!active}
+          defaultValue={description}
+          onChange={setDescription}
           placeholder="Descrição do produto"
         />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
-        <DatePickerSingle value={expirationDate} onChange={setExpirationDate} />
+      <TableCell className={`pointer-events-none hidden md:table-cell`}>
+        <DatePickerSingle
+          className="hidden"
+          value={expirationDate}
+          onChange={setExpirationDate}
+        />
       </TableCell>
-      <TableCell className={disabledClass}>
-        <QuantityInput items={quantity} />
+      <TableCell className="pointer-events-none w-28">
+        <Input
+          type="text"
+          value={initialQuantity}
+          readOnly
+          placeholder="Quantidade"
+          className="text-center"
+        />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none hidden md:table-cell ${disabledClass}`}
-      >
+      <TableCell className={`pointer-events-none hidden w-28 md:table-cell`}>
         <Input
           type="text"
           value={originalPrice}
+          readOnly
           onChange={handleChange(setOriginalPrice)}
           placeholder="Preço Original"
         />
       </TableCell>
-      <TableCell
-        className={`pointer-events-none md:table-cell ${disabledClass}`}
-      >
+      <TableCell className="pointer-events-none w-28">
         <Input
           type="text"
           value={sellPrice}
           onChange={handleChange(setSellPrice)}
           placeholder="Preço de Venda"
+          className="w-20"
         />
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        <Switch checked={status} onCheckedChange={handleStatusChange} />
+        <Switch checked={active} onCheckedChange={handleStatusChange} />
       </TableCell>
-      <TableCell className="flex-col items-center gap-2">
+      <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <IconDots size={25} />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="min-w-16">
-            <DropdownMenuItem
-              onClick={() => {
-                setSelectedProduct(product)
-                handleOpenModal()
-                document.body.style.pointerEvents = ""
-              }}
-            >
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                setIsDeleteModalOpen(true)
-                setSelectedProduct(product)
-                document.body.style.pointerEvents = ""
-              }}
-            >
+            <DropdownMenuItem onClick={openEditModal}>Editar</DropdownMenuItem>
+            <DropdownMenuItem onClick={openDeleteModal}>
               Deletar
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -147,4 +172,4 @@ export function MenuItemCard({
       </TableCell>
     </TableRow>
   )
-}
+})
