@@ -33,10 +33,6 @@ export function useAddressUserStoreProfile() {
       await onRequest({
         request: () => fetchRestaurantAddressById(storeId),
         onSuccess: async (addressByIdRes) => {
-          console.log(
-            "useAddressUserStoreProfile:::::::::::fetchResAddressById",
-            addressByIdRes
-          )
           setAddresById(addressByIdRes)
           setIsLoading(false)
         },
