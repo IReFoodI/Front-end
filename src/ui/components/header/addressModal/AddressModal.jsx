@@ -9,7 +9,7 @@ import { userAddressStore } from "@/domains/user/stores/userAddressStore"
 import { Button } from "../../ui/button/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
 
-export function AddressModal() {
+export function AddressModal({ open, onOpenChange }) {
   const formatCep = (Cep) => {
     return Cep?.replace(/(\d{5})(\d{3})/, "$1-$2")
   }
@@ -30,7 +30,7 @@ export function AddressModal() {
   }, [])
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
@@ -84,7 +84,10 @@ export function AddressModal() {
           </div>
         )}
 
-        <Button className="w-full rounded-xl md:text-xl">
+        <Button
+          onClick={() => onOpenChange(false)}
+          className="w-full rounded-xl md:text-xl"
+        >
           <Link
             to={defaultAddress ? "/endereco" : "/endereco/adicionar"}
             className="w-full sm:text-lg"

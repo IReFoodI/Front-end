@@ -7,8 +7,7 @@ import {
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
@@ -20,11 +19,12 @@ import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
-export function ProfileSheet() {
+export function ProfileSheet({ closeModal }) {
   const { value } = useMediaQuery("(max-width: 768px)")
   const { user } = userStore()
-  const [activeInformationButton, setActiveInformationButton] = useState(null)
   const { logout } = userStore()
+  const navigate = useNavigate()
+  const pathname = location?.pathname
 
   const informationButtons = [
     {
@@ -54,9 +54,14 @@ export function ProfileSheet() {
     },
   ]
 
+  const handleLinkClick = (path) => {
+    closeModal()
+    navigate(path)
+  }
+
   return (
     <div className="flex h-full flex-col justify-between">
-      <div className="flex flex-col gap-3">
+      <nav className="flex flex-col gap-3">
         <div className="mt-4 flex justify-between gap-2">
           {value ? (
             <SheetHeader className="w-full">
@@ -110,27 +115,23 @@ export function ProfileSheet() {
           </div>
         </div>
 
-        <div className="flex w-full flex-col gap-2">
+        <ul className="flex w-full flex-col gap-2">
           {informationButtons.map((button, index) => (
             <InformationButton
               key={index}
-              ownIndex={index}
+              ownIndex={button.path}
               iconForButton={button.iconForButton}
               buttonText={button.buttonText}
-              path={button.path}
-              currentIndex={activeInformationButton}
-              setCurrentIndex={setActiveInformationButton}
+              currentIndex={pathname}
+              setCurrentIndex={() => handleLinkClick(button.path)}
             />
           ))}
-        </div>
-      </div>
+        </ul>
+      </nav>
 
       <div className="mb-2 flex flex-col gap-4">
         <div className="jus flex flex-col gap-2">
           <TermsOfUse className={"text-start"}>Termos e condições</TermsOfUse>
-          <Link to="/" className="text-sm font-semibold text-primary underline">
-            Ajuda
-          </Link>
         </div>
         <Button
           onClick={logout}
