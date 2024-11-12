@@ -1,5 +1,8 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { productService } from "@/domains/store/services/useProdutcList"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -24,7 +27,6 @@ import {
   TableRow,
 } from "@/ui/components/ui/table"
 
-import { productList as initialProductList } from "../../models/productList"
 import { DeleteProductModal } from "./DeleteProductModal"
 import { MenuItemCard } from "./MenuItemCard"
 import { ProductModal } from "./ProductModal"
@@ -32,118 +34,168 @@ import { ProductModal } from "./ProductModal"
 export function StoreMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [localProducts, setLocalProducts] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const [selectedProduct, setSelectedProduct] = useState({})
-  const [productList, setProductList] = useState(initialProductList)
+  const { data, onRequest, loading } = useFetch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const currentPageFromUrl =
+    parseInt(new URLSearchParams(location.search).get("page")) || 0
 
-  const handleStatusChange = (id, newStatus) => {
-    setProductList((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id ? { ...product, status: newStatus } : product
+  const fetchProducts = useCallback(async () => {
+    await onRequest({
+      request: () => productService.getRestaurantProducts(currentPage),
+      onError: (erro) => {
+        if (erro.response.data.status === 400) navigate(`?page=${0}`)
+      },
+    })
+  }, [onRequest, currentPage])
+
+  useEffect(() => {
+    if (data?._embedded?.productDTOList) {
+      setLocalProducts(data._embedded.productDTOList)
+    }
+  }, [data])
+
+  const updateProduct = useCallback(
+    (id, data) => {
+      onRequest({
+        request: () => productService.updateProduct(id, data),
+        onSuccess: fetchProducts,
+        errorMessage: "Erro ao atualizar o produto.",
+      })
+    },
+    [onRequest, fetchProducts]
+  )
+
+  const handleStatusChange = useCallback(
+    (productId, newStatus) => {
+      updateProduct(productId, { active: newStatus })
+      setLocalProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.productId === productId
+            ? { ...product, active: newStatus }
+            : product
+        )
       )
-    )
-  }
+    },
+    [updateProduct]
+  )
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
+  useEffect(() => {
+    setCurrentPage(currentPageFromUrl)
+    fetchProducts()
+  }, [fetchProducts, currentPageFromUrl])
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+    navigate(`?page=${newPage}`)
   }
-  //todo fazer a parte de atualizar o produto
-  // Função para atualizar o produto na lista
-  // const handleUpdateProduct = (updatedProduct) => {
-  //   setProductList((prevList) =>
-  //     prevList.map((product) =>
-  //       product.id === updatedProduct.id ? updatedProduct : product
-  //     )
-  //   )
-  // }
 
   return (
     <div className="w-full">
       <Card className="border-none shadow-none">
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
-
           <AlertDialog open={isModalOpen}>
-            <AlertDialogTrigger onClick={handleOpenModal} asChild>
+            <AlertDialogTrigger asChild>
               <Button
                 size="sm"
                 className="m-0 !mt-0 items-center gap-1 text-lg"
+                onClick={() => setIsModalOpen(true)}
               >
                 <span className="m-0 text-base">+ Adicionar produto</span>
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="min-w-fit">
+            <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle />
-                <AlertDialogDescription />
+                <AlertDialogTitle>Produto</AlertDialogTitle>
               </AlertDialogHeader>
+              <AlertDialogDescription>
+                Aqui você pode ver informações detalhadas sobre o produto
+                selecionado e gerenciar suas escolhas.
+              </AlertDialogDescription>
               <ProductModal
-                setIsDeleteModalOpen={setIsDeleteModalOpen}
-                selectedProduct={selectedProduct}
-                setSelectedProduct={setSelectedProduct}
                 setIsModalOpen={setIsModalOpen}
-                isModalOpen={isModalOpen}
+                setSelectedProduct={setSelectedProduct}
+                selectedProduct={selectedProduct}
+                fetchProducts={fetchProducts}
               />
             </AlertDialogContent>
           </AlertDialog>
         </CardHeader>
+
         <CardContent>
           <Table>
-            <TableHeader className="border-b-2 border-t-2 border-secondary-foreground">
+            <TableHeader>
               <TableRow>
-                <TableHead className="hidden text-center md:table-cell">
-                  Foto
+                <TableHead className="hidden md:table-cell">Foto</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead className="hidden w-20 lg:table-cell">
+                  Categoria
                 </TableHead>
-                <TableHead className="text-left md:text-center">Nome</TableHead>
-                <TableHead className="hidden text-center md:table-cell">
+                <TableHead className="hidden lg:table-cell">
                   Descrição
                 </TableHead>
-                <TableHead className="hidden text-center md:table-cell">
-                  Validade
-                </TableHead>
-                <TableHead className="text-center">Quantidade</TableHead>
-                <TableHead className="hidden text-center md:table-cell">
+                <TableHead className="hidden md:table-cell">Validade</TableHead>
+                <TableHead>Quantidade</TableHead>
+                <TableHead className="hidden md:table-cell">
                   Valor Original
                 </TableHead>
-                <TableHead className="text-center md:table-cell">
-                  Valor Venda
-                </TableHead>
-                <TableHead className="hidden text-center">Status</TableHead>
-                <TableHead className="text-center">Ação</TableHead>
+                <TableHead>Valor Venda</TableHead>
+                <TableHead className="hidden md:table-cell">Status</TableHead>
+                <TableHead>Ação</TableHead>
               </TableRow>
             </TableHeader>
+
             <TableBody>
-              {productList.map((product) => (
+              {localProducts.map((product) => (
                 <MenuItemCard
-                  key={product.id}
+                  key={product.productId}
                   product={product}
-                  setIsDeleteModalOpen={setIsDeleteModalOpen}
-                  selectedProduct={selectedProduct}
-                  setSelectedProduct={setSelectedProduct}
                   setIsModalOpen={setIsModalOpen}
-                  isModalOpen={isModalOpen}
+                  setIsDeleteModalOpen={setIsDeleteModalOpen}
+                  setSelectedProduct={setSelectedProduct}
                   onStatusChange={handleStatusChange}
                 />
               ))}
             </TableBody>
           </Table>
+
+          <div className="mt-4 flex justify-between">
+            <Button
+              size="sm"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 0}
+            >
+              Página Anterior
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === data?.page?.totalPages - 1}
+            >
+              Próxima Página
+            </Button>
+          </div>
         </CardContent>
+
         <CardFooter>
-          <div className="text-xs text-muted-foreground">
-            Exibindo{" "}
-            <strong>
-              1-
-              {initialProductList.length < 10 ? initialProductList.length : 10}
-            </strong>{" "}
-            de <strong>{initialProductList.length}</strong> produtos
+          <div className="text-xs">
+            Exibindo <strong>{currentPage + 1}</strong> de{" "}
+            <strong>{data?.page?.totalPages}</strong> produtos
           </div>
         </CardFooter>
       </Card>
+
       <DeleteProductModal
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         selectedProduct={selectedProduct}
         setSelectedProduct={setSelectedProduct}
+        fetchProducts={fetchProducts}
       />
     </div>
   )

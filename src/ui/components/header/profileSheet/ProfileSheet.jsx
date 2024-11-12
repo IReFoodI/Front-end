@@ -61,7 +61,7 @@ export function ProfileSheet() {
           <div className="z-1 flex w-full items-center justify-start rounded-xl bg-gradient-to-r from-primary to-orange-400">
             <ProfileImagePlaceholder className="z-2 m-1 w-14" />
             <h1 className="m-1 text-lg font-semibold leading-5 text-white">
-              Olá, {user?.nome}!
+              Olá, {user?.name}!
             </h1>
           </div>
         </div>
