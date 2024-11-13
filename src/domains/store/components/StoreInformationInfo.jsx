@@ -66,7 +66,10 @@ export function StoreInformationInfo() {
   }
 
   return (
-    <div id="info" className="flex flex-col gap-8 text-gray-500 antialiased">
+    <div
+      id="info"
+      className="mt-8 flex flex-col gap-8 text-gray-500 antialiased"
+    >
       {!loadingRestaurant && (
         <>
           {restaurantData?.description !== null ? (
@@ -137,11 +140,6 @@ export function StoreInformationInfo() {
                 ></iframe>
               )}
             </div>
-          </div>
-
-          <div id="other-info">
-            <h2 className="font-bold">Outras Informações</h2>
-            <p className="py-2 text-sm">CNPJ: {restaurantData?.cnpj}</p>
           </div>
         </>
       )}

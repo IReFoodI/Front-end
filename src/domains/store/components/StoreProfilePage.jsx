@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   IconArrowLeft,
   IconClock,
@@ -8,15 +7,13 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom"
 
 import { useFavorites } from "@/domains/user/components/favorites/FavoritesData"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { useRestaurant } from "../hooks/useRestaurant"
 import { StoreHourDayOfWeek } from "./StoreHourDayOffWeek"
-import { StoreProductList } from "./StoreProductList"
-import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function UserStoreProfilePage() {
   const { storeId } = useParams()
@@ -38,6 +35,7 @@ export function UserStoreProfilePage() {
         stores?.find((s) => s.restaurant.restaurantId == storeId)
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stores])
 
   if (loadingRestaurant) return <Loading />
@@ -45,11 +43,11 @@ export function UserStoreProfilePage() {
   return (
     <div
       id="page"
-      className="mx-auto w-full min-w-80 max-w-[1280px] text-gray-500 antialiased xl:py-8"
+      className="mx-auto w-full min-w-80 text-gray-500 antialiased xl:py-8"
     >
       <div
         id="capa"
-        className="relative h-[200px] w-full rounded-[14px] bg-cover bg-center px-5 xl:hidden"
+        className="h-[200px] w-full rounded-lg bg-cover bg-center px-5"
         style={{ backgroundImage: `url(${restaurantData?.urlBanner})` }}
       >
         <div
@@ -58,90 +56,97 @@ export function UserStoreProfilePage() {
         >
           <IconArrowLeft />
         </div>
-        <button
-          className="relative top-32 h-24 w-24 transform rounded-full bg-cover transition-transform duration-300 hover:scale-105"
-          style={{ backgroundImage: `url(${restaurantData?.urlLogo})` }}
-        />
       </div>
-      <div className="px-5 pb-5 xl:px-0">
+      <div className="mb-3 items-start justify-between md:flex">
         <div
-          id="icons-mobile"
-          className="flex justify-end gap-2 py-3 text-gray-400 xl:hidden"
+          id="card-info"
+          className="-mt-10 w-full rounded-md bg-cover bg-center md:max-w-[70%] md:bg-card md:pr-5 md:pt-5 lg:max-w-[50%]"
         >
-          <Link to={`/loja/informacoes/${storeId}`}>
-            <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
-          </Link>
-          <button
-            onClick={() =>
-              toggleFavorite(storeId, currentStoreWithFavorite?.favoriteId)
-            }
+          <div
+            id="card-content"
+            className="flex justify-between gap-3 md:flex-row"
           >
-            {currentStoreWithFavorite?.isFavorited ? (
-              <IconHeartFilled className="cursor-pointer text-orange-600 transition duration-300" />
-            ) : (
-              <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-600" />
-            )}
-          </button>
-        </div>
-        <div id="cards-mobile" className="flex flex-col gap-5 xl:hidden">
-          <div id="card-info">
-            <div id="card-content" className="flex flex-col gap-1">
-              <div className="cursor-pointer text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
-                {restaurantData?.fantasy}
+            <div className="gap-2 md:flex">
+              <div className="px-5 md:pb-5 xl:px-0">
+                <Link to={`/loja/${storeId}`}>
+                  <button
+                    className="top-20 h-16 w-16 rounded-full bg-cover transition-transform duration-300 hover:scale-105 md:relative md:top-0 md:block md:h-24 md:w-24"
+                    style={{
+                      backgroundImage: `url(${restaurantData?.urlLogo})`,
+                    }}
+                  />
+                </Link>
               </div>
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex flex-col text-sm">
+                <h2 className="text-xl font-bold text-gray-700 md:text-xl">
+                  {restaurantData?.fantasy}
+                </h2>
                 <span className="font-bold text-primary">novo!</span>
                 <span className="font-semibold text-gray-400">
                   {restaurantData?.category}
                 </span>
-                <span>
-                  <IconStarFilled size={14} className="text-primary" />
-                </span>
-                <span className="font-bold">
-                  {restaurantData?.averageRating} (
-                  {restaurantData?.totalEvaluations} avaliações)
-                </span>
-              </div>
-              <button className="flex items-center gap-2 text-sm text-gray-400">
-                <span>
-                  <IconClock size={15} className="text-gray-500" />
-                </span>
-                {loadingHoursToday ? (
-                  <Loading />
-                ) : (
-                  <span className="transition duration-300 hover:text-primary">
-                    <StoreHourDayOfWeek
-                      restaurantHoursTodayData={restaurantAllHoursData}
-                    />
+                <div className="flex items-center gap-1">
+                  <span>
+                    <IconStarFilled size={14} className="text-primary" />
                   </span>
+                  <span className="font-bold">
+                    {restaurantData?.averageRating} (
+                    {restaurantData?.totalEvaluations} avaliações)
+                  </span>
+                </div>
+              </div>
+            </div>
+            <menu className="flex items-start pt-12 md:p-0">
+              <Link to={`/loja/${storeId}/informacoes/`}>
+                <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-orange-600" />
+              </Link>
+              <button
+                onClick={() =>
+                  toggleFavorite(storeId, currentStoreWithFavorite?.favoriteId)
+                }
+              >
+                {currentStoreWithFavorite?.isFavorited ? (
+                  <IconHeartFilled className="cursor-pointer text-orange-600 transition duration-300" />
+                ) : (
+                  <IconHeart className="cursor-pointer transition duration-300 hover:text-orange-600" />
                 )}
               </button>
-            </div>
-          </div>
-          <div id="card-address">
-            {loadingRestaurantAddress ? (
-              <Loading />
-            ) : (
-              <div id="content" className="text-gray-700">
-                <p className="font-bold">
-                  {restaurantAddressesData?.[0]?.street},{" "}
-                  {restaurantAddressesData?.[0]?.number}
-                </p>
-                <p className="font-bold">
-                  {restaurantAddressesData?.[0]?.district} -{" "}
-                  {restaurantAddressesData?.[0]?.city} -{" "}
-                  {restaurantAddressesData?.[0]?.state}
-                </p>
-              </div>
-            )}
+            </menu>
           </div>
         </div>
-        <StoreProfilePageTopDesktop
-          restaurantData={restaurantData}
-          restaurantAllHoursData={restaurantAllHoursData}
-        />
-        <StoreProductList />
+        <button className="flex items-center gap-2 text-sm text-gray-400 md:p-2">
+          <span>
+            <IconClock size={15} className="text-gray-500" />
+          </span>
+          {loadingHoursToday ? (
+            <Loading />
+          ) : (
+            <span className="transition duration-300 hover:text-primary">
+              <StoreHourDayOfWeek
+                restaurantHoursTodayData={restaurantAllHoursData}
+              />
+            </span>
+          )}
+        </button>
       </div>
+      <div className="md:mb-8" id="card-address">
+        {loadingRestaurantAddress ? (
+          <Loading />
+        ) : (
+          <div id="content" className="text-gray-700">
+            <p className="font-bold">
+              {restaurantAddressesData?.[0]?.street},{" "}
+              {restaurantAddressesData?.[0]?.number}
+            </p>
+            <p className="font-bold">
+              {restaurantAddressesData?.[0]?.district} -{" "}
+              {restaurantAddressesData?.[0]?.city} -{" "}
+              {restaurantAddressesData?.[0]?.state}
+            </p>
+          </div>
+        )}
+      </div>
+      <Outlet />
     </div>
   )
 }

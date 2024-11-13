@@ -7,8 +7,8 @@ export function StoreInformationTabs() {
   const [activeTab, setActiveTab] = useState("reviews")
 
   return (
-    <div className="antialiased">
-      <div className="mb-4 flex cursor-pointer border-t border-t-gray-200 text-gray-500">
+    <div className="antialiased sm:hidden">
+      <div className="mb-4 mt-8 flex cursor-pointer border-t border-t-gray-200 text-gray-500">
         <button
           onClick={() => setActiveTab("reviews")}
           className={`w-full px-4 py-2 text-center transition duration-300 hover:text-primary ${

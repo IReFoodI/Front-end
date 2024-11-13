@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { StoreSignUp } from "@/domains/store/components/authentication/StoreSignUp.jsx"
-import { StoreInformationInfo } from "@/domains/store/components/StoreInformationInfo.jsx"
+import { StoreProductList } from "@/domains/store/components/StoreProductList.jsx"
 import { UserStoreProfilePage } from "@/domains/store/components/StoreProfilePage.jsx"
 import { AlertSoundSettingsPage } from "@/domains/store/dashboard/AlertSoundSettingsPage.jsx"
 import { ConfigurationPage } from "@/domains/store/dashboard/configuration-page/ConfigurationPage.jsx"
@@ -35,6 +35,7 @@ import { AuthenticationLayoutBusiness } from "@/ui/layouts/AuthenticationLayoutB
 import { DashBoardLayout } from "@/ui/layouts/DashboardLayout.jsx"
 import { ProfileManagementLayout } from "@/ui/layouts/ProfileManagementLayout.jsx"
 import { ProtectedLayout } from "@/ui/layouts/ProtectedLayout.jsx"
+import { StoreInformationInfoLayout } from "@/ui/layouts/StoreInformationInfoLayout.jsx"
 import { UserLayout } from "@/ui/layouts/UserLayout.jsx"
 
 import App from "../App.jsx"
@@ -70,7 +71,7 @@ export const ROUTES = {
   MY_ORDERS: "pedidos",
   SEARCH_PRODUCTS: "produtos/pesquisar",
   USER_STORE_PROFILE: "loja/:storeId",
-  USER_STORE_PROFILE_INFO: "loja/informacoes/:storeId",
+  USER_STORE_PROFILE_INFO: "informacoes/",
 }
 
 export const router = createBrowserRouter([
@@ -93,10 +94,13 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.USER_STORE_PROFILE,
                 element: <UserStoreProfilePage />,
-              },
-              {
-                path: ROUTES.USER_STORE_PROFILE_INFO,
-                element: <StoreInformationInfo />,
+                children: [
+                  { index: true, element: <StoreProductList /> },
+                  {
+                    path: ROUTES.USER_STORE_PROFILE_INFO,
+                    element: <StoreInformationInfoLayout />,
+                  },
+                ],
               },
               {
                 element: <ProfileManagementLayout />,
