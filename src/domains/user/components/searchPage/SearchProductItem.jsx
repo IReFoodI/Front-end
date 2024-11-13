@@ -68,7 +68,7 @@ export function SearchProductItem({
   }
 
   return (
-    <Card className="flex flex-col items-center justify-start gap-4 bg-gray-100 p-3">
+    <Card className="flex flex-col items-center justify-start gap-4 bg-gray-100 p-3 border-none">
       <div className="flex w-full flex-1 items-start gap-6 md:gap-6">
         <div className="relative h-full w-24 rounded-lg md:rounded-[1.25rem]">
           <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
@@ -80,7 +80,7 @@ export function SearchProductItem({
             <img
               src={urlImgProduct ? urlImgProduct : Default_Product_Image}
               alt={nameProduct}
-              className="h-24 w-24 bg-cover bg-center"
+              className="h-24 w-24 bg-cover bg-center rounded-md"
               onError={(e) => {
                 e.target.onerror = null
                 e.target.src = Default_Product_Image
