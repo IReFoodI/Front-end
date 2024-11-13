@@ -32,10 +32,12 @@ export function StoreCard({
     .map((hours) => `${hours.openingTime} às ${hours.closingTime}`)
     .join(", ")
 
+  console.log("favorito", storeData.restaurant.restaurantId)
+
   return (
     <Link
       className="block max-w-full"
-      to={`loja/${storeData.restaurant.restaurantId}`}
+      to={`/loja/${storeData.restaurant.restaurantId}`}
     >
       <Card
         className={cn(

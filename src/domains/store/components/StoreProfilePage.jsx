@@ -51,7 +51,7 @@ export function UserStoreProfilePage() {
         style={{ backgroundImage: `url(${restaurantData?.urlBanner})` }}
       >
         <div
-          onClick={() => navigation(-1)}
+          onClick={() => navigation("/")}
           className="relative top-9 cursor-pointer transition duration-300 hover:text-primary"
         >
           <IconArrowLeft />
