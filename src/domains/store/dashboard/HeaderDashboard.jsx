@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom"
 
-import { Button } from "@/ui/components/ui/button/button"
-
 import Logo from "./Logo-Negocios.png"
 export function HeaderDashboard() {
   return (
