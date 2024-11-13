@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -17,15 +17,16 @@ import { SearchProductItem } from "@/domains/user/components/searchPage/SearchPr
 
 export function StoreProductList() {
   const { storeId } = useParams()
+  const [filter, setFilter] = useState("expiry_asc")
   const { data: products, onRequest, loading } = useFetch()
 
   useEffect(() => {
     if (storeId)
       onRequest({
         request: () =>
-          restaurantService.fetchRestaurantProductsByRestaurantId(storeId),
+          restaurantService.fetchRestaurantProductsByRestaurantId(storeId, filter),
       })
-  }, [storeId])
+  }, [storeId, filter])
 
   if (loading) return <Loading />
 
@@ -35,17 +36,17 @@ export function StoreProductList() {
         <h2 className="flex items-center justify-center text-xl font-semibold">
           Produtos:
         </h2>
-        <Select>
+        <Select value={filter} onValueChange={setFilter}>
           <SelectTrigger className="w-fit">
             <SelectValue placeholder="Ordenar" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="crescentName">Nome crescente</SelectItem>
-            <SelectItem value="descendingName">Nome decrescente</SelectItem>
-            <SelectItem value="lowestPrice">Menor preço</SelectItem>
-            <SelectItem value="highestPrice">Maior preço</SelectItem>
-            <SelectItem value="expiringSoon">Perto do vencimento</SelectItem>
-            <SelectItem value="longExpiration">Longe do vencimento</SelectItem>
+            <SelectItem value="name_asc">Nome crescente</SelectItem>
+            <SelectItem value="name_desc">Nome decrescente</SelectItem>
+            <SelectItem value="price_asc">Menor preço</SelectItem>
+            <SelectItem value="price_desc">Maior preço</SelectItem>
+            <SelectItem value="expiry_asc">Perto do vencimento</SelectItem>
+            <SelectItem value="expiry_desc">Longe do vencimento</SelectItem>
           </SelectContent>
         </Select>
       </div>

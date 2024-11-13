@@ -23,10 +23,10 @@ export function UserStoreProfilePage() {
   const {
     loadingRestaurant,
     loadingHoursToday,
-    loadingRestaurantAddress,
+    // loadingRestaurantAddress,
     restaurantData,
     restaurantAllHoursData,
-    restaurantAddressesData,
+    // restaurantAddressesData,
   } = useRestaurant()
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export function UserStoreProfilePage() {
                 <h2 className="text-xl font-bold text-gray-700 md:text-xl">
                   {restaurantData?.fantasy}
                 </h2>
-                <span className="font-bold text-primary">novo!</span>
+                {/* <span className="font-bold text-primary">novo!</span> */}
                 <span className="font-semibold text-gray-400">
                   {restaurantData?.category}
                 </span>
@@ -129,7 +129,7 @@ export function UserStoreProfilePage() {
           )}
         </button>
       </div>
-      <div className="md:mb-8" id="card-address">
+      {/* <div className="md:mb-8" id="card-address">
         {loadingRestaurantAddress ? (
           <Loading />
         ) : (
@@ -145,7 +145,7 @@ export function UserStoreProfilePage() {
             </p>
           </div>
         )}
-      </div>
+      </div> */}
       <Outlet />
     </div>
   )
