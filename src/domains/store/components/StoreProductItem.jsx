@@ -13,10 +13,10 @@ import { useCartStore } from "../hooks/useCartStore"
 export function StoreProductItem({
   originalPrice,
   sellPrice,
-  nameProd,
+  nameProduct,
   quantity,
-  urlImgProd,
-  descriptionProd,
+  urlImgProduct,
+  descriptionProduct,
 }) {
   const addToCart = useCartStore((state) => state.addToCart)
 
@@ -43,13 +43,13 @@ export function StoreProductItem({
 
   const productToCart = {
     amountAdded,
-    nameProd,
+    nameProduct,
     sellPrice,
   }
 
   const handleAddToCart = () => {
     addToCart(productToCart)
-    const cart = useCartStore.getState().cart
+    // const cart = useCartStore.getState().cart
     setNewQuantity(newQuantity - amountAdded)
   }
 
@@ -63,9 +63,9 @@ export function StoreProductItem({
             <p className="text-[0.625rem] md:text-[0.8rem]">disponíveis</p>
           </Badge>
           <img
-            src={urlImgProd}
-            alt={nameProd}
-            className="h-24 w-24 bg-cover bg-center"
+            src={urlImgProduct || imageBroke}
+            alt={nameProduct}
+            className="h-24 w-24 rounded-2xl bg-cover bg-center"
             onError={(e) => {
               e.target.onerror = null
               e.target.src = imageBroke
@@ -73,10 +73,10 @@ export function StoreProductItem({
           />
         </div>
         <div className="flex flex-1 flex-col">
-          <h3 className="text-lg font-semibold">{nameProd}</h3>
+          <h3 className="text-lg font-semibold">{nameProduct}</h3>
           {/* Talvez colocar um truncate para não passar de um determinado número de linhas na descrição */}
           <p className="text-xs font-medium text-gray-400 lg:text-sm">
-            {descriptionProd}
+            {descriptionProduct}
           </p>
           <div className="flex justify-between">
             <div className="flex flex-col justify-center">

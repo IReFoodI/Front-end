@@ -55,7 +55,6 @@ export function StoreSchedule() {
 
   const handleScheduleChange = useCallback(
     (index, field, value) => {
-      console.log({ index, field, value })
       const updatedItem = { ...schedule[index], [field]: value }
       const updatedSchedule = schedule.map((item, i) =>
         i === index ? updatedItem : item
@@ -67,7 +66,6 @@ export function StoreSchedule() {
   )
 
   const handleUpdateSchedule = (index, data) => {
-    console.log({ index, data })
     const updatedItem = { ...schedule[index], ...data }
     const updatedSchedule = schedule.map((item, i) =>
       i === index ? updatedItem : item
@@ -92,7 +90,6 @@ export function StoreSchedule() {
     })
   }
   const handleSave = async () => {
-    console.log({ schedule })
     const data = transformScheduleData(schedule)
     try {
       const results = await Promise.allSettled(

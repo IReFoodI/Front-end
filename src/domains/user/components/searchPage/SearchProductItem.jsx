@@ -1,16 +1,21 @@
+/* eslint-disable */
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons"
 import { IconShoppingBag } from "@tabler/icons-react"
 import { useState } from "react"
 
+import { cartService } from "@/app/service/cartService"
+import useCartStore from "@/app/store/useCartStore"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { dateFormatterYearMonthDay } from "@/app/utils/dateFormatterYearMonthDay"
+import imageBroke from "@/ui/assets/image-broke.png"
 import { Badge } from "@/ui/components/ui/badge"
 import { Button } from "@/ui/components/ui/button/button"
 import { Card } from "@/ui/components/ui/card"
-
+import { toast } from "sonner"
+import userStore from "../../stores/userStore"
 export function SearchProductItem({
   product: {
-    // productId,
+    productId,
     nameProduct,
     descriptionProduct,
     urlImgProduct,
@@ -18,15 +23,13 @@ export function SearchProductItem({
     sellPrice,
     expirationDate,
     quantity,
-    // categoryProduct,
-    // additionDate,
-    // active,
     restaurantName,
-    // category,
   },
 }) {
+  const { userId } = userStore()
+  const { fetchCart } = useCartStore()
   const [amountAdded, setAmountAdded] = useState(1)
-  const [newQuantity, setNewQuantity] = useState(quantity)
+  const [newQuantity] = useState(quantity)
 
   const handleIncreaseProductQuantity = () => {
     setAmountAdded((amountAdded) => {
@@ -46,10 +49,20 @@ export function SearchProductItem({
     })
   }
 
-  const handleAddToCart = () => {
-    // addToCart(productToCart)
-    // const cart = useCartStore.getState().cart
-    setNewQuantity(newQuantity - amountAdded)
+  const handleAddToCart = async () => {
+    try {
+      await cartService.addItemCart({
+        userId,
+        productId,
+        quantity: amountAdded,
+      })
+      await fetchCart(userId)
+      setAmountAdded(1)
+      toast.success("Item adicionado com sucesso!")
+    } catch (error) {
+      console.log(error)
+      toast.error("Erro ao adicionar item no carrinho.")
+    }
   }
 
   return (
@@ -64,7 +77,11 @@ export function SearchProductItem({
           <img
             src={urlImgProduct}
             alt={nameProduct}
-            className="h-24 w-24 bg-cover bg-center"
+            className="h-24 w-24 rounded-xl bg-cover bg-center"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = imageBroke
+            }}
           />
         </div>
         <div className="flex flex-1 flex-col">

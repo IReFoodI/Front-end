@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useCallback, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -38,7 +39,7 @@ export function StoreMenu() {
   const [localProducts, setLocalProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
 
-  const { data, onRequest, loading } = useFetch()
+  const { data, onRequest } = useFetch()
   const navigate = useNavigate()
   const location = useLocation()
   const currentPageFromUrl =

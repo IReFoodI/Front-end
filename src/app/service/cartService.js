@@ -15,7 +15,7 @@ async function fetchCart(userId) {
   }
   const axios = createAxiosInstance(true)
   const response = await axios.get(`${BASE_URL}/user/${userId}`)
-  return response
+  return response.data
 }
 
 /**
@@ -38,7 +38,7 @@ async function clearCart(cartId) {
 async function fetchRestaurantNameByProductId(productId) {
   const axios = createAxiosInstance(true)
   const response = await axios.get(`/api/product/${productId}/restaurant`)
-  return response
+  return response.data
 }
 
 /**
@@ -55,9 +55,34 @@ async function removeItemFromCart(cartId, productId) {
   )
 }
 
+/**
+ * Adds an item to the user's cart.
+ *
+ * @async
+ * @param {Object} params - The request parameters.
+ * @param {number} params.userId - The user's ID.
+ * @param {number} params.productId - The product's ID.
+ * @param {number} params.quantity - The quantity of the product.
+ *
+ * @throws {Error} If `userId` is missing.
+ *
+ * @returns {Promise<Object>} The response data with the updated cart details.
+ */
+async function addItemCart({ userId, productId, quantity }) {
+  if (!userId) {
+    throw new Error("User ID is required to fetch the cart")
+  }
+  const axios = createAxiosInstance(true)
+  const response = await axios.post(
+    `${BASE_URL}/user/${userId}/add-item?productId=${productId}&quantity=${quantity}`
+  )
+  return response.data
+}
+
 export const cartService = {
   fetchCart,
   clearCart,
+  addItemCart,
   fetchRestaurantNameByProductId,
   removeItemFromCart,
 }

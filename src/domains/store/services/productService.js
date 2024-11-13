@@ -7,7 +7,7 @@ export async function fetchAllProducts() {
   return await axios.get(`${BASE_URL}`)
 }
 
-export async function getAllProductsRestaurantById(id) {
+export async function getAllProductsRestaurantById() {
   const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}`)
 }

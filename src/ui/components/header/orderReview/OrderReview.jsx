@@ -1,7 +1,6 @@
 // ACHO QUE NAO PRECISA MAIS DESSA TELA
 import { RadiobuttonIcon } from "@radix-ui/react-icons"
-import { IconPlus, IconTrash } from "@tabler/icons-react"
-import { IconEdit } from "@tabler/icons-react"
+import { IconEdit, IconPlus, IconTrash } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
@@ -12,8 +11,6 @@ import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 
 export function OrderReview() {
   const cart = useCartStore((state) => state.cart)
-
-  console.log(cart)
 
   return (
     <div className="mt-4 flex flex-col gap-6">

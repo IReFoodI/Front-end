@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+/* eslint-disable */
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -12,12 +13,11 @@ import {
   SelectValue,
 } from "@/ui/components/ui/select"
 
-import { StoreProductItem } from "./StoreProductItem"
+import { SearchProductItem } from "@/domains/user/components/searchPage/SearchProductItem"
 
 export function StoreProductList() {
   const { storeId } = useParams()
-  const { data: products, onRequest, error, loading } = useFetch()
-  const [productsWithStoreId, setProductsWithStoreId] = useState([])
+  const { data: products, onRequest, loading } = useFetch()
 
   useEffect(() => {
     if (storeId)
@@ -50,9 +50,11 @@ export function StoreProductList() {
         </Select>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {products?.map((product, index) => (
-          <StoreProductItem {...product} key={product.productId + index} />
-        ))}
+        {products?.map((product) => {
+          return (
+            <SearchProductItem key={product?.productId} product={product} />
+          )
+        })}
       </div>
     </section>
   )

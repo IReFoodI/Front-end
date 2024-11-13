@@ -51,7 +51,7 @@ export function useRestaurant() {
           onRequestRestaurant({
             request: () => restaurantServiceStore.getRestaurantById(storeId),
           }),
-        (error) => {
+        () => {
           navigator.navigate(-1)
           toast.error("Restaurante não encontrado")
         }
