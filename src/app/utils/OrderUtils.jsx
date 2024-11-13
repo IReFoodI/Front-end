@@ -9,7 +9,7 @@ export function getStatus(order) {
   let iconInOrder
   let nameInStatusOrder
 
-  if (order.orderStatus == "EMPRODUCAO") {
+  if (order.orderStatus == "PENDENTE") {
     iconInOrder = <IconAlertOctagon className="text-yellow-500" size={16} />
     nameInStatusOrder = "Pendente"
   } else if (order.orderStatus == "APROVADO") {

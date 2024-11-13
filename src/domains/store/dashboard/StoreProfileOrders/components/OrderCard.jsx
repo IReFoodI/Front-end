@@ -17,7 +17,6 @@ export function OrderCard({
   orderRef,
   setUser,
 }) {
-  const [orderItems, setOrderItems] = useState([])
   const [user, setUserData] = useState()
   const status = getStatus(order)
   const [totalValue] = useState(order.totalValue)
@@ -31,9 +30,13 @@ export function OrderCard({
 
   const fetchUserData = async () => {
     await onRequest({
-      request: () => userService.getUserById(order.userId),
+      request: () => userService.getUsers(),
       onSuccess: (data) => {
-        setUserData(data)
+        data.forEach((userResult) => {
+          if(userResult.userId == order.userId){
+            setUserData(userResult)
+          }
+        }) 
       },
     })
   }
@@ -42,32 +45,7 @@ export function OrderCard({
     fetchUserData()
   }, [])
 
-  useEffect(() => {
-    const fetchProductsById = async () => {
-      const fetchedItems = []
-
-      order?.orderItems?.map(async (item) => {
-        const productId = item.productId
-
-        await onRequest({
-          request: () => restaurantService.getProductById(productId),
-          onSuccess: (data) => {
-            fetchedItems.push({
-              ...data,
-              itemQuantity: item.quantity,
-              itemSubtotal: item.subtotal,
-            })
-          },
-        })
-      })
-
-      setOrderItems(fetchedItems)
-    }
-
-    fetchProductsById()
-  }, [])
-
-  if (!orderItems || !user) {
+  if (!user) {
     return <Loading />
   }
   return (
@@ -94,16 +72,16 @@ export function OrderCard({
         </button>
       </div>
       <Separator />
-      {orderItems?.map((item) => (
+      {order?.orderItems?.map((item) => (
         <div key={item.productId}>
           <div
             className={`flex w-full justify-between py-2 font-semibold ${isDoneOrCanceled ? "text-gray-500" : "text-gray-600"}`}
           >
             <div className="flex items-center justify-between gap-4 text-base">
-              <span>{item.itemQuantity}x</span>
-              <p>{item.nameProd}</p>
+              <span>{item.quantity}x</span>
+              <p>{item.productName}</p>
             </div>
-            <p className="text-base">{currencyFormatter(item.itemSubtotal)}</p>
+            <p className="text-base">{currencyFormatter(item.subtotal)}</p>
           </div>
           <Separator />
         </div>

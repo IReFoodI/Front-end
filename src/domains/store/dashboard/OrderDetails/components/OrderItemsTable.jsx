@@ -28,10 +28,10 @@ export function OrderItemsTable({ orderItems, totalValue }) {
             key={item.productId}
             className="text-base font-semibold text-gray-500"
           >
-            <TableCell colSpan={1}>{item.itemQuantity}</TableCell>
-            <TableCell colSpan={1}>{item.nameProd}</TableCell>
+            <TableCell colSpan={1}>{item.quantity}</TableCell>
+            <TableCell colSpan={1}>{item.productName}</TableCell>
             <TableCell colSpan={3} className="text-right">
-              {currencyFormatter(item.itemSubtotal)}
+              {currencyFormatter(item.subtotal)}
             </TableCell>
           </TableRow>
         ))}

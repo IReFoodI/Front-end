@@ -33,9 +33,15 @@ async function getTransactionById(transactionId) {
   return axios.get(`/transaction/${transactionId}`)
 }
 
+async function getUsers(params) {
+  const axios = createAxiosInstance(true)
+  return axios.get("api/user/users")
+}
+
 export const userService = {
   createUserAccount,
   getUser,
   getUserById,
+  getUsers,
   getTransactionById,
 }

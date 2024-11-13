@@ -21,11 +21,8 @@ export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
   const [user, setUser] = useState()
-  const [orderItems, setOrderItems] = useState([])
-  const [totalValue, setTotalValue] = useState(0)
   const [transaction, setTransaction] = useState()
   const targetOrderRef = useRef(null)
-
   const { onRequest } = useFetch()
 
   function capitalize(text) {
@@ -33,27 +30,6 @@ export function OrderDetails() {
   }
 
   useEffect(() => {
-    const fetchOrderItems = async () => {
-      const fetchedItems = []
-
-      currentOrder?.orderItems?.map(async (item) => {
-        const productId = item.productId
-
-        await onRequest({
-          request: () => restaurantService.getProductById(productId),
-          onSuccess: (data) => {
-            fetchedItems.push({
-              ...data,
-              itemQuantity: item.quantity,
-              itemSubtotal: item.subtotal,
-            })
-          },
-        })
-      })
-
-      setOrderItems(fetchedItems)
-    }
-
     const fetchTransaction = async () => {
       await onRequest({
         request: () =>
@@ -64,14 +40,10 @@ export function OrderDetails() {
       })
     }
 
-    if (currentOrder) {
-      fetchOrderItems()
-      if (currentOrder.transaction != null) {
-        fetchTransaction()
-      }
-      setTotalValue(currentOrder.totalValue)
+    if (currentOrder && currentOrder.transactionId != null) {
+      fetchTransaction()
     }
-  }, [currentOrder, onRequest, setOrderItems])
+  }, [currentOrder, onRequest])
 
   useEffect(() => {
     if (currentOrder !== undefined) {
@@ -79,9 +51,9 @@ export function OrderDetails() {
     }
   }, [currentOrder])
 
-  if (!orderItems) {
-    return <Loading />
-  }
+  console.log(currentOrder)
+
+
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
       <StoreProfileOrders
@@ -147,7 +119,7 @@ export function OrderDetails() {
                       <p className="font-normal">Cartão</p>
                     </div>
                     <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
-                      {capitalize(transaction.transactionStatus)}
+                      {currentOrder.transaction && capitalize(transaction.transactionStatus)}
                     </p>
                   </div>
                 )}
@@ -155,8 +127,8 @@ export function OrderDetails() {
 
               <div>
                 <OrderItemsTable
-                  orderItems={orderItems}
-                  totalValue={totalValue}
+                  orderItems={currentOrder.orderItems}
+                  totalValue={currentOrder.totalValue}
                 />
               </div>
             </div>

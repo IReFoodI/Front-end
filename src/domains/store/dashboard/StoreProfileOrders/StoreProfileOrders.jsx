@@ -56,7 +56,7 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
     <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/3">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
-          pendingOrders={filterOrders("EMPRODUCAO")} //colocar pendente
+          pendingOrders={filterOrders("PENDENTE")} //colocar pendente
           scheduledOrders={filterOrders("APROVADO")}
           setOrder={setOrder}
           orderRef={orderRef}
