@@ -33,7 +33,7 @@ async function getTransactionById(transactionId) {
   return axios.get(`/transaction/${transactionId}`)
 }
 
-async function getUsers(params) {
+async function getUsers() {
   const axios = createAxiosInstance(true)
   return axios.get("api/user/users")
 }

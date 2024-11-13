@@ -11,9 +11,7 @@ import { dateFormatter } from "@/app/utils/dateFormatter"
 import { getStatus } from "@/app/utils/OrderUtils"
 import { userService } from "@/domains/user/services/userService"
 import { Button } from "@/ui/components/ui/button/button"
-import { Loading } from "@/ui/components/ui/loading"
 
-import { restaurantService } from "../../services/restaurantService"
 import { StoreProfileOrders } from "../StoreProfileOrders/StoreProfileOrders"
 import { OrderItemsTable } from "./components/OrderItemsTable"
 
@@ -50,9 +48,6 @@ export function OrderDetails() {
       setOrderStatus(getStatus(currentOrder))
     }
   }, [currentOrder])
-
-  console.log(currentOrder)
-
 
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
@@ -119,7 +114,8 @@ export function OrderDetails() {
                       <p className="font-normal">Cartão</p>
                     </div>
                     <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
-                      {currentOrder.transaction && capitalize(transaction.transactionStatus)}
+                      {currentOrder.transaction &&
+                        capitalize(transaction.transactionStatus)}
                     </p>
                   </div>
                 )}

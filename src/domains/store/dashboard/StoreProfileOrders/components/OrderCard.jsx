@@ -33,10 +33,10 @@ export function OrderCard({
       request: () => userService.getUsers(),
       onSuccess: (data) => {
         data.forEach((userResult) => {
-          if(userResult.userId == order.userId){
+          if (userResult.userId == order.userId) {
             setUserData(userResult)
           }
-        }) 
+        })
       },
     })
   }
