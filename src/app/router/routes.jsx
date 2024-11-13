@@ -67,6 +67,7 @@ export const ROUTES = {
   FINALIZE_ORDER: "finalizar-pedido",
   MY_ORDERS: "pedidos",
   SEARCH_PRODUCTS: "produtos/pesquisar",
+  ORDER_DETAILS: "pedidos",
 }
 
 export const router = createBrowserRouter([

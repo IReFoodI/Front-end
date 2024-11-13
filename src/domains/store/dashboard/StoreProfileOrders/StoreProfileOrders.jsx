@@ -10,7 +10,7 @@ import { TabsStructure } from "./components/TabsStructure"
 export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
   const [orders, setOrders] = useState()
   const [restaurantId, setRestaurantId] = useState()
-  const { onRequest } = useFetch()
+  const { onRequest, error } = useFetch()
 
   const getRestaurantId = async () => {
     await onRequest({
@@ -25,7 +25,11 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
     await onRequest({
       request: () => restaurantService.getRestaurantOrders(restaurantId),
       onSuccess: (data) => {
-        setOrders(data)
+        if (data && data.length > 0) {
+          setOrders(data)
+        } else {
+          setOrders([])
+        }
       },
     })
   }
@@ -41,7 +45,7 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
     return orders.filter((order) => order.orderStatus == filter)
   }
 
-  if (!orders) {
+  if (!orders || error) {
     return (
       <div className="flex h-full items-center justify-center p-2 text-center text-2xl font-bold text-orange-500 shadow-2xl">
         <p>Não foram realizados pedidos ainda!</p>

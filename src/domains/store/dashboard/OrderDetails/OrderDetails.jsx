@@ -66,7 +66,7 @@ export function OrderDetails() {
 
     if (currentOrder) {
       fetchOrderItems()
-      if (currentOrder.transaction) {
+      if (currentOrder.transaction != null) {
         fetchTransaction()
       }
       setTotalValue(currentOrder.totalValue)
