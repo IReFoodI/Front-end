@@ -44,7 +44,7 @@ export function StoreProfilePage() {
   useEffect(() => {
     async function fetchRestaurantOrders() {
       await onRequest({
-        request: () => restaurantService.getRestaurantOrders(1), //user.restaurantId
+        request: () => restaurantService.getRestaurantOrders(user.restaurantId),
         onSuccess: (data) => {
           if (error) {
             setordersForCurrentMonth([])
@@ -82,7 +82,7 @@ export function StoreProfilePage() {
 
     async function fetchRestaurantHours() {
       await onRequest({
-        request: () => fetchRestaurantHoursById(1), //user.restaurantId
+        request: () => fetchRestaurantHoursById(user.restaurantId),
         onSuccess: (data) => {
           setRestaurantHours([...data])
         },
