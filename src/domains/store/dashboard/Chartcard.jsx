@@ -6,75 +6,58 @@ import {
   YAxis,
 } from "recharts"
 
-export function ChartCard({ orders }) {
-  function getMonthlyOrdersTotal(month) {
-    let total = 0
+const data = [
+  {
+    name: "Jan",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Feb",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Mar",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Apr",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "May",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jun",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jul",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Aug",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Sep",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Oct",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Nov",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Dec",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+]
 
-    if (orders.length > 0) {
-      orders.forEach((order) => {
-        const orderDate = new Date(order.orderDate)
-        const monthFromCurrentOrder = orderDate.getMonth()
-
-        if (month == monthFromCurrentOrder) {
-          total += order.totalValue
-        }
-      })
-    }
-
-    return total
-  }
-
-  const data = [
-    {
-      name: "Jan",
-      total: getMonthlyOrdersTotal(0),
-    },
-    {
-      name: "Feb",
-      total: getMonthlyOrdersTotal(1),
-    },
-    {
-      name: "Mar",
-      total: getMonthlyOrdersTotal(2),
-    },
-    {
-      name: "Apr",
-      total: getMonthlyOrdersTotal(3),
-    },
-    {
-      name: "May",
-      total: getMonthlyOrdersTotal(4),
-    },
-    {
-      name: "Jun",
-      total: getMonthlyOrdersTotal(5),
-    },
-    {
-      name: "Jul",
-      total: getMonthlyOrdersTotal(6),
-    },
-    {
-      name: "Aug",
-      total: getMonthlyOrdersTotal(7),
-    },
-    {
-      name: "Sep",
-      total: getMonthlyOrdersTotal(8),
-    },
-    {
-      name: "Oct",
-      total: getMonthlyOrdersTotal(9),
-    },
-    {
-      name: "Nov",
-      total: getMonthlyOrdersTotal(10),
-    },
-    {
-      name: "Dec",
-      total: getMonthlyOrdersTotal(11),
-    },
-  ]
-
+export function ChartCard() {
   return (
     <ResponsiveContainer width={"100%"} height={350}>
       <BarGraph data={data}>
