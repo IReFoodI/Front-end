@@ -92,13 +92,7 @@ export function StoreProfilePage() {
     fetchRestaurantHours()
     fetchRestaurantOrders()
     fetchActiveProducts()
-  }, [
-    setActiveProducts,
-    setRestaurantHours,
-    onRequest,
-    error,
-    user.restaurantId,
-  ])
+  }, [])
 
   return (
     <div className="flex-grow p-4">
@@ -219,7 +213,11 @@ export function StoreProfilePage() {
             <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
               <CardContent className="ps-1">
                 <p className="p-4 text-xl font-semibold">Visão geral</p>
-                <FinanceChartCard orders={orders} />
+                {orders < 0 ? (
+                  <h1>Não existem pedidos feitos!</h1>
+                ) : (
+                  <FinanceChartCard orders={orders} />
+                )}
               </CardContent>
             </Card>
           </div>
