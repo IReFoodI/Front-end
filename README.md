@@ -4,19 +4,18 @@
 
 </div>
 
+<!-- omit in toc -->
 ## Índice
 
-- [Índice](#índice)
 - [📌Sobre](#sobre)
 - [👨‍💻Integrantes](#integrantes)
 - [🚀Tecnologias utilizadas](#tecnologias-utilizadas)
-- [Tecnologias](#tecnologias)
 - [Funcionalidades](#funcionalidades)
 - [🎨Cores](#cores)
 - [💻O projeto pode ser vizualizado acessando o seguinte link](#o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link)
 - [👀Exemplo](#exemplo)
 - [Como executar o projeto](#como-executar-o-projeto)
-- [Estrutura de pastas](#estrutura-de-pastas)
+- [Arquitetura do projeto](#arquitetura-do-projeto)
 
 <div id="sobre">
 
@@ -30,7 +29,7 @@
 
 ## 👨‍💻Integrantes
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/115363966?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Caio Martins](https://github.com/CaioMMendes) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93887208?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Felipe Fracasso](https://github.com/FelipeM-F) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/150201828?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Leonardo Boeira](https://github.com/leomaciel14) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/131506431?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Marina Barbosa](https://github.com/marina-barbosa) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/89655285?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Ricardo Muenchen](https://github.com/RicardoDM23) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/63266170?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Samilis Brito](https://github.com/SamilisBrito) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102476639?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Thasyo Peres](https://github.com/Thasyo) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102565778?v=4" width=80 style='display:flex; justify-content:center; align-items:center;' ><br>Yasmin Carlôto](https://github.com/Yasmin-Carloto) |
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/115363966?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Caio Martins](https://github.com/CaioMMendes) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93887208?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Felipe Fracasso](https://github.com/FelipeM-F) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/150201828?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Leonardo Boeira](https://github.com/leomaciel14) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/131506431?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Marina Barbosa](https://github.com/marina-barbosa) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/89655285?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Ricardo Muenchen](https://github.com/RicardoDM23) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/63266170?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Samilis Brito](https://github.com/SamilisBrito) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102476639?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Thasyo Peres](https://github.com/Thasyo) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102565778?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Yasmin Carlôto](https://github.com/Yasmin-Carloto) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 
 </div>
@@ -41,40 +40,23 @@
 
 ## 🚀Tecnologias utilizadas
 
-## Tecnologias
+<!-- omit in toc -->
+### O projeto foi desenvolvido utilizando as seguintes tecnologias
 
-- Vite
-- Tailwind
-- Prettier-tailwind - Plugin para organizar as classes do tailwind
-- Zod - Validação
-- Axios - Requisição
-- React-hook-form - Formulário
-- Zustand - Variavel global (tipo context)
-- Icones - (react icons - phospor icons - lucide)
-- Toast message - (react toastify - sonner)
-- React-number-format - Mascara de input
-- Framer Motion - Animação
-- Swiper js - Slide
-- Chart Js - Grafico
-- Faker Js - Dados fakes
-O projeto foi desenvolvido utilizando as seguintes tecnologias:
-
-[![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](https://vite.dev/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff)](https://ui.shadcn.com/)
-
-- [Next](https://nextjs.org/)
-- [Typescript](https://www.typescriptlang.org/)
-- [NextAuth](https://next-auth.js.org/)
-- [Stripe](https://stripe.com/br?utm_campaign=BR_en_Search_Brand_Brand_EXA-15088005049&utm_medium=cpc&utm_source=google&ad_content=603963803239&utm_term=stripe&utm_matchtype=e&utm_adposition=&utm_device=c&gclid=CjwKCAiAgeeqBhBAEiwAoDDhn-uFC7kxKBhv1mdhEDV3YF4t4_p4CPb-thEMXqIVVWYa3wJBK0KwchoCu-cQAvD_BwE)
-- [Tailwindcss](https://tailwindcss.com/)
-- [Shadcn](https://ui.shadcn.com/)
-- [React Hook Form](https://www.react-hook-form.com/)
-- [React Query](https://tanstack.com/query/v3/)
-- [Zod](https://zod.dev/)
-- [Zustand](https://zustand-demo.pmnd.rs/)
-- [Keen-Slider](https://keen-slider.io/)
+- [Vite](https://vite.dev/)
+- [Tailwind](https://tailwindcss.com/)
+- [Shadcn/ui](https://ui.shadcn.com/)
+- [Radix](https://www.radix-ui.com/)
+- [Zod](<https://zod.dev/>)
+- [Axios](<https://axios-http.com/ptbr/docs/intro>)
+- [React-hook-form](<https://react-hook-form.com/>)
+- [Zustand](<https://zustand.docs.pmnd.rs/getting-started/introduction>)
+- [Tabler Icons](<https://tablericons.com/>)
+- [Sonner](https://sonner.emilkowal.ski/)
+- [React number format](<https://s-yadav.github.io/react-number-format/docs/intro/>)
+- [Framer Motion](https://motion.dev/)
+- [recharts](<https://recharts.org/>)
+- [Date-fns](https://date-fns.org/)
 
 </div>
 
@@ -90,11 +72,32 @@ escrever as funcionalidades
 
 ## 🎨Cores
 
-| Cor            | Hex                                                                   |
-| ---------------- | --------------------------------------------------------------------- |
-| Primary Color    | ![#4f32c3](https://readme-swatches.vercel.app/4f32c3?size=10) #4f32c3 |
-| Accent Color     | ![#171717](https://readme-swatches.vercel.app/171717?size=10) #171717 |
-| Background Color | ![#0a0a0a](https://readme-swatches.vercel.app/0a0a0a?size=10) #0a0a0a |
+| Cor                  | Hex                                                                                      |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| Background           | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Foreground           | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Card                 | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Card Foreground      | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Popover              | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Popover Foreground   | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Primary              | ![#f97215](https://readme-swatches.vercel.app/f97215?size=10) #f97215                    |
+| Primary Foreground   | ![#f9f9f8](https://readme-swatches.vercel.app/f9f9f8?size=10) #f9f9f8                    |
+| Secondary            | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Secondary Foreground | ![#1b1917](https://readme-swatches.vercel.app/1b1917?size=10) #1b1917                    |
+| Muted                | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Muted Foreground     | ![#78706b](https://readme-swatches.vercel.app/78706b?size=10) #78706b                    |
+| Accent               | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Accent Foreground    | ![#1b1917](https://readme-swatches.vercel.app/1b1917?size=10) #1b1917                    |
+| Destructive          | ![#ee4444](https://readme-swatches.vercel.app/ee4444?size=10) #ee4444                    |
+| Destructive Foreground | ![#f9f9f8](https://readme-swatches.vercel.app/f9f9f8?size=10) #f9f9f8                |
+| Border               | ![#e7e4e3](https://readme-swatches.vercel.app/e7e4e3?size=10) #e7e4e3                    |
+| Input                | ![#e7e4e3](https://readme-swatches.vercel.app/e7e4e3?size=10) #e7e4e3                    |
+| Ring                 | ![#f97215](https://readme-swatches.vercel.app/f97215?size=10) #f97215                    |
+| Chart 1              | ![#e76e4f](https://readme-swatches.vercel.app/e76e4f?size=10) #e76e4f                    |
+| Chart 2              | ![#299d8f](https://readme-swatches.vercel.app/299d8f?size=10) #299d8f                    |
+| Chart 3              | ![#264753](https://readme-swatches.vercel.app/264753?size=10) #264753                    |
+| Chart 4              | ![#e8c468](https://readme-swatches.vercel.app/e8c468?size=10) #e8c468                    |
+| Chart 5              | ![#f4a361](https://readme-swatches.vercel.app/f4a361?size=10) #f4a361                    |
 
 </div>
 
@@ -121,7 +124,9 @@ Escrever como executar localmente
 
 </div>
 
-## Estrutura de pastas
+## Arquitetura do projeto
+
+Talvez falar sobre a arquitetura
 
 ```plaintext
 src/
