@@ -18,7 +18,7 @@ import {
 
 import { fetchRestaurantHoursById } from "../services/restaurantHoursService"
 import { restaurantService } from "../services/restaurantService"
-import { Chartcard } from "./Chartcard"
+import { FinanceChartCard } from "./FinanceChartCard"
 
 export function StoreProfilePage() {
   const { onRequest, error } = useFetch()
@@ -219,7 +219,7 @@ export function StoreProfilePage() {
             <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
               <CardContent className="ps-1">
                 <p className="p-4 text-xl font-semibold">Visão geral</p>
-                <Chartcard orders={orders} />
+                <FinanceChartCard orders={orders} />
               </CardContent>
             </Card>
           </div>

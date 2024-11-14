@@ -15,7 +15,7 @@ import {
 } from "@/ui/components/ui/card"
 
 import { restaurantService } from "../services/restaurantService"
-import { Chartcard } from "./Chartcard"
+import { FinanceChartCard } from "./FinanceChartCard"
 import { SelectMonth } from "./SelectMonth"
 import { SelectYear } from "./SelectYear"
 
@@ -152,7 +152,7 @@ export function FinancePage() {
           <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
             <CardContent className="ps-1">
               <p className="p-4 text-xl font-semibold">Overview</p>
-              <Chartcard orders={orders} />
+              <FinanceChartCard orders={orders} />
             </CardContent>
           </Card>
           <div className="col-span-12 flex flex-col gap-5 text-xl font-semibold sm:col-span-6 lg:col-span-4">
