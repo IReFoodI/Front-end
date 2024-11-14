@@ -175,7 +175,7 @@ export function StoreProfilePage() {
                   </div>
                 </CardTitle>
               </CardHeader>
-              {restaurantHours.length > 0 && (
+              {restaurantHours.length > 0 ? (
                 <CardContent className="flex flex-col gap-6 text-sm text-gray-500">
                   <span className="flex justify-between">
                     <p>Segunda-feira</p>{" "}
@@ -206,6 +206,10 @@ export function StoreProfilePage() {
                     <p>{`${restaurantHours[6].openingTime} às ${restaurantHours[6].closingTime}`}</p>
                   </span>
                 </CardContent>
+              ) : (
+                <p className="m-6 text-lg text-orange-500">
+                  Os horários do restaurante não foram cadastrados!
+                </p>
               )}
             </Card>
           </div>
