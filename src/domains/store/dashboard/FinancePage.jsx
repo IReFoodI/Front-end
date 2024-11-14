@@ -31,23 +31,12 @@ export function FinancePage() {
 
   async function fetchRestaurantOrders() {
     await onRequest({
-      request: () => restaurantService.getRestaurantOrders(1), //user.restaurantId
+      request: () => restaurantService.getRestaurantOrders(1),
       onSuccess: (data) => {
         if (error) {
-          // setordersForCurrentMonth([])
           setOrders([])
         } else {
           setOrders(data)
-          // const filteredByMonthOrders = data.filter((order) =>
-          //   isOrderFromCurrentMonth(order.orderDate)
-          // )
-
-          // setordersForCurrentMonth([...filteredByMonthOrders])
-          // let total = 0
-          // filteredByMonthOrders.forEach((order) => {
-          //   total += order.totalValue
-          // })
-          // setMonthlyTotal(total)
         }
       },
     })

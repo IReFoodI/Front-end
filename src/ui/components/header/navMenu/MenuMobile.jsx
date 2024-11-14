@@ -1,4 +1,5 @@
 import { IconMenu2 } from "@tabler/icons-react"
+import { useState } from "react"
 
 import {
   Sheet,
@@ -11,8 +12,9 @@ import {
 import { ProfileSheet } from "../profileSheet/ProfileSheet"
 
 export function MenuMobile() {
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
   return (
-    <Sheet>
+    <Sheet open={isProfileOpen} onOpenChange={setIsProfileOpen}>
       <SheetTrigger asChild>
         <div className="w-9 cursor-pointer rounded-sm bg-[#ffeae4] p-1 md:hidden">
           <IconMenu2 className="m-auto text-primary" size={24} />
@@ -27,7 +29,7 @@ export function MenuMobile() {
         side={"left"}
         className="max-h-[100vh] overflow-auto bg-[#F8F9FE]"
       >
-        <ProfileSheet />
+        <ProfileSheet closeModal={() => setIsProfileOpen(false)} />
       </SheetContent>
     </Sheet>
   )
