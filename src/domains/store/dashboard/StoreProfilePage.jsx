@@ -92,6 +92,7 @@ export function StoreProfilePage() {
     fetchRestaurantHours()
     fetchRestaurantOrders()
     fetchActiveProducts()
+    //eslint-disable-next-line
   }, [])
 
   return (
