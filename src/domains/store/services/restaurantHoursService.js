@@ -21,3 +21,8 @@ export async function addRestaurantHours(data) {
     return await axios.post(`${BASE_URL}`, data)
   }
 }
+
+export async function fetchRestaurantHoursById(restaurantId) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/restaurant-id/${restaurantId}`)
+}

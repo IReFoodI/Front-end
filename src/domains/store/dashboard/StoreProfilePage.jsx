@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/ui/components/ui/card"
 
+import { fetchRestaurantHoursById } from "../services/restaurantHoursService"
 import { restaurantService } from "../services/restaurantService"
 import { ChartCard } from "./ChartCard"
 
@@ -24,34 +25,35 @@ export function StoreProfilePage() {
   const { user } = userStore()
   const [activeProducts, setActiveProducts] = useState([])
   const [orders, setOrders] = useState([])
+  const [ordersForCurrentMonth, setordersForCurrentMonth] = useState([])
   const [monthlyTotal, setMonthlyTotal] = useState(0)
+  const [restaurantHours, setRestaurantHours] = useState([])
 
-  function sumOrdersTotal() {}
+  function isOrderFromCurrentMonth(orderDate) {
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth()
+    const currentYear = currentDate.getFullYear()
+
+    const orderDateObj = new Date(orderDate)
+    const orderMonth = orderDateObj.getMonth()
+    const orderYear = orderDateObj.getFullYear()
+
+    return currentMonth === orderMonth && currentYear === orderYear
+  }
 
   async function fetchRestaurantOrders() {
     await onRequest({
-      request: () => restaurantService.getRestaurantOrders(1),
+      request: () => restaurantService.getRestaurantOrders(1), //user.restaurantId
       onSuccess: (data) => {
         if (error) {
-          setOrders([])
+          setordersForCurrentMonth([])
         } else {
-          function isOrderFromCurrentMonth(orderDate) {
-            const currentDate = new Date()
-            const currentMonth = currentDate.getMonth()
-
-            const currentYear = currentDate.getFullYear()
-            const orderDateObj = new Date(orderDate)
-            const orderMonth = orderDateObj.getMonth()
-            const orderYear = orderDateObj.getFullYear()
-
-            return currentMonth === orderMonth && currentYear === orderYear
-          }
-
+          setOrders(data)
           const filteredByMonthOrders = data.filter((order) =>
             isOrderFromCurrentMonth(order.orderDate)
           )
 
-          setOrders([...filteredByMonthOrders])
+          setordersForCurrentMonth([...filteredByMonthOrders])
           let total = 0
           filteredByMonthOrders.forEach((order) => {
             total += order.totalValue
@@ -62,22 +64,32 @@ export function StoreProfilePage() {
     })
   }
 
-  useEffect(() => {
-    async function fetchActiveProducts() {
-      await onRequest({
-        request: () => restaurantService.getProducts(),
-        onSuccess: (data) => {
-          let activeProductsByRestaurantId = []
-          data.forEach((product) => {
-            if (product.restaurantId == user.restaurantId) {
-              activeProductsByRestaurantId.push(product)
-            }
-          })
-          setActiveProducts(activeProductsByRestaurantId)
-        },
-      })
-    }
+  async function fetchActiveProducts() {
+    await onRequest({
+      request: () => restaurantService.getProducts(),
+      onSuccess: (data) => {
+        let activeProductsByRestaurantId = []
+        data.forEach((product) => {
+          if (product.restaurantId == user.restaurantId) {
+            activeProductsByRestaurantId.push(product)
+          }
+        })
+        setActiveProducts(activeProductsByRestaurantId)
+      },
+    })
+  }
 
+  async function fetchRestaurantHours() {
+    await onRequest({
+      request: () => fetchRestaurantHoursById(1), //user.restaurantId
+      onSuccess: (data) => {
+        setRestaurantHours([...data])
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchRestaurantHours()
     fetchRestaurantOrders()
     fetchActiveProducts()
   }, [])
@@ -144,7 +156,7 @@ export function StoreProfilePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-2xl text-primary sm:text-4xl">
-                <p>{orders.length}</p>
+                <p>{ordersForCurrentMonth.length}</p>
               </CardContent>
             </Card>
           </div>
@@ -163,36 +175,45 @@ export function StoreProfilePage() {
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-col gap-6 text-sm text-gray-500">
-                <span className="flex justify-between">
-                  <p>Segunda-feira</p> <p>08:00 às 18:00</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Terça-feira</p> <p>08:00 às 18:00</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Quarta-feira</p> <p>08:00 às 18:00</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Quinta-feira</p> <p>08:00 às 18:00</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Sexta-feira</p> <p>08:00 às 18:00</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Sábado</p> <p>Fechado</p>
-                </span>
-                <span className="flex justify-between">
-                  <p>Domingo</p> <p>Fechado</p>
-                </span>
-              </CardContent>
+              {restaurantHours.length > 0 && (
+                <CardContent className="flex flex-col gap-6 text-sm text-gray-500">
+                  <span className="flex justify-between">
+                    <p>Segunda-feira</p>{" "}
+                    <p>{`${restaurantHours[0].openingTime} às ${restaurantHours[0].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Terça-feira</p>
+                    <p>{`${restaurantHours[1].openingTime} às ${restaurantHours[1].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Quarta-feira</p>
+                    <p>{`${restaurantHours[2].openingTime} às ${restaurantHours[2].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Quinta-feira</p>
+                    <p>{`${restaurantHours[3].openingTime} às ${restaurantHours[3].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Sexta-feira</p>
+                    <p>{`${restaurantHours[4].openingTime} às ${restaurantHours[4].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Sábado</p>
+                    <p>{`${restaurantHours[5].openingTime} às ${restaurantHours[5].closingTime}`}</p>
+                  </span>
+                  <span className="flex justify-between">
+                    <p>Domingo</p>
+                    <p>{`${restaurantHours[6].openingTime} às ${restaurantHours[6].closingTime}`}</p>
+                  </span>
+                </CardContent>
+              )}
             </Card>
           </div>
           <div className="col-span-12 flex flex-col gap-5 text-xl font-semibold sm:col-span-6 lg:col-span-8">
             <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
               <CardContent className="ps-1">
                 <p className="p-4 text-xl font-semibold">Visão geral</p>
-                <ChartCard />
+                <ChartCard orders={orders} />
               </CardContent>
             </Card>
           </div>
