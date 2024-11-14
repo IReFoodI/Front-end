@@ -26,6 +26,14 @@ async function updateRestaurantPassword(data) {
   const axios = createAxiosInstance(true)
   return await axios.put(`${BASE_URL}/password`, data)
 }
+async function getProducts() {
+  const axios = createAxiosInstance(true)
+  return await axios.get("/api/product")
+}
+async function getRestaurantOrders(restaurantId) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`api/order/restaurant/${restaurantId}`)
+}
 
 export const restaurantService = {
   createRestaurant,
@@ -34,4 +42,6 @@ export const restaurantService = {
   getRestaurantEmail,
   updateRestaurantEmail,
   updateRestaurantPassword,
+  getProducts,
+  getRestaurantOrders,
 }
