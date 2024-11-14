@@ -6,7 +6,7 @@ import {
   YAxis,
 } from "recharts"
 
-export function ChartCard({ orders }) {
+export function Chartcard({ orders }) {
   function getMonthlyOrdersTotal(month) {
     let total = 0
 
