@@ -23,10 +23,9 @@ export function UserStoreProfilePage() {
   const {
     loadingRestaurant,
     loadingHoursToday,
-    // loadingRestaurantAddress,
+
     restaurantData,
     restaurantAllHoursData,
-    // restaurantAddressesData,
   } = useRestaurant()
 
   useEffect(() => {
@@ -129,23 +128,6 @@ export function UserStoreProfilePage() {
           )}
         </button>
       </div>
-      {/* <div className="md:mb-8" id="card-address">
-        {loadingRestaurantAddress ? (
-          <Loading />
-        ) : (
-          <div id="content" className="text-gray-700">
-            <p className="font-bold">
-              {restaurantAddressesData?.[0]?.street},{" "}
-              {restaurantAddressesData?.[0]?.number}
-            </p>
-            <p className="font-bold">
-              {restaurantAddressesData?.[0]?.district} -{" "}
-              {restaurantAddressesData?.[0]?.city} -{" "}
-              {restaurantAddressesData?.[0]?.state}
-            </p>
-          </div>
-        )}
-      </div> */}
       <Outlet />
     </div>
   )
