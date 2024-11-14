@@ -41,58 +41,64 @@ export function StoreProfilePage() {
     return currentMonth === orderMonth && currentYear === orderYear
   }
 
-  async function fetchRestaurantOrders() {
-    await onRequest({
-      request: () => restaurantService.getRestaurantOrders(1), //user.restaurantId
-      onSuccess: (data) => {
-        if (error) {
-          setordersForCurrentMonth([])
-        } else {
-          setOrders(data)
-          const filteredByMonthOrders = data.filter((order) =>
-            isOrderFromCurrentMonth(order.orderDate)
-          )
-
-          setordersForCurrentMonth([...filteredByMonthOrders])
-          let total = 0
-          filteredByMonthOrders.forEach((order) => {
-            total += order.totalValue
-          })
-          setMonthlyTotal(total)
-        }
-      },
-    })
-  }
-
-  async function fetchActiveProducts() {
-    await onRequest({
-      request: () => restaurantService.getProducts(),
-      onSuccess: (data) => {
-        let activeProductsByRestaurantId = []
-        data.forEach((product) => {
-          if (product.restaurantId == user.restaurantId) {
-            activeProductsByRestaurantId.push(product)
-          }
-        })
-        setActiveProducts(activeProductsByRestaurantId)
-      },
-    })
-  }
-
-  async function fetchRestaurantHours() {
-    await onRequest({
-      request: () => fetchRestaurantHoursById(1), //user.restaurantId
-      onSuccess: (data) => {
-        setRestaurantHours([...data])
-      },
-    })
-  }
-
   useEffect(() => {
+    async function fetchRestaurantOrders() {
+      await onRequest({
+        request: () => restaurantService.getRestaurantOrders(1), //user.restaurantId
+        onSuccess: (data) => {
+          if (error) {
+            setordersForCurrentMonth([])
+          } else {
+            setOrders(data)
+            const filteredByMonthOrders = data.filter((order) =>
+              isOrderFromCurrentMonth(order.orderDate)
+            )
+
+            setordersForCurrentMonth([...filteredByMonthOrders])
+            let total = 0
+            filteredByMonthOrders.forEach((order) => {
+              total += order.totalValue
+            })
+            setMonthlyTotal(total)
+          }
+        },
+      })
+    }
+
+    async function fetchActiveProducts() {
+      await onRequest({
+        request: () => restaurantService.getProducts(),
+        onSuccess: (data) => {
+          let activeProductsByRestaurantId = []
+          data.forEach((product) => {
+            if (product.restaurantId == user.restaurantId) {
+              activeProductsByRestaurantId.push(product)
+            }
+          })
+          setActiveProducts(activeProductsByRestaurantId)
+        },
+      })
+    }
+
+    async function fetchRestaurantHours() {
+      await onRequest({
+        request: () => fetchRestaurantHoursById(1), //user.restaurantId
+        onSuccess: (data) => {
+          setRestaurantHours([...data])
+        },
+      })
+    }
+
     fetchRestaurantHours()
     fetchRestaurantOrders()
     fetchActiveProducts()
-  }, [])
+  }, [
+    setActiveProducts,
+    setRestaurantHours,
+    onRequest,
+    error,
+    user.restaurantId,
+  ])
 
   return (
     <div className="flex-grow p-4">

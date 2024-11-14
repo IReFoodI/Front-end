@@ -10,18 +10,15 @@ import {
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-import { useMediaQuery } from "@/app/hooks/useMediaQuery"
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
 import userStore from "@/domains/user/stores/userStore"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
-import { SheetDescription, SheetHeader, SheetTitle } from "../../ui/sheet"
 import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet() {
-  const { value } = useMediaQuery("(max-width: 768px)")
   const { user } = userStore()
   const [activeInformationButton, setActiveInformationButton] = useState(null)
   const { logout } = userStore()

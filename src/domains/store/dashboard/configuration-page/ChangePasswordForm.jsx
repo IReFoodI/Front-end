@@ -18,7 +18,7 @@ import { changePasswordTypes } from "../../models/dashboard/ChangePasswordTypes"
 import { restaurantService } from "../../services/restaurantService"
 
 export function ChangePasswordForm() {
-  const { loading, onRequest } = useFetch()
+  const { onRequest } = useFetch()
   const form = useForm({
     resolver: zodResolver(changePasswordTypes),
     defaultValues: {
