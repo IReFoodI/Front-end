@@ -19,8 +19,6 @@ export function ChartCard({ orders }) {
           total += order.totalValue
         }
       })
-    } else {
-      return total
     }
 
     return total
