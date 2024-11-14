@@ -57,8 +57,12 @@
 - Swiper js - Slide
 - Chart Js - Grafico
 - Faker Js - Dados fakes
-
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+[![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](https://vite.dev/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff)](https://ui.shadcn.com/)
 
 - [Next](https://nextjs.org/)
 - [Typescript](https://www.typescriptlang.org/)
