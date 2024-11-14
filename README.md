@@ -1,4 +1,45 @@
-## Refood - Front-end
+<div align="center" style="margin-top:20px; margin-bottom:20px;">
+
+<img src="./github/images/logo.png" width="120px" /><br />
+
+</div>
+
+## Índice
+
+- [Índice](#índice)
+- [📌Sobre](#sobre)
+- [👨‍💻Integrantes](#integrantes)
+- [🚀Tecnologias utilizadas](#tecnologias-utilizadas)
+- [Tecnologias](#tecnologias)
+- [Funcionalidades](#funcionalidades)
+- [🎨Cores](#cores)
+- [💻O projeto pode ser vizualizado acessando o seguinte link](#o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link)
+- [👀Exemplo](#exemplo)
+- [Como executar o projeto](#como-executar-o-projeto)
+- [Estrutura de pastas](#estrutura-de-pastas)
+
+<div id="sobre">
+
+## 📌Sobre
+
+**Refood** é uma plataforma onde estabelecimentos comerciais podem vender produtos próximos da data de validade a preços mais acessíveis, permitindo que consumidores adquiram esses itens e contribuam para a redução do desperdício de alimentos.
+
+</div>
+
+<div id="integrantes">
+
+## 👨‍💻Integrantes
+
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/115363966?v=4" width=80 ><br><sub>Caio</sub>](https://github.com/CaioMMendes) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93887208?s=96&v=4" width=80 ><br><sub>Felipe Fracasso</sub>](https://github.com/FelipeM-F) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/150201828?s=96&v=4" width=80 ><br><sub>Leonardo Boeira</sub>](https://github.com/leomaciel14) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/131506431?v=4" width=80 ><br><sub>Marina Barbosa</sub>](https://github.com/marina-barbosa) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/89655285?v=4" width=80 ><br><sub>Ricardo Muenchen</sub>](https://github.com/RicardoDM23) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/63266170?v=4" width=80 ><br><sub>Samilis Brito</sub>](https://github.com/SamilisBrito) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102476639?v=4" width=80 ><br><sub>Thasyo Peres</sub>](https://github.com/Thasyo) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102565778?v=4" width=80 ><br><sub>Yasmin Carlôto</sub>](https://github.com/Yasmin-Carloto) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+
+</div>
+
+</div>
+
+<div id="tecnologias">
+
+## 🚀Tecnologias utilizadas
 
 ## Tecnologias
 
@@ -17,79 +58,64 @@
 - Chart Js - Grafico
 - Faker Js - Dados fakes
 
-## Requisitos Funcionais
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-| Nº   | Descrição                                                                                      | Prioridade | Status  |
-|------|------------------------------------------------------------------------------------------------|------------|---------|
-| RF01 | Cadastrar alimentos (vinculado ao fornecedor) com as seguintes informações: Validade, Quantidade, Preço, Nome, Categoria, Foto | Alta       | Proposto |
-| RF02 | Atualização e exclusão de alimentos cadastrados                                                 | Alta       | Proposto |
-| RF03 | Notificações de alimentos próximos da data de validade                                          | Alta       | Proposto |
-| RF04 | Sugestão de receitas baseadas nos ingredientes disponíveis                                      | Baixa      | Proposto |
-| RF05 | Criação e gerenciamento de listas de compras (consumidor final e estabelecimentos)              | Alta       | Proposto |
-| RF06 | Histórico de compras                                                                            | Médio      | Proposto |
-| RF07 | Listagem de Produtos                                                                            | Alto       | Proposto |
-| RF08 | Registro de Consumidor/Estabelecimento/Fornecedor: Nome, Senha, Email, CNPJ, Endereço, Contato  | Alto       | Proposto |
-| RF09 | Integração de API de pagamento (cartão, pix) (stripe)                                           | Alto       | Proposto |
-| RF10 | Pesquisa e filtro de alimentos por categoria, preço e data de validade                          | Alto       | Proposto |
-| RF11 | Sistema de recomendação de produtos com base nas compras anteriores dos usuários                | Baixo      | Proposto |
-| RF12 | Avaliação e comentários de usuários sobre os alimentos                                          | Médio      | Proposto |
-| RF13 | Relatórios de vendas e estoques para fornecedores                                               | Alto       | Proposto |
-| RF14 | Opção de doação de alimentos próximos da data de validade para instituições de caridade         | Baixo      | Proposto |
-| RF15 | Suporte ao cliente via chat ou email                                                            | Baixo      | Proposto |
-| RF16 | Exportação de dados financeiros para formatos CSV e PDF                                         | Baixo      | Proposto |
-| RF17 | Log (criação, alteração, compra...)                                                             | -          | Proposto |
+- [Next](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [NextAuth](https://next-auth.js.org/)
+- [Stripe](https://stripe.com/br?utm_campaign=BR_en_Search_Brand_Brand_EXA-15088005049&utm_medium=cpc&utm_source=google&ad_content=603963803239&utm_term=stripe&utm_matchtype=e&utm_adposition=&utm_device=c&gclid=CjwKCAiAgeeqBhBAEiwAoDDhn-uFC7kxKBhv1mdhEDV3YF4t4_p4CPb-thEMXqIVVWYa3wJBK0KwchoCu-cQAvD_BwE)
+- [Tailwindcss](https://tailwindcss.com/)
+- [Shadcn](https://ui.shadcn.com/)
+- [React Hook Form](https://www.react-hook-form.com/)
+- [React Query](https://tanstack.com/query/v3/)
+- [Zod](https://zod.dev/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [Keen-Slider](https://keen-slider.io/)
 
-## Requisitos não funcionais
+</div>
 
-| Nº    | Descrição                                                                                                  | Prioridade | Status  |
-|-------|------------------------------------------------------------------------------------------------------------|------------|---------|
-| RNF01 | A aplicação deve ser intuitiva e fácil de usar                                                              | Alta       | Proposto |
-| RNF02 | A aplicação deve ter um tempo de resposta rápido (menos de 2 segundos para operações principais)            | Alta       | Proposto |
-| RNF03 | O sistema deve ser capaz de suportar múltiplos usuários simultâneos sem degradação de performance            | Alta       | Proposto |
-| RNF04 | A aplicação deve ser segura e proteger as informações dos usuários                                          | Alta       | Proposto |
-| RNF05 | O sistema deve ser compatível com os principais navegadores web (Chrome, Firefox, Safari, Edge)             | Média      | Proposto |
-| RNF06 | A aplicação deve estar disponível 99,9% do tempo                                                            | Alta       | Proposto |
-| RNF07 | O design deve ser responsivo, adaptando-se a diferentes resoluções de tela                                  | Alta       | Proposto |
-| RNF08 | A aplicação deve ser modular para permitir futuras expansões e manutenção                                   | Média      | Proposto |
-| RNF09 | O sistema deve fornecer logs de erros detalhados para depuração                                             | Média      | Proposto |
-| RNF10 | A aplicação deve seguir as diretrizes de acessibilidade, tornando-se utilizável para pessoas com deficiências | Média      | Proposto |
-| RNF11 | O dashboard financeiro deve ser atualizado em tempo real                                                    | Alta       | Proposto |
+<div id="funcionalidades">
 
-## Sugestões de telas
+## Funcionalidades
 
-| Nº   | Descrição                                   | Prioridade | Status  |
-|------|---------------------------------------------|------------|---------|
-| T01  | Pg. Inicial                                 | Feito      | Proposto |
-| T02  | Cadastro (Infos Básicas) > Tipo de Cadastro > Infos Específicas | Feito      |           |
-| T03  | Login                                       | Feito      |           |
-| T04  | Logout                                      |            |           |
-| T05  | Termos de Uso e Condições                   |            |           |
-| T06  | FAQ                                         | Precisa de dados |        |
+escrever as funcionalidades
 
-## Usuário / Estabelecimento
+</div>
 
-| Nº   | Descrição                                      | Prioridade | Status  |
-|------|------------------------------------------------|------------|---------|
-|   | Lista de Produtos (Cardápio) / Filtros         |            |         |
-|   | Lista de estabelecimentos / Filtros            |            |         |
-|   | Histórico de Compras                           |            |         |
-|   | Perfil > Dados                                 |            |         |
-|   | Endereço (para pesquisa de locais próximos)    |            |         |
-|   | Formas de Pagamento                            |            |         |
-|   | Favoritos                                      |            |         |
-|   | Página de Produto (Produto Específico)         |            |         |
-|   | Carrinho de Compras                            |            |         |
+<div id="cores">
 
-## Fornecedor / Estabelecimento
+## 🎨Cores
 
-| Nº   | Descrição                                               | Prioridade | Status  |
-|------|---------------------------------------------------------|------------|---------|
-|   | Relatórios de venda e estoque (RF13)                    |            |         |
-|   | Registro de alimentos                                   |            |         |
-|   | Dash de Produtos para manutenção (Cardápio)             |            |         |
-|   | Dash de Pedidos Recebidos > Informações do Pedido       |            |         |
-|   | Ajuda                                                   |            |         |
-|   | Configurações da Loja                                   |            |         |
+| Cor            | Hex                                                                   |
+| ---------------- | --------------------------------------------------------------------- |
+| Primary Color    | ![#4f32c3](https://readme-swatches.vercel.app/4f32c3?size=10) #4f32c3 |
+| Accent Color     | ![#171717](https://readme-swatches.vercel.app/171717?size=10) #171717 |
+| Background Color | ![#0a0a0a](https://readme-swatches.vercel.app/0a0a0a?size=10) #0a0a0a |
+
+</div>
+
+<div id="linkdeploy">
+
+## 💻O projeto pode ser vizualizado acessando o seguinte link
+
+<https://refoodproject.vercel.app/>
+
+</div>
+
+<div id="exemplo">
+
+## 👀Exemplo
+
+<img  title="Gif projeto mobile" src="./github/gif.gif" height="800" width="360"  />
+</div>
+
+<div id="comoexecutar">
+
+## Como executar o projeto
+
+Escrever como executar localmente
+
+</div>
 
 ## Estrutura de pastas
 
