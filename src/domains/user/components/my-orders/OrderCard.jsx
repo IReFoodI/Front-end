@@ -2,6 +2,7 @@ import { IconPaperBag } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import imageBroke from "@/ui/assets/image-broke.png"
 
 export function OrderCard({
   pickupTime,
@@ -63,9 +64,13 @@ export function OrderCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <img
-                src={restaurantImage}
+                src={restaurantImage || imageBroke}
                 alt={restaurantName}
                 className="h-10 w-10 rounded-full"
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.src = imageBroke
+                }}
               />
               <div>
                 <div className="font-semibold text-gray-700">

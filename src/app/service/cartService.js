@@ -56,6 +56,20 @@ async function removeItemFromCart(cartId, productId) {
 }
 
 /**
+ * Remove an item from the cart
+ *
+ * @param {number} cartId - The ID of the cart.
+ * @param {number} productId - The ID of the product.
+ * @returns {Promise<void>}
+ */
+async function removeAllItemFromCart(cartId, productId) {
+  const axios = createAxiosInstance(true)
+  await axios.delete(
+    `${BASE_URL}/del/item/all?cartId=${cartId}&productId=${productId}`
+  )
+}
+
+/**
  * Adds an item to the user's cart.
  *
  * @async
@@ -85,4 +99,5 @@ export const cartService = {
   addItemCart,
   fetchRestaurantNameByProductId,
   removeItemFromCart,
+  removeAllItemFromCart,
 }

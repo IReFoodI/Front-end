@@ -88,6 +88,7 @@ export function ProfileSheet({ closeModal }) {
               }
               content="1"
               title="pedidos feitos"
+              linkTo={"/pedidos"}
             />
 
             <ContainerStatus

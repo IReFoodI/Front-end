@@ -25,6 +25,7 @@ export function SearchProductItem({
     sellPrice,
     expirationDate,
     quantity,
+
     restaurantName,
   },
 }) {
@@ -63,7 +64,7 @@ export function SearchProductItem({
       toast.success("Item adicionado com sucesso!")
     } catch (error) {
       console.log(error)
-      toast.error("Erro ao adicionar item no carrinho.")
+      toast.error(error.response.data.error || "Não foi possível adicionar item no carrinho!")
     }
   }
 
