@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useCallback, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -52,7 +51,7 @@ export function StoreMenu() {
         if (erro.response.data.status === 400) navigate(`?page=${0}`)
       },
     })
-  }, [onRequest, currentPage])
+  }, [onRequest, currentPage, navigate])
 
   useEffect(() => {
     if (data?._embedded?.productDTOList) {
