@@ -69,7 +69,7 @@ export function SearchInput() {
                     {...field}
                     type="text"
                     placeholder="Busque por produtos"
-                    className="bg-background pl-8"
+                    className="truncate bg-background pl-8"
                   />
                 </FormControl>
               </FormItem>
