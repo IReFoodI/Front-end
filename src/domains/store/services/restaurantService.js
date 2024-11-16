@@ -26,6 +26,10 @@ async function getProductById(productId) {
   const axios = createAxiosInstance(true)
   return await axios.get(`/api/product/${productId}`)
 }
+async function updateStatusOrder(orderId, status) {
+  const axios = createAxiosInstance(true)
+  return await axios.patch(`/api/order/${orderId}/status?newStatus=${status}`)
+}
 
 export const restaurantService = {
   createRestaurant,
@@ -34,4 +38,5 @@ export const restaurantService = {
   updateRestaurant,
   getRestaurantOrders,
   getProductById,
+  updateStatusOrder,
 }

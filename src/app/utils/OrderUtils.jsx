@@ -12,7 +12,7 @@ export function getStatus(order) {
   if (order.orderStatus == "PENDENTE") {
     iconInOrder = <IconAlertOctagon className="text-yellow-500" size={16} />
     nameInStatusOrder = "Pendente"
-  } else if (order.orderStatus == "APROVADO") {
+  } else if (order.orderStatus == "PREPARANDO") {
     nameInStatusOrder = "Aceito"
     iconInOrder = <IconHeart className="text-green-500" size={16} />
   } else if (order.orderStatus == "CONCLUIDO") {

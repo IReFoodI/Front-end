@@ -12,6 +12,8 @@ import { getStatus } from "@/app/utils/OrderUtils"
 import { userService } from "@/domains/user/services/userService"
 import { Button } from "@/ui/components/ui/button/button"
 
+import { OrderStatus } from "../../models/OrderStatusOptions"
+import { restaurantService } from "../../services/restaurantService"
 import { StoreProfileOrders } from "../StoreProfileOrders/StoreProfileOrders"
 import { OrderItemsTable } from "./components/OrderItemsTable"
 
@@ -25,6 +27,19 @@ export function OrderDetails() {
 
   function capitalize(text) {
     return String(text).charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+  }
+
+  const cancelOrder = async () => {
+    await onRequest({
+      request: () =>
+        restaurantService.updateStatusOrder(
+          currentOrder.orderId,
+          OrderStatus.CANCELADO
+        ),
+      onSuccess: () => {
+        setOrderStatus(getStatus(OrderStatus.CANCELADO))
+      },
+    })
   }
 
   useEffect(() => {
@@ -130,13 +145,15 @@ export function OrderDetails() {
             </div>
           </div>
 
-          <div className="flex justify-between py-5">
-            <span className="cursor-pointer text-lg font-semibold text-orange-600 underline hover:text-orange-500">
-              Preciso de ajuda
-            </span>
-            <span className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400">
-              Cancelar Pedido
-            </span>
+          <div className="flex justify-end py-5">
+            {currentOrder.orderStatus !== OrderStatus.CANCELADO && (
+              <button
+                onClick={() => cancelOrder()}
+                className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400"
+              >
+                Cancelar Pedido
+              </button>
+            )}
           </div>
         </div>
       ) : (

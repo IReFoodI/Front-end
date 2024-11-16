@@ -4,9 +4,9 @@ import { useEffect, useState } from "react"
 import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { getStatus } from "@/app/utils/OrderUtils"
+import { OrderStatus } from "@/domains/store/models/OrderStatusOptions"
 import { restaurantService } from "@/domains/store/services/restaurantService"
 import { userService } from "@/domains/user/services/userService"
-import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 import { Separator } from "@/ui/components/ui/separator"
 
@@ -37,6 +37,16 @@ export function OrderCard({
             setUserData(userResult)
           }
         })
+      },
+    })
+  }
+
+  const handleOrderAcceptance = async (status) => {
+    await onRequest({
+      request: () => restaurantService.updateStatusOrder(order.orderId, status),
+      onSuccess: (data) => {
+        setOrder(data)
+        setUser(user)
       },
     })
   }
@@ -90,13 +100,20 @@ export function OrderCard({
         <p>Total</p>
         <p className="font-bold">{currencyFormatter(totalValue)}</p>
       </div>
-      {/* Substituir por PENDENTE */}
       {order.orderStatus == "PENDENTE" && (
         <div className="flex w-full justify-around gap-1 pt-4">
-          <Button className="w-1/2">Aceitar Pedido</Button>
-          <Button className="w-1/2 bg-gray-400 hover:bg-gray-500">
+          <button
+            onClick={() => handleOrderAcceptance(OrderStatus.PREPARANDO)}
+            className="w-1/2 rounded-2xl bg-orange-500 p-1 font-semibold text-white shadow hover:bg-orange-400"
+          >
+            Aceitar Pedido
+          </button>
+          <button
+            onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}
+            className="w-1/2 rounded-2xl bg-gray-400 p-1 font-semibold text-white shadow hover:bg-gray-500"
+          >
             Recusar Pedido
-          </Button>
+          </button>
         </div>
       )}
     </div>
