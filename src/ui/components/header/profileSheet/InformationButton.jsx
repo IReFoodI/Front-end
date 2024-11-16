@@ -9,7 +9,7 @@ export function InformationButton({
 }) {
   return (
     <li
-      className={`flex items-center justify-between rounded-xl p-2 hover:bg-[#ffeae4] hover:text-primary ${currentIndex === ownIndex ? `bg-orange-100 text-primary` : `bg-gray-200 text-gray-600`}`}
+      className={`flex items-center justify-between rounded-xl p-2 hover:bg-[#ffeae4] hover:text-primary ${currentIndex === ownIndex ? `bg-[#ffeae4] text-primary` : `bg-gray-200 text-gray-600`}`}
       onClick={setCurrentIndex}
     >
       <div className="flex items-center gap-1">
