@@ -1,5 +1,5 @@
 import { IconTrash } from "@tabler/icons-react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
@@ -7,8 +7,9 @@ import useCartStore from "../../../../app/store/useCartStore"
 import { Button } from "../../ui/button/button"
 import { SheetHeader, SheetTitle } from "../../ui/sheet"
 
-export function Cart() {
-  const { cartItems, subtotal, clearCart, restaurantName, removeItemFromCart } =
+export function Cart({ onToggleModals }) {
+  const navigate = useNavigate()
+  const { cartItems, subtotal, clearCart, restaurantInfo, removeItemFromCart } =
     useCartStore()
 
   return (
@@ -30,10 +31,17 @@ export function Cart() {
 
             <SheetHeader className="flex flex-col">
               <div className="flex items-center justify-between rounded-md bg-secondary px-2 py-2 text-sm font-bold lg:text-lg">
-                <p className="font-semibold">{restaurantName}</p>
-                <Link to="/">
-                  <p className="font-normal">Ver cardápio</p>
-                </Link>
+                <p className="font-semibold">{restaurantInfo.fantasy}</p>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    onToggleModals("cart", false)
+                    navigate(`/loja/${restaurantInfo.restaurantId}`)
+                  }}
+                  className="font-normal"
+                >
+                  Ver cardápio
+                </Button>
               </div>
             </SheetHeader>
 
@@ -59,12 +67,16 @@ export function Cart() {
               ))}
             </div>
 
-            <Link
-              to="/"
+            <Button
+              variant={"ghost"}
+              onClick={() => {
+                onToggleModals("cart", false)
+                navigate(`/loja/${restaurantInfo.restaurantId}`)
+              }}
               className="text-center text-sm font-semibold text-gray-400 lg:text-lg"
             >
               Adicionar mais itens
-            </Link>
+            </Button>
           </SheetHeader>
 
           <div className="flex flex-col">

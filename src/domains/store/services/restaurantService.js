@@ -6,9 +6,9 @@ async function createRestaurant(data) {
   const axios = createAxiosInstance(true)
   return await axios.post(BASE_URL, data)
 }
-async function getRestaurant() {
+async function getRestaurantById(id) {
   const axios = createAxiosInstance(true)
-  return await axios.get(BASE_URL)
+  return await axios.get(`${BASE_URL}/${id}`)
 }
 async function getRestaurantEmail() {
   const axios = createAxiosInstance(true)
@@ -37,7 +37,7 @@ async function getRestaurantOrders(restaurantId) {
 
 export const restaurantService = {
   createRestaurant,
-  getRestaurant,
+  getRestaurantById,
   updateRestaurant,
   getRestaurantEmail,
   updateRestaurantEmail,

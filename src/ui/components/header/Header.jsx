@@ -22,12 +22,13 @@ import { SearchInput } from "./search/searchInput"
 
 export function Header() {
   const [isActive, setIsActive] = useState(false)
-  const { userId, setUserId } = userStore()
-  const { fetchCart, clearLocalStorageCart } = useCartStore()
   const [isPopoverOpen, setIsPopoverOpen] = useState({
     profile: false,
     address: false,
+    cart: false,
   })
+  const { userId, setUserId } = userStore()
+  const { fetchCart, clearLocalStorageCart } = useCartStore()
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -58,17 +59,8 @@ export function Header() {
     setIsActive(open)
   }
 
-  function handleProfilePopoverOpen(open) {
-    setIsPopoverOpen((prev) => ({
-      ...prev,
-      profile: open,
-    }))
-  }
-  function handleAddressPopoverOpen(open) {
-    setIsPopoverOpen((prev) => ({
-      ...prev,
-      address: open,
-    }))
+  function onToggleModals(modal, open) {
+    setIsPopoverOpen((prev) => ({ ...prev, [modal]: open }))
   }
 
   return (
@@ -102,7 +94,7 @@ export function Header() {
           <SearchInput />
           <AddressModal
             open={isPopoverOpen.address}
-            onOpenChange={handleAddressPopoverOpen}
+            onOpenChange={(open) => onToggleModals("address", open)}
           />
         </section>
 
@@ -113,7 +105,7 @@ export function Header() {
           </Link>
           <Popover
             open={isPopoverOpen.profile}
-            onOpenChange={handleProfilePopoverOpen}
+            onOpenChange={(open) => onToggleModals("profile", open)}
           >
             <PopoverTrigger asChild>
               <div
@@ -130,12 +122,15 @@ export function Header() {
               className="max-h-max-profile-sheet overflow-auto md:w-80"
             >
               <ProfileSheet
-                closeModal={() => handleProfilePopoverOpen(false)}
+                closeModal={() => onToggleModals("profile", false)}
               />
             </PopoverContent>
           </Popover>
 
-          <Sheet>
+          <Sheet
+            open={isPopoverOpen.cart}
+            onOpenChange={(e) => onToggleModals("cart", e)}
+          >
             <SheetTrigger
               className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
             >
@@ -148,8 +143,10 @@ export function Header() {
               <DialogTitle className="text-lg font-semibold">
                 Carrinho
               </DialogTitle>
-              <SheetDescription />
-              <Cart />
+              <SheetDescription>
+                Carrinho não é garantia de reserva!
+              </SheetDescription>
+              <Cart onToggleModals={onToggleModals} />
             </SheetContent>
           </Sheet>
         </section>

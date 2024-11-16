@@ -27,7 +27,7 @@ export const OrderDetails = () => {
     const initializeData = async () => {
       const firstProduct = cartItems[0]
       if (firstProduct?.productId) {
-        await fetchRestaurantInfo(firstProduct.productId)
+        await fetchRestaurantInfo(firstProduct?.productId)
       }
     }
 
@@ -36,8 +36,8 @@ export const OrderDetails = () => {
 
   useEffect(() => {
     if (restaurantInfo) {
-      fetchRestaurantHours(restaurantInfo.restaurantId)
-      fetchAddress(restaurantInfo.restaurantId)
+      fetchRestaurantHours(restaurantInfo?.restaurantId)
+      fetchAddress(restaurantInfo?.restaurantId)
     }
   }, [restaurantInfo, fetchRestaurantHours, fetchAddress])
 
@@ -47,22 +47,25 @@ export const OrderDetails = () => {
       const dayOfWeek = today
         .toLocaleDateString("en-US", { weekday: "long" })
         .toUpperCase()
-      const todayHours = restaurantHours.find(
-        (hour) => hour.dayOfWeek === dayOfWeek
+      const todayHours = restaurantHours?.find(
+        (hour) => hour?.dayOfWeek === dayOfWeek
       )
 
       setPickupTime(
         todayHours
-          ? `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
+          ? `Hoje, ${todayHours?.openingTime} - ${todayHours?.closingTime}`
           : "Restaurante fechado hoje"
       )
     }
   }, [restaurantHours])
 
-  const restaurantAddressStandard =
-    restaurantAddress?.find((address) => address.isStandard) || {}
+  console.log(restaurantAddress)
+
+  const restaurantAddressStandard = restaurantAddress
+    ? restaurantAddress?.find((address) => address?.isStandard)
+    : {}
   const encodedAddress = encodeURIComponent(
-    `${restaurantAddressStandard.street || ""}, ${restaurantAddressStandard.number || ""}, ${restaurantAddressStandard.city || ""}`
+    `${restaurantAddressStandard?.street || ""}, ${restaurantAddressStandard?.number || ""}, ${restaurantAddressStandard?.city || ""}`
   )
 
   return (

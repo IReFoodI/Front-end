@@ -5,6 +5,7 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 
+import { useRestaurant } from "../hooks/useRestaurant"
 import logo from "./logo-loja.png"
 import { StoreInformationInfo } from "./StoreInformationInfo"
 import { StoreInformationReview } from "./StoreInformationReview"
@@ -12,6 +13,7 @@ import { StoreInformationTabs } from "./StoreInformationTabs"
 import { StoreProfilePageTopDesktop } from "./StoreProfilePageTopDesktop"
 
 export function StoreInformationSectionPage() {
+  const { restaurantData, restaurantAllHoursData } = useRestaurant()
   return (
     <div
       id="page"
@@ -52,7 +54,10 @@ export function StoreInformationSectionPage() {
           <span>10 avaliações</span>
         </div>
       </header>
-      <StoreProfilePageTopDesktop />
+      <StoreProfilePageTopDesktop
+        restaurantData={restaurantData}
+        restaurantAllHoursData={restaurantAllHoursData}
+      />
       <div className="xl:hidden">
         <StoreInformationTabs />
       </div>
