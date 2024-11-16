@@ -67,4 +67,17 @@
     @apply bg-background text-foreground;
     -webkit-tap-highlight-color: transparent;
   }
+  @media only screen and (min-width: 600px) {
+    ::-webkit-scrollbar {
+      @apply w-[0.5rem];
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-primary/15;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-primary;
+    }
+  }
 }

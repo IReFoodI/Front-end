@@ -1,11 +1,12 @@
 import { z } from "zod"
 
 export const productSchema = z.object({
-  name: z
+  nameProd: z
     .string()
     .min(1, "O nome do produto é obrigatório")
     .max(200, "O nome não pode ter mais de 200 caracteres"),
-  description: z
+  categoryProduct: z.string().min(1, "Selecione uma categoria"),
+  descriptionProd: z
     .string()
     .max(500, "A descrição não pode ter mais de 500 caracteres"),
   expirationDate: z

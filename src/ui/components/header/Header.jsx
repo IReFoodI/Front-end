@@ -17,15 +17,17 @@ import {
   SheetTrigger,
 } from "../ui/sheet"
 import { Cart } from "./Cart/Cart"
-// import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { SearchInput } from "./search/searchInput"
 
 export function Header() {
   const [isActive, setIsActive] = useState(false)
-  const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
   const { userId, setUserId } = userStore()
-  const { fetchCart, clearCart } = useCartStore()
+  const { fetchCart, clearLocalStorageCart } = useCartStore()
+  const [isPopoverOpen, setIsPopoverOpen] = useState({
+    profile: false,
+    address: false,
+  })
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,9 +43,9 @@ export function Header() {
   }, [setUserId])
 
   useEffect(() => {
-    clearCart()
+    clearLocalStorageCart()
     fetchCart(userId)
-  }, [fetchCart, userId, clearCart])
+  }, [fetchCart, userId, clearLocalStorageCart])
 
   let cartItems = useCartStore((state) => state.cartItems)
 
@@ -57,7 +59,16 @@ export function Header() {
   }
 
   function handleProfilePopoverOpen(open) {
-    setIsProfilePopoverOpen(open)
+    setIsPopoverOpen((prev) => ({
+      ...prev,
+      profile: open,
+    }))
+  }
+  function handleAddressPopoverOpen(open) {
+    setIsPopoverOpen((prev) => ({
+      ...prev,
+      address: open,
+    }))
   }
 
   return (
@@ -86,27 +97,41 @@ export function Header() {
             </div>
           </div>
         </section>
-        {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
+
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
           <SearchInput />
-          <AddressModal />
+          <AddressModal
+            open={isPopoverOpen.address}
+            onOpenChange={handleAddressPopoverOpen}
+          />
         </section>
+
         <section className="order-1 flex w-full items-center justify-between gap-2 md:order-last md:w-fit">
           <MenuMobile />
           <Link className="w-24 md:mr-7 md:hidden" to="/">
             <img src={logo} alt="Logo" className="w-full" />
           </Link>
-          <Popover onOpenChange={handleProfilePopoverOpen}>
+          <Popover
+            open={isPopoverOpen.profile}
+            onOpenChange={handleProfilePopoverOpen}
+          >
             <PopoverTrigger asChild>
               <div
-                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${isProfilePopoverOpen ? "bg-[#ffeae4] text-primary" : " "}`}
+                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${
+                  isPopoverOpen.profile ? "bg-[#ffeae4] text-primary" : ""
+                }`}
               >
                 <IconUser className="w-full text-center" size={30} />
               </div>
             </PopoverTrigger>
 
-            <PopoverContent sideOffset={20}>
-              <ProfileSheet />
+            <PopoverContent
+              sideOffset={20}
+              className="max-h-max-profile-sheet overflow-auto md:w-80"
+            >
+              <ProfileSheet
+                closeModal={() => handleProfilePopoverOpen(false)}
+              />
             </PopoverContent>
           </Popover>
 

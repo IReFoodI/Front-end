@@ -87,13 +87,7 @@ export function StoreSignUp() {
       id: "SUPERMERCADO",
       category: "SUPERMERCADO",
     },
-    {
-      id: "LANCHERIA",
-      category: "LANCHERIA",
-    },
   ]
-
-  console.log(form.formState.errors)
 
   return (
     <div className="grid gap-2 sm:px-8">

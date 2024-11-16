@@ -1,3 +1,8 @@
+import { useNavigate } from "react-router-dom"
+
+import { useFetch } from "@/app/hooks/useFetch"
+import { localStorageUtil } from "@/app/utils/localStorageUtil"
+import { userService } from "@/domains/user/services/userService"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../ui/button/button"
@@ -11,35 +16,45 @@ import {
   DialogTrigger,
 } from "../ui/dialog"
 
-export function DeleteAccountModal() {
+export function DeleteAccountModal({ toggleOpenModal, isModalOpen }) {
+  const navigate = useNavigate()
+  const { loading, onRequest } = useFetch()
+  const handleDeleteAccount = async () => {
+    toggleOpenModal(false)
+    return await onRequest({
+      request: () => userService.deleteAccount(),
+      onSuccess: () => {
+        localStorageUtil.removeLocalStorageToken()
+        navigate("/autenticar/entrar")
+      },
+    })
+  }
   return (
     <>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            className="my-12 w-[50%] text-lg lg:my-5 lg:rounded-full lg:border lg:p-5"
-          >
-            Excluir Conta
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-[90%] rounded-md lg:max-w-[30%]">
+      <Dialog open={isModalOpen} onOpenChange={toggleOpenModal}>
+        <DialogTrigger asChild></DialogTrigger>
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="w-full text-center lg:text-2xl">
+            <DialogTitle className="text-center">
               Tem certeza que deseja excluir?
             </DialogTitle>
-            <DialogDescription className="m-auto w-full text-center lg:w-[90%] lg:text-xl">
+            <DialogDescription className="m-auto w-full text-center">
               Após a exclusão desta conta todos os seus dados serão apagados.
               Mesmo que crie uma nova conta não será possível recuperar.
             </DialogDescription>
           </DialogHeader>
           <ProfileImagePlaceholder className="m-auto" />
-          <DialogFooter>
+          <DialogFooter className={"flex gap-2 md:gap-0"}>
             <Button
               variant="outline"
-              className="m-auto w-[80%] rounded-full border-2 border-ring text-ring hover:bg-background hover:text-ring lg:p-5 lg:text-xl"
+              className="rounded-full"
+              disabled={loading}
+              onClick={handleDeleteAccount}
             >
               Excluir
+            </Button>
+            <Button className="rounded-full" onClick={toggleOpenModal}>
+              Cancelar
             </Button>
           </DialogFooter>
         </DialogContent>

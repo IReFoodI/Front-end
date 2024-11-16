@@ -8,7 +8,6 @@ import { tokenService } from "./service/tokenService"
 
 function App() {
   const { setUser, setIsUserLoading, isUserLoading } = userStore()
-
   useEffect(() => {
     async function authenticate() {
       setIsUserLoading(true)

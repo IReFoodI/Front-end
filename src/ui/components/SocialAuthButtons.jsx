@@ -10,7 +10,7 @@ import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
-  const { setUser } = userStore()
+  const { setUser, setUserId } = userStore()
 
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {
@@ -31,7 +31,7 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
         }
 
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/auth/google/success`,
+          `${import.meta.env.VITE_API_URL}/auth/google/success`,
           userDTO
         )
 
@@ -39,7 +39,8 @@ export function SocialAuthButtons({ locationPathname, redirectPath }) {
 
         localStorage.setItem("userRefoods", JSON.stringify(userDTO))
 
-        setUser(userDTO)
+        setUser({ ...response.data, userId: response.data.id })
+        setUserId(response.data.id)
 
         toast.success("Login efetuado com sucesso!")
 

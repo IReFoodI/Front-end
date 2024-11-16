@@ -121,10 +121,6 @@ export function StoreProfileSettings() {
       id: "SUPERMERCADO",
       category: "SUPERMERCADO",
     },
-    {
-      id: "LANCHERIA",
-      category: "LANCHERIA",
-    },
   ]
 
   if (loading) {

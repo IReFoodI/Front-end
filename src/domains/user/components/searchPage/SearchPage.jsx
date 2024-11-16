@@ -118,36 +118,35 @@ export function SearchPage() {
         )}
       </section>
 
-      <h2>
-        {/* Buscando produtos por{" "}
-          <span className="font-semibold">&quot;{searchText}&quot;</span> */}
-        Foram encontrados{" "}
-        <span className="font-medium"> {products?.totalElements}</span>{" "}
-        produtos.
-      </h2>
-
       {loading ? (
         <Loading />
       ) : (
-        <section>
-          {products?.content?.length > 0 ? (
-            <SearchProductList
-              products={products?.content}
-              finalRef={finalRef}
-              setProducts={setProducts}
-              totalPages={products?.totalPages}
-              alreadyRenderFirstPage={alreadyRenderFirstPage}
-            />
-          ) : (
-            <div className="flex flex-col">
-              <p>
-                Infelizmente não foi possível encontrar nenhum produto buscando
-                por esses filtros. <br />
-                Tente buscar por outros filtros.
-              </p>
-            </div>
-          )}
-        </section>
+        <>
+          <h2>
+            Foram encontrados{" "}
+            <span className="font-medium"> {products?.totalElements}</span>{" "}
+            produtos.
+          </h2>
+          <section>
+            {products?.content?.length > 0 ? (
+              <SearchProductList
+                products={products?.content}
+                finalRef={finalRef}
+                setProducts={setProducts}
+                totalPages={products?.totalPages}
+                alreadyRenderFirstPage={alreadyRenderFirstPage}
+              />
+            ) : (
+              <div className="flex flex-col">
+                <p>
+                  Infelizmente não foi possível encontrar nenhum produto
+                  buscando por esses filtros. <br />
+                  Tente buscar por outros filtros.
+                </p>
+              </div>
+            )}
+          </section>
+        </>
       )}
     </div>
   )
