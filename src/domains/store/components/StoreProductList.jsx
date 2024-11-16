@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
@@ -19,13 +19,14 @@ import { Button } from "@/ui/components/ui/button/button"
 export function StoreProductList() {
   const { storeId } = useParams()
   const navigate = useNavigate()
+  // const [localProducts, setLocalProducts] = useState()
   const [currentPage, setCurrentPage] = useState(0)
   const currentPageFromUrl =
     parseInt(new URLSearchParams(location.search).get("page")) || 0
   const [filter, setFilter] = useState("expiry_asc")
   const { data: products, onRequest, loading } = useFetch()
 
-  useEffect(() => {
+  const fetchProducts = useCallback(() => {
     setCurrentPage(currentPageFromUrl)
     if (storeId)
       onRequest({
@@ -35,14 +36,38 @@ export function StoreProductList() {
             filter
           ),
       })
+  }, [storeId, currentPageFromUrl, filter])
+
+  // const handleUpdate = useCallback(
+  //   (productId, newStatus) => {
+  //     fetchProducts()
+  //     setLocalProducts((prevProducts) => 
+  //       prevProducts.map((product) =>
+  //         product.productId === productId
+  //           ? { ...product, active: newStatus }
+  //           : product
+  //       )
+  //     )
+  //   },
+  //   [fetchProducts]
+  // )
+
+  useEffect(() => {
+    fetchProducts()
   }, [storeId, filter, currentPageFromUrl])
+
+  // useEffect(() => {
+  //   if (products?.products) {
+  //     setLocalProducts(products.products)
+  //   }
+  // }, [products])
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
     navigate(`?page=${newPage}`)
   }
 
-  if (loading) return <Loading />
+  // if (loading) return <Loading />
 
   return (
     <section className="mt-5 flex flex-col gap-5 xl:mt-0">
@@ -55,19 +80,23 @@ export function StoreProductList() {
             <SelectValue placeholder="Ordenar" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="expiry_asc">Perto do vencimento</SelectItem>
+            <SelectItem value="expiry_desc">Longe do vencimento</SelectItem>
             <SelectItem value="name_asc">Nome crescente</SelectItem>
             <SelectItem value="name_desc">Nome decrescente</SelectItem>
             <SelectItem value="price_asc">Menor preço</SelectItem>
             <SelectItem value="price_desc">Maior preço</SelectItem>
-            <SelectItem value="expiry_asc">Perto do vencimento</SelectItem>
-            <SelectItem value="expiry_desc">Longe do vencimento</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {products?.products?.map((product) => {
           return (
-            <SearchProductItem key={product?.productId} product={product} />
+            <SearchProductItem
+              key={product?.productId}
+              product={product}
+              onAddItem={fetchProducts}
+            />
           )
         })}
       </div>

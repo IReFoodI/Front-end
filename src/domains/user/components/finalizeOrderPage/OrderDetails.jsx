@@ -59,8 +59,6 @@ export const OrderDetails = () => {
     }
   }, [restaurantHours])
 
-  console.log(restaurantAddress)
-
   const restaurantAddressStandard = restaurantAddress
     ? restaurantAddress?.find((address) => address?.isStandard)
     : {}

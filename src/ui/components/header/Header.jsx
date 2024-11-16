@@ -46,7 +46,7 @@ export function Header() {
   useEffect(() => {
     clearLocalStorageCart()
     fetchCart(userId)
-  }, [fetchCart, userId, clearLocalStorageCart])
+  }, [fetchCart, userId, clearLocalStorageCart, isPopoverOpen.cart])
 
   let cartItems = useCartStore((state) => state.cartItems)
 
@@ -144,7 +144,8 @@ export function Header() {
                 Carrinho
               </DialogTitle>
               <SheetDescription>
-                Carrinho não é garantia de reserva!
+                Os itens do carrinho expiram em <b>10 minutos</b> se a compra
+                não for finalizada.
               </SheetDescription>
               <Cart onToggleModals={onToggleModals} />
             </SheetContent>

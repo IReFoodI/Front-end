@@ -39,7 +39,7 @@ export function StoreCard({
     >
       <Card
         className={cn(
-          "relative grid h-auto min-h-28 max-w-full grid-cols-12 gap-4 rounded-2xl border-0 bg-[hsl(var(--secondary))] p-2 shadow-none hover:bg-[hsl(var(--primary))]/5 sm:p-5",
+          "relative grid h-auto min-h-28 max-w-full grid-cols-12 gap-4 rounded-2xl border-0 bg-secondary p-2 shadow-none hover:bg-primary/5 sm:p-5",
           className
         )}
         {...props}
@@ -69,7 +69,7 @@ export function StoreCard({
         </CardContent>
 
         <CardContent className="col-span-6 flex flex-col p-0 sm:p-0">
-          <CardTitle className="mb-2 truncate font-inter text-sm font-semibold text-[hsl(var(--foreground))] md:text-2xl lg:text-xl">
+          <CardTitle className="mb-2 truncate font-inter text-sm font-semibold text-[hsl(var(--foreground))] md:text-lg lg:text-xl">
             {fantasy}
           </CardTitle>
           {discount && (
@@ -82,10 +82,10 @@ export function StoreCard({
 
           <div className="mb-2 flex items-center">
             <IconStarFilled className="h-[14px] w-[14px] text-[hsl(var(--primary))]" />
-            <span className="ml-2 font-inter text-xs font-semibold text-[hsl(var(--foreground))] md:text-2xl lg:text-sm">
+            <span className="ml-2 font-inter text-xs font-semibold text-[hsl(var(--foreground))] md:text-sm">
               {averageRating}
             </span>
-            <span className="ml-2 font-inter text-xs font-semibold text-gray-500 sm:text-sm">
+            <span className="ml-2 truncate font-inter text-xs font-semibold lowercase text-gray-500 first-letter:uppercase sm:text-sm">
               {category}
             </span>
           </div>
