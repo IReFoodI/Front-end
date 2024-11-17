@@ -3,14 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { productService } from "@/domains/store/services/productListService"
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Card,
@@ -99,32 +91,13 @@ export function StoreMenu() {
       <Card className="border-none shadow-none">
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
-          <AlertDialog open={isModalOpen}>
-            <AlertDialogTrigger asChild>
-              <Button
-                size="sm"
-                className="m-0 !mt-0 items-center gap-1 text-lg"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <span className="m-0 text-base">+ Adicionar produto</span>
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Produto</AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogDescription>
-                Aqui você pode ver informações detalhadas sobre o produto
-                selecionado e gerenciar suas escolhas.
-              </AlertDialogDescription>
-              <ProductModal
-                setIsModalOpen={setIsModalOpen}
-                setSelectedProduct={setSelectedProduct}
-                selectedProduct={selectedProduct}
-                fetchProducts={fetchProducts}
-              />
-            </AlertDialogContent>
-          </AlertDialog>
+          <ProductModal
+            setIsModalOpen={setIsModalOpen}
+            setSelectedProduct={setSelectedProduct}
+            selectedProduct={selectedProduct}
+            fetchProducts={fetchProducts}
+            isModalOpen={isModalOpen}
+          />
         </CardHeader>
 
         <CardContent>
