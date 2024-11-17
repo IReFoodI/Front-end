@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
+import { finalizeOrder } from "../../../../app/utils/finalizeOrder"
 import { OrderDetails } from "./OrderDetails"
 import Orderitems from "./Orderitems"
 
 export function FinalizeOrderPage() {
-  const { cards } = userCardStore()
+  const { cards, selectedCard } = userCardStore()
   const { cartItems } = useCartStore()
+
+  const navigate = useNavigate()
+
+  const handleFinalizeOrder = () => finalizeOrder({ navigate })
 
   return (
     <div
@@ -34,24 +39,18 @@ export function FinalizeOrderPage() {
             <Orderitems />
           </div>
 
-          {cards.length > 0 ? (
-            <Link to="/pedidos" className="w-full">
-              <div className="mx-auto my-11 w-full max-w-[400px] px-5 lg:hidden">
-                <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
-                  Finalizar
-                </Button>
-              </div>
-            </Link>
-          ) : (
-            <div className="mx-auto my-11 w-full max-w-[400px] px-5 lg:hidden">
-              <Button
-                className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
-                disabled
-              >
-                Finalizar
-              </Button>
-            </div>
-          )}
+          {/* BUTTON FINALIZAR */}
+          <div className="mx-auto my-11 w-full max-w-[400px] px-5 lg:hidden">
+            <Button
+              className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
+              onClick={handleFinalizeOrder}
+              disabled={
+                cards.length === 0 || !selectedCard || !cartItems.length
+              }
+            >
+              Finalizar
+            </Button>
+          </div>
         </div>
       )}
     </div>

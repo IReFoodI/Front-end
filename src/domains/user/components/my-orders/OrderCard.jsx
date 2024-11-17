@@ -2,6 +2,7 @@ import { IconPaperBag } from "@tabler/icons-react"
 import { useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import imageBroke from "@/ui/assets/image-broke.png"
 
 export function OrderCard({
   pickupTime,
@@ -25,6 +26,8 @@ export function OrderCard({
     }))
   }
 
+  const formattedOrderId = String(orderNumber).padStart(4, "0")
+
   return (
     <div className="mx-auto rounded-lg p-4 md:max-w-md">
       <div className="text-lg font-semibold text-primary">
@@ -36,7 +39,7 @@ export function OrderCard({
       <div className="mt-1 flex items-center">
         <IconPaperBag />
         <span className="ml-2 text-sm text-secondary-foreground">
-          {orderStatus}
+          &quot;Status: {orderStatus}&quot;
         </span>
       </div>
       <div className="mt-4 text-lg font-semibold text-primary md:hidden">
@@ -63,9 +66,13 @@ export function OrderCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <img
-                src={restaurantImage}
+                src={restaurantImage || imageBroke}
                 alt={restaurantName}
                 className="h-10 w-10 rounded-full"
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.src = imageBroke
+                }}
               />
               <div>
                 <div className="font-semibold text-gray-700">
@@ -76,7 +83,7 @@ export function OrderCard({
                 </div>
               </div>
             </div>
-            <div className="text-secondary-foreground">{orderNumber}</div>
+            <div className="text-secondary-foreground">#{formattedOrderId}</div>
           </div>
 
           {orderItems?.map((item, index) => (
@@ -85,9 +92,10 @@ export function OrderCard({
                 className="flex cursor-pointer items-center justify-between"
                 onClick={() => toggleItemDescription(index)}
               >
-                <div className="text-gray-700">{item.name}</div>
+                <div className="text-gray-700">{item.quantity}x</div>
+                <div className="text-gray-700">{item.productName}</div>
                 <div className="text-gray-700">
-                  {currencyFormatter(item.price)}
+                  {currencyFormatter(item.unitValue * item.quantity)}
                 </div>
               </div>
               <div
@@ -95,7 +103,7 @@ export function OrderCard({
               >
                 {item.description}
               </div>
-              {!expandedItems[index] && item.description.length > 50 && (
+              {!expandedItems[index] && item.description?.length > 50 && (
                 <button
                   onClick={() => toggleItemDescription(index)}
                   className="mt-1 text-xs text-primary"

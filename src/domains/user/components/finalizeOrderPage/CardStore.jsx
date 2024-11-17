@@ -1,16 +1,20 @@
-import {
-  IconHeart,
-  IconHeartFilled,
-  IconInfoCircle,
-  IconStarFilled,
-} from "@tabler/icons-react"
-import { useState } from "react"
+import { IconInfoCircle, IconStarFilled } from "@tabler/icons-react"
+
+import { useFavorites } from "@/domains/user/components/favorites/FavoritesData"
+
+import { FavoriteButton } from "../favorites/FavoriteButton"
 
 const CardStore = ({ restaurantInfo }) => {
-  const [isHeartFilled, setIsHeartFilled] = useState(false)
+  const { stores, toggleFavorite } = useFavorites()
+
+  const store = stores.find(
+    (store) => store.restaurant.restaurantId === restaurantInfo.restaurantId
+  )
+
+  const isFavorited = store ? store.isFavorited : false
 
   const toggleHeart = () => {
-    setIsHeartFilled((prevState) => !prevState)
+    toggleFavorite(restaurantInfo.restaurantId, store?.favoriteId)
   }
 
   const isNewRestaurant = () => {
@@ -43,18 +47,12 @@ const CardStore = ({ restaurantInfo }) => {
           <button className="text-2xl font-bold text-gray-700 transition duration-300 hover:text-primary">
             {restaurantInfo?.fantasy}
           </button>
-          <div id="icons" className="flex justify-end gap-2 text-gray-400">
+          <div
+            id="icons"
+            className="flex items-center justify-end gap-2 text-gray-400"
+          >
             <IconInfoCircle className="cursor-pointer transition duration-300 hover:text-primary" />
-            <button
-              onClick={toggleHeart}
-              className="flex transition duration-300 hover:text-primary"
-            >
-              {isHeartFilled ? (
-                <IconHeartFilled className="cursor-pointer text-primary" />
-              ) : (
-                <IconHeart className="cursor-pointer" />
-              )}
-            </button>
+            <FavoriteButton isFavorited={isFavorited} onToggle={toggleHeart} />
           </div>
         </div>
         <span className="font-semibold text-primary">{isNew}</span>

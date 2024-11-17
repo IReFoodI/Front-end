@@ -3,6 +3,8 @@ import { IconX } from "@tabler/icons-react"
 import { useRef, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
+import reviewService from "@/app/service/reviewService"
+import restaurantStore from "@/app/store/restaurantStore"
 import { cn } from "@/app/utils/cn"
 import { dateFormatter } from "@/app/utils/dateFormatter"
 import {
@@ -17,12 +19,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/ui/components/ui/avatar"
 import { Button } from "@/ui/components/ui/button/button"
 import { Textarea } from "@/ui/components/ui/textarea"
 
+import userStore from "../stores/userStore"
+
 export function ReviewModal({ reviewStars }) {
   const [reviewText, setReviewText] = useState("")
   const [stars, setStars] = useState(reviewStars ? reviewStars : null)
   const [hover, setHover] = useState(0)
   const tempStars = useRef(null)
   const maxLengthReview = 300
+  const { userId } = userStore()
+  const { restaurantInfo } = restaurantStore() //restaurantInfo.restaurantId
 
   function handleUpdateReviewText(e) {
     setReviewText(e?.target?.value)
@@ -40,6 +46,32 @@ export function ReviewModal({ reviewStars }) {
   function handleMouseLeave() {
     setHover(0)
     setStars(tempStars.current)
+  }
+
+  async function handleSubmitReview() {
+    if (!stars) {
+      alert("Por favor, dê uma nota para o pedido.")
+      return
+    }
+
+    const reviewData = {
+      ratingNote: stars,
+      ratingDate: new Date().toISOString(),
+      ratingComment: reviewText,
+      userId,
+      restaurantId: restaurantInfo.restaurantId,
+    }
+
+    try {
+      const response = await reviewService.createReview(reviewData)
+      if (response.status === 201) {
+        alert("Avaliação enviada com sucesso!")
+      } else {
+        throw new Error("Erro ao enviar a avaliação.")
+      }
+    } catch (error) {
+      console.error("Erro ao enviar a avaliação:", error)
+    }
   }
 
   return (
@@ -112,7 +144,10 @@ export function ReviewModal({ reviewStars }) {
         </div>
       </div>
       <div className="flex w-full items-center justify-end">
-        <AlertDialogAction className="w-full rounded-full md:w-fit md:px-8">
+        <AlertDialogAction
+          className="w-full rounded-full md:w-fit md:px-8"
+          onClick={handleSubmitReview}
+        >
           Enviar avaliação
         </AlertDialogAction>
       </div>

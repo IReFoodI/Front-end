@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 
-export function ContainerStatus({ containerIcon, content, title }) {
+export function ContainerStatus({ containerIcon, content, title, linkTo }) {
   return (
     <Link
-      to="/"
+      to={linkTo}
       className="flex w-full flex-col items-center justify-center rounded-xl bg-secondary p-2 text-center hover:bg-[#ffeae4]"
     >
       {containerIcon}

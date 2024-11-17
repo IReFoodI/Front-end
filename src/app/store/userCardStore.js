@@ -7,6 +7,7 @@ import {
 
 const userCardStore = create((set) => ({
   cards: [],
+  selectedCard: null,
   isLoading: false,
   error: null,
 
@@ -35,6 +36,8 @@ const userCardStore = create((set) => ({
       set({ isLoading: false })
     }
   },
+
+  setSelectedCard: (cardId) => set({ selectedCard: cardId }),
 }))
 
 export default userCardStore

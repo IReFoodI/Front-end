@@ -91,7 +91,7 @@ export function SignIn() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-2 text-left"
+          className="grid gap-4 text-left"
         >
           <FormField
             id="email"

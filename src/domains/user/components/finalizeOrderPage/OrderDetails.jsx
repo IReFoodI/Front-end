@@ -1,12 +1,13 @@
 import { IconClock } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import restaurantStore from "@/app/store/restaurantStore"
 import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
 import { Button } from "@/ui/components/ui/button/button"
 
+import { finalizeOrder } from "../../../../app/utils/finalizeOrder"
 import CardStore from "./CardStore"
 import DeliveryAndPayment from "./DeliveryAndPayment"
 
@@ -22,12 +23,13 @@ export const OrderDetails = () => {
     fetchAddress,
     restaurantAddress,
   } = restaurantStore()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const initializeData = async () => {
       const firstProduct = cartItems[0]
       if (firstProduct?.productId) {
-        await fetchRestaurantInfo(firstProduct.productId)
+        await fetchRestaurantInfo(firstProduct?.productId)
       }
     }
 
@@ -36,8 +38,8 @@ export const OrderDetails = () => {
 
   useEffect(() => {
     if (restaurantInfo) {
-      fetchRestaurantHours(restaurantInfo.restaurantId)
-      fetchAddress(restaurantInfo.restaurantId)
+      fetchRestaurantHours(restaurantInfo?.restaurantId)
+      fetchAddress(restaurantInfo?.restaurantId)
     }
   }, [restaurantInfo, fetchRestaurantHours, fetchAddress])
 
@@ -47,23 +49,26 @@ export const OrderDetails = () => {
       const dayOfWeek = today
         .toLocaleDateString("en-US", { weekday: "long" })
         .toUpperCase()
-      const todayHours = restaurantHours.find(
-        (hour) => hour.dayOfWeek === dayOfWeek
+      const todayHours = restaurantHours?.find(
+        (hour) => hour?.dayOfWeek === dayOfWeek
       )
 
       setPickupTime(
         todayHours
-          ? `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
+          ? `Hoje, ${todayHours?.openingTime} - ${todayHours?.closingTime}`
           : "Restaurante fechado hoje"
       )
     }
   }, [restaurantHours])
 
-  const restaurantAddressStandard =
-    restaurantAddress?.find((address) => address.isStandard) || {}
+  const restaurantAddressStandard = restaurantAddress
+    ? restaurantAddress?.find((address) => address?.isStandard)
+    : {}
   const encodedAddress = encodeURIComponent(
-    `${restaurantAddressStandard.street || ""}, ${restaurantAddressStandard.number || ""}, ${restaurantAddressStandard.city || ""}`
+    `${restaurantAddressStandard?.street || ""}, ${restaurantAddressStandard?.number || ""}, ${restaurantAddressStandard?.city || ""}`
   )
+
+  const handleFinalizeOrder = () => finalizeOrder({ navigate })
 
   return (
     <div
@@ -111,24 +116,15 @@ export const OrderDetails = () => {
         <DeliveryAndPayment />
       </div>
       {/* BUTTON FINALIZAR */}
-      {cards.length > 0 ? (
-        <Link to="/pedidos" className="w-full">
-          <div className="mx-auto hidden w-full max-w-[400px] lg:block">
-            <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
-              Finalizar
-            </Button>
-          </div>
-        </Link>
-      ) : (
-        <div className="mx-auto hidden w-full max-w-[400px] lg:block">
-          <Button
-            className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
-            disabled
-          >
-            Finalizar
-          </Button>
-        </div>
-      )}
+      <div className="mx-auto hidden w-full max-w-[400px] lg:block">
+        <Button
+          className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl"
+          disabled={cards.length === 0}
+          onClick={handleFinalizeOrder}
+        >
+          Finalizar
+        </Button>
+      </div>
     </div>
   )
 }

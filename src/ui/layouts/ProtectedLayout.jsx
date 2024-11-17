@@ -5,7 +5,9 @@ import { Outlet } from "react-router-dom"
 export function ProtectedLayout() {
   return (
     // <ProtectedRoute>
-    <Outlet />
+    <div className="px-3">
+      <Outlet />
+    </div>
     // </ProtectedRoute>
   )
 }

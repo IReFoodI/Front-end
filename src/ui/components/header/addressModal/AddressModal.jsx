@@ -34,7 +34,7 @@ export function AddressModal({ open, onOpenChange }) {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-orange-100 md:order-2 md:w-fit ${isActive ? "active:bg-orange-100" : ""}`}
+          className={`order-1 m-2 flex w-full cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-[#ffeae4] md:order-2 md:w-fit ${isActive ? "active:bg-orange-100" : ""}`}
           onClick={() => setIsActive(!isActive)}
         >
           <p className="text-sm font-semibold md:text-base">Endereço</p>
