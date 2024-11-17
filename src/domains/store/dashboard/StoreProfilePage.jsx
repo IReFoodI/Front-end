@@ -94,13 +94,12 @@ export function StoreProfilePage() {
     fetchActiveProducts()
     //eslint-disable-next-line
   }, [])
-
   return (
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
           <h1 className="mb-4 text-2xl font-semibold md:text-4xl">
-            Olá, {user?.fantasy}
+            Olá, {user?.name}
           </h1>
         </div>
 
