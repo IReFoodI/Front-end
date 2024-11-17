@@ -18,30 +18,30 @@ async function updateRestaurant(data) {
   const axios = createAxiosInstance(true)
   return await axios.put(BASE_URL, data)
 }
-async function updateRestaurantEmail(data) {
+async function getRestaurantOrders(restaurantId) {
   const axios = createAxiosInstance(true)
-  return await axios.put(`${BASE_URL}/email`, data)
+  return await axios.get(`api/order/restaurant/${restaurantId}`)
 }
-async function updateRestaurantPassword(data) {
+async function getProductById(productId) {
   const axios = createAxiosInstance(true)
-  return await axios.put(`${BASE_URL}/password`, data)
+  return await axios.get(`/api/product/${productId}`)
+}
+async function updateStatusOrder(orderId, status) {
+  const axios = createAxiosInstance(true)
+  return await axios.patch(`/api/order/${orderId}/status?newStatus=${status}`)
 }
 async function getProducts() {
   const axios = createAxiosInstance(true)
   return await axios.get("/api/product")
 }
-async function getRestaurantOrders(restaurantId) {
-  const axios = createAxiosInstance(true)
-  return await axios.get(`api/order/restaurant/${restaurantId}`)
-}
 
 export const restaurantService = {
   createRestaurant,
-  getRestaurantById,
-  updateRestaurant,
   getRestaurantEmail,
-  updateRestaurantEmail,
-  updateRestaurantPassword,
-  getProducts,
+  updateRestaurant,
   getRestaurantOrders,
+  getProductById,
+  updateStatusOrder,
+  getRestaurantById,
+  getProducts,
 }

@@ -12,6 +12,9 @@ export function AccordionsStructure({
   canceledOrders,
   setOrder,
   orderRef,
+  setUser,
+  refreshOrders,
+  setRefreshOrders,
 }) {
   return (
     <Accordion type="single" collapsible>
@@ -30,6 +33,9 @@ export function AccordionsStructure({
             isDoneOrCanceled={true}
             setOrder={setOrder}
             orderRef={orderRef}
+            setUser={setUser}
+            refreshOrders={refreshOrders}
+            setRefreshOrders={setRefreshOrders}
           />
         </AccordionContent>
       </AccordionItem>
@@ -51,6 +57,9 @@ export function AccordionsStructure({
             isDoneOrCanceled={true}
             setOrder={setOrder}
             orderRef={orderRef}
+            setUser={setUser}
+            refreshOrders={refreshOrders}
+            setRefreshOrders={setRefreshOrders}
           />
         </AccordionContent>
       </AccordionItem>

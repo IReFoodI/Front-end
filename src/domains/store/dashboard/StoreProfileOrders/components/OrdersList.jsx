@@ -1,6 +1,14 @@
 import { OrderCard } from "@/domains/store/dashboard/StoreProfileOrders/components/OrderCard"
 
-export function OrdersList({ orders, isDoneOrCanceled, setOrder, orderRef }) {
+export function OrdersList({
+  orders,
+  isDoneOrCanceled,
+  setOrder,
+  orderRef,
+  setUser,
+  refreshOrders,
+  setRefreshOrders,
+}) {
   return (
     <div>
       {orders?.map((order) => (
@@ -10,6 +18,9 @@ export function OrdersList({ orders, isDoneOrCanceled, setOrder, orderRef }) {
           isDoneOrCanceled={isDoneOrCanceled}
           setOrder={setOrder}
           orderRef={orderRef}
+          setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       ))}
     </div>

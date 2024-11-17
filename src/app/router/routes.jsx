@@ -70,6 +70,7 @@ export const ROUTES = {
   FINALIZE_ORDER: "finalizar-pedido",
   MY_ORDERS: "pedidos",
   SEARCH_PRODUCTS: "produtos/pesquisar",
+  ORDER_DETAILS: "pedidos",
   USER_STORE_PROFILE: "loja/:storeId",
   USER_STORE_PROFILE_INFO: "informacoes/",
 }

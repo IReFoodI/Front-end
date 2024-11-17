@@ -1,119 +1,88 @@
+import { useEffect, useState } from "react"
+
+import { useFetch } from "@/app/hooks/useFetch"
+import { tokenService } from "@/app/service/tokenService.js"
+
+import { restaurantService } from "../../services/restaurantService.js"
 import { AccordionsStructure } from "./components/AccordionsStructure"
 import { TabsStructure } from "./components/TabsStructure"
 
-export function StoreProfileOrders({ setOrder, orderRef }) {
-  const orders = [
-    {
-      orderId: 1,
-      client: {
-        clientName: "Marcos Daniel ",
-        clientPhoneNumber: 99999999999,
-      },
-      orderNumber: 12345,
-      items: [
-        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
-        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
-      ],
-      totalValue: 25.0,
-      status: "canceled",
-      typeOfReceiving: "Retirada",
-      timeOfDelivery: {
-        day: "02/02/2025",
-        initialTime: "19:52",
-        finalTime: "20:02",
-      },
-      payment: "Pix",
-      paymentStatus: "aprovado",
-    },
-    {
-      orderId: 2,
-      client: {
-        clientName: "Yasmin Carloto",
-        clientPhoneNumber: 99999999999,
-      },
-      orderNumber: 12345,
-      items: [
-        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
-        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
-      ],
-      totalValue: 25.0,
-      status: "accepted",
-      typeOfReceiving: "Retirada",
-      timeOfDelivery: {
-        day: "02/02/2025",
-        initialTime: "19:52",
-        finalTime: "20:02",
-      },
-      payment: "Pix",
-      paymentStatus: "aprovado",
-    },
-    {
-      orderId: 3,
-      client: {
-        clientName: "Ingryd Duarte",
-        clientPhoneNumber: 99999999999,
-      },
-      orderNumber: 12345,
-      items: [
-        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
-        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
-      ],
-      totalValue: 25.0,
-      status: "done",
-      typeOfReceiving: "Retirada",
-      timeOfDelivery: {
-        day: "02/02/2025",
-        initialTime: "19:52",
-        finalTime: "20:02",
-      },
-      payment: "Pix",
-      paymentStatus: "aprovado",
-    },
-    {
-      orderId: 4,
-      client: {
-        clientName: "Teste da Silva",
-        clientPhoneNumber: 99999999999,
-      },
-      orderNumber: 12345,
-      items: [
-        { itemId: 1, itemName: "Hambúrguer", price: 20.0 },
-        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
-        { itemId: 2, itemName: "Refrigerante", price: 5.0 },
-      ],
-      totalValue: 25.0,
-      status: "pending",
-      typeOfReceiving: "Retirada",
-      timeOfDelivery: {
-        day: "02/02/2025",
-        initialTime: "19:52",
-        finalTime: "20:02",
-      },
-      payment: "Pix",
-      paymentStatus: "aprovado",
-    },
-  ]
+export function StoreProfileOrders({
+  setRefreshOrders,
+  refreshOrders,
+  setOrder,
+  orderRef,
+  setUser,
+}) {
+  const [orders, setOrders] = useState()
+  const [restaurantId, setRestaurantId] = useState()
+  const { onRequest, error } = useFetch()
 
-  function filterOrders(filter) {
-    return orders.filter((order) => order.status == filter)
+  const getRestaurantId = async () => {
+    await onRequest({
+      request: () => tokenService.getInfoUsingToken(),
+      onSuccess: (data) => {
+        setRestaurantId(data.restaurantId)
+      },
+    })
   }
 
+  const fetchStoreOrders = async () => {
+    await onRequest({
+      request: () => restaurantService.getRestaurantOrders(restaurantId),
+      onSuccess: (data) => {
+        if (data && data.length > 0) {
+          setOrders(data)
+        } else {
+          setOrders([])
+        }
+      },
+    })
+  }
+
+  useEffect(() => {
+    getRestaurantId()
+  }, [])
+
+  useEffect(() => {
+    if (restaurantId) {
+      fetchStoreOrders()
+    }
+  }, [restaurantId, refreshOrders])
+
+  function filterOrders(filter) {
+    return orders.filter((order) => order.orderStatus == filter)
+  }
+
+  if (!orders || error) {
+    return (
+      <div className="flex h-full items-center justify-center p-2 text-center text-2xl font-bold text-orange-500 shadow-2xl">
+        <p>Não foram realizados pedidos ainda!</p>
+      </div>
+    )
+  }
   return (
-    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/3">
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-2/6">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
-          pendingOrders={filterOrders("pending")}
-          scheduledOrders={filterOrders("accepted")}
+          pendingOrders={filterOrders("PENDENTE")}
+          scheduledOrders={filterOrders("PREPARANDO")}
           setOrder={setOrder}
           orderRef={orderRef}
+          setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </div>
       <div className="flex flex-col">
         <AccordionsStructure
-          doneOrders={filterOrders("done")}
-          canceledOrders={filterOrders("canceled")}
+          doneOrders={filterOrders("CONCLUIDO")}
+          canceledOrders={filterOrders("CANCELADO")}
           setOrder={setOrder}
           orderRef={orderRef}
+          setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </div>
     </div>
