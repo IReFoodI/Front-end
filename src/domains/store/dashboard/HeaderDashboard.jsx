@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import Logo from "./Logo-Negocios.png"
+import Logo from "@/ui/assets/Logo-Negocios.png"
 export function HeaderDashboard() {
   return (
     <header className="sticky bg-slate-900 shadow-md">

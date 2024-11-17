@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import { productService } from "@/domains/store/services/useProdutcList"
+import { productService } from "@/domains/store/services/productListService"
 import {
   AlertDialog,
   AlertDialogContent,
