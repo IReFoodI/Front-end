@@ -26,7 +26,6 @@ export function ProtectedRoute({
         navigate(`${redirect}${pathname && `?redirect=${location.pathname}`}`)
         return
       }
-      //todo talvez trocar esse id por outra coisa pra não precisar expor o id
       if (type === "user" && !user?.userId) {
         navigate("/autenticar/entrar")
       } else if (type === "restaurant" && !user?.restaurantId) {

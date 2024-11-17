@@ -1,60 +1,103 @@
-import {
-  IconCaretRightFilled,
-  IconMoneybag,
-  IconShoppingBag,
-} from "@tabler/icons-react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
-import { ContainerStatus } from "@/ui/components/header/profileSheet/ContainerStatus"
 import { BasicUserInfo } from "@/ui/components/myDataPage/BasicUserInfo"
-import { DefaultAddress } from "@/ui/components/myDataPage/DefaultAddress"
 import { DeleteAccountModal } from "@/ui/components/myDataPage/DeleteAccountModal"
 import { Button } from "@/ui/components/ui/button/button"
+import { Loading } from "@/ui/components/ui/loading"
+import { RadioGroup } from "@/ui/components/ui/radio-group"
+
+import { AddressCard } from "../../../../ui/components/AddressCard"
+import { addressService } from "../../services/addressService"
+import { userService } from "../../services/userService"
+import { userAddressStore } from "../../stores/userAddressStore"
+import userStore from "../../stores/userStore"
 
 export function MydataPage() {
+  const { user, setUser } = userStore()
+  const { defaultAddress, setAddresses } = userAddressStore()
+  const [isModalDeleteOpen, setIsModalDeleteOpenOpen] = useState(false)
+  const { loading, onRequest } = useFetch()
+
+  const toggleOpenModalDelete = () => setIsModalDeleteOpenOpen((prev) => !prev)
+
+  const fetchStoreProfileSettings = async () => {
+    await onRequest({
+      request: () => userService.getUserInformation(),
+      onSuccess: (data) => {
+        setUser(data)
+      },
+    })
+  }
+  async function fetchAddressDefault() {
+    await onRequest({
+      request: () => addressService.listAddresses(),
+      onSuccess: (data) => setAddresses(data),
+    })
+  }
+
+  useEffect(() => {
+    fetchStoreProfileSettings()
+    fetchAddressDefault()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (loading) {
+    return <Loading />
+  }
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-3">
+    <div className="mt-8 flex w-full flex-col justify-center gap-2 md:mt-[5vh]">
       <div className="flex h-24 w-full flex-col items-center justify-start rounded-xl bg-gradient-to-r from-primary to-primary/85">
         <ProfileImagePlaceholder className="relative bottom-10 z-0 w-20 rounded-full border-4 border-white" />
         <h1 className="relative bottom-5 z-0 text-2xl font-semibold leading-4 text-white">
-          Olá, Usuário
+          Olá, {user.name}
         </h1>
       </div>
-      <div className="mt-2 flex w-full gap-5">
-        <ContainerStatus
-          containerIcon={<IconShoppingBag size={30} className="text-primary" />}
-          content="1"
-          title="pedidos feitos"
-        />
-        <ContainerStatus
-          containerIcon={<IconMoneybag size={30} className="text-primary" />}
-          content="R$ 10,00"
-          title="economizados"
-        />
-      </div>
-      <div className="mt-2 hidden w-full rounded-md bg-gray-50 lg:block">
-        <DefaultAddress />
-      </div>
-      <div className="flex w-full flex-col gap-2">
-        <BasicUserInfo label="Nome" data="Nome do usuário" />
-        <div className="lg:flex lg:gap-2">
-          <BasicUserInfo label="Celular" data="(xx) xxxxx-xxxx" />
-          <BasicUserInfo label="E-mail" data="e-mail@email.com" />
+      {defaultAddress ? (
+        <ul className="mt-2 w-full rounded-md bg-secondary lg:block">
+          <RadioGroup>
+            <AddressCard
+              address={defaultAddress}
+              isSelected={defaultAddress?.isStantard}
+              toggleOpenModalDefault={() => {}}
+            />
+          </RadioGroup>
+        </ul>
+      ) : (
+        <div className="my-3 w-full rounded-lg bg-secondary p-2 py-4 text-center">
+          <p className="text-base font-semibold text-primary md:text-xl">
+            Você ainda não possue endereço padrão!
+          </p>
+          <p className="mt-2">
+            Adicione um endereço para melhorar a sua experiência{" "}
+          </p>
         </div>
-        {/* Esse link leva para a rota de alterar os dados do usuário. */}
-        {/* por algum motivo colocaram um hidden aqui no lg, não sei como acessaria essa tela no desktop */}
-        <Link to="/alterar-dados" className="l mt-7 flex items-center">
-          <span className="mr-2">Alterar dados</span>
-          <IconCaretRightFilled size={15} />
-        </Link>
+      )}
+      <div className="flex w-full flex-col gap-2">
+        <BasicUserInfo label="Nome" data={user.name} />
+        <div className="lg:flex lg:gap-2">
+          <BasicUserInfo label="Contato" data={user.phone} />
+          <BasicUserInfo label="E-mail" data={user.email} />
+        </div>
       </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <DeleteAccountModal />
-        <Button className="my-5 flex w-[50%] rounded-full bg-primary p-5 text-lg lg:flex">
-          <Link to="/">Atualizar</Link>
+      <div className="mt-5 flex flex-col justify-end gap-2 sm:flex-row">
+        <Button className="order-1 md:order-2">
+          <Link to="/alterar-dados">Alterar dados</Link>
+        </Button>
+        <Button
+          onClick={() => setIsModalDeleteOpenOpen(true)}
+          variant={"outline"}
+          className="order-2 md:order-1"
+        >
+          Excluir conta
         </Button>
       </div>
+      <DeleteAccountModal
+        toggleOpenModal={toggleOpenModalDelete}
+        isModalOpen={isModalDeleteOpen}
+      />
     </div>
   )
 }

@@ -88,6 +88,7 @@ export default {
         "max-dashboard": "calc(100vh - 5rem)",
         "max-orders-sheet": "calc(100vh - 26rem)",
         "max-orders-sheet-lg": "calc(100vh - 27rem)",
+        "max-profile-sheet": "calc(100vh - 5.25rem)",
       },
       screens: {
         custom: "450px",

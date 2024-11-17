@@ -12,9 +12,9 @@ const restaurantStore = create((set) => ({
   fetchRestaurantInfo: async (productId) => {
     set({ isLoading: true, error: null })
     try {
-      const restaurantInfo =
+      const { data } =
         await restaurantService.fetchRestaurantInfoByProductId(productId)
-      set({ restaurantInfo })
+      set({ restaurantInfo: data })
     } catch (error) {
       set({
         error:
@@ -28,9 +28,9 @@ const restaurantStore = create((set) => ({
   fetchRestaurantHours: async (restaurantId) => {
     set({ isLoading: true, error: null })
     try {
-      const restaurantHours =
+      const { data } =
         await restaurantService.fetchRestaurantHoursById(restaurantId)
-      set({ restaurantHours })
+      set({ restaurantHours: data })
     } catch (error) {
       set({
         error: "Não foi possível carregar os horários do restaurante. " + error,
@@ -43,9 +43,9 @@ const restaurantStore = create((set) => ({
   fetchAddress: async (restaurantId) => {
     set({ isLoading: true, error: null })
     try {
-      const restaurantAddress =
+      const { data } =
         await restaurantService.fetchAddressByRestaurantId(restaurantId)
-      set({ restaurantAddress })
+      set({ restaurantAddress: data })
     } catch (error) {
       set({
         error: "Não foi possível carregar o endereço do restaurante. " + error,

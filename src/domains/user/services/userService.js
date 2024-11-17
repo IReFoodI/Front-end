@@ -14,7 +14,6 @@ const BASE_URL = "/api/user"
 async function createUserAccount(data) {
   const axios = createAxiosInstance()
   return await axios.post(BASE_URL, data)
-  // return await axios({ url: "/api/user", method: "POST", data })
 }
 
 async function getUser() {
@@ -38,10 +37,31 @@ async function getUsers() {
   return axios.get("api/user/users")
 }
 
+async function getUserInformation() {
+  const axios = createAxiosInstance(true)
+  const response = await axios.get(`${BASE_URL}`)
+  return response
+}
+
+async function updateUser(data) {
+  const axios = createAxiosInstance(true)
+  const response = await axios.put(`${BASE_URL}`, data)
+  return response
+}
+
+async function deleteAccount() {
+  const axios = createAxiosInstance(true)
+  const response = await axios.delete(`${BASE_URL}`)
+  return response
+}
+
 export const userService = {
   createUserAccount,
   getUser,
   getUserById,
   getUsers,
   getTransactionById,
+  updateUser,
+  getUserInformation,
+  deleteAccount,
 }

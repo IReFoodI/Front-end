@@ -2,12 +2,31 @@ import { createAxiosInstance } from "@/app/utils/createAxiosInstance"
 
 const BASE_URL = "/api/restaurant-hours"
 
-export async function fetchRestaurantHours() {
+// busca o horário do restaurante no dia atual - ou deveria
+async function fetchRestaurantHourTodayById(id) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/${id}`)
+}
+
+// busca o horário de todos os restaurantes
+async function fetchRestaurantHours() {
   const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}/restaurant`)
 }
 
-export async function addRestaurantHours(data) {
+// retorna os horários de um restaurante
+async function getRestaurantAllHoursById(id) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/restaurant-id/${id}`)
+}
+
+// retorna as horas dos restaurantes por dia
+async function fetchRestaurantHoursToday() {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/today`)
+}
+
+async function addRestaurantHours(data) {
   if (data.id) {
     if (data.enabled) {
       const axios = createAxiosInstance(true)
@@ -20,4 +39,18 @@ export async function addRestaurantHours(data) {
     const axios = createAxiosInstance(true)
     return await axios.post(`${BASE_URL}`, data)
   }
+}
+
+async function fetchRestaurantHoursById(restaurantId) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/restaurant-id/${restaurantId}`)
+}
+
+export {
+  addRestaurantHours,
+  fetchRestaurantHours,
+  fetchRestaurantHoursById,
+  fetchRestaurantHoursToday,
+  fetchRestaurantHourTodayById,
+  getRestaurantAllHoursById,
 }

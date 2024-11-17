@@ -17,13 +17,16 @@ import {
   SheetTrigger,
 } from "../ui/sheet"
 import { Cart } from "./Cart/Cart"
-// import { OrderReview } from "./orderReview/OrderReview"
 import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { SearchInput } from "./search/searchInput"
 
 export function Header() {
   const [isActive, setIsActive] = useState(false)
-  const [isProfilePopoverOpen, setIsProfilePopoverOpen] = useState(false)
+  const [isPopoverOpen, setIsPopoverOpen] = useState({
+    profile: false,
+    address: false,
+    cart: false,
+  })
   const { userId, setUserId } = userStore()
   const { fetchCart, clearLocalStorageCart } = useCartStore()
 
@@ -43,7 +46,7 @@ export function Header() {
   useEffect(() => {
     clearLocalStorageCart()
     fetchCart(userId)
-  }, [fetchCart, userId, clearLocalStorageCart])
+  }, [fetchCart, userId, clearLocalStorageCart, isPopoverOpen.cart])
 
   let cartItems = useCartStore((state) => state.cartItems)
 
@@ -56,8 +59,8 @@ export function Header() {
     setIsActive(open)
   }
 
-  function handleProfilePopoverOpen(open) {
-    setIsProfilePopoverOpen(open)
+  function onToggleModals(modal, open) {
+    setIsPopoverOpen((prev) => ({ ...prev, [modal]: open }))
   }
 
   return (
@@ -86,31 +89,48 @@ export function Header() {
             </div>
           </div>
         </section>
-        {/* APLICAR CONDICIONAL PARA MOSTRAR A PARTE ABAIXO DO HEADER DEPENDENDO DA PÁGINA QUE O USUÁRIO ESTIVER. "APLICAR HIDDEN" */}
+
         <section className="order-2 flex w-full flex-1 flex-col items-center justify-center md:flex-row">
           <SearchInput />
-          <AddressModal />
+          <AddressModal
+            open={isPopoverOpen.address}
+            onOpenChange={(open) => onToggleModals("address", open)}
+          />
         </section>
+
         <section className="order-1 flex w-full items-center justify-between gap-2 md:order-last md:w-fit">
           <MenuMobile />
           <Link className="w-24 md:mr-7 md:hidden" to="/">
             <img src={logo} alt="Logo" className="w-full" />
           </Link>
-          <Popover onOpenChange={handleProfilePopoverOpen}>
+          <Popover
+            open={isPopoverOpen.profile}
+            onOpenChange={(open) => onToggleModals("profile", open)}
+          >
             <PopoverTrigger asChild>
               <div
-                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${isProfilePopoverOpen ? "bg-[#ffeae4] text-primary" : " "}`}
+                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${
+                  isPopoverOpen.profile ? "bg-[#ffeae4] text-primary" : ""
+                }`}
               >
                 <IconUser className="w-full text-center" size={30} />
               </div>
             </PopoverTrigger>
 
-            <PopoverContent sideOffset={20}>
-              <ProfileSheet />
+            <PopoverContent
+              sideOffset={20}
+              className="max-h-max-profile-sheet overflow-auto md:w-80"
+            >
+              <ProfileSheet
+                closeModal={() => onToggleModals("profile", false)}
+              />
             </PopoverContent>
           </Popover>
 
-          <Sheet>
+          <Sheet
+            open={isPopoverOpen.cart}
+            onOpenChange={(e) => onToggleModals("cart", e)}
+          >
             <SheetTrigger
               className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
             >
@@ -123,8 +143,11 @@ export function Header() {
               <DialogTitle className="text-lg font-semibold">
                 Carrinho
               </DialogTitle>
-              <SheetDescription />
-              <Cart />
+              <SheetDescription>
+                Os itens do carrinho expiram em <b>10 minutos</b> se a compra
+                não for finalizada.
+              </SheetDescription>
+              <Cart onToggleModals={onToggleModals} />
             </SheetContent>
           </Sheet>
         </section>
