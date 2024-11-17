@@ -30,19 +30,6 @@ export function OrderCard({
   }
   const { onRequest } = useFetch()
 
-  const fetchUserData = async () => {
-    await onRequest({
-      request: () => userService.getUsers(),
-      onSuccess: (data) => {
-        data.forEach((userResult) => {
-          if (userResult.userId == order.userId) {
-            setUserData(userResult)
-          }
-        })
-      },
-    })
-  }
-
   const handleOrderAcceptance = async (status) => {
     await onRequest({
       request: () => restaurantService.updateStatusOrder(order.orderId, status),
@@ -56,8 +43,21 @@ export function OrderCard({
   }
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      await onRequest({
+        request: () => userService.getUsers(),
+        onSuccess: (data) => {
+          data.forEach((userResult) => {
+            if (userResult.userId == order.userId) {
+              setUserData(userResult)
+            }
+          })
+        },
+      })
+    }
+
     fetchUserData()
-  }, [])
+  }, [order.userId])
 
   if (!user) {
     return <Loading />
