@@ -7,7 +7,13 @@ import { restaurantService } from "../../services/restaurantService.js"
 import { AccordionsStructure } from "./components/AccordionsStructure"
 import { TabsStructure } from "./components/TabsStructure"
 
-export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
+export function StoreProfileOrders({
+  setRefreshOrders,
+  refreshOrders,
+  setOrder,
+  orderRef,
+  setUser,
+}) {
   const [orders, setOrders] = useState()
   const [restaurantId, setRestaurantId] = useState()
   const { onRequest, error } = useFetch()
@@ -36,10 +42,13 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
 
   useEffect(() => {
     getRestaurantId()
+  }, [])
+
+  useEffect(() => {
     if (restaurantId) {
       fetchStoreOrders()
     }
-  }, [restaurantId, orders])
+  }, [restaurantId, refreshOrders])
 
   function filterOrders(filter) {
     return orders.filter((order) => order.orderStatus == filter)
@@ -53,7 +62,7 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
     )
   }
   return (
-    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-1/3">
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-2/6">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
           pendingOrders={filterOrders("PENDENTE")}
@@ -61,6 +70,8 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </div>
       <div className="flex flex-col">
@@ -70,6 +81,8 @@ export function StoreProfileOrders({ setOrder, orderRef, setUser }) {
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </div>
     </div>

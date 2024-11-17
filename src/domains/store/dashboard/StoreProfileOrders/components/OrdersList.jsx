@@ -6,6 +6,8 @@ export function OrdersList({
   setOrder,
   orderRef,
   setUser,
+  refreshOrders,
+  setRefreshOrders,
 }) {
   return (
     <div>
@@ -17,6 +19,8 @@ export function OrdersList({
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       ))}
     </div>

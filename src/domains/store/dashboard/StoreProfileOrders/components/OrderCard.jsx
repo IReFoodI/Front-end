@@ -16,9 +16,11 @@ export function OrderCard({
   setOrder,
   orderRef,
   setUser,
+  refreshOrders,
+  setRefreshOrders,
 }) {
   const [user, setUserData] = useState()
-  const status = getStatus(order)
+  const [status, setStatus] = useState(getStatus(order))
   const [totalValue] = useState(order.totalValue)
 
   function onStatusButtonClick() {
@@ -47,6 +49,8 @@ export function OrderCard({
       onSuccess: (data) => {
         setOrder(data)
         setUser(user)
+        setRefreshOrders(!refreshOrders)
+        setStatus(getStatus(data.orderStatus))
       },
     })
   }

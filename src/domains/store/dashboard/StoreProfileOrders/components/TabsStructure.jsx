@@ -15,6 +15,8 @@ export function TabsStructure({
   setOrder,
   orderRef,
   setUser,
+  refreshOrders,
+  setRefreshOrders,
 }) {
   const [isTabActive, setIsTabActive] = useState({
     pending: true,
@@ -59,6 +61,8 @@ export function TabsStructure({
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </TabsContent>
       <TabsContent
@@ -71,6 +75,8 @@ export function TabsStructure({
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
+          refreshOrders={refreshOrders}
+          setRefreshOrders={setRefreshOrders}
         />
       </TabsContent>
     </Tabs>

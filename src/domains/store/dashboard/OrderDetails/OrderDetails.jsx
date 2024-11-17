@@ -22,6 +22,7 @@ export function OrderDetails() {
   const [orderStatus, setOrderStatus] = useState()
   const [user, setUser] = useState()
   const [transaction, setTransaction] = useState()
+  const [refreshOrders, setRefreshOrders] = useState(false)
   const targetOrderRef = useRef(null)
   const { onRequest } = useFetch()
 
@@ -38,6 +39,7 @@ export function OrderDetails() {
         ),
       onSuccess: () => {
         setOrderStatus(getStatus(OrderStatus.CANCELADO))
+        setRefreshOrders(!refreshOrders)
       },
     })
   }
@@ -67,6 +69,8 @@ export function OrderDetails() {
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
       <StoreProfileOrders
+        refreshOrders={refreshOrders}
+        setRefreshOrders={setRefreshOrders}
         setOrder={setCurrentOrder}
         orderRef={targetOrderRef}
         setUser={setUser}
