@@ -8,7 +8,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { imageService } from "@/app/service/imageService"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
 import { productSchema } from "@/domains/store/models/ProductTypes"
-import { productService } from "@/domains/store/services/useProdutcList"
+import { productService } from "@/domains/store/services/productListService"
 import imageBroke from "@/ui/assets/image-broke.png"
 import {
   AlertDialogCancel,

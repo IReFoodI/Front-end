@@ -1,6 +1,6 @@
 import { useFetch } from "@/app/hooks/useFetch"
 import { imageService } from "@/app/service/imageService"
-import { productService } from "@/domains/store/services/useProdutcList"
+import { productService } from "@/domains/store/services/productListService"
 import {
   AlertDialog,
   AlertDialogCancel,
