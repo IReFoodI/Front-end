@@ -31,7 +31,7 @@ export function CardReview({ avatar, name, rating, date, reviewText }) {
     >
       <div id="profile-img" className="flex w-1/5 items-start">
         <img
-          className="h-20 w-20 rounded-full object-cover"
+          className="rounded-full object-cover"
           src={avatar}
           alt={`${name} avatar`}
         />

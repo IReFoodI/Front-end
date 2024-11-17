@@ -3,8 +3,9 @@ import {
   IconShoppingCart,
   IconSquareX,
 } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import {
   Card,
   CardContent,
@@ -13,17 +14,38 @@ import {
   CardTitle,
 } from "@/ui/components/ui/card"
 
-import { ChartCard } from "./ChartCard"
+import { restaurantService } from "../services/restaurantService"
+import { FinanceChartCard } from "./FinanceChartCard"
 import { SelectMonth } from "./SelectMonth"
 import { SelectYear } from "./SelectYear"
 
 export function FinancePage() {
+  const { onRequest, error } = useFetch()
+  const [orders, setOrders] = useState([])
   const [selectedMonth, setSelectedMonth] = useState(
     new Date().getMonth().toString()
   )
   const [selectedYear, setSelectedYear] = useState(
     new Date().getFullYear().toString()
   )
+
+  async function fetchRestaurantOrders() {
+    await onRequest({
+      request: () => restaurantService.getRestaurantOrders(1),
+      onSuccess: (data) => {
+        if (error) {
+          setOrders([])
+        } else {
+          setOrders(data)
+        }
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchRestaurantOrders()
+  })
+
   return (
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
@@ -119,7 +141,7 @@ export function FinancePage() {
           <Card className="col-span-12 sm:col-span-6 lg:col-span-8">
             <CardContent className="ps-1">
               <p className="p-4 text-xl font-semibold">Overview</p>
-              <ChartCard />
+              <FinanceChartCard orders={orders} />
             </CardContent>
           </Card>
           <div className="col-span-12 flex flex-col gap-5 text-xl font-semibold sm:col-span-6 lg:col-span-4">

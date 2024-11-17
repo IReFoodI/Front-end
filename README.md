@@ -1,97 +1,132 @@
-## Refood - Front-end
+<div align="center" style="margin-top:20px; margin-bottom:20px;">
 
-## Tecnologias
+<img src="./github/images/logo.png" width="120px" /><br />
 
-- Vite
-- Tailwind
-- Prettier-tailwind - Plugin para organizar as classes do tailwind
-- Zod - Validação
-- Axios - Requisição
-- React-hook-form - Formulário
-- Zustand - Variavel global (tipo context)
-- Icones - (react icons - phospor icons - lucide)
-- Toast message - (react toastify - sonner)
-- React-number-format - Mascara de input
-- Framer Motion - Animação
-- Swiper js - Slide
-- Chart Js - Grafico
-- Faker Js - Dados fakes
+</div>
 
-## Requisitos Funcionais
+<!-- omit in toc -->
+## Índice
 
-| Nº   | Descrição                                                                                      | Prioridade | Status  |
-|------|------------------------------------------------------------------------------------------------|------------|---------|
-| RF01 | Cadastrar alimentos (vinculado ao fornecedor) com as seguintes informações: Validade, Quantidade, Preço, Nome, Categoria, Foto | Alta       | Proposto |
-| RF02 | Atualização e exclusão de alimentos cadastrados                                                 | Alta       | Proposto |
-| RF03 | Notificações de alimentos próximos da data de validade                                          | Alta       | Proposto |
-| RF04 | Sugestão de receitas baseadas nos ingredientes disponíveis                                      | Baixa      | Proposto |
-| RF05 | Criação e gerenciamento de listas de compras (consumidor final e estabelecimentos)              | Alta       | Proposto |
-| RF06 | Histórico de compras                                                                            | Médio      | Proposto |
-| RF07 | Listagem de Produtos                                                                            | Alto       | Proposto |
-| RF08 | Registro de Consumidor/Estabelecimento/Fornecedor: Nome, Senha, Email, CNPJ, Endereço, Contato  | Alto       | Proposto |
-| RF09 | Integração de API de pagamento (cartão, pix) (stripe)                                           | Alto       | Proposto |
-| RF10 | Pesquisa e filtro de alimentos por categoria, preço e data de validade                          | Alto       | Proposto |
-| RF11 | Sistema de recomendação de produtos com base nas compras anteriores dos usuários                | Baixo      | Proposto |
-| RF12 | Avaliação e comentários de usuários sobre os alimentos                                          | Médio      | Proposto |
-| RF13 | Relatórios de vendas e estoques para fornecedores                                               | Alto       | Proposto |
-| RF14 | Opção de doação de alimentos próximos da data de validade para instituições de caridade         | Baixo      | Proposto |
-| RF15 | Suporte ao cliente via chat ou email                                                            | Baixo      | Proposto |
-| RF16 | Exportação de dados financeiros para formatos CSV e PDF                                         | Baixo      | Proposto |
-| RF17 | Log (criação, alteração, compra...)                                                             | -          | Proposto |
+- [📌Sobre](#sobre)
+- [👨‍💻Integrantes](#integrantes)
+- [🚀Tecnologias utilizadas](#tecnologias-utilizadas)
+- [Funcionalidades](#funcionalidades)
+- [🎨Cores](#cores)
+- [💻O projeto pode ser vizualizado acessando o seguinte link](#o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link)
+- [👀Exemplo](#exemplo)
+- [Como executar o projeto](#como-executar-o-projeto)
+- [Arquitetura do projeto](#arquitetura-do-projeto)
 
-## Requisitos não funcionais
+<div id="sobre">
 
-| Nº    | Descrição                                                                                                  | Prioridade | Status  |
-|-------|------------------------------------------------------------------------------------------------------------|------------|---------|
-| RNF01 | A aplicação deve ser intuitiva e fácil de usar                                                              | Alta       | Proposto |
-| RNF02 | A aplicação deve ter um tempo de resposta rápido (menos de 2 segundos para operações principais)            | Alta       | Proposto |
-| RNF03 | O sistema deve ser capaz de suportar múltiplos usuários simultâneos sem degradação de performance            | Alta       | Proposto |
-| RNF04 | A aplicação deve ser segura e proteger as informações dos usuários                                          | Alta       | Proposto |
-| RNF05 | O sistema deve ser compatível com os principais navegadores web (Chrome, Firefox, Safari, Edge)             | Média      | Proposto |
-| RNF06 | A aplicação deve estar disponível 99,9% do tempo                                                            | Alta       | Proposto |
-| RNF07 | O design deve ser responsivo, adaptando-se a diferentes resoluções de tela                                  | Alta       | Proposto |
-| RNF08 | A aplicação deve ser modular para permitir futuras expansões e manutenção                                   | Média      | Proposto |
-| RNF09 | O sistema deve fornecer logs de erros detalhados para depuração                                             | Média      | Proposto |
-| RNF10 | A aplicação deve seguir as diretrizes de acessibilidade, tornando-se utilizável para pessoas com deficiências | Média      | Proposto |
-| RNF11 | O dashboard financeiro deve ser atualizado em tempo real                                                    | Alta       | Proposto |
+## 📌Sobre
 
-## Sugestões de telas
+**Refood** é uma plataforma onde estabelecimentos comerciais podem vender produtos próximos da data de validade a preços mais acessíveis, permitindo que consumidores adquiram esses itens e contribuam para a redução do desperdício de alimentos.
 
-| Nº   | Descrição                                   | Prioridade | Status  |
-|------|---------------------------------------------|------------|---------|
-| T01  | Pg. Inicial                                 | Feito      | Proposto |
-| T02  | Cadastro (Infos Básicas) > Tipo de Cadastro > Infos Específicas | Feito      |           |
-| T03  | Login                                       | Feito      |           |
-| T04  | Logout                                      |            |           |
-| T05  | Termos de Uso e Condições                   |            |           |
-| T06  | FAQ                                         | Precisa de dados |        |
+</div>
 
-## Usuário / Estabelecimento
+<div id="integrantes">
 
-| Nº   | Descrição                                      | Prioridade | Status  |
-|------|------------------------------------------------|------------|---------|
-|   | Lista de Produtos (Cardápio) / Filtros         |            |         |
-|   | Lista de estabelecimentos / Filtros            |            |         |
-|   | Histórico de Compras                           |            |         |
-|   | Perfil > Dados                                 |            |         |
-|   | Endereço (para pesquisa de locais próximos)    |            |         |
-|   | Formas de Pagamento                            |            |         |
-|   | Favoritos                                      |            |         |
-|   | Página de Produto (Produto Específico)         |            |         |
-|   | Carrinho de Compras                            |            |         |
+## 👨‍💻Integrantes
 
-## Fornecedor / Estabelecimento
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/115363966?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Caio Martins](https://github.com/CaioMMendes) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93887208?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Felipe Fracasso](https://github.com/FelipeM-F) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/150201828?s=96&v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Leonardo Boeira](https://github.com/leomaciel14) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/131506431?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Marina Barbosa](https://github.com/marina-barbosa) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/89655285?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Ricardo Muenchen](https://github.com/RicardoDM23) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/63266170?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Samilis Brito](https://github.com/SamilisBrito) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102476639?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Thasyo Peres](https://github.com/Thasyo) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/102565778?v=4" width=80 style='display:flex; justify-content:center; align-items:center; text-decoration:none;' ><br>Yasmin Carlôto](https://github.com/Yasmin-Carloto) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 
-| Nº   | Descrição                                               | Prioridade | Status  |
-|------|---------------------------------------------------------|------------|---------|
-|   | Relatórios de venda e estoque (RF13)                    |            |         |
-|   | Registro de alimentos                                   |            |         |
-|   | Dash de Produtos para manutenção (Cardápio)             |            |         |
-|   | Dash de Pedidos Recebidos > Informações do Pedido       |            |         |
-|   | Ajuda                                                   |            |         |
-|   | Configurações da Loja                                   |            |         |
+</div>
 
-## Estrutura de pastas
+</div>
+
+<div id="tecnologias">
+
+## 🚀Tecnologias utilizadas
+
+<!-- omit in toc -->
+### O projeto foi desenvolvido utilizando as seguintes tecnologias
+
+- [Vite](https://vite.dev/)
+- [Tailwind](https://tailwindcss.com/)
+- [Shadcn/ui](https://ui.shadcn.com/)
+- [Radix](https://www.radix-ui.com/)
+- [Zod](<https://zod.dev/>)
+- [Axios](<https://axios-http.com/ptbr/docs/intro>)
+- [React-hook-form](<https://react-hook-form.com/>)
+- [Zustand](<https://zustand.docs.pmnd.rs/getting-started/introduction>)
+- [Tabler Icons](<https://tablericons.com/>)
+- [Sonner](https://sonner.emilkowal.ski/)
+- [React number format](<https://s-yadav.github.io/react-number-format/docs/intro/>)
+- [Framer Motion](https://motion.dev/)
+- [recharts](<https://recharts.org/>)
+- [Date-fns](https://date-fns.org/)
+
+</div>
+
+<div id="funcionalidades">
+
+## Funcionalidades
+
+escrever as funcionalidades
+
+</div>
+
+<div id="cores">
+
+## 🎨Cores
+
+| Cor                  | Hex                                                                                      |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| Background           | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Foreground           | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Card                 | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Card Foreground      | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Popover              | ![#ffffff](https://readme-swatches.vercel.app/ffffff?size=10) #ffffff                    |
+| Popover Foreground   | ![#0b0908](https://readme-swatches.vercel.app/0b0908?size=10) #0b0908                    |
+| Primary              | ![#f97215](https://readme-swatches.vercel.app/f97215?size=10) #f97215                    |
+| Primary Foreground   | ![#f9f9f8](https://readme-swatches.vercel.app/f9f9f8?size=10) #f9f9f8                    |
+| Secondary            | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Secondary Foreground | ![#1b1917](https://readme-swatches.vercel.app/1b1917?size=10) #1b1917                    |
+| Muted                | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Muted Foreground     | ![#78706b](https://readme-swatches.vercel.app/78706b?size=10) #78706b                    |
+| Accent               | ![#f5f5f4](https://readme-swatches.vercel.app/f5f5f4?size=10) #f5f5f4                    |
+| Accent Foreground    | ![#1b1917](https://readme-swatches.vercel.app/1b1917?size=10) #1b1917                    |
+| Destructive          | ![#ee4444](https://readme-swatches.vercel.app/ee4444?size=10) #ee4444                    |
+| Destructive Foreground | ![#f9f9f8](https://readme-swatches.vercel.app/f9f9f8?size=10) #f9f9f8                |
+| Border               | ![#e7e4e3](https://readme-swatches.vercel.app/e7e4e3?size=10) #e7e4e3                    |
+| Input                | ![#e7e4e3](https://readme-swatches.vercel.app/e7e4e3?size=10) #e7e4e3                    |
+| Ring                 | ![#f97215](https://readme-swatches.vercel.app/f97215?size=10) #f97215                    |
+| Chart 1              | ![#e76e4f](https://readme-swatches.vercel.app/e76e4f?size=10) #e76e4f                    |
+| Chart 2              | ![#299d8f](https://readme-swatches.vercel.app/299d8f?size=10) #299d8f                    |
+| Chart 3              | ![#264753](https://readme-swatches.vercel.app/264753?size=10) #264753                    |
+| Chart 4              | ![#e8c468](https://readme-swatches.vercel.app/e8c468?size=10) #e8c468                    |
+| Chart 5              | ![#f4a361](https://readme-swatches.vercel.app/f4a361?size=10) #f4a361                    |
+
+</div>
+
+<div id="linkdeploy">
+
+## 💻O projeto pode ser vizualizado acessando o seguinte link
+
+<https://refoodproject.vercel.app/>
+
+</div>
+
+<div id="exemplo">
+
+## 👀Exemplo
+
+<img  title="Gif projeto mobile" src="./github/gif.gif" height="800" width="360"  />
+</div>
+
+<div id="comoexecutar">
+
+## Como executar o projeto
+
+Escrever como executar localmente
+
+</div>
+
+## Arquitetura do projeto
+
+Talvez falar sobre a arquitetura
 
 ```plaintext
 src/

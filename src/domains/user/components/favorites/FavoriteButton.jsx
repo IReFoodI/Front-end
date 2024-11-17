@@ -2,18 +2,19 @@ import { IconHeart, IconHeartFilled } from "@tabler/icons-react"
 
 import { Button } from "@/ui/components/ui/button/button"
 
-export function FavoriteButton({ isFavorited, onToggle, className, ...props }) {
+export function FavoriteButton({ isFavorited, onToggle, ...props }) {
   return (
     <Button
       variant="ghost"
-      className={`p-0 md:p-2 ${className}`}
-      onClick={onToggle}
+      onClick={() => {
+        onToggle()
+      }}
       {...props}
     >
       {isFavorited ? (
-        <IconHeartFilled className="h-6 w-6 text-[hsl(var(--primary))]" />
+        <IconHeartFilled className="size-6 text-[hsl(var(--primary))] sm:size-8" />
       ) : (
-        <IconHeart className="h-6 w-6 text-gray-400" />
+        <IconHeart className="size-6 text-[hsl(var(--primary))] sm:size-8" />
       )}
     </Button>
   )

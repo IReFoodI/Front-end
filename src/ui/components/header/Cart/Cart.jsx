@@ -1,15 +1,28 @@
 import { IconTrash } from "@tabler/icons-react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
+import { useProductsStore } from "@/app/store/useProducts"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
 import useCartStore from "../../../../app/store/useCartStore"
 import { Button } from "../../ui/button/button"
-import { SheetHeader, SheetTitle } from "../../ui/sheet"
+import { SheetClose, SheetHeader, SheetTitle } from "../../ui/sheet"
 
-export function Cart() {
-  const { cartItems, subtotal, clearCart, restaurantName, removeItemFromCart } =
+export function Cart({ onToggleModals }) {
+  const navigate = useNavigate()
+  const { cartItems, subtotal, clearCart, restaurantInfo, removeItemFromCart } =
     useCartStore()
+  const { fetchProducts } = useProductsStore()
+
+  const onClearCart = async () => {
+    await clearCart()
+    await fetchProducts()
+  }
+
+  const onRemoveFromCart = async (id) => {
+    await removeItemFromCart(id)
+    await fetchProducts()
+  }
 
   return (
     <div className="mt-4 flex flex-col gap-6 text-gray-600">
@@ -25,15 +38,22 @@ export function Cart() {
                 Seu pedido em
               </SheetTitle>
 
-              <button onClick={clearCart}>Limpar</button>
+              <button onClick={onClearCart}>Limpar</button>
             </div>
 
             <SheetHeader className="flex flex-col">
               <div className="flex items-center justify-between rounded-md bg-secondary px-2 py-2 text-sm font-bold lg:text-lg">
-                <p className="font-semibold">{restaurantName}</p>
-                <Link to="/">
-                  <p className="font-normal">Ver cardápio</p>
-                </Link>
+                <p className="font-semibold">{restaurantInfo.fantasy}</p>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    onToggleModals("cart", false)
+                    navigate(`/loja/${restaurantInfo.restaurantId}`)
+                  }}
+                  className="font-normal"
+                >
+                  Ver cardápio
+                </Button>
               </div>
             </SheetHeader>
 
@@ -53,18 +73,22 @@ export function Cart() {
                   </div>
                   <IconTrash
                     className="cursor-pointer"
-                    onClick={() => removeItemFromCart(item.productId)}
+                    onClick={() => onRemoveFromCart(item.productId)}
                   />
                 </div>
               ))}
             </div>
 
-            <Link
-              to="/"
+            <Button
+              variant={"ghost"}
+              onClick={() => {
+                onToggleModals("cart", false)
+                navigate(`/loja/${restaurantInfo.restaurantId}`)
+              }}
               className="text-center text-sm font-semibold text-gray-400 lg:text-lg"
             >
               Adicionar mais itens
-            </Link>
+            </Button>
           </SheetHeader>
 
           <div className="flex flex-col">
@@ -73,11 +97,13 @@ export function Cart() {
                 <p>Subtotal</p>
                 <span>{currencyFormatter(subtotal)}</span>
               </div>
-              <Link to="/finalizar-pedido" className="w-full">
-                <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
-                  Pagar agora
-                </Button>
-              </Link>
+              <SheetClose asChild>
+                <Link to="/finalizar-pedido" className="w-full">
+                  <Button className="w-full rounded-full border-gray-400 lg:p-5 lg:text-xl">
+                    Pagar agora
+                  </Button>
+                </Link>
+              </SheetClose>
             </div>
           </div>
         </>

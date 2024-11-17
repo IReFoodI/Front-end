@@ -49,7 +49,6 @@ export function SignIn() {
   }
 
   function handleSuccess(data) {
-    console.log("sucesso", data)
     if (
       pathname == "/autenticar/negocios" ||
       pathname == "/autenticar/negocios"
@@ -92,7 +91,7 @@ export function SignIn() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-2 text-left"
+          className="grid gap-4 text-left"
         >
           <FormField
             id="email"
@@ -106,6 +105,7 @@ export function SignIn() {
                     type="email"
                     placeholder="Email"
                     className={"!mt-1"}
+                    autoComplete="username"
                     {...field}
                   />
                 </FormControl>

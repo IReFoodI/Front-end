@@ -20,7 +20,6 @@ export function RecoverPasswordPage() {
   const location = useLocation()
   const pathname = location?.pathname
   const isBusiness = pathname === "/autenticar/negocios/recuperar-senha"
-  console.log(pathname)
   const form = useForm({
     resolver: zodResolver(recoverPasswordTypes),
     defaultValues: {

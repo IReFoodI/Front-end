@@ -6,7 +6,7 @@ const useCartStore = create((set) => ({
   cartItems: [],
   subtotal: 0,
   cartId: null,
-  restaurantName: null,
+  restaurantInfo: null,
 
   fetchCart: async (userId) => {
     if (!userId) {
@@ -14,22 +14,23 @@ const useCartStore = create((set) => ({
     }
     try {
       const cartItems = await cartService.fetchCart(userId)
+
       const subtotal = cartItems.reduce(
         (acc, item) => acc + item.unitValue * item.quantity,
         0
       )
 
-      let restaurantName = ""
+      let restaurantInfo = ""
       let cartId = null
 
       if (cartItems.length > 0) {
         const productId = cartItems[0].productId
-        restaurantName =
+        restaurantInfo =
           await cartService.fetchRestaurantNameByProductId(productId)
         cartId = cartItems[0].cartId
       }
 
-      set({ cartItems, subtotal, restaurantName, cartId })
+      set({ cartItems, subtotal, restaurantInfo, cartId })
     } catch (error) {
       if (error.status === 404) {
         console.log("Carrinho vazio")
@@ -45,7 +46,6 @@ const useCartStore = create((set) => ({
       if (!cartId) {
         return
       }
-      console.log("Limpando carrinho no db")
       await cartService.clearCart(cartId)
       set({ cartItems: [], subtotal: 0, cartId: null })
     } catch (error) {
@@ -54,7 +54,6 @@ const useCartStore = create((set) => ({
   },
 
   clearLocalStorageCart: () => {
-    console.log("Limpando carrinho local")
     set({ cartItems: [], subtotal: 0, cartId: null })
   },
 
@@ -66,16 +65,11 @@ const useCartStore = create((set) => ({
     }
 
     try {
-      await cartService.removeItemFromCart(cartId, productId)
+      await cartService.removeAllItemFromCart(cartId, productId)
 
-      const updatedItems = cartItems
-        .map((item) => {
-          if (item.productId === productId) {
-            return { ...item, quantity: item.quantity - 1 }
-          }
-          return item
-        })
-        .filter((item) => item.quantity > 0)
+      const updatedItems = cartItems.filter(
+        (item) => item.productId != productId
+      )
 
       const newSubtotal = updatedItems.reduce(
         (acc, item) => acc + item.unitValue * item.quantity,
