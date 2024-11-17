@@ -1,6 +1,7 @@
 import { IconTrash } from "@tabler/icons-react"
 import { Link, useNavigate } from "react-router-dom"
 
+import { useProductsStore } from "@/app/store/useProducts"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
 import useCartStore from "../../../../app/store/useCartStore"
@@ -11,6 +12,17 @@ export function Cart({ onToggleModals }) {
   const navigate = useNavigate()
   const { cartItems, subtotal, clearCart, restaurantInfo, removeItemFromCart } =
     useCartStore()
+  const { fetchProducts } = useProductsStore()
+
+  const onClearCart = async () => {
+    await clearCart()
+    await fetchProducts()
+  }
+
+  const onRemoveFromCart = async (id) => {
+    await removeItemFromCart(id)
+    await fetchProducts()
+  }
 
   return (
     <div className="mt-4 flex flex-col gap-6 text-gray-600">
@@ -26,7 +38,7 @@ export function Cart({ onToggleModals }) {
                 Seu pedido em
               </SheetTitle>
 
-              <button onClick={clearCart}>Limpar</button>
+              <button onClick={onClearCart}>Limpar</button>
             </div>
 
             <SheetHeader className="flex flex-col">
@@ -61,7 +73,7 @@ export function Cart({ onToggleModals }) {
                   </div>
                   <IconTrash
                     className="cursor-pointer"
-                    onClick={() => removeItemFromCart(item.productId)}
+                    onClick={() => onRemoveFromCart(item.productId)}
                   />
                 </div>
               ))}

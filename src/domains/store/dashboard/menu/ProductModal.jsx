@@ -40,7 +40,7 @@ export function ProductModal({
   const [imageName, setImageName] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const [active, setActive] = useState(selectedProduct?.active ?? false)
-  const { onRequest } = useFetch()
+  const { onRequest, loading: loadingAdd } = useFetch()
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState(null)
@@ -421,7 +421,7 @@ export function ProductModal({
                   <Button
                     type="submit"
                     className="!ml-0 !mr-0 md:px-6"
-                    disabled={loading}
+                    disabled={loadingAdd}
                   >
                     {loading ? "Carregando..." : "Confirmar"}
                   </Button>

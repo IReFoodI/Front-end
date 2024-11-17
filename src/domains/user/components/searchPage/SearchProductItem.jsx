@@ -31,11 +31,10 @@ export const SearchProductItem = memo(
     },
     onAddItem,
   }) => {
+    const navigate = useNavigate()
     const { userId } = userStore()
     const { fetchCart, restaurantInfo } = useCartStore()
     const [amountAdded, setAmountAdded] = useState(1)
-    const [newQuantity] = useState(quantity)
-    const navigate = useNavigate()
     const { pathname } = useLocation()
 
     const handleIncreaseProductQuantity = () => {
@@ -84,7 +83,7 @@ export const SearchProductItem = memo(
           <div className="relative h-full w-24 rounded-lg md:rounded-[1.25rem]">
             <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
               <IconShoppingBag size={13} />
-              <p className="text-[0.625rem] md:text-[0.8rem]">{newQuantity}</p>
+              <p className="text-[0.625rem] md:text-[0.8rem]">{quantity}</p>
               <p className="text-[0.625rem] md:text-[0.8rem]">disponíveis</p>
             </Badge>
             <div className="flex h-full items-center justify-center">

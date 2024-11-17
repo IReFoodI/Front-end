@@ -3,11 +3,11 @@ import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 // const BASE_URL = "/api/restaurant"
 
 const restaurantService = {
-  async fetchRestaurantProductsByRestaurantId(id, sort) {
+  async fetchRestaurantProductsByRestaurantId(id, sort, page) {
     const axiosInstance = createAxiosInstance(true)
     try {
       return await axiosInstance.get(
-        `/api/product/sorted?restaurantId=${id}&sort=${sort}`
+        `/api/product/sorted?restaurantId=${id}&sort=${sort}&page=${page}`
       )
     } catch (error) {
       console.error("Erro ao buscar informações do restaurante:", error)

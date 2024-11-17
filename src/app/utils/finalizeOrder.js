@@ -58,8 +58,6 @@ export const finalizeOrder = async ({ navigate }) => {
         orderId: orderId,
       }
 
-      console.log(transactionData)
-
       const transactionResponse =
         await userOrderService.createTransaction(transactionData)
 

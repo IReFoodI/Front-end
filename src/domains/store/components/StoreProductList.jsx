@@ -15,59 +15,40 @@ import {
 
 import { SearchProductItem } from "@/domains/user/components/searchPage/SearchProductItem"
 import { Button } from "@/ui/components/ui/button/button"
+import { useProductsStore } from "@/app/store/useProducts"
 
 export function StoreProductList() {
   const { storeId } = useParams()
   const navigate = useNavigate()
-  // const [localProducts, setLocalProducts] = useState()
-  const [currentPage, setCurrentPage] = useState(0)
+  const {
+    filter,
+    products,
+    currentPage,
+    fetchProducts,
+    setStoreId,
+    setFilter,
+    setCurrentPage,
+  } = useProductsStore()
   const currentPageFromUrl =
     parseInt(new URLSearchParams(location.search).get("page")) || 0
-  const [filter, setFilter] = useState("expiry_asc")
-  const { data: products, onRequest, loading } = useFetch()
 
-  const fetchProducts = useCallback(() => {
+  useEffect(() => {
+    setStoreId(storeId)
+  }, [storeId])
+
+  const onFetchProduct = useCallback(() => {
     setCurrentPage(currentPageFromUrl)
-    if (storeId)
-      onRequest({
-        request: () =>
-          restaurantService.fetchRestaurantProductsByRestaurantId(
-            storeId,
-            filter
-          ),
-      })
+    fetchProducts()
   }, [storeId, currentPageFromUrl, filter])
-
-  // const handleUpdate = useCallback(
-  //   (productId, newStatus) => {
-  //     fetchProducts()
-  //     setLocalProducts((prevProducts) => 
-  //       prevProducts.map((product) =>
-  //         product.productId === productId
-  //           ? { ...product, active: newStatus }
-  //           : product
-  //       )
-  //     )
-  //   },
-  //   [fetchProducts]
-  // )
 
   useEffect(() => {
     fetchProducts()
   }, [storeId, filter, currentPageFromUrl])
 
-  // useEffect(() => {
-  //   if (products?.products) {
-  //     setLocalProducts(products.products)
-  //   }
-  // }, [products])
-
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage)
     navigate(`?page=${newPage}`)
   }
-
-  // if (loading) return <Loading />
 
   return (
     <section className="mt-5 flex flex-col gap-5 xl:mt-0">
@@ -95,7 +76,7 @@ export function StoreProductList() {
             <SearchProductItem
               key={product?.productId}
               product={product}
-              onAddItem={fetchProducts}
+              onAddItem={onFetchProduct}
             />
           )
         })}
@@ -117,8 +98,8 @@ export function StoreProductList() {
         </Button>
       </div>
       <div className="text-xs">
-        Exibindo <strong>{currentPage + 1}</strong> de{" "}
-        <strong>{products?.totalPages}</strong> produtos
+        Exibindo <strong>{products?.currentPage || 0 + 1}</strong> de{" "}
+        <strong>{products?.totalPages || 0}</strong> páginas
       </div>
     </section>
   )

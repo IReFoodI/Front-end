@@ -10,17 +10,17 @@ import { Loading } from "@/ui/components/ui/loading"
 import { useRestaurant } from "../hooks/useRestaurant"
 import { StoreHourDayOfWeek } from "./StoreHourDayOffWeek"
 
-export const DAY_OF_WEEK_TODAY = {
-  MONDAY: "Segunda-feira",
-  TUESDAY: "Terça-feira",
-  WEDNESDAY: "Quarta-feira",
-  THURSDAY: "Quinta-feira",
-  FRIDAY: "Sexta-feira",
-  SATURDAY: "Sábado",
-  SUNDAY: "Domingo",
-}
-
 export function StoreInformationInfo() {
+  const DAY_OF_WEEK_TODAY = {
+    MONDAY: "Segunda-feira",
+    TUESDAY: "Terça-feira",
+    WEDNESDAY: "Quarta-feira",
+    THURSDAY: "Quinta-feira",
+    FRIDAY: "Sexta-feira",
+    SATURDAY: "Sábado",
+    SUNDAY: "Domingo",
+  }
+
   const {
     loadingRestaurant,
     restaurantData,
