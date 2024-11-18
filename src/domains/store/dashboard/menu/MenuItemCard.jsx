@@ -1,5 +1,5 @@
-import { IconDots } from "@tabler/icons-react"
-import { IconPhotoOff } from "@tabler/icons-react"
+/* eslint-disable react-hooks/exhaustive-deps */
+import { IconDots, IconPhotoOff } from "@tabler/icons-react"
 import { memo, useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -51,7 +51,7 @@ export const MenuItemCard = memo(function MenuItemCard({
   }
 
   const handleStatusChange = (checked) => {
-    if (checked && expirationDate < new Date()) {
+    if (checked && verifyExperationDate()) {
       toast.error(`${nameProd} está vencido!`)
       return
     }
@@ -70,12 +70,22 @@ export const MenuItemCard = memo(function MenuItemCard({
   }
 
   useEffect(() => {
-    if (expirationDate && expirationDate < new Date()) {
-      setActive(false)
-      onStatusChange(product.productId, false)
-      toast.error(`${nameProd} está vencido!`)
+    if (verifyExperationDate()) {
+      if (initialStatus) {
+        setActive(false)
+        onStatusChange(product.productId, false)
+      }
     }
   }, [expirationDate, nameProd, onStatusChange, product.productId])
+
+  function verifyExperationDate() {
+    const currentDate = new Date()
+    const expirationDateObj = new Date(expirationDate)
+    expirationDateObj.setHours(0, 0, 0, 0)
+    return (
+      expirationDateObj && expirationDateObj < currentDate.setHours(0, 0, 0, 0)
+    )
+  }
 
   const disabledClass = active ? "" : "opacity-50"
 
@@ -122,7 +132,7 @@ export const MenuItemCard = memo(function MenuItemCard({
       </TableCell>
       <TableCell className={`pointer-events-none hidden md:table-cell`}>
         <DatePickerSingle
-          className="hidden"
+          classCustom={`${verifyExperationDate() && "border-red-500 border-2"}`}
           value={expirationDate}
           onChange={setExpirationDate}
         />

@@ -1,10 +1,7 @@
 /* eslint-disable */
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { useFetch } from "@/app/hooks/useFetch"
-import restaurantService from "@/app/service/restaurantService"
-import { Loading } from "@/ui/components/ui/loading"
 import {
   Select,
   SelectContent,
@@ -13,9 +10,9 @@ import {
   SelectValue,
 } from "@/ui/components/ui/select"
 
+import { useProductsStore } from "@/app/store/useProducts"
 import { SearchProductItem } from "@/domains/user/components/searchPage/SearchProductItem"
 import { Button } from "@/ui/components/ui/button/button"
-import { useProductsStore } from "@/app/store/useProducts"
 
 export function StoreProductList() {
   const { storeId } = useParams()
@@ -34,6 +31,7 @@ export function StoreProductList() {
 
   useEffect(() => {
     setStoreId(storeId)
+    handlePageChange(0)
   }, [storeId])
 
   const onFetchProduct = useCallback(() => {

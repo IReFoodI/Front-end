@@ -43,7 +43,7 @@ export function OrderReview() {
         </div>
 
         <Link
-          to="/"
+          to={`/loja/${cart?.restaurantInfo?.restaurantId}`}
           className="text-center text-sm font-semibold text-gray-400 lg:text-lg"
         >
           Adicionar mais itens

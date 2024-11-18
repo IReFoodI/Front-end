@@ -30,7 +30,7 @@ export function FinanceChartCard({ orders }) {
       total: getMonthlyOrdersTotal(0),
     },
     {
-      name: "Feb",
+      name: "Fev",
       total: getMonthlyOrdersTotal(1),
     },
     {
@@ -38,11 +38,11 @@ export function FinanceChartCard({ orders }) {
       total: getMonthlyOrdersTotal(2),
     },
     {
-      name: "Apr",
+      name: "Abr",
       total: getMonthlyOrdersTotal(3),
     },
     {
-      name: "May",
+      name: "Mai",
       total: getMonthlyOrdersTotal(4),
     },
     {
@@ -54,15 +54,15 @@ export function FinanceChartCard({ orders }) {
       total: getMonthlyOrdersTotal(6),
     },
     {
-      name: "Aug",
+      name: "Ago",
       total: getMonthlyOrdersTotal(7),
     },
     {
-      name: "Sep",
+      name: "Set",
       total: getMonthlyOrdersTotal(8),
     },
     {
-      name: "Oct",
+      name: "Out",
       total: getMonthlyOrdersTotal(9),
     },
     {
@@ -70,7 +70,7 @@ export function FinanceChartCard({ orders }) {
       total: getMonthlyOrdersTotal(10),
     },
     {
-      name: "Dec",
+      name: "Dez",
       total: getMonthlyOrdersTotal(11),
     },
   ]
@@ -90,7 +90,7 @@ export function FinanceChartCard({ orders }) {
           axisLine={false}
           stroke="#888888"
           fontSize={12}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => `R$${value}`}
         />
         <Bar dataKey={"total"} radius={[4, 4, 0, 0]} />
       </BarGraph>

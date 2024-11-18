@@ -16,10 +16,6 @@ const OrderHistory = () => {
     fetchOrders(userId)
   }, [userId, fetchOrders])
 
-  // useEffect(() => {
-  //   console.log(orderHistory)
-  // })
-
   return (
     <div className="flex w-full flex-col items-start px-8">
       <div className="flex w-full flex-col">

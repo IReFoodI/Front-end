@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IconXboxXFilled } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -15,7 +15,9 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
+  DialogTitle,
   DialogTrigger,
 } from "@/ui/components/ui/dialog"
 import {
@@ -51,7 +53,11 @@ export function ProductModal({
 
   const form = useForm({
     resolver: zodResolver(productSchema),
-    defaultValues: {
+    defaultValues: {},
+  })
+
+  useEffect(() => {
+    form.reset({
       nameProd: selectedProduct?.nameProd || "",
       categoryProduct: selectedProduct?.categoryProduct || "",
       descriptionProd: selectedProduct?.descriptionProd || "",
@@ -67,8 +73,13 @@ export function ProductModal({
       sellPrice: selectedProduct?.sellPrice
         ? String(selectedProduct.sellPrice)
         : "0",
-    },
-  })
+    })
+
+    setActive(selectedProduct?.active)
+
+    seturlImgProd(selectedProduct?.urlImgProd)
+  }, [form, selectedProduct])
+
   function handleCloseModal() {
     setIsModalOpen(false)
     setSelectedProduct(null)
@@ -213,16 +224,27 @@ export function ProductModal({
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={(e) => {
+        if (!e) {
+          return handleCloseModal()
+        }
+        setIsModalOpen(e)
+      }}
+    >
       <DialogTrigger asChild>
         <Button size="sm" className="m-0 !mt-0 items-center gap-1 text-lg">
           <span className="m-0 text-base">+ Adicionar produto</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="rounded-lg! overflow-hidden">
-        <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
+        <DialogTitle>
           {selectedProduct === null ? "Adicionar Produto" : "Editar Produto"}
-        </h1>
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          Criar ou editar um produto.
+        </DialogDescription>
         <div className="flex w-full flex-col items-center">
           <div
             className={`relative my-2 aspect-square w-1/3 border-2 ${

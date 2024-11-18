@@ -119,7 +119,7 @@ export function ChangeEmailForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail</FormLabel>
+                <FormLabel>Novo e-mail</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -139,7 +139,7 @@ export function ChangeEmailForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirmar E-mail</FormLabel>
+                <FormLabel>Confirmar novo e-mail</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -153,10 +153,11 @@ export function ChangeEmailForm() {
             )}
           />
         </div>
-
-        <Button type="submit" className="w-full">
-          Trocar email
-        </Button>
+        <footer className="mt-2 flex w-full justify-end">
+          <Button type="submit" className="px-6">
+            Trocar email
+          </Button>
+        </footer>
       </form>
     </Form>
   )

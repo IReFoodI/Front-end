@@ -29,14 +29,14 @@ export function SidebarDashboard() {
             <IconToolsKitchen2 className="size-6 md:size-10" />
             <p className="text-xs md:text-sm">Cardápio</p>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={"/dashboard/financas"}
             className={`flex w-16 select-none flex-col items-center justify-center rounded-lg p-3 transition-all duration-300 ease-in-out hover:bg-primary md:w-20 [&.active]:bg-primary`}
             variant="ghost"
           >
             <IconCurrencyDollar className="size-6 md:size-10" />
             <p className="text-xs md:text-sm">Finanças</p>
-          </NavLink>
+          </NavLink> */}
         </div>
         <div className="flex flex-row gap-1.5 md:gap-3 lg:flex-col">
           <DashboardConfigMenu />

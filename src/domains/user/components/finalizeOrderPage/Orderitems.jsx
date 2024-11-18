@@ -9,7 +9,8 @@ import useCartStore from "../../../../app/store/useCartStore"
 const Orderitems = () => {
   const [showAllItems, setShowAllItems] = useState(false)
 
-  const { cartItems, subtotal, removeItemFromCart } = useCartStore()
+  const { cartItems, subtotal, removeItemFromCart, restaurantInfo } =
+    useCartStore()
 
   const toggleShowAllItems = () => {
     setShowAllItems((prevState) => !prevState)
@@ -58,7 +59,7 @@ const Orderitems = () => {
       )}
       {/* ADD MAIS ITEMS */}
       <Link
-        to="/"
+        to={`/loja/${restaurantInfo?.restaurantId}`}
         className="text-center text-sm font-semibold text-gray-400 lg:text-lg"
       >
         Adicionar mais itens
