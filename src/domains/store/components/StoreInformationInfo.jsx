@@ -5,22 +5,14 @@ import {
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 
+import { DAY_OF_WEEK_EN_TO_PT } from "@/app/utils/daysOfWeekENToPT"
+import { DAYS_OF_WEEK_ORDER } from "@/app/utils/daysOfWeekOrder"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { useRestaurant } from "../hooks/useRestaurant"
 import { StoreHourDayOfWeek } from "./StoreHourDayOffWeek"
 
 export function StoreInformationInfo() {
-  const DAY_OF_WEEK_TODAY = {
-    MONDAY: "Segunda-feira",
-    TUESDAY: "Terça-feira",
-    WEDNESDAY: "Quarta-feira",
-    THURSDAY: "Quinta-feira",
-    FRIDAY: "Sexta-feira",
-    SATURDAY: "Sábado",
-    SUNDAY: "Domingo",
-  }
-
   const {
     loadingRestaurant,
     restaurantData,
@@ -105,16 +97,25 @@ export function StoreInformationInfo() {
               <div
                 className={`overflow-hidden pb-2 text-sm transition-all duration-1000 ${isShowing ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
               >
-                {restaurantAllHoursData?.map((day, index) =>
-                  index !== todayIndex ? (
-                    <div key={index} className="flex justify-between">
-                      <span>{DAY_OF_WEEK_TODAY[day.dayOfWeek]}</span>
-                      <span>
-                        {day.openingTime}h - {day.closingTime}h
-                      </span>
-                    </div>
-                  ) : null
-                )}
+                {restaurantAllHoursData
+                  ?.sort(
+                    (a, b) =>
+                      DAYS_OF_WEEK_ORDER[a.dayOfWeek] -
+                      DAYS_OF_WEEK_ORDER[b.dayOfWeek]
+                  )
+                  ?.map((day, index) => {
+                    if (index !== todayIndex) {
+                      return (
+                        <div key={index} className="flex justify-between">
+                          <span>{DAY_OF_WEEK_EN_TO_PT[day.dayOfWeek]}</span>
+                          <span>
+                            {day?.openingTime}h - {day?.closingTime}h
+                          </span>
+                        </div>
+                      )
+                    }
+                    return null
+                  })}
               </div>
             </div>
           </div>

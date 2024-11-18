@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
+import { DAY_OF_WEEK_EN_TO_PT } from "@/app/utils/daysOfWeekENToPT"
+import { DAYS_OF_WEEK_ORDER } from "@/app/utils/daysOfWeekOrder"
 import userStore from "@/domains/user/stores/userStore"
 import {
   Card,
@@ -95,6 +97,8 @@ export function StoreProfilePage() {
     //eslint-disable-next-line
   }, [])
 
+  console.log(restaurantHours)
+
   return (
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
@@ -178,34 +182,21 @@ export function StoreProfilePage() {
               </CardHeader>
               {restaurantHours.length > 0 ? (
                 <CardContent className="flex flex-col gap-6 text-sm text-gray-500">
-                  <span className="flex justify-between">
-                    <p>Segunda-feira</p>{" "}
-                    <p>{`${restaurantHours[0].openingTime} às ${restaurantHours[0].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Terça-feira</p>
-                    <p>{`${restaurantHours[1].openingTime} às ${restaurantHours[1].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Quarta-feira</p>
-                    <p>{`${restaurantHours[2].openingTime} às ${restaurantHours[2].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Quinta-feira</p>
-                    <p>{`${restaurantHours[3].openingTime} às ${restaurantHours[3].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Sexta-feira</p>
-                    <p>{`${restaurantHours[4].openingTime} às ${restaurantHours[4].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Sábado</p>
-                    <p>{`${restaurantHours[5].openingTime} às ${restaurantHours[5].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Domingo</p>
-                    <p>{`${restaurantHours[6].openingTime} às ${restaurantHours[6].closingTime}`}</p>
-                  </span>
+                  {restaurantHours
+                    ?.sort(
+                      (a, b) =>
+                        DAYS_OF_WEEK_ORDER[a.dayOfWeek] -
+                        DAYS_OF_WEEK_ORDER[b.dayOfWeek]
+                    )
+                    ?.map((item) => (
+                      <span
+                        key={item.dayOfWeek}
+                        className="flex justify-between"
+                      >
+                        <p>{DAY_OF_WEEK_EN_TO_PT[item.dayOfWeek]}</p>{" "}
+                        <p>{`${item?.openingTime || "-"} às ${item?.closingTime || "-"}  `}</p>
+                      </span>
+                    ))}
                 </CardContent>
               ) : (
                 <p className="m-6 text-lg text-orange-500">
