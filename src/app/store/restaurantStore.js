@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import restaurantService from "@/app/service/restaurantService"
+import { restaurantServiceMarina } from "@/app/service/restaurantServiceMarina"
 
 const restaurantStore = create((set) => ({
   restaurantInfo: null,
@@ -13,7 +13,7 @@ const restaurantStore = create((set) => ({
     set({ isLoading: true, error: null })
     try {
       const { data } =
-        await restaurantService.fetchRestaurantInfoByProductId(productId)
+        await restaurantServiceMarina.fetchRestaurantInfoByProductId(productId)
       set({ restaurantInfo: data })
     } catch (error) {
       set({
@@ -29,7 +29,7 @@ const restaurantStore = create((set) => ({
     set({ isLoading: true, error: null })
     try {
       const { data } =
-        await restaurantService.fetchRestaurantHoursById(restaurantId)
+        await restaurantServiceMarina.fetchRestaurantHoursById(restaurantId)
       set({ restaurantHours: data })
     } catch (error) {
       set({
@@ -44,7 +44,7 @@ const restaurantStore = create((set) => ({
     set({ isLoading: true, error: null })
     try {
       const { data } =
-        await restaurantService.fetchAddressByRestaurantId(restaurantId)
+        await restaurantServiceMarina.fetchAddressByRestaurantId(restaurantId)
       set({ restaurantAddress: data })
     } catch (error) {
       set({
