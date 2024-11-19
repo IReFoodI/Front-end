@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom"
 
 import useCartStore from "../../../app/store/useCartStore"
 import { userService } from "../../../domains/user/services/userService"
-import userStore from "../../../domains/user/stores/userStore"
+import useUserStore from "../../../domains/user/stores/useUserStore"
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
@@ -26,7 +26,7 @@ export function Header() {
     address: false,
     cart: false,
   })
-  const { userId, setUserId } = userStore()
+  const { userId, setUserId } = useUserStore()
   const { fetchCart, clearLocalStorageCart } = useCartStore()
   const { pathname } = useLocation()
 

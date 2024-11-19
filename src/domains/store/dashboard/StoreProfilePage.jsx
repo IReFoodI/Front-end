@@ -10,7 +10,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import { DAY_OF_WEEK_EN_TO_PT } from "@/app/utils/daysOfWeekENToPT"
 import { DAYS_OF_WEEK_ORDER } from "@/app/utils/daysOfWeekOrder"
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import {
   Card,
   CardContent,
@@ -24,7 +24,7 @@ import { FinanceChartCard } from "./FinanceChartCard"
 
 export function StoreProfilePage() {
   const { onRequest, error } = useFetch()
-  const { user } = userStore()
+  const { user } = useUserStore()
   const [activeProducts, setActiveProducts] = useState([])
   const [orders, setOrders] = useState([])
   const [ordersForCurrentMonth, setordersForCurrentMonth] = useState([])
@@ -64,6 +64,7 @@ export function StoreProfilePage() {
             setMonthlyTotal(total)
           }
         },
+        showError: false,
       })
     }
 
@@ -96,8 +97,6 @@ export function StoreProfilePage() {
     fetchActiveProducts()
     //eslint-disable-next-line
   }, [])
-
-  console.log(restaurantHours)
 
   return (
     <div className="flex-grow p-4">

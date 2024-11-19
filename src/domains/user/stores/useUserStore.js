@@ -2,7 +2,7 @@ import { create } from "zustand"
 
 import { localStorageUtil } from "../../../app/utils/localStorageUtil"
 
-const userStore = create()((set) => ({
+const useUserStore = create((set) => ({
   user: null,
   userId: null,
   isUserLoading: true,
@@ -26,4 +26,4 @@ const userStore = create()((set) => ({
   },
 }))
 
-export default userStore
+export default useUserStore

@@ -19,7 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/ui/components/ui/avatar"
 import { Button } from "@/ui/components/ui/button/button"
 import { Textarea } from "@/ui/components/ui/textarea"
 
-import userStore from "../stores/userStore"
+import useUserStore from "../stores/useUserStore"
 
 export function ReviewModal({ reviewStars }) {
   const [reviewText, setReviewText] = useState("")
@@ -27,7 +27,7 @@ export function ReviewModal({ reviewStars }) {
   const [hover, setHover] = useState(0)
   const tempStars = useRef(null)
   const maxLengthReview = 300
-  const { userId } = userStore()
+  const { userId } = useUserStore()
   const { restaurantInfo } = restaurantStore() //restaurantInfo.restaurantId
 
   function handleUpdateReviewText(e) {

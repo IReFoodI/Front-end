@@ -13,10 +13,10 @@ import { AddressCard } from "../../../../ui/components/AddressCard"
 import { addressService } from "../../services/addressService"
 import { userService } from "../../services/userService"
 import { userAddressStore } from "../../stores/userAddressStore"
-import userStore from "../../stores/userStore"
+import useUserStore from "../../stores/useUserStore"
 
 export function MydataPage() {
-  const { user, setUser } = userStore()
+  const { user, setUser } = useUserStore()
   const { defaultAddress, setAddresses } = userAddressStore()
   const [isModalDeleteOpen, setIsModalDeleteOpenOpen] = useState(false)
   const { loading, onRequest } = useFetch()
