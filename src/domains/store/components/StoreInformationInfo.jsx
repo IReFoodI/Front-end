@@ -135,7 +135,7 @@ export function StoreInformationInfo() {
                   title="Google Maps"
                   width="100%"
                   height="100%"
-                  style={{ border: 0 }}
+                  className="rounded-xl border-0"
                   src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
                   allowFullScreen
                 ></iframe>

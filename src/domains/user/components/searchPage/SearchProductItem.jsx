@@ -14,7 +14,7 @@ import { Card } from "@/ui/components/ui/card"
 import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import Default_Product_Image from "../../../../ui/assets/image-broke.png"
-import userStore from "../../stores/userStore"
+import useUserStore from "../../stores/useUserStore"
 
 export const SearchProductItem = memo(
   ({
@@ -32,7 +32,7 @@ export const SearchProductItem = memo(
     onAddItem,
   }) => {
     const navigate = useNavigate()
-    const { userId } = userStore()
+    const { userId } = useUserStore()
     const { fetchCart, restaurantInfo } = useCartStore()
     const [amountAdded, setAmountAdded] = useState(1)
     const { pathname } = useLocation()
@@ -69,7 +69,6 @@ export const SearchProductItem = memo(
           navigate(`/loja/${restaurantInfo.restaurantId}`)
         toast.success("Item adicionado com sucesso!")
       } catch (error) {
-        console.log(error)
         toast.error(
           error.response.data.error ||
             "Não foi possível adicionar item no carrinho!"
@@ -78,9 +77,9 @@ export const SearchProductItem = memo(
     }
 
     return (
-      <Card className="flex flex-col items-center justify-start gap-4 border-none bg-gray-100 p-3">
-        <div className="flex w-full flex-1 items-start gap-6 md:gap-6">
-          <div className="relative h-full w-24 rounded-lg md:rounded-[1.25rem]">
+      <Card className="flex flex-col items-center justify-start gap-4 border-none bg-secondary p-3 hover:bg-primary/5">
+        <div className="grid w-full flex-1 grid-cols-6 items-start gap-6 md:gap-6">
+          <div className="relative col-span-2 h-full w-24 rounded-lg md:rounded-[1.25rem]">
             <Badge className="absolute left-1/2 top-0 flex w-fit -translate-x-1/2 -translate-y-1/2 gap-0.5 px-0.5 py-0.5 font-semibold hover:bg-primary">
               <IconShoppingBag size={13} />
               <p className="text-[0.625rem] md:text-[0.8rem]">{quantity}</p>
@@ -90,7 +89,7 @@ export const SearchProductItem = memo(
               <img
                 src={urlImgProduct ? urlImgProduct : Default_Product_Image}
                 alt={nameProduct}
-                className="h-24 w-24 rounded-md bg-cover bg-center"
+                className="h-24 w-24 rounded-md bg-cover bg-center object-cover"
                 onError={(e) => {
                   e.target.onerror = null
                   e.target.src = Default_Product_Image
@@ -98,14 +97,14 @@ export const SearchProductItem = memo(
               />
             </div>
           </div>
-          <div className="flex flex-1 flex-col">
+          <div className="col-span-4 flex flex-1 flex-col">
             <h3 className="text-lg font-semibold">{nameProduct}</h3>
 
             {/* Talvez colocar um truncate para não passar de um determinado número de linhas na descrição */}
-            <p className="truncate text-xs text-gray-500 lg:text-sm">
+            <p className="truncate text-ellipsis text-xs text-gray-500 lg:text-sm">
               {restaurantName}
             </p>
-            <p className="text-xs font-medium text-gray-400 lg:text-sm">
+            <p className="line-clamp-2 truncate text-ellipsis whitespace-normal break-words text-xs text-gray-400 lg:text-sm">
               {descriptionProduct}
             </p>
             <div>
@@ -126,7 +125,6 @@ export const SearchProductItem = memo(
               <div className="flex items-center justify-center gap-2 md:ml-2">
                 <Button
                   onClick={handleDecreaseProductQuantity}
-                  variant="ghost"
                   className="px-2"
                 >
                   <MinusIcon />
@@ -136,7 +134,6 @@ export const SearchProductItem = memo(
                 </p>
                 <Button
                   onClick={handleIncreaseProductQuantity}
-                  variant="ghost"
                   className="px-2"
                 >
                   <PlusIcon />
