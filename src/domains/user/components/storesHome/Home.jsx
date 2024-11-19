@@ -2,6 +2,7 @@ import { IconMoodSad } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
 
 import { useStores } from "@/domains/user/components/storesHome/StoresData"
+import { NotFound } from "@/ui/components/NotFound"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { BannerCarousel } from "./BannerCarousel"
@@ -52,21 +53,25 @@ export function Home() {
       <div className="my-6">
         <BannerCarousel />
       </div>
+      <h1 className="mt-10 w-full pb-6 text-2xl font-semibold">
+        Lojas disponíveis hoje
+      </h1>
 
       {/* Mostrar Loading enquanto carregando */}
       {loading && !hasLoadedOnce ? (
         <Loading />
       ) : stores.length === 0 && hasLoadedOnce ? (
-        <div className="flex h-full w-full items-center justify-center">
-          {mostrarDiv && (
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <IconMoodSad className="h-12 w-12 text-muted-foreground" />
-              <h1 className="text-lg font-bold text-muted-foreground">
-                Infelizmente não encontramos nenhuma loja aberta na sua região
-              </h1>
-            </div>
-          )}
-        </div>
+        mostrarDiv && (
+          <NotFound
+            Icon={IconMoodSad}
+            title={
+              "Infelizmente não encontramos nenhuma loja aberta na sua região"
+            }
+            description={
+              "Não fique triste, em breve teremos lojas na sua região"
+            }
+          />
+        )
       ) : (
         <StoresGrid
           stores={stores}

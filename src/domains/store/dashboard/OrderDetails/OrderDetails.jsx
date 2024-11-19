@@ -1,7 +1,7 @@
 import {
   IconClockHour5,
   IconCurrencyDollar,
-  IconPhone,
+  IconSoup,
   IconTruck,
 } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
@@ -10,7 +10,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { dateFormatter } from "@/app/utils/dateFormatter"
 import { getStatus } from "@/app/utils/OrderUtils"
 import { userService } from "@/domains/user/services/userService"
-import { Button } from "@/ui/components/ui/button/button"
+import { NotFound } from "@/ui/components/NotFound"
 
 import { OrderStatus } from "../../models/OrderStatusOptions"
 import { restaurantService } from "../../services/restaurantService"
@@ -20,7 +20,7 @@ import { OrderItemsTable } from "./components/OrderItemsTable"
 export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
-  const [user, setUser] = useState()
+  const [setUser] = useState()
   const [transaction, setTransaction] = useState()
   const [refreshOrders, setRefreshOrders] = useState(false)
   const targetOrderRef = useRef(null)
@@ -96,14 +96,14 @@ export function OrderDetails() {
                   </div>
                 </div>
               </div>
-
+              {/* 
               <div className="flex items-center gap-4 font-semibold">
                 <h1 className="text-2xl lg:text-4xl">{user.name}</h1>
                 <Button className="gap-1 rounded-2xl text-xs">
                   <IconPhone size={24} />
                   Entrar em contato
                 </Button>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex flex-col gap-4">
@@ -162,9 +162,13 @@ export function OrderDetails() {
         </div>
       ) : (
         <div className="flex h-full w-full items-center justify-center text-center">
-          <p className="m-12 text-xl font-semibold text-orange-500">
-            Selecione um pedido para saber mais detalhes sobre ele!
-          </p>
+          <NotFound
+            Icon={IconSoup}
+            title={"Detalhes de um produto"}
+            description={
+              "Selecione um pedido para saber mais detalhes sobre ele!"
+            }
+          />
         </div>
       )}
     </div>
