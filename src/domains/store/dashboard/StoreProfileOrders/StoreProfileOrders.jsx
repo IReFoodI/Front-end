@@ -37,6 +37,7 @@ export function StoreProfileOrders({
           setOrders([])
         }
       },
+      showError: false,
     })
   }
 
@@ -48,6 +49,7 @@ export function StoreProfileOrders({
     if (restaurantId) {
       fetchStoreOrders()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantId, refreshOrders])
 
   function filterOrders(filter) {
