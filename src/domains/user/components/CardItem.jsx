@@ -26,6 +26,7 @@ function renderStars(rating) {
   }
   return stars
 }
+
 export function CardItem({ data }) {
   const orderDate = new Date(data.orderDate)
   const [review, setReview] = useState(null)
@@ -42,12 +43,6 @@ export function CardItem({ data }) {
     fetchReview()
   }, [data.orderId])
 
-  useEffect(() => {
-    if (review) {
-      return
-    }
-  }, [review])
-
   const formattedDate = orderDate.toLocaleDateString("pt-BR", {
     weekday: "short",
     day: "2-digit",
@@ -57,19 +52,26 @@ export function CardItem({ data }) {
 
   const formattedOrderId = String(data.orderId).padStart(4, "0")
 
-  // Formatar os itens do pedido
-  const formattedOrderItems = data.orderItems.map((item) => ({
-    name: item.productName,
-    quantity: item.quantity,
-  }))
+  // Garantir que os itens do pedido sejam válidos
+  const formattedOrderItems =
+    data.orderItems?.map((item) => ({
+      name: item.productName,
+      quantity: item.quantity,
+    })) || []
 
   // Exibir o primeiro item e indicar quantos itens a mais há
-  const mainItem = formattedOrderItems[0]
-  const additionalItemsCount = formattedOrderItems.length - 1
+  const mainItem =
+    formattedOrderItems.length > 0
+      ? formattedOrderItems[0]
+      : { name: "Nenhum item", quantity: 0 }
+  const additionalItemsCount = Math.max(formattedOrderItems.length - 1, 0)
+
   const itemsText =
-    additionalItemsCount > 0
-      ? `${mainItem.quantity}x ${mainItem.name} + ${additionalItemsCount} itens`
-      : `${mainItem.quantity}x ${mainItem.name}`
+    formattedOrderItems.length > 0
+      ? additionalItemsCount > 0
+        ? `${mainItem.quantity}x ${mainItem.name} + ${additionalItemsCount} itens`
+        : `${mainItem.quantity}x ${mainItem.name}`
+      : "Nenhum item no pedido"
 
   return (
     <div className="w-full min-w-[320px] p-3 text-sm font-semibold">

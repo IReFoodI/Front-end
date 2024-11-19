@@ -1,23 +1,22 @@
 import userOrderService from "@/app/service/userOrderService"
-import restaurantStore from "@/app/store/restaurantStore"
 import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
 
-import userStore from "../../domains/user/stores/userStore"
+import useUserStore from "../../domains/user/stores/useUserStore"
 
-export const finalizeOrder = async ({ navigate }) => {
+export const finalizeOrder = async ({ navigate, cartItemsWithRestaurant }) => {
   const { selectedCard } = userCardStore.getState()
   const { cartItems, subtotal } = useCartStore.getState()
-  const { restaurantInfo, restaurantAddress } = restaurantStore.getState()
-  const { userId } = userStore.getState()
+  // const { restaurantInfo, restaurantAddress } = restaurantStore.getState()
+  const { userId } = useUserStore.getState()
 
   if (!selectedCard) {
     alert("Selecione um cartão válido!")
     return
   }
 
-  if (!restaurantAddress || restaurantAddress.length === 0) {
-    alert("Endereço do restaurante não encontrado!")
+  if (!cartItemsWithRestaurant?.restaurant) {
+    alert("Ocorreu um erro ao identidicar o restaurante!")
     return
   }
 
@@ -27,13 +26,13 @@ export const finalizeOrder = async ({ navigate }) => {
 
   const orderData = {
     orderDate: orderDate.toISOString(),
-    orderStatus: "PENDENTE",
     deliveryDate: deliveryDate.toISOString(),
+    orderStatus: "PENDENTE",
     deliveryType: "RETIRADA",
     totalValue: subtotal,
     userId,
-    restaurantId: restaurantInfo.restaurantId,
-    addressId: restaurantAddress[0].addressId,
+    restaurantId: cartItemsWithRestaurant?.restaurant?.restaurantId,
+    addressId: cartItemsWithRestaurant?.restaurant?.address?.addressId,
     reviewId: null,
     transactionId: null,
     orderItems: cartItems.map((item) => ({
@@ -60,9 +59,6 @@ export const finalizeOrder = async ({ navigate }) => {
 
       const transactionResponse =
         await userOrderService.createTransaction(transactionData)
-
-      console.log(transactionResponse.data)
-
       if (transactionResponse.status === 201) {
         await useCartStore.getState().clearCart()
         navigate("/pedidos")

@@ -1,74 +1,27 @@
 import { IconClock } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
-import restaurantStore from "@/app/store/restaurantStore"
-import useCartStore from "@/app/store/useCartStore"
 import userCardStore from "@/app/store/userCardStore"
+import { getEncodedAddress } from "@/app/utils/encodeAddress"
 import { Button } from "@/ui/components/ui/button/button"
 
-import { finalizeOrder } from "../../../../app/utils/finalizeOrder"
 import CardStore from "./CardStore"
 import DeliveryAndPayment from "./DeliveryAndPayment"
 
-export const OrderDetails = () => {
+export const OrderDetails = ({
+  cartItemsWithRestaurant,
+  handleFinalizeOrder,
+}) => {
   const { cards } = userCardStore()
-  const { cartItems } = useCartStore()
   const [pickupTime, setPickupTime] = useState("")
-  const {
-    fetchRestaurantInfo,
-    restaurantInfo,
-    fetchRestaurantHours,
-    restaurantHours,
-    fetchAddress,
-    restaurantAddress,
-  } = restaurantStore()
-  const navigate = useNavigate()
 
   useEffect(() => {
-    const initializeData = async () => {
-      const firstProduct = cartItems[0]
-      if (firstProduct?.productId) {
-        await fetchRestaurantInfo(firstProduct?.productId)
-      }
-    }
-
-    initializeData()
-  }, [fetchRestaurantInfo, cartItems])
-
-  useEffect(() => {
-    if (restaurantInfo) {
-      fetchRestaurantHours(restaurantInfo?.restaurantId)
-      fetchAddress(restaurantInfo?.restaurantId)
-    }
-  }, [restaurantInfo, fetchRestaurantHours, fetchAddress])
-
-  useEffect(() => {
-    if (restaurantHours) {
-      const today = new Date()
-      const dayOfWeek = today
-        .toLocaleDateString("en-US", { weekday: "long" })
-        .toUpperCase()
-      const todayHours = restaurantHours?.find(
-        (hour) => hour?.dayOfWeek === dayOfWeek
-      )
-
-      setPickupTime(
-        todayHours
-          ? `Hoje, ${todayHours?.openingTime} - ${todayHours?.closingTime}`
-          : "Restaurante fechado hoje"
-      )
-    }
-  }, [restaurantHours])
-
-  const restaurantAddressStandard = restaurantAddress
-    ? restaurantAddress?.find((address) => address?.isStandard)
-    : {}
-  const encodedAddress = encodeURIComponent(
-    `${restaurantAddressStandard?.street || ""}, ${restaurantAddressStandard?.number || ""}, ${restaurantAddressStandard?.city || ""}`
-  )
-
-  const handleFinalizeOrder = () => finalizeOrder({ navigate })
+    setPickupTime(
+      cartItemsWithRestaurant?.restaurant?.timesOfTheDay
+        ? `Hoje, ${cartItemsWithRestaurant?.restaurant?.timesOfTheDay?.openingTime} - ${cartItemsWithRestaurant?.restaurant?.timesOfTheDay?.closingTime}`
+        : "Restaurante fechado hoje"
+    )
+  }, [cartItemsWithRestaurant?.restaurant?.timesOfTheDay])
 
   return (
     <div
@@ -77,7 +30,7 @@ export const OrderDetails = () => {
     >
       {/* CARD LOJA */}
       <div>
-        <CardStore restaurantInfo={restaurantInfo} />
+        <CardStore restaurantInfo={cartItemsWithRestaurant?.restaurant} />
       </div>
 
       {/* RETIRADA */}
@@ -105,7 +58,7 @@ export const OrderDetails = () => {
             width="100%"
             height="100%"
             className="rounded-xl border-0"
-            src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
+            src={`https://www.google.com/maps?q=${getEncodedAddress(cartItemsWithRestaurant?.restaurant?.address)}&output=embed`}
             allowFullScreen
           ></iframe>
         </div>

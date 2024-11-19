@@ -6,24 +6,24 @@ import { currencyFormatter } from "@/app/utils/currencyFormatter"
 
 import useCartStore from "../../../../app/store/useCartStore"
 
-const Orderitems = () => {
+const Orderitems = ({ cartItemsWithRestaurant }) => {
   const [showAllItems, setShowAllItems] = useState(false)
-
-  const { cartItems, subtotal, removeItemFromCart, restaurantInfo } =
-    useCartStore()
+  const { cartItems, subtotal, removeItemFromCart } = useCartStore()
 
   const toggleShowAllItems = () => {
     setShowAllItems((prevState) => !prevState)
   }
 
-  const itemsToDisplay = showAllItems ? cartItems : cartItems.slice(0, 2)
+  const itemsToDisplay = showAllItems
+    ? cartItemsWithRestaurant?.items
+    : cartItemsWithRestaurant?.items.slice(0, 2)
 
   return (
     <aside className="mx-auto flex max-w-[400px] flex-1 flex-col items-center gap-4 rounded-md border p-8 shadow-lg lg:gap-6">
       <div className="flex flex-1 flex-col gap-1">
         {/* CARD PRODUTO ITEM */}
         <div className="flex flex-col gap-4">
-          {itemsToDisplay.map((item) => (
+          {itemsToDisplay?.map((item) => (
             <div
               key={item.productId}
               className="flex items-center justify-between rounded-md bg-secondary p-2 text-sm"
@@ -59,7 +59,7 @@ const Orderitems = () => {
       )}
       {/* ADD MAIS ITEMS */}
       <Link
-        to={`/loja/${restaurantInfo?.restaurantId}`}
+        to={`/loja/${cartItemsWithRestaurant?.restaurant?.restaurantId}`}
         className="text-center text-sm font-semibold text-gray-400 lg:text-lg"
       >
         Adicionar mais itens

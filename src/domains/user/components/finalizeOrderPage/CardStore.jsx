@@ -8,29 +8,29 @@ const CardStore = ({ restaurantInfo }) => {
   const { stores, toggleFavorite } = useFavorites()
 
   const store = stores.find(
-    (store) => store.restaurant.restaurantId === restaurantInfo.restaurantId
+    (store) => store.restaurant?.restaurantId === restaurantInfo?.restaurantId
   )
 
   const isFavorited = store ? store.isFavorited : false
 
   const toggleHeart = () => {
-    toggleFavorite(restaurantInfo.restaurantId, store?.favoriteId)
+    toggleFavorite(restaurantInfo?.restaurantId, store?.favoriteId)
   }
 
-  const isNewRestaurant = () => {
-    if (restaurantInfo?.dateCreation) {
-      const creationDate = new Date(restaurantInfo.dateCreation)
-      const today = new Date()
+  // const isNewRestaurant = () => {
+  //   if (restaurantInfo?.dateCreation) {
+  //     const creationDate = new Date(restaurantInfo.dateCreation)
+  //     const today = new Date()
 
-      const diffInTime = today - creationDate
-      const diffInMonths = diffInTime / (1000 * 3600 * 24 * 30)
+  //     const diffInTime = today - creationDate
+  //     const diffInMonths = diffInTime / (1000 * 3600 * 24 * 30)
 
-      return diffInMonths <= 2
-    }
-    return false
-  }
+  //     return diffInMonths <= 2
+  //   }
+  //   return false
+  // }
 
-  const isNew = isNewRestaurant() ? "novo!" : ".."
+  // const isNew = isNewRestaurant() ? "novo!" : ".."
 
   return (
     <div
@@ -55,7 +55,7 @@ const CardStore = ({ restaurantInfo }) => {
             <FavoriteButton isFavorited={isFavorited} onToggle={toggleHeart} />
           </div>
         </div>
-        <span className="font-semibold text-primary">{isNew}</span>
+        {/* <span className="font-semibold text-primary">{isNew}</span> */}
         <div className="flex items-center gap-2 font-semibold">
           <span>
             <IconStarFilled size={15} className="text-primary" />

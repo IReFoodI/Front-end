@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import restaurantService from "../service/restaurantService"
+import { restaurantServiceMarina } from "../service/restaurantServiceMarina"
 
 export const useProductsStore = create((set, get) => ({
   products: [],
@@ -18,7 +18,7 @@ export const useProductsStore = create((set, get) => ({
 
     try {
       const result =
-        await restaurantService.fetchRestaurantProductsByRestaurantId(
+        await restaurantServiceMarina.fetchRestaurantProductsByRestaurantId(
           storeId,
           filter,
           currentPage
