@@ -34,14 +34,16 @@ async function createAddress(data) {
  */
 async function updateAddress(data) {
   const axios = createAxiosInstance(true)
-  return await axios.put(`${BASE_URL}/${data.addressId}`, data)
+  return await axios.put(`${BASE_URL}/${data.addressId}/edit`, data)
 }
-
+async function getAddressRestaurantByRestaurantId(id) {
+  const axios = createAxiosInstance(true)
+  return await axios.get(`${BASE_URL}/restaurant/${id}`)
+}
 async function listAddresses() {
   const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}/user`)
 }
-
 async function getAddressById(id) {
   const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}/me/${id}`)
@@ -66,4 +68,5 @@ export const addressService = {
   deleteAddressById,
   patchAddressById,
   getAddressDefault,
+  getAddressRestaurantByRestaurantId,
 }
