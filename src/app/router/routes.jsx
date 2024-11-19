@@ -127,12 +127,12 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "dashboard",
+        path: "dashboard/",
         children: [
           {
             element: <DashBoardLayout />,
             children: [
-              { index: true, element: <StoreProfilePage /> },
+              { index: true, path: "inicio", element: <StoreProfilePage /> },
               { path: ROUTES.FINANCE, element: <FinancePage /> },
               {
                 path: ROUTES.ALERTSETTINGS,

@@ -6,7 +6,10 @@ export function HeaderDashboard() {
     <header className="sticky bg-slate-900 shadow-md">
       <div className="mx-auto flex flex-col items-center justify-between gap-3 px-8 py-4 text-white md:flex-row">
         <div className="flex w-full items-center justify-start">
-          <Link to="/dashboard" className="flex items-center justify-start">
+          <Link
+            to="/dashboard/inicio"
+            className="flex items-center justify-start"
+          >
             <img
               src={Logo}
               alt="Logo da Loja"
