@@ -64,7 +64,7 @@ export function StoreProfileOrders({
     )
   }
   return (
-    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-2/6">
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:min-w-96">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
           pendingOrders={filterOrders("PENDENTE")}
@@ -78,7 +78,7 @@ export function StoreProfileOrders({
       </div>
       <div className="flex flex-col">
         <AccordionsStructure
-          doneOrders={filterOrders("CONCLUIDO")}
+          doneOrders={filterOrders("CONCLUIDOS")}
           canceledOrders={filterOrders("CANCELADO")}
           setOrder={setOrder}
           orderRef={orderRef}
