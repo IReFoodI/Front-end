@@ -16,6 +16,7 @@ export function StoreCard({
   const [imgError, setImgError] = useState(false)
 
   const {
+    hours = [],
     hour = {},
     isFavorited,
     restaurant: {
@@ -28,9 +29,10 @@ export function StoreCard({
     } = {},
   } = storeData
 
-  const formatBusinessHours = hour
-    ? `${hour.openingTime} às ${hour.closingTime}`
-    : ""
+  const formatBusinessHours =
+    hours?.length > 0
+      ? `${hours[0].openingTime} às ${hours[0].closingTime}`
+      : `${hour.openingTime} às ${hour.closingTime}`
 
   return (
     <Link
