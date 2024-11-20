@@ -74,7 +74,7 @@ export function CardItem({ data }) {
       : "Nenhum item no pedido"
 
   return (
-    <div className="w-full min-w-[320px] p-3 text-sm font-semibold">
+    <div className="flex w-full min-w-[320px] flex-1 flex-col p-3 text-sm font-semibold">
       <p className="py-2">{formattedDate}</p>
       <div className="flex items-center justify-between rounded-t-lg border-b bg-gray-100 p-2 px-4">
         <div className="flex gap-3">
@@ -92,7 +92,7 @@ export function CardItem({ data }) {
           <IconCaretRightFilled />
         </div>
       </div>
-      <div className="border-b bg-gray-100 p-2 px-4">
+      <div className="flex flex-1 flex-col border-b bg-gray-100 p-2 px-4">
         <div className="flex items-center gap-1">
           <span className="text-green-500">
             <IconCheck />
