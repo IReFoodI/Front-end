@@ -30,15 +30,14 @@ export function OrderDetails() {
     return String(text).charAt(0).toUpperCase() + text.slice(1).toLowerCase()
   }
 
-  const cancelOrder = async () => {
+  const handleOrderAcceptance = async (status) => {
     await onRequest({
       request: () =>
-        restaurantService.updateStatusOrder(
-          currentOrder.orderId,
-          OrderStatus.CANCELADO
-        ),
-      onSuccess: () => {
-        setOrderStatus(getStatus(OrderStatus.CANCELADO))
+        restaurantService.updateStatusOrder(currentOrder.orderId, status),
+      onSuccess: (data) => {
+        const updatedOrder = { ...currentOrder, orderStatus: data.orderStatus }
+        setCurrentOrder(updatedOrder)
+        setOrderStatus(getStatus(status))
         setRefreshOrders(!refreshOrders)
       },
     })
@@ -67,7 +66,7 @@ export function OrderDetails() {
   }, [currentOrder])
 
   return (
-    <div className="flex h-full w-full flex-col lg:flex-row">
+    <div className="flex h-full flex-col lg:flex-row">
       <StoreProfileOrders
         refreshOrders={refreshOrders}
         setRefreshOrders={setRefreshOrders}
@@ -79,7 +78,7 @@ export function OrderDetails() {
       {currentOrder !== undefined ? (
         <div
           ref={targetOrderRef}
-          className="m-4 flex flex-col justify-between lg:m-10 lg:mx-32 lg:w-2/3"
+          className="m-4 flex w-full flex-col justify-between lg:m-10 lg:mx-32"
         >
           <div className="flex flex-col justify-center gap-4">
             <div className="flex flex-col gap-3">
@@ -96,14 +95,13 @@ export function OrderDetails() {
                   </div>
                 </div>
               </div>
-              {/* 
               <div className="flex items-center gap-4 font-semibold">
                 <h1 className="text-2xl lg:text-4xl">{user.name}</h1>
-                <Button className="gap-1 rounded-2xl text-xs">
+                {/* <Button className="gap-1 rounded-2xl text-xs">
                   <IconPhone size={24} />
                   Entrar em contato
-                </Button>
-              </div> */}
+                </Button> */}
+              </div>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -149,15 +147,26 @@ export function OrderDetails() {
             </div>
           </div>
 
-          <div className="flex justify-end py-5">
-            {currentOrder.orderStatus !== OrderStatus.CANCELADO && (
-              <button
-                onClick={() => cancelOrder()}
-                className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400"
-              >
-                Cancelar Pedido
-              </button>
-            )}
+          <div className="flex justify-between py-5">
+            {currentOrder.orderStatus !== OrderStatus.CANCELADO &&
+              currentOrder.orderStatus !== OrderStatus.AGUARDANDO_RETIRADA && (
+                <>
+                  <button
+                    onClick={() =>
+                      handleOrderAcceptance(OrderStatus.AGUARDANDO_RETIRADA)
+                    }
+                    className="cursor-pointer text-lg font-semibold text-orange-500 underline hover:text-orange-400"
+                  >
+                    Aguardando Retirada
+                  </button>
+                  <button
+                    onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}
+                    className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400"
+                  >
+                    Cancelar Pedido
+                  </button>
+                </>
+              )}
           </div>
         </div>
       ) : (

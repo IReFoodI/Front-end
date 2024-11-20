@@ -53,7 +53,7 @@ export function TabsStructure({
       </TabsList>
       <TabsContent
         value="pending"
-        className="mt-0 min-h-[300px] flex-grow overflow-y-auto lg:min-h-[400px]"
+        className="mt-0 min-h-[300px] flex-grow lg:min-h-[400px]"
       >
         <OrdersList
           orders={pendingOrders}
@@ -67,7 +67,7 @@ export function TabsStructure({
       </TabsContent>
       <TabsContent
         value="scheduled"
-        className="lg:min-h[400px] mt-0 min-h-[300px] flex-grow overflow-y-auto"
+        className="lg:min-h[400px] mt-0 min-h-[300px] flex-grow"
       >
         <OrdersList
           orders={scheduledOrders}
