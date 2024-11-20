@@ -20,7 +20,7 @@ import { OrderItemsTable } from "./components/OrderItemsTable"
 export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
-  const [setUser] = useState()
+  const [user, setUser] = useState()
   const [transaction, setTransaction] = useState()
   const [refreshOrders, setRefreshOrders] = useState(false)
   const targetOrderRef = useRef(null)

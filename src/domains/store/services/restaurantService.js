@@ -47,6 +47,11 @@ async function updateStatusOrder(orderId, status) {
   return await axios.patch(`/api/order/${orderId}/status?newStatus=${status}`)
 }
 
+async function cancelStatusOrder(orderId) {
+  const axios = createAxiosInstance(true)
+  return await axios.patch(`/api/order/${orderId}/cancel`)
+}
+
 async function getProducts() {
   const axios = createAxiosInstance(true)
   return await axios.get("/api/product")
@@ -69,4 +74,5 @@ export const restaurantService = {
   updateRestaurantPassword,
   getRestaurant,
   getProducts,
+  cancelStatusOrder,
 }

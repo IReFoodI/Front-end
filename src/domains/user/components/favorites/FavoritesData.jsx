@@ -17,10 +17,12 @@ export function useFavorites() {
         onSuccess: (favRes) => {
           const updatedStores = storesData.map((store) => {
             const favorite = favRes.find(
-              (fav) => fav.restaurantId === store.restaurant.restaurantId
+              (fav) =>
+                fav.restaurant.restaurantId === store.restaurant.restaurantId
             )
             return {
               ...store,
+              hour: favorite?.hourDTO ?? null,
               isFavorited: !!favorite,
               favoriteId: favorite ? favorite.favoriteId : null,
             }
@@ -38,10 +40,12 @@ export function useFavorites() {
             ]
             return mergedStores.map((store) => {
               const favorite = favRes.find(
-                (fav) => fav.restaurantId === store.restaurant.restaurantId
+                (fav) =>
+                  fav.restaurant.restaurantId === store.restaurant.restaurantId
               )
               return {
                 ...store,
+                hour: favorite?.hourDTO ?? null,
                 isFavorited: !!favorite,
                 favoriteId: favorite ? favorite.favoriteId : null,
               }

@@ -1,4 +1,4 @@
-import { IconCaretDownFilled } from "@tabler/icons-react"
+import { IconCaretDownFilled, IconMapPinOff } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -6,6 +6,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { addressService } from "@/domains/user/services/addressService"
 import { userAddressStore } from "@/domains/user/stores/userAddressStore"
 
+import { NotFound } from "../../NotFound"
 import { Button } from "../../ui/button/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover"
 
@@ -77,11 +78,13 @@ export function AddressModal({ open, onOpenChange }) {
             </div>
           </div>
         ) : (
-          <div className="my-6 rounded-lg bg-secondary p-2 text-center">
-            <p className="text-base font-semibold text-primary md:text-xl">
-              Você ainda não possue endereço padrão!
-            </p>
-          </div>
+          <NotFound
+            Icon={IconMapPinOff}
+            title={"Você ainda não possue endereço padrão!"}
+            description={
+              "Adicione um endereço para para melhorar a sua experiência"
+            }
+          />
         )}
 
         <Button

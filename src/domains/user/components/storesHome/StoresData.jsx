@@ -17,7 +17,8 @@ export function useStores() {
         onSuccess: (favRes) => {
           const updatedStores = storesData?.map((store) => {
             const favorite = favRes?.find(
-              (fav) => fav.restaurantId === store.restaurant.restaurantId
+              (fav) =>
+                fav.restaurant.restaurantId === store.restaurant.restaurantId
             )
             return {
               ...store,
@@ -38,7 +39,8 @@ export function useStores() {
             ]
             return mergedStores.map((store) => {
               const favorite = favRes.find(
-                (fav) => fav.restaurantId === store.restaurant.restaurantId
+                (fav) =>
+                  fav.restaurant.restaurantId === store.restaurant.restaurantId
               )
               return {
                 ...store,

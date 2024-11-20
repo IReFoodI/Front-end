@@ -58,7 +58,7 @@ export function StoreAddressEdit() {
           addressService.getAddressRestaurantByRestaurantId(user?.restaurantId),
         onSuccess: (data) => {
           if (data && data.length > 0) {
-            reset({ ...data[0] })
+            reset({ ...data[0], type: "RESTAURANT" })
             setAddressId(data[0].addressId)
           } else {
             toast.info("Sem endereço cadastrado")
@@ -272,7 +272,7 @@ export function StoreAddressEdit() {
                   ></iframe>
                 </div>
                 <div className="md:text-right">
-                  <Button type="submit">Salvar Alterações</Button>
+                  <Button type="submit">Salvar Alterações </Button>
                 </div>
               </form>
             </FormProvider>

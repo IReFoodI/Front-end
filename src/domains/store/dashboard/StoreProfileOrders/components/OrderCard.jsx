@@ -41,6 +41,17 @@ export function OrderCard({
       },
     })
   }
+  const handleOrderCancel = async () => {
+    await onRequest({
+      request: () => restaurantService.cancelStatusOrder(order.orderId),
+      onSuccess: (data) => {
+        setOrder(data)
+        setUser(user)
+        setRefreshOrders(!refreshOrders)
+        setStatus(getStatus(data.orderStatus))
+      },
+    })
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -57,6 +68,7 @@ export function OrderCard({
     }
 
     fetchUserData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order.userId])
 
   if (!user) {
@@ -113,7 +125,7 @@ export function OrderCard({
             Aceitar Pedido
           </button>
           <button
-            onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}
+            onClick={() => handleOrderCancel()}
             className="w-1/2 rounded-2xl bg-gray-400 p-1 font-semibold text-white shadow hover:bg-gray-500"
           >
             Recusar Pedido

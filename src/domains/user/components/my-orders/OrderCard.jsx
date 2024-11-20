@@ -1,5 +1,5 @@
 import { IconPaperBag } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
 import background from "@/ui/assets/background.png"
@@ -16,10 +16,10 @@ export function OrderCard({
     restaurantLogo,
     restaurantName,
     totalValue,
+    timesOfTheDay,
   },
 }) {
   const [expandedItems, setExpandedItems] = useState({})
-  const [pickupTime, setPickupTime] = useState("")
   const toggleItemDescription = (index) => {
     setExpandedItems((prev) => ({
       ...prev,
@@ -27,31 +27,15 @@ export function OrderCard({
     }))
   }
 
-  // useEffect(() => {
-  //   if (orderOnGoing.length > 0) {
-  //     fetchRestaurantHours(restaurantId)
-  //     fetchAddress(restaurantId)
-  //     getPickupTime()
-  //   }
-  // }, [orderOnGoing, fetchRestaurantHours, fetchAddress])
+  useEffect
 
-  // TODO: ajustar horário aqui
-  // const getPickupTime = () => {
-  //   if (restaurantHours) {
-  //     const today = new Date()
-  //     const dayOfWeek = today
-  //       .toLocaleDateString("en-US", { weekday: "long" })
-  //       .toUpperCase()
-  //     const todayHours = restaurantHours.find(
-  //       (hour) => hour.dayOfWeek === dayOfWeek
-  //     )
-  //     setPickupTime(
-  //       todayHours
-  //         ? `Hoje, ${todayHours.openingTime} - ${todayHours.closingTime}`
-  //         : "Restaurante fechado hoje"
-  //     )
-  //   }
-  // }
+  const getPickupTime = () => {
+    if (timesOfTheDay) {
+      return timesOfTheDay
+        ? `Hoje, ${timesOfTheDay.openingTime} - ${timesOfTheDay.closingTime}`
+        : "Restaurante fechado hoje"
+    }
+  }
 
   function getEncodedAddress(address) {
     return encodeURIComponent(
@@ -72,7 +56,7 @@ export function OrderCard({
             Previsão para Retirada
           </div>
           <div className="text-2xl font-semibold text-secondary-foreground">
-            {pickupTime}
+            {getPickupTime()}
           </div>
           <div className="mt-1 flex items-center">
             <IconPaperBag />
