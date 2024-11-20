@@ -1,5 +1,6 @@
 import { IconInfoCircle, IconStarFilled } from "@tabler/icons-react"
 
+import { decimalFormatter } from "@/app/utils/decimalFormatter"
 import { useFavorites } from "@/domains/user/components/favorites/FavoritesData"
 
 import { FavoriteButton } from "../favorites/FavoriteButton"
@@ -61,8 +62,8 @@ const CardStore = ({ restaurantInfo }) => {
             <IconStarFilled size={15} className="text-primary" />
           </span>
           <span className="text-sm 2xl:text-base">
-            {restaurantInfo?.averageRating} ({restaurantInfo?.totalEvaluations}{" "}
-            avaliações)
+            {decimalFormatter(restaurantInfo?.averageRating)} (
+            {restaurantInfo?.totalEvaluations} avaliações)
           </span>
           <span className="text-sm text-gray-400 2xl:text-base">
             {restaurantInfo?.category}

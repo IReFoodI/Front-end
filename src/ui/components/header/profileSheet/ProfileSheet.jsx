@@ -4,6 +4,7 @@ import {
   IconKey,
   IconMap,
   IconMoneybag,
+  IconPaperBag,
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
@@ -33,6 +34,11 @@ export function ProfileSheet({ closeModal }) {
       iconForButton: <IconHeart />,
       buttonText: "Favoritos",
       path: "/favoritos",
+    },
+    {
+      iconForButton: <IconPaperBag />,
+      buttonText: "Pedidos",
+      path: "/pedidos",
     },
     {
       iconForButton: <IconMap />,
