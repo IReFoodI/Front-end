@@ -43,6 +43,7 @@ export function StoreProfileOrders({
 
   useEffect(() => {
     getRestaurantId()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
