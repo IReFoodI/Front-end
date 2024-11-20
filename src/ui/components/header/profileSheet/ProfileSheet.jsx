@@ -4,6 +4,7 @@ import {
   IconKey,
   IconMap,
   IconMoneybag,
+  IconPaperBag,
   IconShoppingBag,
   IconUser,
 } from "@tabler/icons-react"
@@ -33,6 +34,11 @@ export function ProfileSheet({ closeModal }) {
       iconForButton: <IconHeart />,
       buttonText: "Favoritos",
       path: "/favoritos",
+    },
+    {
+      iconForButton: <IconPaperBag />,
+      buttonText: "Pedidos",
+      path: "/pedidos",
     },
     {
       iconForButton: <IconMap />,
@@ -70,17 +76,17 @@ export function ProfileSheet({ closeModal }) {
 
         <div className="flex w-full flex-col items-center justify-center">
           <div className="w-full rounded-xl bg-gray-200 p-4 text-center">
-            <h2 className="text-sm font-semibold leading-5">
+            {/* <h2 className="text-sm font-semibold leading-5">
               Você ainda não possuí pedidos em andamento
-            </h2>
+            </h2> */}
             <Link
               to="/"
-              className="text-xs font-semibold text-primary hover:text-orange-400"
+              className="text-base font-semibold text-primary hover:text-orange-400"
             >
-              Que tal fazer um agora?
+              Que tal fazer um pedido?
             </Link>
           </div>
-
+          {/* 
           <div className="m-2 flex w-full justify-between gap-2">
             <ContainerStatus
               containerIcon={
@@ -98,7 +104,7 @@ export function ProfileSheet({ closeModal }) {
               content="R$ 10,00"
               title="economizados"
             />
-          </div>
+          </div> */}
         </div>
 
         <ul className="flex w-full flex-col gap-2">
@@ -119,7 +125,7 @@ export function ProfileSheet({ closeModal }) {
         <div className="flex flex-col gap-2">
           <TermsOfUse
             className={
-              "border-none text-start text-sm outline-none focus:border-none focus:outline-none"
+              "w-fit border-none text-start text-sm outline-none focus:border-none focus:outline-none"
             }
           >
             Termos e condições

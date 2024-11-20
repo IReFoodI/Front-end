@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { cn } from "@/app/utils/cn"
+import { decimalFormatter } from "@/app/utils/decimalFormatter"
 import { Card, CardContent, CardTitle } from "@/ui/components/ui/card"
 
 import { FavoriteButton } from "../favorites/FavoriteButton"
@@ -85,7 +86,7 @@ export function StoreCard({
           <div className="mb-2 flex items-center">
             <IconStarFilled className="h-[14px] w-[14px] text-[hsl(var(--primary))]" />
             <span className="ml-2 font-inter text-xs font-semibold text-[hsl(var(--foreground))] md:text-sm">
-              {averageRating}
+              {decimalFormatter(averageRating)}
             </span>
             <span className="ml-2 truncate font-inter text-xs font-semibold lowercase text-gray-500 first-letter:uppercase sm:text-sm">
               {category}

@@ -1,8 +1,11 @@
 import { IconCaretDownFilled, IconStarFilled } from "@tabler/icons-react"
 import { useState } from "react"
 
+import { decimalFormatter } from "@/app/utils/decimalFormatter"
 import defaultImage from "@/ui/assets/default-review-image.png"
+import { Loading } from "@/ui/components/ui/loading"
 
+import { useRestaurant } from "../hooks/useRestaurant"
 import { CardReview } from "./CardReview"
 
 const reviewsData = [
@@ -81,10 +84,13 @@ export function StoreInformationReview() {
   const [visibleReviews, setVisibleReviews] = useState(3)
   const [hasReviews] = useState(reviewsData.length > 0)
 
+  const { loadingRestaurant, restaurantData } = useRestaurant()
+
   const loadMoreReviews = () => {
     setVisibleReviews(visibleReviews + 3)
   }
 
+  if (loadingRestaurant) return <Loading />
   return (
     <div
       id="review-content"
@@ -94,16 +100,16 @@ export function StoreInformationReview() {
         id="review-content-top"
         className="mb-6 mt-3 flex flex-col items-center text-center"
       >
-        <h1 className="text-2xl font-bold">5,0</h1>
-        <span className="my-3 flex items-center gap-2">
-          <IconStarFilled size={24} className="text-primary" />
-          <IconStarFilled size={24} className="text-primary" />
-          <IconStarFilled size={24} className="text-primary" />
-          <IconStarFilled size={24} className="text-primary" />
-          <IconStarFilled size={24} className="text-primary" />
-        </span>
+        <div className="flex items-center justify-center gap-2">
+          <span className="my-3 flex items-center gap-2">
+            <IconStarFilled size={24} className="text-primary" />
+          </span>
+          <h1 className="text-2xl font-bold">
+            {decimalFormatter(restaurantData?.averageRating)}
+          </h1>
+        </div>
         <p className="font-semibold">9 avaliações • últimos 90 dias</p>
-        <p>10 avaliações no total</p>
+        <p>{restaurantData?.totalEvaluations} avaliações no total</p>
       </div>
 
       {hasReviews ? (

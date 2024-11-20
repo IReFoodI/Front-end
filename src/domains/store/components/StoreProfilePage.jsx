@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react"
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom"
 
+import { decimalFormatter } from "@/app/utils/decimalFormatter"
 import { useFavorites } from "@/domains/user/components/favorites/FavoritesData"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
@@ -88,7 +89,7 @@ export function UserStoreProfilePage() {
                     <IconStarFilled size={14} className="text-primary" />
                   </span>
                   <span className="font-bold">
-                    {restaurantData?.averageRating} (
+                    {decimalFormatter(restaurantData?.averageRating)} (
                     {restaurantData?.totalEvaluations} avaliações)
                   </span>
                 </div>
