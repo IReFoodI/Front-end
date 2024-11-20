@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IconXboxXFilled } from "@tabler/icons-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -8,13 +8,18 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { imageService } from "@/app/service/imageService"
 import { DatePickerSingle } from "@/domains/store/dashboard/DatePicker"
 import { productSchema } from "@/domains/store/models/ProductTypes"
-import { productService } from "@/domains/store/services/useProdutcList"
+import { productService } from "@/domains/store/services/productListService"
 import imageBroke from "@/ui/assets/image-broke.png"
-import {
-  AlertDialogCancel,
-  AlertDialogFooter,
-} from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from "@/ui/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -33,6 +38,7 @@ export function ProductModal({
   setSelectedProduct,
   setIsModalOpen,
   fetchProducts,
+  isModalOpen,
 }) {
   const [urlImgProd, seturlImgProd] = useState(
     selectedProduct?.urlImgProd || ""
@@ -47,7 +53,11 @@ export function ProductModal({
 
   const form = useForm({
     resolver: zodResolver(productSchema),
-    defaultValues: {
+    defaultValues: {},
+  })
+
+  useEffect(() => {
+    form.reset({
       nameProd: selectedProduct?.nameProd || "",
       categoryProduct: selectedProduct?.categoryProduct || "",
       descriptionProd: selectedProduct?.descriptionProd || "",
@@ -63,8 +73,13 @@ export function ProductModal({
       sellPrice: selectedProduct?.sellPrice
         ? String(selectedProduct.sellPrice)
         : "0",
-    },
-  })
+    })
+
+    setActive(selectedProduct?.active)
+
+    seturlImgProd(selectedProduct?.urlImgProd)
+  }, [form, selectedProduct])
+
   function handleCloseModal() {
     setIsModalOpen(false)
     setSelectedProduct(null)
@@ -209,107 +224,93 @@ export function ProductModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black opacity-50"></div>
-
-      <div className="relative z-10 mx-auto rounded-lg bg-white p-6 shadow-lg">
-        <div>
-          <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold">
-            {selectedProduct === null ? "Adicionar Produto" : "Editar Produto"}
-          </h1>
-          <div className="flex w-full flex-col items-center">
-            <div
-              className={`relative my-2 aspect-square w-1/3 border-2 ${
-                dragActive ? "border-blue-500" : "border-dashed"
-              } flex items-center justify-center rounded-md`}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              {loading ? (
-                <p className="text-center">Carregando imagem...</p>
-              ) : urlImgProd ? (
-                <>
-                  <button
-                    className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs text-red-500"
-                    onClick={handleImageDelete}
-                  >
-                    <IconXboxXFilled />
-                  </button>
-                  <img
-                    src={urlImgProd}
-                    alt={imageName}
-                    className="h-auto w-full rounded-md"
-                    onError={(e) => {
-                      e.target.onerror = null
-                      e.target.src = imageBroke
-                    }}
-                  />
-                </>
-              ) : (
-                <p className="text-center">
-                  Arraste uma imagem aqui ou clique para selecionar
-                </p>
-              )}
-              <input
-                type="file"
-                accept="urlImgProd/*"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </div>
-            <Button
-              type="button"
-              onClick={() =>
-                document.querySelector('input[type="file"]')?.click()
-              }
-            >
-              Adicionar imagem
-            </Button>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={(e) => {
+        if (!e) {
+          return handleCloseModal()
+        }
+        setIsModalOpen(e)
+      }}
+    >
+      <DialogTrigger asChild>
+        <Button size="sm" className="m-0 !mt-0 items-center gap-1 text-lg">
+          <span className="m-0 text-base">+ Adicionar produto</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="rounded-lg! overflow-hidden">
+        <DialogTitle>
+          {selectedProduct === null ? "Adicionar Produto" : "Editar Produto"}
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          Criar ou editar um produto.
+        </DialogDescription>
+        <div className="flex w-full flex-col items-center">
+          <div
+            className={`relative my-2 aspect-square w-1/3 border-2 ${
+              dragActive ? "border-blue-500" : "border-dashed"
+            } flex items-center justify-center rounded-md`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            {loading ? (
+              <p className="text-center">Carregando imagem...</p>
+            ) : urlImgProd ? (
+              <>
+                <button
+                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs text-red-500"
+                  onClick={handleImageDelete}
+                >
+                  <IconXboxXFilled />
+                </button>
+                <img
+                  src={urlImgProd}
+                  alt={imageName}
+                  className="h-auto w-full rounded-md"
+                  onError={(e) => {
+                    e.target.onerror = null
+                    e.target.src = imageBroke
+                  }}
+                />
+              </>
+            ) : (
+              <p className="text-center">
+                Arraste uma imagem aqui ou clique para selecionar
+              </p>
+            )}
+            <input
+              type="file"
+              accept="urlImgProd/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
           </div>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit((data) =>
-                selectedProduct
-                  ? handleChange(selectedProduct.productId, data)
-                  : onSubmit(data)
-              )}
-              className="flex flex-col gap-4 gap-y-2"
-            >
-              <div className="my-2 grid grid-cols-2 gap-4 gap-y-2">
-                <FormField
-                  control={form.control}
-                  name="nameProd"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome do produto</FormLabel>
-                      <FormControl>
-                        <Input {...field} maxLength={200} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="categoryProduct"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Categoria</FormLabel>
-                      <FormControl>
-                        <CategorySelect {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+          <Button
+            type="button"
+            onClick={() =>
+              document.querySelector('input[type="file"]')?.click()
+            }
+          >
+            Adicionar imagem
+          </Button>
+        </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit((data) =>
+              selectedProduct
+                ? handleChange(selectedProduct.productId, data)
+                : onSubmit(data)
+            )}
+            className="flex flex-col gap-4 gap-y-2"
+          >
+            <div className="my-2 grid grid-cols-2 gap-4 gap-y-2">
               <FormField
                 control={form.control}
-                name="descriptionProd"
+                name="nameProd"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Descrição</FormLabel>
+                    <FormLabel>Nome do produto</FormLabel>
                     <FormControl>
                       <Input {...field} maxLength={200} />
                     </FormControl>
@@ -317,120 +318,146 @@ export function ProductModal({
                   </FormItem>
                 )}
               />
-              <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-4">
-                <FormField
-                  control={form.control}
-                  name="expirationDate"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Validade</FormLabel>
-                      <DatePickerSingle {...field} ref={null} />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="quantity"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Quantidade</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          min={0}
-                          onFocus={(e) =>
-                            e.target.value === "0" && (e.target.value = "")
-                          }
-                          onBlur={(e) =>
-                            e.target.value === "" && (e.target.value = "0")
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="originalPrice"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Preço Original</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          {...field}
-                          min={0}
-                          onFocus={(e) =>
-                            e.target.value === "0" && (e.target.value = "")
-                          }
-                          onBlur={(e) =>
-                            e.target.value === "" && (e.target.value = "0")
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="sellPrice"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Preço de Venda</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          {...field}
-                          min={0}
-                          onFocus={(e) =>
-                            e.target.value === "0" && (e.target.value = "")
-                          }
-                          onBlur={(e) =>
-                            e.target.value === "" && (e.target.value = "0")
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="flex justify-between">
-                <FormItem className="flex items-center">
-                  <FormLabel className="mr-2">Status</FormLabel>{" "}
+              <FormField
+                control={form.control}
+                name="categoryProduct"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Categoria</FormLabel>
+                    <FormControl>
+                      <CategorySelect {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="descriptionProd"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Descrição</FormLabel>
                   <FormControl>
-                    <Switch
-                      className="!mt-0 mr-4"
-                      checked={active}
-                      onCheckedChange={handleStatusChange}
-                    />
+                    <Input {...field} maxLength={200} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-                <AlertDialogFooter className="flex flex-row items-center justify-center gap-4">
-                  <AlertDialogCancel className="mt-0" onClick={handleCancel}>
-                    Cancelar
-                  </AlertDialogCancel>
-                  <Button
-                    type="submit"
-                    className="!ml-0 !mr-0 md:px-6"
-                    disabled={loadingAdd}
-                  >
-                    {loading ? "Carregando..." : "Confirmar"}
-                  </Button>
-                </AlertDialogFooter>
-              </div>
-            </form>
-          </Form>
-        </div>
-      </div>
-    </div>
+              )}
+            />
+            <div className="my-2 grid grid-cols-2 gap-4 md:grid-cols-4">
+              <FormField
+                control={form.control}
+                name="expirationDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Validade</FormLabel>
+                    <DatePickerSingle {...field} ref={null} />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="quantity"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Quantidade</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        min={0}
+                        onFocus={(e) =>
+                          e.target.value === "0" && (e.target.value = "")
+                        }
+                        onBlur={(e) =>
+                          e.target.value === "" && (e.target.value = "0")
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="originalPrice"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Preço Original</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        {...field}
+                        min={0}
+                        onFocus={(e) =>
+                          e.target.value === "0" && (e.target.value = "")
+                        }
+                        onBlur={(e) =>
+                          e.target.value === "" && (e.target.value = "0")
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sellPrice"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Preço de Venda</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        {...field}
+                        min={0}
+                        onFocus={(e) =>
+                          e.target.value === "0" && (e.target.value = "")
+                        }
+                        onBlur={(e) =>
+                          e.target.value === "" && (e.target.value = "0")
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="flex justify-between">
+              <FormItem className="flex items-center">
+                <FormLabel className="mr-2">Status</FormLabel>{" "}
+                <FormControl>
+                  <Switch
+                    className="!mt-0 mr-4"
+                    checked={active}
+                    onCheckedChange={handleStatusChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              <DialogFooter className="flex flex-row items-center justify-center gap-4">
+                <DialogClose className="mt-0" onClick={handleCancel}>
+                  Cancelar
+                </DialogClose>
+                <Button
+                  type="submit"
+                  className="!ml-0 !mr-0 md:px-6"
+                  disabled={loadingAdd}
+                >
+                  {loading ? "Carregando..." : "Confirmar"}
+                </Button>
+              </DialogFooter>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }

@@ -21,12 +21,12 @@ import { PhonePatternFormat } from "@/ui/components/ui/phone-pattern-format"
 
 import { formSchema } from "../../models/MyProfileDataTypes"
 import { userService } from "../../services/userService"
-import userStore from "../../stores/userStore"
+import useUserStore from "../../stores/useUserStore"
 import { ModalCancel } from "./ModalCancel"
 
 export function ChangeData() {
   const navigate = useNavigate()
-  const { setUser } = userStore()
+  const { setUser } = useUserStore()
   const [isModalSaveChangesOpen, setIsModalSaveChangesOpen] = useState(false)
   const { loading, onRequest } = useFetch()
 

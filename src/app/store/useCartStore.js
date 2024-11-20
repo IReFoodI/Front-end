@@ -1,12 +1,14 @@
 import { create } from "zustand"
 
 import { cartService } from "../service/cartService"
+import { restaurantServiceMarina } from "../service/restaurantServiceMarina"
 
 const useCartStore = create((set) => ({
   cartItems: [],
   subtotal: 0,
   cartId: null,
   restaurantInfo: null,
+  cartItemsWithRestaurant: null,
 
   fetchCart: async (userId) => {
     if (!userId) {
@@ -79,6 +81,25 @@ const useCartStore = create((set) => ({
       set({ cartItems: updatedItems, subtotal: newSubtotal })
     } catch (error) {
       console.error("Failed to remove item from cart:", error)
+    }
+  },
+
+  getCartWithRestaurantByUserId: async (userId) => {
+    set({ isLoading: true, error: null, cartItemsWithRestaurant: null })
+    try {
+      const { data } =
+        await restaurantServiceMarina.fetchCentralizedOrderInformation(userId)
+      if (!data || !data.restaurant) {
+        throw new Error("Informações do restaurante não disponíveis.")
+      }
+      set({ cartItemsWithRestaurant: data })
+    } catch (error) {
+      console.error("Erro ao carregar os dados do restaurante:", error)
+      set({
+        error: "Não foi possível carregar os dados do restaurante.",
+      })
+    } finally {
+      set({ isLoading: false })
     }
   },
 }))

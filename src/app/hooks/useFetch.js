@@ -27,7 +27,14 @@ export function useFetch() {
   const [loading, setLoading] = useState(null)
 
   const onRequest = useCallback(
-    async ({ request, onSuccess, onError, successMessage, errorMessage }) => {
+    async ({
+      request,
+      onSuccess,
+      onError,
+      successMessage,
+      errorMessage,
+      showError = true,
+    }) => {
       let response
       try {
         setError(null)
@@ -40,13 +47,14 @@ export function useFetch() {
         setError(err)
         onError && onError(err)
         setData(null)
-        toast.error(
-          errorMessage ??
-            err?.response?.data?.error ??
-            err?.response?.data?.message ??
-            err?.message ??
-            "Ocorreu um erro"
-        )
+        if (showError)
+          toast.error(
+            errorMessage ??
+              err?.response?.data?.error ??
+              err?.response?.data?.message ??
+              err?.message ??
+              "Ocorreu um erro"
+          )
       } finally {
         setLoading(false)
       }

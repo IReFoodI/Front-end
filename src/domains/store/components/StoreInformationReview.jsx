@@ -1,11 +1,13 @@
 import { IconCaretDownFilled, IconStarFilled } from "@tabler/icons-react"
 import { useState } from "react"
 
+import defaultImage from "@/ui/assets/default-review-image.png"
+
 import { CardReview } from "./CardReview"
 
 const reviewsData = [
   {
-    avatar: "https://avatar.iran.liara.run/public/72",
+    avatar: defaultImage,
     name: "Julianinha da Silva",
     rating: 4,
     date: "13/08/2024",
@@ -13,14 +15,14 @@ const reviewsData = [
       "Produto muito bom! A qualidade é excelente e a entrega foi rápida. No entanto, o atendimento ao cliente poderia ser melhor. Tive algumas dificuldades para entrar em contato, mas no final deu tudo certo. Recomendo para quem procura um bom custo-benefício e não se importa com um atendimento um pouco lento.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/73",
+    avatar: defaultImage,
     name: "Sayonara de Melo",
     rating: 5,
     date: "13/08/2024",
     reviewText: "Achei muito bom, vale a pena e veio muita coisa na sacola!",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/45",
+    avatar: defaultImage,
     name: "Carlos Alberto",
     rating: 3,
     date: "14/08/2024",
@@ -28,7 +30,7 @@ const reviewsData = [
       "O produto em si é bom e funciona como prometido, mas tive uma experiência misturada com o serviço. A entrega foi bem demorada, o que foi um inconveniente, e o atendimento ao cliente deixou a desejar quando tive problemas para rastrear meu pedido. Espero que melhorem esses aspectos, pois o produto é realmente bom.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/65",
+    avatar: defaultImage,
     name: "Maria Eduarda",
     rating: 5,
     date: "15/08/2024",
@@ -36,14 +38,14 @@ const reviewsData = [
       "Estou extremamente satisfeita com minha compra. O produto chegou antes do esperado e em perfeito estado. A qualidade é superior e o atendimento ao cliente foi impecável. Foi uma experiência de compra muito positiva e sem complicações. Com certeza, recomendo para quem busca qualidade e eficiência.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/33",
+    avatar: defaultImage,
     name: "Ricardo Gomes",
     rating: 2,
     date: "16/08/2024",
     reviewText: "Não gostei.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/57",
+    avatar: defaultImage,
     name: "Ana Paula",
     rating: 4,
     date: "17/08/2024",
@@ -51,14 +53,14 @@ const reviewsData = [
       "O produto é muito bom e chegou no prazo estipulado. No entanto, o site poderia ser mais intuitivo e fácil de navegar. Tive um pouco de dificuldade para encontrar todas as informações necessárias. Apesar disso, estou bastante satisfeita com a compra e recomendo para quem busca um bom produto.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/20",
+    avatar: defaultImage,
     name: "Lucas Pereira",
     rating: 5,
     date: "18/08/2024",
     reviewText: "Simplesmente perfeito!",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/95",
+    avatar: defaultImage,
     name: "Fernanda Lima",
     rating: 4,
     date: "19/08/2024",
@@ -66,7 +68,7 @@ const reviewsData = [
       "Estou bastante satisfeita com a compra. O produto é de boa qualidade e chegou no prazo previsto. No entanto, notei uma pequena falha no acabamento, que não compromete o uso, mas poderia ser melhorado. O atendimento foi bom e a experiência geral foi positiva. Vou continuar comprando e recomendando.",
   },
   {
-    avatar: "https://avatar.iran.liara.run/public/22",
+    avatar: defaultImage,
     name: "Gabriel Santos",
     rating: 3,
     date: "20/08/2024",

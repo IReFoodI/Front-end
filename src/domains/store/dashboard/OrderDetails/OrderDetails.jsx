@@ -1,21 +1,64 @@
 import {
   IconClockHour5,
   IconCurrencyDollar,
-  IconPhone,
+  IconSoup,
   IconTruck,
 } from "@tabler/icons-react"
 import { useEffect, useRef, useState } from "react"
 
+import { useFetch } from "@/app/hooks/useFetch"
+import { dateFormatter } from "@/app/utils/dateFormatter"
 import { getStatus } from "@/app/utils/OrderUtils"
-import { Button } from "@/ui/components/ui/button/button"
+import { userService } from "@/domains/user/services/userService"
+import { NotFound } from "@/ui/components/NotFound"
 
+import { OrderStatus } from "../../models/OrderStatusOptions"
+import { restaurantService } from "../../services/restaurantService"
 import { StoreProfileOrders } from "../StoreProfileOrders/StoreProfileOrders"
 import { OrderItemsTable } from "./components/OrderItemsTable"
 
 export function OrderDetails() {
   const [currentOrder, setCurrentOrder] = useState()
   const [orderStatus, setOrderStatus] = useState()
+  const [user, setUser] = useState()
+  const [transaction, setTransaction] = useState()
+  const [refreshOrders, setRefreshOrders] = useState(false)
   const targetOrderRef = useRef(null)
+  const { onRequest } = useFetch()
+
+  function capitalize(text) {
+    return String(text).charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+  }
+
+  const cancelOrder = async () => {
+    await onRequest({
+      request: () =>
+        restaurantService.updateStatusOrder(
+          currentOrder.orderId,
+          OrderStatus.CANCELADO
+        ),
+      onSuccess: () => {
+        setOrderStatus(getStatus(OrderStatus.CANCELADO))
+        setRefreshOrders(!refreshOrders)
+      },
+    })
+  }
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      await onRequest({
+        request: () =>
+          userService.getTransactionById(currentOrder.transactionId),
+        onSuccess: (data) => {
+          setTransaction(data)
+        },
+      })
+    }
+
+    if (currentOrder && currentOrder.transactionId != null) {
+      fetchTransaction()
+    }
+  }, [currentOrder, onRequest])
 
   useEffect(() => {
     if (currentOrder !== undefined) {
@@ -26,8 +69,11 @@ export function OrderDetails() {
   return (
     <div className="flex h-full w-full flex-col lg:flex-row">
       <StoreProfileOrders
+        refreshOrders={refreshOrders}
+        setRefreshOrders={setRefreshOrders}
         setOrder={setCurrentOrder}
         orderRef={targetOrderRef}
+        setUser={setUser}
       />
 
       {currentOrder !== undefined ? (
@@ -39,7 +85,7 @@ export function OrderDetails() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 lg:gap-1">
                 <p className="text-lg font-semibold lg:text-xl">
-                  Pedido #{currentOrder.orderNumber}
+                  Pedido #{currentOrder.orderId}
                 </p>
                 <div className="flex items-center gap-3 rounded-md p-2">
                   <div className="flex items-center gap-1">
@@ -50,16 +96,14 @@ export function OrderDetails() {
                   </div>
                 </div>
               </div>
-
+              {/* 
               <div className="flex items-center gap-4 font-semibold">
-                <h1 className="text-2xl lg:text-4xl">
-                  {currentOrder.client.clientName}
-                </h1>
+                <h1 className="text-2xl lg:text-4xl">{user.name}</h1>
                 <Button className="gap-1 rounded-2xl text-xs">
                   <IconPhone size={24} />
                   Entrar em contato
                 </Button>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex flex-col gap-4">
@@ -69,12 +113,7 @@ export function OrderDetails() {
                   <div className="flex gap-1 text-sm">
                     <p className="font-bold">Agendado:</p>
                     <p className="flex">
-                      {
-                        (currentOrder.timeOfDelivery.day + " + ",
-                        currentOrder.timeOfDelivery.initialTime +
-                          " - " +
-                          currentOrder.timeOfDelivery.finalTime)
-                      }
+                      {dateFormatter(new Date(currentOrder.orderDate))}
                     </p>
                   </div>
                 </div>
@@ -82,45 +121,54 @@ export function OrderDetails() {
                 <div className="flex items-center gap-2 rounded border-2 border-gray-300 bg-gray-200 p-1">
                   <IconTruck className="text-orange-500" />
                   <p className="text-sm font-bold">
-                    {currentOrder.typeOfReceiving}
+                    {capitalize(currentOrder.deliveryType)}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 rounded border-2 border-gray-300 bg-gray-200 p-1 text-sm lg:gap-2">
-                  <IconCurrencyDollar className="text-orange-500" />
-                  <div className="flex gap-1">
-                    <p className="font-bold">Pagamento:</p>
-                    <p className="font-normal">{currentOrder.payment}</p>
+                {transaction && (
+                  <div className="flex items-center gap-3 rounded border-2 border-gray-300 bg-gray-200 p-1 text-sm lg:gap-2">
+                    <IconCurrencyDollar className="text-orange-500" />
+                    <div className="flex gap-1">
+                      <p className="font-bold">Pagamento:</p>
+                      <p className="font-normal">Cartão</p>
+                    </div>
+                    <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
+                      {currentOrder.transaction &&
+                        capitalize(transaction.transactionStatus)}
+                    </p>
                   </div>
-                  <p className="rounded-xl bg-orange-500 p-1 px-3 font-semibold text-white">
-                    {currentOrder.paymentStatus}
-                  </p>
-                </div>
+                )}
               </div>
 
               <div>
                 <OrderItemsTable
-                  orderItems={currentOrder.items}
+                  orderItems={currentOrder.orderItems}
                   totalValue={currentOrder.totalValue}
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex justify-between py-5">
-            <span className="cursor-pointer text-lg font-semibold text-orange-600 underline hover:text-orange-500">
-              Preciso de ajuda
-            </span>
-            <span className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400">
-              Cancelar Pedido
-            </span>
+          <div className="flex justify-end py-5">
+            {currentOrder.orderStatus !== OrderStatus.CANCELADO && (
+              <button
+                onClick={() => cancelOrder()}
+                className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400"
+              >
+                Cancelar Pedido
+              </button>
+            )}
           </div>
         </div>
       ) : (
         <div className="flex h-full w-full items-center justify-center text-center">
-          <p className="m-12 text-xl font-semibold text-orange-500">
-            Selecione um pedido para saber mais detalhes sobre ele!
-          </p>
+          <NotFound
+            Icon={IconSoup}
+            title={"Detalhes de um produto"}
+            description={
+              "Selecione um pedido para saber mais detalhes sobre ele!"
+            }
+          />
         </div>
       )}
     </div>

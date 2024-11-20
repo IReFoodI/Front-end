@@ -1,16 +1,10 @@
+import { IconChefHat } from "@tabler/icons-react"
 import { useCallback, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import { productService } from "@/domains/store/services/useProdutcList"
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/ui/components/ui/alert-dialog"
+import { productService } from "@/domains/store/services/productListService"
+import { NotFound } from "@/ui/components/NotFound"
 import { Button } from "@/ui/components/ui/button/button"
 import {
   Card,
@@ -99,95 +93,92 @@ export function StoreMenu() {
       <Card className="border-none shadow-none">
         <CardHeader className="flex-row items-center justify-between text-2xl">
           <CardTitle>Cardápio</CardTitle>
-          <AlertDialog open={isModalOpen}>
-            <AlertDialogTrigger asChild>
-              <Button
-                size="sm"
-                className="m-0 !mt-0 items-center gap-1 text-lg"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <span className="m-0 text-base">+ Adicionar produto</span>
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Produto</AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogDescription>
-                Aqui você pode ver informações detalhadas sobre o produto
-                selecionado e gerenciar suas escolhas.
-              </AlertDialogDescription>
-              <ProductModal
-                setIsModalOpen={setIsModalOpen}
-                setSelectedProduct={setSelectedProduct}
-                selectedProduct={selectedProduct}
-                fetchProducts={fetchProducts}
-              />
-            </AlertDialogContent>
-          </AlertDialog>
+          <ProductModal
+            setIsModalOpen={setIsModalOpen}
+            setSelectedProduct={setSelectedProduct}
+            selectedProduct={selectedProduct}
+            fetchProducts={fetchProducts}
+            isModalOpen={isModalOpen}
+          />
         </CardHeader>
 
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="hidden md:table-cell">Foto</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead className="hidden w-20 lg:table-cell">
-                  Categoria
-                </TableHead>
-                <TableHead className="hidden lg:table-cell">
-                  Descrição
-                </TableHead>
-                <TableHead className="hidden md:table-cell">Validade</TableHead>
-                <TableHead>Quantidade</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Valor Original
-                </TableHead>
-                <TableHead>Valor Venda</TableHead>
-                <TableHead className="hidden md:table-cell">Status</TableHead>
-                <TableHead>Ação</TableHead>
-              </TableRow>
-            </TableHeader>
+          {localProducts.length > 0 ? (
+            <>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="hidden md:table-cell">Foto</TableHead>
+                    <TableHead>Nome</TableHead>
+                    <TableHead className="hidden w-20 lg:table-cell">
+                      Categoria
+                    </TableHead>
+                    <TableHead className="hidden lg:table-cell">
+                      Descrição
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Validade
+                    </TableHead>
+                    <TableHead>Quantidade</TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Valor Original
+                    </TableHead>
+                    <TableHead>Valor Venda</TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Status
+                    </TableHead>
+                    <TableHead>Ação</TableHead>
+                  </TableRow>
+                </TableHeader>
+                {localProducts && (
+                  <TableBody>
+                    {localProducts.map((product) => (
+                      <MenuItemCard
+                        key={product.productId}
+                        product={product}
+                        setIsModalOpen={setIsModalOpen}
+                        setIsDeleteModalOpen={setIsDeleteModalOpen}
+                        setSelectedProduct={setSelectedProduct}
+                        onStatusChange={handleStatusChange}
+                      />
+                    ))}
+                  </TableBody>
+                )}
+              </Table>
 
-            <TableBody>
-              {localProducts.map((product) => (
-                <MenuItemCard
-                  key={product.productId}
-                  product={product}
-                  setIsModalOpen={setIsModalOpen}
-                  setIsDeleteModalOpen={setIsDeleteModalOpen}
-                  setSelectedProduct={setSelectedProduct}
-                  onStatusChange={handleStatusChange}
-                />
-              ))}
-            </TableBody>
-          </Table>
-
-          <div className="mt-4 flex justify-between">
-            <Button
-              size="sm"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 0}
-            >
-              Página Anterior
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === data?.page?.totalPages - 1}
-            >
-              Próxima Página
-            </Button>
-          </div>
+              <div className="mt-4 flex justify-between">
+                <Button
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 0}
+                >
+                  Página Anterior
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === data?.page?.totalPages - 1}
+                >
+                  Próxima Página
+                </Button>
+              </div>
+              <CardFooter>
+                <div className="text-xs">
+                  Exibindo <strong>{currentPage + 1}</strong> de{" "}
+                  <strong>{data?.page?.totalPages}</strong> produtos
+                </div>
+              </CardFooter>
+            </>
+          ) : (
+            <NotFound
+              Icon={IconChefHat}
+              title={"Você ainda não cadastrou nenhuma produto!"}
+              description={"Cadastre produtos para exibir a listagem!"}
+              linkTo={"/"}
+              textButton={""}
+            />
+          )}
         </CardContent>
-
-        <CardFooter>
-          <div className="text-xs">
-            Exibindo <strong>{currentPage + 1}</strong> de{" "}
-            <strong>{data?.page?.totalPages}</strong> produtos
-          </div>
-        </CardFooter>
       </Card>
 
       <DeleteProductModal

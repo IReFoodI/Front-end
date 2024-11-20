@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom"
 
 import { useFavorites } from "@/domains/user/components/favorites/FavoritesData"
+import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { useRestaurant } from "../hooks/useRestaurant"
@@ -44,19 +45,17 @@ export function UserStoreProfilePage() {
       id="page"
       className="mx-auto w-full min-w-80 text-gray-500 antialiased xl:py-8"
     >
-      <div
-        id="capa"
-        className="h-[200px] w-full rounded-lg bg-cover bg-center px-5"
-        style={{ backgroundImage: `url(${restaurantData?.urlBanner})` }}
-      >
-        <div
+      <div className="relative w-full overflow-hidden rounded-lg object-cover sm:h-[200px]">
+        <img id="capa" className="w-full" src={restaurantData?.urlBanner}></img>
+        <Button
+          variant="ghost"
           onClick={() => navigation("/")}
-          className="relative top-9 cursor-pointer transition duration-300 hover:text-primary"
+          className="absolute top-9 ml-4 bg-white/50"
         >
           <IconArrowLeft />
-        </div>
+        </Button>
       </div>
-      <div className="mb-3 items-start justify-between md:flex">
+      <div className="relative mb-3 items-start justify-between px-2 md:flex">
         <div
           id="card-info"
           className="-mt-10 w-full rounded-md bg-cover bg-center md:max-w-[70%] md:bg-card md:pr-5 md:pt-5 lg:max-w-[50%]"
@@ -113,7 +112,7 @@ export function UserStoreProfilePage() {
             </menu>
           </div>
         </div>
-        <button className="flex items-center gap-2 text-sm text-gray-400 md:p-2">
+        <button className="flex cursor-default items-center gap-2 text-sm text-gray-400 md:p-2">
           <span>
             <IconClock size={15} className="text-gray-500" />
           </span>

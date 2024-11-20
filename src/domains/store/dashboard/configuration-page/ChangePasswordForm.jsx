@@ -103,8 +103,11 @@ export function ChangePasswordForm() {
             </FormItem>
           )}
         />
-
-        <Button type="submit">Trocar senha</Button>
+        <footer className="mt-2 flex w-full justify-end">
+          <Button type="submit" className="px-6">
+            Trocar senha
+          </Button>
+        </footer>
       </form>
     </Form>
   )

@@ -50,10 +50,10 @@ export function FinancePage() {
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
-          <h1 className="mb-4 text-3xl font-semibold sm:mb-0 lg:text-4xl">
+          <h1 className="mb-4 text-base font-semibold sm:mb-0 lg:text-2xl">
             Finanças
           </h1>
-          <div className="flex items-center justify-end gap-3">
+          <div className="flex items-center justify-end">
             <SelectMonth
               selectedMonth={selectedMonth}
               selectedYear={selectedYear}
@@ -74,7 +74,7 @@ export function FinancePage() {
                   <CardHeader className="flex justify-between">
                     <CardTitle>Pedidos hoje</CardTitle>
                   </CardHeader>
-                  <CardContent className="text-4xl">
+                  <CardContent className="text-2xl">
                     <p>1</p>
                   </CardContent>
                 </div>
@@ -82,7 +82,7 @@ export function FinancePage() {
                   <CardHeader className="flex justify-between">
                     <CardTitle>Ticket médio hoje</CardTitle>
                   </CardHeader>
-                  <CardContent className="text-4xl">
+                  <CardContent className="text-2xl">
                     <p>R$ 80,00</p>
                   </CardContent>
                 </div>
@@ -102,7 +102,7 @@ export function FinancePage() {
                       Pedidos do mês
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="text-4xl text-primary">
+                  <CardContent className="text-2xl text-primary">
                     <p>1</p>
                   </CardContent>
                 </div>
@@ -112,7 +112,7 @@ export function FinancePage() {
                       Ticket médio mês
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="text-4xl text-primary">
+                  <CardContent className="text-2xl text-primary">
                     <p>R$ 80,00</p>
                   </CardContent>
                 </div>
@@ -128,7 +128,7 @@ export function FinancePage() {
               <CardHeader>
                 <CardTitle className="text-gray-500">Avaliações</CardTitle>
               </CardHeader>
-              <CardContent className="text-4xl text-primary">
+              <CardContent className="text-2xl text-primary">
                 <p>4,0</p>
               </CardContent>
               <CardFooter className="text-gray-500">
@@ -154,7 +154,7 @@ export function FinancePage() {
                   </p>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-4xl text-primary">
+              <CardContent className="text-2xl text-primary">
                 <p>R$800,00</p>
               </CardContent>
             </Card>
@@ -167,7 +167,7 @@ export function FinancePage() {
                   </p>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-4xl text-primary">
+              <CardContent className="text-2xl text-primary">
                 <p>124</p>
               </CardContent>
             </Card>
@@ -180,7 +180,7 @@ export function FinancePage() {
                   </p>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-4xl text-primary">
+              <CardContent className="text-2xl text-primary">
                 <p>0</p>
               </CardContent>
             </Card>

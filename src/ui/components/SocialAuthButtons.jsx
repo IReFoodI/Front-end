@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { localStorageUtil } from "@/app/utils/localStorageUtil"
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import gmail from "@/ui/assets/gmail-icon.svg"
 import { Button } from "@/ui/components/ui/button/button"
 
 export function SocialAuthButtons({ locationPathname, redirectPath }) {
   const navigate = useNavigate()
-  const { setUser, setUserId } = userStore()
+  const { setUser, setUserId } = useUserStore()
 
   const login = useGoogleLogin({
     onSuccess: async (credetialResponse) => {

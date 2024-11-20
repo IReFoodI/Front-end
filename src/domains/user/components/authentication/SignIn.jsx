@@ -21,10 +21,10 @@ import { TextWithLink } from "@/ui/components/ui/TextWithLink"
 import { SocialAuthButtons } from "../../../../ui/components/SocialAuthButtons"
 import { formSchema } from "../../models/LoginTypes"
 import { authService } from "../../services/authService"
-import userStore from "../../stores/userStore"
+import useUserStore from "../../stores/useUserStore"
 
 export function SignIn() {
-  const { setUser } = userStore()
+  const { setUser } = useUserStore()
   const navigate = useNavigate()
   const location = useLocation()
   const pathname = location?.pathname
@@ -44,7 +44,7 @@ export function SignIn() {
     if (redirectPath) {
       navigate(redirectPath)
     } else {
-      navigate(pathname == "/autenticar/negocios" ? "/dashboard" : "/")
+      navigate(pathname == "/autenticar/negocios" ? "/dashboard/inicio" : "/")
     }
   }
 

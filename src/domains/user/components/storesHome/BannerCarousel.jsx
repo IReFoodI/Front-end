@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/ui/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 
 import { BannerPromo } from "./BannerPromo"
 import banner1Desktop from "@/ui/assets/banner-1.png"
@@ -20,7 +21,17 @@ const BANNER_URLS = [
 
 export function BannerCarousel() {
   return (
-    <Carousel>
+    <Carousel
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+      plugins={[
+        Autoplay({
+          delay: 5000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {BANNER_URLS.map((url) => (
           <CarouselItem key={url.desktop}>

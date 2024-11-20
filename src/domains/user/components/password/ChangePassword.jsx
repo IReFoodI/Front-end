@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { TextWithLink } from "@/ui/components/TextWithLink"
@@ -19,6 +19,7 @@ import { formSchema } from "../../models/ChangePasswordTypes"
 
 export function ChangePassword() {
   const navigate = useNavigate()
+  const location = useLocation()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -67,7 +68,11 @@ export function ChangePassword() {
             <TextWithLink
               text="Esqueceu sua senha?"
               buttonContent="Recuperar senha"
-              navigateTo="/recoverPassword"
+              navigateTo={
+                location?.pathname === "/autenticar/negocios"
+                  ? "/autenticar/negocios/recuperar-senha"
+                  : "/autenticar/recuperar-senha"
+              }
               style={"!justify-start"}
             />
 

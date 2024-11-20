@@ -70,6 +70,7 @@ export const ROUTES = {
   FINALIZE_ORDER: "finalizar-pedido",
   MY_ORDERS: "pedidos",
   SEARCH_PRODUCTS: "produtos/pesquisar",
+  ORDER_DETAILS: "pedidos",
   USER_STORE_PROFILE: "loja/:storeId",
   USER_STORE_PROFILE_INFO: "informacoes/",
 }
@@ -126,12 +127,12 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "dashboard",
+        path: "dashboard/",
         children: [
           {
             element: <DashBoardLayout />,
             children: [
-              { index: true, element: <StoreProfilePage /> },
+              { index: true, path: "inicio", element: <StoreProfilePage /> },
               { path: ROUTES.FINANCE, element: <FinancePage /> },
               {
                 path: ROUTES.ALERTSETTINGS,

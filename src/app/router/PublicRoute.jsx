@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom"
 
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 
 import { checkTokenExpiration } from "../hooks/useTokenValidation"
 
 export function PublicRoute({ children, redirect = "/" }) {
-  const { user } = userStore()
+  const { user } = useUserStore()
 
   const token = localStorage.getItem("jwtRefoods")
   const isTokenValid = token ? checkTokenExpiration(token) : false

@@ -10,7 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom"
 
 import { TermsOfUse } from "@/domains/user/components/authentication/TermsOfUse"
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 
 import { Button } from "../../ui/button/button"
@@ -18,8 +18,8 @@ import { ContainerStatus } from "./ContainerStatus"
 import { InformationButton } from "./InformationButton"
 
 export function ProfileSheet({ closeModal }) {
-  const { user } = userStore()
-  const { logout } = userStore()
+  const { user } = useUserStore()
+  const { logout } = useUserStore()
   const navigate = useNavigate()
   const pathname = location?.pathname
 

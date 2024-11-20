@@ -8,7 +8,9 @@ import { useEffect, useState } from "react"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
-import userStore from "@/domains/user/stores/userStore"
+import { DAY_OF_WEEK_EN_TO_PT } from "@/app/utils/daysOfWeekENToPT"
+import { DAYS_OF_WEEK_ORDER } from "@/app/utils/daysOfWeekOrder"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import {
   Card,
   CardContent,
@@ -22,7 +24,7 @@ import { FinanceChartCard } from "./FinanceChartCard"
 
 export function StoreProfilePage() {
   const { onRequest, error } = useFetch()
-  const { user } = userStore()
+  const { user } = useUserStore()
   const [activeProducts, setActiveProducts] = useState([])
   const [orders, setOrders] = useState([])
   const [ordersForCurrentMonth, setordersForCurrentMonth] = useState([])
@@ -62,6 +64,7 @@ export function StoreProfilePage() {
             setMonthlyTotal(total)
           }
         },
+        showError: false,
       })
     }
 
@@ -99,26 +102,26 @@ export function StoreProfilePage() {
     <div className="flex-grow p-4">
       <main className="mx-auto flex w-full max-w-[1216px] flex-col items-center text-gray-600 antialiased lg:h-auto">
         <div className="mb-5 mt-4 flex w-full flex-col justify-between sm:flex-row">
-          <h1 className="mb-4 text-2xl font-semibold md:text-4xl">
-            Olá, {user?.fantasy}
+          <h1 className="mb-4 text-base font-semibold md:text-2xl">
+            Olá, {user?.name || user?.fantasy}
           </h1>
         </div>
 
         <section className="grid w-full grid-cols-12 gap-4 text-xl font-semibold transition-all sm:grid-cols-6 lg:grid-cols-12">
           <div className="col-span-12 sm:col-span-6 lg:col-span-4">
-            <Card>
+            <Card className="">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between text-gray-500">
                   <p>Itens ativos no cardápio</p>
                   <div className="sm:hidden">
-                    <IconShoppingCart size={30} />
+                    <IconShoppingCart size={20} />
                   </div>
                   <div className="hidden sm:block">
-                    <IconShoppingCart size={40} />
+                    <IconShoppingCart size={30} />
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-2xl text-primary sm:text-4xl">
+              <CardContent className="text-base text-primary sm:text-2xl md:py-3">
                 <p>{activeProducts.length}</p>
               </CardContent>
             </Card>
@@ -130,14 +133,14 @@ export function StoreProfilePage() {
                 <CardTitle className="flex items-center justify-between text-gray-500">
                   <p>Total faturado no mês</p>
                   <div className="sm:hidden">
-                    <IconCurrencyDollar size={35} />
+                    <IconCurrencyDollar size={20} />
                   </div>
                   <div className="hidden sm:block">
-                    <IconCurrencyDollar size={40} />
+                    <IconCurrencyDollar size={30} />
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-2xl text-primary sm:text-4xl">
+              <CardContent className="text-base text-primary sm:text-2xl md:py-3">
                 <p>{currencyFormatter(monthlyTotal)}</p>
               </CardContent>
             </Card>
@@ -149,14 +152,14 @@ export function StoreProfilePage() {
                 <CardTitle className="flex items-center justify-between text-gray-500">
                   <p>Pedidos no mês</p>
                   <div className="sm:hidden">
-                    <IconShoppingBag size={35} />
+                    <IconShoppingBag size={20} />
                   </div>
                   <div className="hidden sm:block">
-                    <IconShoppingBag size={40} />
+                    <IconShoppingBag size={30} />
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-2xl text-primary sm:text-4xl">
+              <CardContent className="text-base text-primary sm:text-2xl md:py-3">
                 <p>{ordersForCurrentMonth.length}</p>
               </CardContent>
             </Card>
@@ -169,43 +172,30 @@ export function StoreProfilePage() {
                 <CardTitle className="flex items-center justify-between text-gray-500">
                   <p>Horário de Funcionamento</p>
                   <div className="sm:hidden">
-                    <IconClockHour4 size={35} />
+                    <IconClockHour4 size={20} />
                   </div>
                   <div className="hidden sm:block">
-                    <IconClockHour4 size={40} />
+                    <IconClockHour4 size={30} />
                   </div>
                 </CardTitle>
               </CardHeader>
               {restaurantHours.length > 0 ? (
                 <CardContent className="flex flex-col gap-6 text-sm text-gray-500">
-                  <span className="flex justify-between">
-                    <p>Segunda-feira</p>{" "}
-                    <p>{`${restaurantHours[0].openingTime} às ${restaurantHours[0].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Terça-feira</p>
-                    <p>{`${restaurantHours[1].openingTime} às ${restaurantHours[1].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Quarta-feira</p>
-                    <p>{`${restaurantHours[2].openingTime} às ${restaurantHours[2].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Quinta-feira</p>
-                    <p>{`${restaurantHours[3].openingTime} às ${restaurantHours[3].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Sexta-feira</p>
-                    <p>{`${restaurantHours[4].openingTime} às ${restaurantHours[4].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Sábado</p>
-                    <p>{`${restaurantHours[5].openingTime} às ${restaurantHours[5].closingTime}`}</p>
-                  </span>
-                  <span className="flex justify-between">
-                    <p>Domingo</p>
-                    <p>{`${restaurantHours[6].openingTime} às ${restaurantHours[6].closingTime}`}</p>
-                  </span>
+                  {restaurantHours
+                    ?.sort(
+                      (a, b) =>
+                        DAYS_OF_WEEK_ORDER[a.dayOfWeek] -
+                        DAYS_OF_WEEK_ORDER[b.dayOfWeek]
+                    )
+                    ?.map((item) => (
+                      <span
+                        key={item.dayOfWeek}
+                        className="flex justify-between"
+                      >
+                        <p>{DAY_OF_WEEK_EN_TO_PT[item.dayOfWeek]}</p>{" "}
+                        <p>{`${item?.openingTime || "-"} às ${item?.closingTime || "-"}  `}</p>
+                      </span>
+                    ))}
                 </CardContent>
               ) : (
                 <p className="m-6 text-lg text-orange-500">

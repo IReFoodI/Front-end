@@ -1,27 +1,87 @@
 import { IconCaretRightFilled } from "@tabler/icons-react"
+import { useEffect, useState } from "react"
 
+import { useFetch } from "@/app/hooks/useFetch"
 import { currencyFormatter } from "@/app/utils/currencyFormatter"
-import { getStatus, groupItems } from "@/app/utils/OrderUtils"
-import { Button } from "@/ui/components/ui/button/button"
+import { getStatus } from "@/app/utils/OrderUtils"
+import { OrderStatus } from "@/domains/store/models/OrderStatusOptions"
+import { restaurantService } from "@/domains/store/services/restaurantService"
+import { userService } from "@/domains/user/services/userService"
+import { Loading } from "@/ui/components/ui/loading"
 import { Separator } from "@/ui/components/ui/separator"
 
-export function OrderCard({ order, isDoneOrCanceled, setOrder, orderRef }) {
-  const groupedItems = groupItems(order.items)
-  const status = getStatus(order)
+export function OrderCard({
+  order,
+  isDoneOrCanceled,
+  setOrder,
+  orderRef,
+  setUser,
+  refreshOrders,
+  setRefreshOrders,
+}) {
+  const [user, setUserData] = useState()
+  const [status, setStatus] = useState(getStatus(order))
+  const [totalValue] = useState(order.totalValue)
 
   function onStatusButtonClick() {
     setOrder(order)
+    setUser(user)
     orderRef.current?.scrollIntoView({ behavior: "smooth" })
   }
+  const { onRequest } = useFetch()
 
+  const handleOrderAcceptance = async (status) => {
+    await onRequest({
+      request: () => restaurantService.updateStatusOrder(order.orderId, status),
+      onSuccess: (data) => {
+        setOrder(data)
+        setUser(user)
+        setRefreshOrders(!refreshOrders)
+        setStatus(getStatus(data.orderStatus))
+      },
+    })
+  }
+  const handleOrderCancel = async () => {
+    await onRequest({
+      request: () => restaurantService.cancelStatusOrder(order.orderId),
+      onSuccess: (data) => {
+        setOrder(data)
+        setUser(user)
+        setRefreshOrders(!refreshOrders)
+        setStatus(getStatus(data.orderStatus))
+      },
+    })
+  }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      await onRequest({
+        request: () => userService.getUsers(),
+        onSuccess: (data) => {
+          data.forEach((userResult) => {
+            if (userResult.userId == order.userId) {
+              setUserData(userResult)
+            }
+          })
+        },
+      })
+    }
+
+    fetchUserData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order.userId])
+
+  if (!user) {
+    return <Loading />
+  }
   return (
     <div
       className={`border-b-2 border-gray-300 bg-gray-100 p-4 ${isDoneOrCanceled ? "text-gray-500" : "text-black"}`}
     >
       <div className="flex items-start justify-between pb-4">
         <div className="flex flex-col">
-          <h1 className="text-xl font-semibold">{order.client.clientName}</h1>
-          <p className="text-sm font-semibold">Pedido #{order.orderNumber}</p>
+          <h1 className="text-xl font-semibold">{user.name}</h1>
+          <p className="text-sm font-semibold">Pedido #{order.orderId}</p>
         </div>
 
         <button
@@ -38,30 +98,38 @@ export function OrderCard({ order, isDoneOrCanceled, setOrder, orderRef }) {
         </button>
       </div>
       <Separator />
-      {groupedItems.map((item) => (
-        <div key={item.itemId}>
+      {order?.orderItems?.map((item) => (
+        <div key={item.productId}>
           <div
             className={`flex w-full justify-between py-2 font-semibold ${isDoneOrCanceled ? "text-gray-500" : "text-gray-600"}`}
           >
-            <div className="flex items-center justify-between gap-1 text-lg">
+            <div className="flex items-center justify-between gap-4 text-base">
               <span>{item.quantity}x</span>
-              <p>{item.itemName}</p>
+              <p>{item.productName}</p>
             </div>
-            <p className="text-base">{currencyFormatter(item.price)}</p>
+            <p className="text-base">{currencyFormatter(item.subtotal)}</p>
           </div>
           <Separator />
         </div>
       ))}
       <div className="flex w-full justify-between py-2 text-lg font-semibold">
         <p>Total</p>
-        <p className="font-bold">{currencyFormatter(order.totalValue)}</p>
+        <p className="font-bold">{currencyFormatter(totalValue)}</p>
       </div>
-      {order.status == "pending" && (
+      {order.orderStatus == "PENDENTE" && (
         <div className="flex w-full justify-around gap-1 pt-4">
-          <Button className="w-1/2">Aceitar Pedido</Button>
-          <Button className="w-1/2 bg-gray-400 hover:bg-gray-500">
+          <button
+            onClick={() => handleOrderAcceptance(OrderStatus.PREPARANDO)}
+            className="w-1/2 rounded-2xl bg-orange-500 p-1 font-semibold text-white shadow hover:bg-orange-400"
+          >
+            Aceitar Pedido
+          </button>
+          <button
+            onClick={() => handleOrderCancel()}
+            className="w-1/2 rounded-2xl bg-gray-400 p-1 font-semibold text-white shadow hover:bg-gray-500"
+          >
             Recusar Pedido
-          </Button>
+          </button>
         </div>
       )}
     </div>

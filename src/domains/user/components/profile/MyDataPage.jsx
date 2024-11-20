@@ -1,3 +1,4 @@
+import { IconMapPinOff } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -5,6 +6,7 @@ import { useFetch } from "@/app/hooks/useFetch"
 import { ProfileImagePlaceholder } from "@/ui/assets/ProfileImgePlaceholder"
 import { BasicUserInfo } from "@/ui/components/myDataPage/BasicUserInfo"
 import { DeleteAccountModal } from "@/ui/components/myDataPage/DeleteAccountModal"
+import { NotFound } from "@/ui/components/NotFound"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
@@ -13,10 +15,10 @@ import { AddressCard } from "../../../../ui/components/AddressCard"
 import { addressService } from "../../services/addressService"
 import { userService } from "../../services/userService"
 import { userAddressStore } from "../../stores/userAddressStore"
-import userStore from "../../stores/userStore"
+import useUserStore from "../../stores/useUserStore"
 
 export function MydataPage() {
-  const { user, setUser } = userStore()
+  const { user, setUser } = useUserStore()
   const { defaultAddress, setAddresses } = userAddressStore()
   const [isModalDeleteOpen, setIsModalDeleteOpenOpen] = useState(false)
   const { loading, onRequest } = useFetch()
@@ -66,14 +68,13 @@ export function MydataPage() {
           </RadioGroup>
         </ul>
       ) : (
-        <div className="my-3 w-full rounded-lg bg-secondary p-2 py-4 text-center">
-          <p className="text-base font-semibold text-primary md:text-xl">
-            Você ainda não possue endereço padrão!
-          </p>
-          <p className="mt-2">
-            Adicione um endereço para melhorar a sua experiência{" "}
-          </p>
-        </div>
+        <NotFound
+          Icon={IconMapPinOff}
+          title={"Você ainda não possue endereço padrão!"}
+          description={
+            "Adicione um endereço para para melhorar a sua experiência"
+          }
+        />
       )}
       <div className="flex w-full flex-col gap-2">
         <BasicUserInfo label="Nome" data={user.name} />

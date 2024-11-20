@@ -17,6 +17,7 @@ export function StoreCard({
 
   const {
     hours = [],
+    hour = {},
     isFavorited,
     restaurant: {
       fantasy = "Nome não disponível",
@@ -28,9 +29,10 @@ export function StoreCard({
     } = {},
   } = storeData
 
-  const formatBusinessHours = hours
-    .map((hours) => `${hours.openingTime} às ${hours.closingTime}`)
-    .join(", ")
+  const formatBusinessHours =
+    hours?.length > 0
+      ? `${hours[0].openingTime} às ${hours[0].closingTime}`
+      : `${hour.openingTime} às ${hour.closingTime}`
 
   return (
     <Link

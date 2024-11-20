@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { getEncodedAddress } from "@/app/utils/encodeAddress"
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
   changeUserAddressTypes,
@@ -91,9 +92,9 @@ export function ProfileAddressForm() {
 
   useEffect(() => {
     const [cep, street, number, district, city, state] = watchedFields
-
-    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${cep}`
-    setEncodedAddress(encodeURIComponent(fullAddress))
+    setEncodedAddress(
+      getEncodedAddress({ cep, street, number, district, city, state })
+    )
   }, [watchedFields])
 
   const onSubmit = async (data) => {

@@ -22,6 +22,21 @@ async function getUser() {
   return response
 }
 
+async function getUserById(userId) {
+  const axios = createAxiosInstance(true)
+  return axios.get(`api/user/${userId}`)
+}
+
+async function getTransactionById(transactionId) {
+  const axios = createAxiosInstance(true)
+  return axios.get(`/transaction/${transactionId}`)
+}
+
+async function getUsers() {
+  const axios = createAxiosInstance(true)
+  return axios.get("api/user/users")
+}
+
 async function getUserInformation() {
   const axios = createAxiosInstance(true)
   const response = await axios.get(`${BASE_URL}`)
@@ -33,6 +48,7 @@ async function updateUser(data) {
   const response = await axios.put(`${BASE_URL}`, data)
   return response
 }
+
 async function deleteAccount() {
   const axios = createAxiosInstance(true)
   const response = await axios.delete(`${BASE_URL}`)
@@ -42,6 +58,9 @@ async function deleteAccount() {
 export const userService = {
   createUserAccount,
   getUser,
+  getUserById,
+  getUsers,
+  getTransactionById,
   updateUser,
   getUserInformation,
   deleteAccount,

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
-import restaurantService from "@/app/service/restaurantService"
+import { restaurantServiceMarina } from "@/app/service/restaurantServiceMarina"
 import { restaurantService as restaurantServiceStore } from "@/domains/store/services/restaurantService"
 
 import { fetchRestaurantHourTodayById } from "../services/restaurantHoursService"
@@ -59,7 +59,8 @@ export function useRestaurant() {
       fetchData(
         () =>
           onRequestRestaurantAllHours({
-            request: () => restaurantService.fetchRestaurantHoursById(storeId),
+            request: () =>
+              restaurantServiceMarina.fetchRestaurantHoursById(storeId),
           }),
         () =>
           toast.error(
@@ -77,7 +78,8 @@ export function useRestaurant() {
         () =>
           onRequestRestaurantAddress({
             request: () =>
-              restaurantService.fetchAddressByRestaurantId(storeId),
+              restaurantServiceMarina.fetchAddressByRestaurantId(storeId),
+            showError: false,
           }),
         () => console.error("Erro ao buscar endereço do restaurante")
       ),

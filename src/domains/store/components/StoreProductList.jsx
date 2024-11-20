@@ -1,10 +1,7 @@
 /* eslint-disable */
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { useFetch } from "@/app/hooks/useFetch"
-import restaurantService from "@/app/service/restaurantService"
-import { Loading } from "@/ui/components/ui/loading"
 import {
   Select,
   SelectContent,
@@ -13,9 +10,11 @@ import {
   SelectValue,
 } from "@/ui/components/ui/select"
 
+import { useProductsStore } from "@/app/store/useProducts"
 import { SearchProductItem } from "@/domains/user/components/searchPage/SearchProductItem"
 import { Button } from "@/ui/components/ui/button/button"
-import { useProductsStore } from "@/app/store/useProducts"
+import { NotFound } from "@/ui/components/NotFound"
+import { IconMeatOff } from "@tabler/icons-react"
 
 export function StoreProductList() {
   const { storeId } = useParams()
@@ -34,6 +33,7 @@ export function StoreProductList() {
 
   useEffect(() => {
     setStoreId(storeId)
+    handlePageChange(0)
   }, [storeId])
 
   const onFetchProduct = useCallback(() => {
@@ -49,6 +49,17 @@ export function StoreProductList() {
     setCurrentPage(newPage)
     navigate(`?page=${newPage}`)
   }
+
+  if (products?.products?.length == 0)
+    return (
+      <NotFound
+        Icon={IconMeatOff}
+        title={"Essa loja não tem produtos"}
+        description={"Explore outros estabelecimentos"}
+        linkTo={"/"}
+        textButton={"Explorar agora!"}
+      />
+    )
 
   return (
     <section className="mt-5 flex flex-col gap-5 xl:mt-0">

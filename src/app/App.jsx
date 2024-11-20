@@ -1,13 +1,13 @@
 import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { tokenService } from "./service/tokenService"
 
 function App() {
-  const { setUser, setIsUserLoading, isUserLoading } = userStore()
+  const { setUser, setIsUserLoading, isUserLoading } = useUserStore()
   useEffect(() => {
     async function authenticate() {
       setIsUserLoading(true)

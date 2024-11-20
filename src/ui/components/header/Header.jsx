@@ -1,11 +1,11 @@
 import { DialogTitle } from "@radix-ui/react-dialog"
 import { IconShoppingBag, IconUser } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import useCartStore from "../../../app/store/useCartStore"
 import { userService } from "../../../domains/user/services/userService"
-import userStore from "../../../domains/user/stores/userStore"
+import useUserStore from "../../../domains/user/stores/useUserStore"
 import logo from "../../assets/Logo.svg"
 import { AddressModal } from "../header/addressModal/AddressModal"
 import { MenuMobile } from "../header/navMenu/MenuMobile"
@@ -21,14 +21,14 @@ import { ProfileSheet } from "./profileSheet/ProfileSheet"
 import { SearchInput } from "./search/searchInput"
 
 export function Header() {
-  const [isActive, setIsActive] = useState(false)
   const [isPopoverOpen, setIsPopoverOpen] = useState({
     profile: false,
     address: false,
     cart: false,
   })
-  const { userId, setUserId } = userStore()
+  const { userId, setUserId } = useUserStore()
   const { fetchCart, clearLocalStorageCart } = useCartStore()
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,10 +55,6 @@ export function Header() {
     0
   )
 
-  function handleClick(open) {
-    setIsActive(open)
-  }
-
   function onToggleModals(modal, open) {
     setIsPopoverOpen((prev) => ({ ...prev, [modal]: open }))
   }
@@ -74,15 +70,13 @@ export function Header() {
             <div className="hidden items-center gap-5 md:flex">
               <Link
                 to="/"
-                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
-                onClick={handleClick}
+                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${pathname === "/" ? "bg-[#ffeae4] text-primary" : ""}`}
               >
                 Início
               </Link>
               <Link
                 to="/pedidos"
-                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : ""}`}
-                onClick={handleClick}
+                className={`rounded-lg px-2 py-1 hover:bg-[#ffeae4] ${pathname == "/pedidos" ? "bg-[#ffeae4] text-primary" : ""}`}
               >
                 Pedidos
               </Link>
@@ -109,9 +103,7 @@ export function Header() {
           >
             <PopoverTrigger asChild>
               <div
-                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${
-                  isPopoverOpen.profile ? "bg-[#ffeae4] text-primary" : ""
-                }`}
+                className={`relative hidden w-9 cursor-pointer rounded-lg p-1 hover:bg-[#ffeae4] md:flex ${pathname == "/meus-dados" ? "bg-[#ffeae4] text-primary" : " "}`}
               >
                 <IconUser className="w-full text-center" size={30} />
               </div>
@@ -132,7 +124,7 @@ export function Header() {
             onOpenChange={(e) => onToggleModals("cart", e)}
           >
             <SheetTrigger
-              className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${isActive ? "focus:bg-[#ffeae4] focus:text-primary" : " "}`}
+              className={`relative rounded-sm p-1 hover:bg-[#ffeae4] md:rounded-lg ${pathname == "/finalizar-pedido" ? "bg-[#ffeae4] text-primary" : " "}`}
             >
               <span className="absolute -right-1 -top-1 mx-px inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary p-2 text-xs leading-none text-white md:-right-2 md:-top-1 md:p-3 md:text-sm">
                 {orderQuantity > 9 ? "9+" : orderQuantity}

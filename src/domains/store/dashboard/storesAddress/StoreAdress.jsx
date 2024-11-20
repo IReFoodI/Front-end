@@ -4,12 +4,14 @@ import { FormProvider, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { getEncodedAddress } from "@/app/utils/encodeAddress"
 import { useCep } from "@/domains/user/hooks/useCep"
 import {
   changeUserAddressTypes,
   states,
 } from "@/domains/user/models/ChangeUserAddressTypes"
 import { addressService } from "@/domains/user/services/addressService"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import { Button } from "@/ui/components/ui/button/button"
 import { CepPatternFormat } from "@/ui/components/ui/cep-pattern-format"
 import {
@@ -25,6 +27,7 @@ import { Loading } from "@/ui/components/ui/loading"
 const FormSchema = changeUserAddressTypes
 
 export function StoreAddressEdit() {
+  const { user } = useUserStore()
   const [addressId, setAddressId] = useState("")
   const { loading: loadingSaveAddress, onRequest } = useFetch()
   const [encodedAddress, setEncodedAddress] = useState("")
@@ -51,10 +54,11 @@ export function StoreAddressEdit() {
   useEffect(() => {
     function fetchAddress() {
       onRequest({
-        request: () => addressService.listAddresses(),
+        request: () =>
+          addressService.getAddressRestaurantByRestaurantId(user?.restaurantId),
         onSuccess: (data) => {
           if (data && data.length > 0) {
-            reset({ ...data[0] })
+            reset({ ...data[0], type: "RESTAURANT" })
             setAddressId(data[0].addressId)
           } else {
             toast.info("Sem endereço cadastrado")
@@ -64,6 +68,7 @@ export function StoreAddressEdit() {
       })
     }
     fetchAddress()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, onRequest])
 
   useCep(getValues("cep"), setValue, getValues)
@@ -79,8 +84,9 @@ export function StoreAddressEdit() {
 
   useEffect(() => {
     const [cep, street, number, district, city, state] = watchedFields
-    const fullAddress = `${street}, ${number} ${district ? `${district},` : ""} ${city} - ${state}, ${cep}`
-    setEncodedAddress(encodeURIComponent(fullAddress))
+    setEncodedAddress(
+      getEncodedAddress({ cep, street, number, district, city, state })
+    )
   }, [watchedFields])
   const onSubmit = async (data) => {
     await onRequest({
@@ -91,6 +97,7 @@ export function StoreAddressEdit() {
               ...data,
               addressType: "RESTAURANT",
               addressId,
+              restaurantId: user?.restaurantId,
             }),
       onSuccess: () => {
         toast.success(
@@ -252,7 +259,7 @@ export function StoreAddressEdit() {
                 </div>
                 <div
                   id="map"
-                  className="top-12 z-20 mx-auto flex aspect-video w-full items-center justify-center md:h-1/3"
+                  className="z-20 mx-auto flex aspect-video w-full items-center justify-center md:h-1/3"
                 >
                   <iframe
                     key={encodedAddress}
@@ -262,10 +269,10 @@ export function StoreAddressEdit() {
                     className="rounded-xl border-0"
                     src={`https://www.google.com/maps?q=${encodedAddress}&output=embed`}
                     allowFullScreen
-                  />
+                  ></iframe>
                 </div>
                 <div className="md:text-right">
-                  <Button type="submit">Salvar Alterações</Button>
+                  <Button type="submit">Salvar Alterações </Button>
                 </div>
               </form>
             </FormProvider>

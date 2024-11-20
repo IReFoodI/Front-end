@@ -59,7 +59,7 @@ export function DatePicker({ className }) {
   )
 }
 
-export function DatePickerSingle({ value, onChange }) {
+export function DatePickerSingle({ value, onChange, classCustom }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -67,7 +67,8 @@ export function DatePickerSingle({ value, onChange }) {
           variant={"outline"}
           className={cn(
             "justify-start rounded-md p-2 text-left font-normal",
-            !value && "p-2 text-muted-foreground"
+            !value && "p-2 text-muted-foreground",
+            classCustom
           )}
         >
           <CalendarIcon className="mr-2 hidden h-4 w-4 lg:inline" />

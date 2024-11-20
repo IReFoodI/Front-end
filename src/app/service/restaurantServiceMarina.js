@@ -2,7 +2,7 @@ import { createAxiosInstance } from "@/app/service/createAxiosInstace"
 
 // const BASE_URL = "/api/restaurant"
 
-const restaurantService = {
+export const restaurantServiceMarina = {
   async fetchRestaurantProductsByRestaurantId(id, sort, page) {
     const axiosInstance = createAxiosInstance(true)
     try {
@@ -48,6 +48,14 @@ const restaurantService = {
       throw error
     }
   },
-}
 
-export default restaurantService
+  async fetchCentralizedOrderInformation(userId) {
+    const axiosInstance = createAxiosInstance(true)
+    try {
+      return await axiosInstance.get(`/api/cart/monster/${userId}`)
+    } catch (error) {
+      console.error("Erro ao buscar informações do pedido:", error)
+      throw error
+    }
+  },
+}

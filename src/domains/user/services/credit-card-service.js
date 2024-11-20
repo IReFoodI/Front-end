@@ -1,24 +1,28 @@
 import { createAxiosInstance } from "@/app/utils/createAxiosInstance"
 
 const BASE_URL = "/api/card"
-const axios = createAxiosInstance(true)
 
 async function createCreditCard(data) {
+  const axios = createAxiosInstance(true)
   return await axios.post(BASE_URL, data)
 }
 
 async function updateCreditCard(data) {
+  const axios = createAxiosInstance(true)
   return await axios.put(`${BASE_URL}/${data?.cardId}`, data)
 }
 
 async function getCreditCardById(id) {
+  const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}/${id}`)
 }
 async function getAllCreditCard() {
+  const axios = createAxiosInstance(true)
   return await axios.get(`${BASE_URL}`)
 }
 
 async function deleteCreditCard(id) {
+  const axios = createAxiosInstance(true)
   return await axios.delete(`${BASE_URL}/${id}`)
 }
 

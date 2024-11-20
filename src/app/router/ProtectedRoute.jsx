@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import userStore from "@/domains/user/stores/userStore"
+import useUserStore from "@/domains/user/stores/useUserStore"
 import { Loading } from "@/ui/components/ui/loading"
 
 import { checkTokenExpiration } from "../hooks/useTokenValidation"
@@ -17,7 +17,7 @@ export function ProtectedRoute({
   const token = localStorageUtil.getLocalStorageToken()
   const isTokenValid = token ? checkTokenExpiration(token) : false
   const pathname = location?.pathname
-  const { user, logout, isUserLoading } = userStore()
+  const { user, logout, isUserLoading } = useUserStore()
 
   useEffect(() => {
     if (!isUserLoading) {

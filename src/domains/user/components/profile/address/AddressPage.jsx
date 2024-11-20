@@ -1,9 +1,11 @@
+import { IconMapPinOff } from "@tabler/icons-react"
 import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
 import { addressService } from "@/domains/user/services/addressService"
 import { userAddressStore } from "@/domains/user/stores/userAddressStore"
+import { NotFound } from "@/ui/components/NotFound"
 import { Button } from "@/ui/components/ui/button/button"
 import { Loading } from "@/ui/components/ui/loading"
 import { RadioGroup } from "@/ui/components/ui/radio-group"
@@ -79,14 +81,13 @@ export function AddressPage() {
                   />
                 </ul>
               ) : (
-                <div className="my-3 rounded-lg bg-secondary p-2 text-center">
-                  <p className="text-base font-semibold text-primary md:text-xl">
-                    Você ainda não possue endereço padrão!
-                  </p>
-                  <p className="mt-2">
-                    Adicione um endereço para para melhorar a sua experiência{" "}
-                  </p>
-                </div>
+                <NotFound
+                  Icon={IconMapPinOff}
+                  title={"Você ainda não possue endereço padrão!"}
+                  description={
+                    "Adicione um endereço para para melhorar a sua experiência"
+                  }
+                />
               )}
               {otherAddresses?.length > 0 && (
                 <ul>
