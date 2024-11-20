@@ -14,13 +14,17 @@ import { ProfileSheet } from "../profileSheet/ProfileSheet"
 export function MenuMobile() {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   return (
-    <Sheet open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+    <Sheet
+      open={isProfileOpen}
+      onOpenChange={setIsProfileOpen}
+      className="md:hidden"
+    >
       <SheetTrigger asChild>
         <div className="w-9 cursor-pointer rounded-sm bg-[#ffeae4] p-1 md:hidden">
           <IconMenu2 className="m-auto text-primary" size={24} />
         </div>
       </SheetTrigger>
-      <SheetHeader>
+      <SheetHeader className="hidden">
         <SheetTitle />
 
         <SheetDescription />
