@@ -112,7 +112,7 @@ export function UserStoreProfilePage() {
             </menu>
           </div>
         </div>
-        <button className="flex items-center gap-2 text-sm text-gray-400 md:p-2">
+        <button className="flex cursor-default items-center gap-2 text-sm text-gray-400 md:p-2">
           <span>
             <IconClock size={15} className="text-gray-500" />
           </span>
