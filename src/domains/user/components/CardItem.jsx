@@ -4,6 +4,7 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 import reviewService from "@/app/service/reviewService"
 import {
@@ -76,22 +77,24 @@ export function CardItem({ data }) {
   return (
     <div className="flex w-full min-w-[320px] flex-1 flex-col p-3 text-sm font-semibold">
       <p className="py-2">{formattedDate}</p>
-      <div className="flex items-center justify-between rounded-t-lg border-b bg-gray-100 p-2 px-4">
-        <div className="flex gap-3">
-          <img
-            src={data.restaurantLogo}
-            alt={data.restaurantName}
-            className="h-12 w-12 rounded-full object-cover"
-          />
+      <Link to={`/loja/${data.restaurantId}?page=0`}>
+        <div className="flex items-center justify-between rounded-t-lg border-b bg-gray-100 p-2 px-4">
+          <div className="flex gap-3">
+            <img
+              src={data.restaurantLogo}
+              alt={data.restaurantName}
+              className="h-12 w-12 rounded-full object-cover"
+            />
+            <div>
+              <p className="text-xl">{data.restaurantName}</p>
+              <p className="text-gray-400">{data.restaurantCategory}</p>
+            </div>
+          </div>
           <div>
-            <p className="text-xl">{data.restaurantName}</p>
-            <p className="text-gray-400">{data.restaurantCategory}</p>
+            <IconCaretRightFilled />
           </div>
         </div>
-        <div>
-          <IconCaretRightFilled />
-        </div>
-      </div>
+      </Link>
       <div className="flex flex-1 flex-col border-b bg-gray-100 p-2 px-4">
         <div className="flex items-center gap-1">
           <span className="text-green-500">
