@@ -7,19 +7,18 @@
 <!-- omit in toc -->
 ## Índice
 
-- [📌Sobre](#sobre)
+- [📄Sobre](#sobre)
 - [👨‍💻Integrantes](#integrantes)
 - [🚀Tecnologias utilizadas](#tecnologias-utilizadas)
-- [Funcionalidades](#funcionalidades)
+- [🛠Funcionalidades](#funcionalidades)
 - [🎨Cores](#cores)
 - [💻O projeto pode ser vizualizado acessando o seguinte link](#o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link)
 - [👀Exemplo](#exemplo)
-- [Como executar o projeto](#como-executar-o-projeto)
-- [Arquitetura do projeto](#arquitetura-do-projeto)
+- [⚙Como executar o projeto localmente](#como-executar-o-projeto-localmente)
 
 <div id="sobre">
 
-## 📌Sobre
+## 📄Sobre
 
 **Refood** é uma plataforma onde estabelecimentos comerciais podem vender produtos próximos da data de validade a preços mais acessíveis, permitindo que consumidores adquiram esses itens e contribuam para a redução do desperdício de alimentos.
 
@@ -62,9 +61,10 @@
 
 <div id="funcionalidades">
 
-## Funcionalidades
+## 🛠Funcionalidades
 
-escrever as funcionalidades
+- Link do fluxo da aplicação
+<https://www.figma.com/board/ZZScpHgkj3E5j7Iju9Yx0B/ReFood-Flow?node-id=0-1&node-type=canvas&t=bgMl979Vm3BBMRRt-0>
 
 </div>
 
@@ -118,61 +118,28 @@ escrever as funcionalidades
 
 <div id="comoexecutar">
 
-## Como executar o projeto
+## ⚙Como executar o projeto localmente
 
-Escrever como executar localmente
+- Clonar o repositório
+
+    <pre><code>git clone https://github.com/IReFoodI/Front-end</code></pre>
+
+- Acessar a pasta do front-end no terminal
+    <pre><code>cd Front-end</code></pre>
+
+- Instalar as dependências
+    <pre><code>npm ci</code></pre>
+
+- Criar um arquivo .env na pasta backend com o seguinte código
+
+    ```md
+    VITE_GOOGLE_CLIENT_ID='Seu id do google console'
+    VITE_API_BASE_URL=url da api do backend por padrão é 'http://localhost:8080'
+    ```
+
+- Executar o projeto
+    <pre><code>npm run dev</code></pre>
+
+- A url de desenvolvimento irá aparecer no terminal, por padrão é <http://localhost:5173/>
 
 </div>
-
-## Arquitetura do projeto
-
-Talvez falar sobre a arquitetura
-
-```plaintext
-src/
-├── domains/                       # Domínios principais da aplicação
-│   ├── food/                      # Domínio relacionado aos alimentos
-│   │   ├── components/            # Componentes UI específicos do domínio
-│   │   ├── models/                # Modelos de dados (e.g., Food, Category)
-│   │   ├── services/              # Serviços de regras de negócio (lógica de domínio)
-│   │   ├── hooks/                 # Hooks específicos do domínio
-│   │   └── index.ts               # Exportações do domínio
-│   ├── user/                      # Domínio relacionado aos usuários
-│   │   ├── components/
-│   │   ├── models/
-│   │   ├── services/
-│   │   ├── hooks/
-│   │   └── index.ts
-│   └── ...                        # Outros domínios (e.g., order, payment, etc.)
-│
-├── app/                           # Lógica e configuração geral da aplicação
-│   ├── context/                   # Contextos globais (e.g., AuthContext)
-│   ├── hooks/                     # Hooks reutilizáveis
-│   ├── providers/                 # Providers globais (e.g., ThemeProvider)
-│   ├── router/                    # Configuração de rotas
-│   ├── store/                     # Gerenciamento de estado (e.g., Redux, Zustand)
-│   └── App.tsx                    # Componente principal da aplicação
-│
-├── infrastructure/                # Infraestrutura e integrações externas
-│   ├── api/                       # Configuração de APIs externas
-│   ├── config/                    # Configurações globais (e.g., env, axios)
-│   ├── logging/                   # Configuração de logs
-│   └── security/                  # Configuração de segurança (e.g., autenticação)
-│
-├── ui/                            # Componentes de UI e estilos
-│   ├── components/                # Componentes reutilizáveis de UI
-│   ├── layouts/                   # Layouts globais
-│   ├── styles/                    # Arquivos de estilo (e.g., Tailwind, CSS Modules)
-│   └── assets/                    # Imagens, fontes, etc.
-│
-└── index.tsx                      # Entrada principal da aplicação React
-```
-
-Explicação
-Domains: Cada domínio representa uma área do negócio (como food ou user) e contém tudo relacionado a ele, como componentes específicos, modelos de dados, serviços (regra de negócio), e hooks. Isso organiza o código de maneira modular e alinhada com as regras de negócio.
-
-App: Contém a configuração e lógica geral da aplicação, como contextos, hooks globais, provedores e roteamento. Mantém a lógica de domínio separada das configurações e funcionalidades compartilhadas.
-
-Infrastructure: Reúne todas as integrações externas e configurações de infraestrutura, como APIs, segurança, e logging. Mantém a lógica de domínio desacoplada de detalhes técnicos.
-
-UI: Foca nos componentes de interface, layouts, estilos e ativos visuais. Essa separação permite que o desenvolvimento da UI seja independente das regras de negócio.

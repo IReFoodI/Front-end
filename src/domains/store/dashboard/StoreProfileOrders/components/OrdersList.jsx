@@ -10,7 +10,7 @@ export function OrdersList({
   setRefreshOrders,
 }) {
   return (
-    <div>
+    <div className="">
       {orders?.map((order) => (
         <OrderCard
           key={order.orderId}

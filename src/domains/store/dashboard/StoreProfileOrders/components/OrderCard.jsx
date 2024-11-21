@@ -41,17 +41,6 @@ export function OrderCard({
       },
     })
   }
-  const handleOrderCancel = async () => {
-    await onRequest({
-      request: () => restaurantService.cancelStatusOrder(order.orderId),
-      onSuccess: (data) => {
-        setOrder(data)
-        setUser(user)
-        setRefreshOrders(!refreshOrders)
-        setStatus(getStatus(data.orderStatus))
-      },
-    })
-  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -76,7 +65,7 @@ export function OrderCard({
   }
   return (
     <div
-      className={`border-b-2 border-gray-300 bg-gray-100 p-4 ${isDoneOrCanceled ? "text-gray-500" : "text-black"}`}
+      className={`border-b-2 border-gray-300 bg-gray-100 p-4 ${isDoneOrCanceled ? "text-gray-500" : "text-black"} w-full`}
     >
       <div className="flex items-start justify-between pb-4">
         <div className="flex flex-col">
@@ -125,7 +114,7 @@ export function OrderCard({
             Aceitar Pedido
           </button>
           <button
-            onClick={() => handleOrderCancel()}
+            onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}
             className="w-1/2 rounded-2xl bg-gray-400 p-1 font-semibold text-white shadow hover:bg-gray-500"
           >
             Recusar Pedido
