@@ -60,6 +60,13 @@ export function OrderCard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order.userId])
 
+  useEffect(() => {
+    setRefreshOrders(!refreshOrders)
+  }, [status])
+
+  console.log(order.orderId)
+  console.log(order.orderStatus)
+
   if (!user) {
     return <Loading />
   }
