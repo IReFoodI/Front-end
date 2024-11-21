@@ -43,6 +43,7 @@ export function StoreProfileOrders({
 
   useEffect(() => {
     getRestaurantId()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -53,7 +54,9 @@ export function StoreProfileOrders({
   }, [restaurantId, refreshOrders])
 
   function filterOrders(filter) {
-    return orders.filter((order) => order.orderStatus == filter)
+    return orders.filter((order) => {
+      return order.orderStatus === filter
+    })
   }
 
   if (!orders || error) {
@@ -64,11 +67,13 @@ export function StoreProfileOrders({
     )
   }
   return (
-    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:w-2/6">
+    <div className="flex h-full flex-col bg-slate-100 shadow-right lg:min-w-96">
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
           pendingOrders={filterOrders("PENDENTE")}
-          scheduledOrders={filterOrders("PREPARANDO")}
+          scheduledOrders={filterOrders("PREPARANDO").concat(
+            filterOrders("AGUARDANDO_RETIRADA")
+          )}
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}

@@ -3,6 +3,7 @@ import {
   IconCircleCheck,
   IconCircleX,
   IconHeart,
+  IconMailFast,
 } from "@tabler/icons-react"
 
 export function getStatus(order) {
@@ -18,6 +19,9 @@ export function getStatus(order) {
   } else if (order.orderStatus == "CONCLUIDO") {
     nameInStatusOrder = "Concluído"
     iconInOrder = <IconCircleCheck className="text-blue-500" size={16} />
+  } else if (order.orderStatus == "AGUARDANDO_RETIRADA") {
+    nameInStatusOrder = "Aguardando Retirada"
+    iconInOrder = <IconMailFast className="text-pink-500" size={16} />
   } else {
     nameInStatusOrder = "Cancelado"
     iconInOrder = <IconCircleX className="text-red-500" size={16} />

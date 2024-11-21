@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { IconArrowLeft } from "@tabler/icons-react"
 import { useForm } from "react-hook-form"
 import { PatternFormat } from "react-number-format"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { useFetch } from "@/app/hooks/useFetch"
+import { cn } from "@/app/utils/cn"
 import { AlertDialogFooter } from "@/ui/components/ui/alert-dialog"
 import { Button } from "@/ui/components/ui/button/button"
 import {
@@ -84,9 +86,21 @@ export function AddEditCard({ type = "add", card, closeModal }) {
 
   return (
     <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center justify-center p-3 md:p-4 lg:p-5">
-      <h1 className="mb-2 flex w-full justify-center text-center text-xl font-semibold lg:hidden">
-        {type === "add" ? "Adicionar" : "Editar"} Cartão
-      </h1>
+      <div className="relative flex h-full w-full max-w-[35rem] items-center justify-center pb-2">
+        <Link
+          to="/cartoes"
+          className={cn(
+            "absolute left-5 hidden text-primary md:flex lg:hidden",
+            type !== "add" && "!hidden"
+          )}
+          title="Voltar para cartões"
+        >
+          <IconArrowLeft className="text-primary" />
+        </Link>
+        <h1 className="flex w-full justify-center text-center text-xl font-semibold lg:hidden">
+          {type === "add" ? "Adicionar" : "Editar"} Cartão
+        </h1>
+      </div>
       <div className="flex w-full min-w-[19rem] flex-col items-center justify-center gap-3 lg:flex-row lg:gap-10">
         <section
           id="credit-card"
@@ -110,9 +124,21 @@ export function AddEditCard({ type = "add", card, closeModal }) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-3 md:min-w-[35rem]"
           >
-            <h1 className="hidden w-full justify-center text-center text-xl font-semibold lg:flex">
-              {type === "add" ? "Adicionar" : "Editar"} Cartão
-            </h1>
+            <div className="relative hidden w-full justify-center text-center text-xl font-semibold lg:flex">
+              <Link
+                to="/cartoes"
+                className={cn(
+                  "absolute left-5 hidden text-primary lg:flex",
+                  type !== "add" && "!hidden"
+                )}
+                title="Voltar para cartões"
+              >
+                <IconArrowLeft className="text-primary" />
+              </Link>
+              <h1 className="hidden w-full justify-center text-center text-xl font-semibold lg:flex">
+                {type === "add" ? "Adicionar" : "Editar"} Cartão
+              </h1>
+            </div>
             <FormField
               control={form.control}
               name="number"
