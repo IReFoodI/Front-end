@@ -62,10 +62,7 @@ export function OrderCard({
 
   useEffect(() => {
     setRefreshOrders(!refreshOrders)
-  }, [status])
-
-  console.log(order.orderId)
-  console.log(order.orderStatus)
+  }, [status, order.orderStatus])
 
   if (!user) {
     return <Loading />
