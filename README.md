@@ -10,7 +10,7 @@
 - [📄Sobre](#sobre)
 - [👨‍💻Integrantes](#integrantes)
 - [🚀Tecnologias utilizadas](#tecnologias-utilizadas)
-- [🛠Funcionalidades](#funcionalidades)
+- [📱Fluxo da aplicação](#fluxo-da-aplicação)
 - [🎨Cores](#cores)
 - [💻O projeto pode ser vizualizado acessando o seguinte link](#o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link)
 - [👀Exemplo](#exemplo)
@@ -35,7 +35,7 @@
 
 </div>
 
-<div id="tecnologias">
+<div id="tecnologias-utilizadas">
 
 ## 🚀Tecnologias utilizadas
 
@@ -59,7 +59,7 @@
 
 </div>
 
-<div id="funcionalidades">
+<div id="fluxo-da-aplicação">
 
 ## 📱Fluxo da aplicação
 
@@ -67,8 +67,6 @@
 <https://www.figma.com/board/ZZScpHgkj3E5j7Iju9Yx0B/ReFood-Flow?node-id=0-1&node-type=canvas&t=bgMl979Vm3BBMRRt-0>
 
 <img width="3614" alt="ReFood Flow (1)" src="https://github.com/user-attachments/assets/a00d6641-9b63-41fe-a6f0-692312d27bd9">
-
-
 
 </div>
 
@@ -105,7 +103,7 @@
 
 </div>
 
-<div id="linkdeploy">
+<div id="o-projeto-pode-ser-vizualizado-acessando-o-seguinte-link">
 
 ## 💻O projeto pode ser vizualizado acessando o seguinte link
 
@@ -117,16 +115,11 @@
 
 ## 👀Exemplo
 
-
-
-https://github.com/user-attachments/assets/e98f5bb3-ccc9-4e8b-a2e1-5fd864887788
-
-
-
+<https://github.com/user-attachments/assets/e98f5bb3-ccc9-4e8b-a2e1-5fd864887788>
 
 </div>
 
-<div id="comoexecutar">
+<div id="como-executar-o-projeto-localmente">
 
 ## ⚙Como executar o projeto localmente
 
