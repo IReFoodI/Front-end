@@ -149,15 +149,39 @@ export function OrderDetails() {
 
           <div className="flex justify-between py-5">
             {currentOrder.orderStatus !== OrderStatus.CANCELADO &&
-              currentOrder.orderStatus !== OrderStatus.AGUARDANDO_RETIRADA && (
+              currentOrder.orderStatus !== OrderStatus.AGUARDANDO_RETIRADA &&
+              currentOrder.orderStatus !== OrderStatus.CONCLUIDO && (
                 <>
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       handleOrderAcceptance(OrderStatus.AGUARDANDO_RETIRADA)
-                    }
+                      setCurrentOrder((currentOrder) => {
+                        return {
+                          ...currentOrder,
+                          orderStatus: OrderStatus.AGUARDANDO_RETIRADA,
+                        }
+                      })
+                    }}
                     className="cursor-pointer text-lg font-semibold text-orange-500 underline hover:text-orange-400"
                   >
-                    Aguardando Retirada
+                    Solicitar Retirada
+                  </button>
+                  <button
+                    onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}
+                    className="cursor-pointer text-lg font-semibold text-gray-500 underline hover:text-gray-400"
+                  >
+                    Cancelar Pedido
+                  </button>
+                </>
+              )}
+            {currentOrder.orderStatus === OrderStatus.AGUARDANDO_RETIRADA &&
+              currentOrder.orderStatus !== OrderStatus.CONCLUIDO && (
+                <>
+                  <button
+                    onClick={() => handleOrderAcceptance(OrderStatus.CONCLUIDO)}
+                    className="cursor-pointer text-lg font-semibold text-orange-500 underline hover:text-orange-400"
+                  >
+                    Confirmar pedido
                   </button>
                   <button
                     onClick={() => handleOrderAcceptance(OrderStatus.CANCELADO)}

@@ -54,7 +54,9 @@ export function StoreProfileOrders({
   }, [restaurantId, refreshOrders])
 
   function filterOrders(filter) {
-    return orders.filter((order) => order.orderStatus == filter)
+    return orders.filter((order) => {
+      return order.orderStatus === filter
+    })
   }
 
   if (!orders || error) {
@@ -69,7 +71,9 @@ export function StoreProfileOrders({
       <div className="flex-grow overflow-y-auto">
         <TabsStructure
           pendingOrders={filterOrders("PENDENTE")}
-          scheduledOrders={filterOrders("PREPARANDO")}
+          scheduledOrders={filterOrders("PREPARANDO").concat(
+            filterOrders("AGUARDANDO_RETIRADA")
+          )}
           setOrder={setOrder}
           orderRef={orderRef}
           setUser={setUser}
@@ -79,7 +83,7 @@ export function StoreProfileOrders({
       </div>
       <div className="flex flex-col">
         <AccordionsStructure
-          doneOrders={filterOrders("CONCLUIDOS")}
+          doneOrders={filterOrders("CONCLUIDO")}
           canceledOrders={filterOrders("CANCELADO")}
           setOrder={setOrder}
           orderRef={orderRef}

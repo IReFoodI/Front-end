@@ -27,8 +27,6 @@ export function OrderCard({
     }))
   }
 
-  useEffect
-
   const getPickupTime = () => {
     if (timesOfTheDay) {
       return timesOfTheDay
