@@ -165,7 +165,7 @@ export function StoreMenu() {
               <CardFooter>
                 <div className="text-xs">
                   Exibindo <strong>{currentPage + 1}</strong> de{" "}
-                  <strong>{data?.page?.totalPages}</strong> produtos
+                  <strong>{data?.page?.totalPages}</strong> páginas
                 </div>
               </CardFooter>
             </>
