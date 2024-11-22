@@ -127,13 +127,13 @@
 
     <pre><code>git clone https://github.com/IReFoodI/Front-end</code></pre>
 
-- Acessar a pasta do front-end no terminal
+- Acessar a pasta no terminal
     <pre><code>cd Front-end</code></pre>
 
 - Instalar as dependências
     <pre><code>npm ci</code></pre>
 
-- Criar um arquivo .env na pasta backend com o seguinte código
+- Criar um arquivo .env com o seguinte código
 
     ```md
     VITE_GOOGLE_CLIENT_ID='Seu id do google console'
