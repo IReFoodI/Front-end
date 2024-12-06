@@ -9,6 +9,7 @@ export function Loading({ classname, iconClassname }) {
         "flex h-full w-full flex-1 items-center justify-center",
         classname
       )}
+      data-testid="loading"
     >
       <IconLoader2
         className={cn(
