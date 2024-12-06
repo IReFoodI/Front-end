@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@fontsource/inter": "^5.1.0",
