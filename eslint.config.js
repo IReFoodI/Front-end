@@ -1,4 +1,5 @@
 import js from "@eslint/js"
+import pluginJest from "eslint-plugin-jest"
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
@@ -67,6 +68,21 @@ export default [
     files: ["src/ui/components/ui/**/*.jsx"],
     rules: {
       "prettier/prettier": "off",
+    },
+  },
+  {
+    // update this to match your test files
+    files: ["**/*.spec.js", "**/*.test.js", "**/*.spec.jsx", "**/*.test.jsx"],
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
+    },
+    rules: {
+      "jest/no-disabled-tests": "warn",
+      "jest/no-focused-tests": "error",
+      "jest/no-identical-title": "error",
+      "jest/prefer-to-have-length": "warn",
+      "jest/valid-expect": "error",
     },
   },
 ]
