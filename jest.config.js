@@ -8,5 +8,5 @@ export default {
     "^.+\\.svg$": "<rootDir>/svgTransform.js",
   },
   setupFilesAfterEnv: ["@testing-library/jest-dom", "<rootDir>/jest.setup.js"], // Configura jest-dom
-  testMatch: ["**/src/tests/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"], // Detecta arquivos de teste
+  testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"], // Detecta arquivos de teste
 }
